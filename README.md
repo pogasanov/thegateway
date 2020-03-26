@@ -13,7 +13,7 @@ The authorization is a fixed -format JWT token with '{"iss": "shop:{shop_guid}",
 ## Third party platforms
 
 ### Top priority
- - [ ] IAI
+ - [x] IAI - @sunil.techwob
  - [ ] Retalia
  - [x] PrestaShop - @poganasov
  - [ ] shoper.pl
