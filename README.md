@@ -15,7 +15,7 @@ The authorization is a fixed -format JWT token with '{"iss": "shop:{shop_guid}",
 ### Top priority
  - [x] IAI - @sunil.techwob
  - [ ] Retalia
- - [x] PrestaShop - @poganasov
+ - [x] PrestaShop - @pogasanov
  - [ ] shoper.pl
  - [ ] SubiektGT
 
