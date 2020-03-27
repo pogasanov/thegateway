@@ -2,7 +2,7 @@ from unittest import TestCase
 
 import responses
 
-from prestashop.PrestashopImporter import PrestashopImporter
+from prestashop.PrestashopImporter import PrestashopImporter, Product
 
 
 class PrestashopImporterTest(TestCase):
@@ -26,7 +26,7 @@ class PrestashopImporterTest(TestCase):
     @responses.activate
     def test_can_fetch_prestashop_single_product(self):
         ID = 1
-        PRODUCT = {
+        PRESTASHOP_PRODUCT = {
             "product": {"id": 1, "id_manufacturer": "1", "id_supplier": "0", "id_category_default": "4", "new": None,
                         "cache_default_attribute": "1", "id_default_image": "1", "id_default_combination": "1",
                         "id_tax_rules_group": "1", "position_in_category": "1", "manufacturer_name": "Studio Design",
@@ -66,11 +66,12 @@ class PrestashopImporterTest(TestCase):
                                                               {"id": "25", "id_product_attribute": "6"},
                                                               {"id": "26", "id_product_attribute": "7"},
                                                               {"id": "27", "id_product_attribute": "8"}]}}}
+        OUR_PRODUCT = Product(name="Hummingbird printed t-shirt", price=23.9)
 
         responses.add(responses.GET,
                       'http://127.0.0.1:8080/api/products/1',
-                      json=PRODUCT,
+                      json=PRESTASHOP_PRODUCT,
                       status=200)
 
-        products = self.importer.fetch_single_product(ID)
-        self.assertEqual(products, PRODUCT)
+        product = self.importer.fetch_single_product(ID)
+        self.assertEqual(product, OUR_PRODUCT)

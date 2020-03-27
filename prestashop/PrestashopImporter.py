@@ -1,6 +1,13 @@
 import os
+from dataclasses import dataclass
 
 import requests
+
+
+@dataclass
+class Product:
+    name: str
+    price: float
 
 
 class PrestashopImporter:
@@ -16,4 +23,8 @@ class PrestashopImporter:
     def fetch_single_product(self, id):
         result = requests.get(f'{self.API_HOSTNAME}/api/products/{id}', auth=(self.API_KEY, ''),
                               params={'output_format': 'JSON'})
-        return result.json()
+        result_json = result.json()['product']
+        return Product(
+            name=result_json['name'],
+            price=float(result_json['price'])
+        )
