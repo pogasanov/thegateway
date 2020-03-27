@@ -28,3 +28,7 @@ class PrestashopImporter:
             name=result_json['name'],
             price=float(result_json['price'])
         )
+
+    def build_products(self):
+        products = self.fetch_products()
+        return [self.fetch_single_product(p['id']) for p in products]

@@ -55,7 +55,7 @@ PRESTASHOP_PRODUCT_2 = {
                 "upc": "", "cache_is_pack": "0", "cache_has_attachments": "0", "is_virtual": "0", "state": "1",
                 "additional_delivery_times": "1", "delivery_in_stock": "", "delivery_out_stock": "",
                 "on_sale": "0", "online_only": "0", "ecotax": "0.000000", "minimal_quantity": "1",
-                "low_stock_threshold": None, "low_stock_alert": "0", "price": "23.900000",
+                "low_stock_threshold": None, "low_stock_alert": "0", "price": "22.900000",
                 "wholesale_price": "0.000000", "unity": "", "unit_price_ratio": "0.000000",
                 "additional_shipping_cost": "0.00", "customizable": "0", "text_fields": "0",
                 "uploadable_files": "0", "active": "1", "redirect_type": "301-category",
@@ -64,7 +64,7 @@ PRESTASHOP_PRODUCT_2 = {
                 "visibility": "both", "advanced_stock_management": "0", "date_add": "2020-03-27 08:08:02",
                 "date_upd": "2020-03-27 08:08:02", "pack_stock_type": "3", "meta_description": "",
                 "meta_keywords": "", "meta_title": "", "link_rewrite": "hummingbird-printed-t-shirt",
-                "name": "Hummingbird printed t-shirt",
+                "name": "Not Hummingbird printed t-shirt",
                 "description": "<p><span style=\"font-size:10pt;font-style:normal;\"><span style=\"font-size:10pt;font-style:normal;\">Symbol of lightness and delicacy, the hummingbird evokes curiosity and joy.<\/span><span style=\"font-size:10pt;font-style:normal;\"> Studio Design' PolyFaune collection features classic products with colorful patterns, inspired by the traditional japanese origamis. To wear with a chino or jeans. The sublimation textile printing process provides an exceptional color rendering and a color, guaranteed overtime.<\/span><\/span><\/p>",
                 "description_short": "<p><span style=\"font-size:10pt;font-style:normal;\">Regular fit, round neckline, short sleeves. Made of extra long staple pima cotton. <\/span><\/p>\r\n<p><\/p>",
                 "available_now": "", "available_later": "",
@@ -122,3 +122,11 @@ class PrestashopImporterTest(TestCase):
 
         product = self.importer.fetch_single_product(ID)
         self.assertEqual(product, OUR_PRODUCT)
+
+    def test_can_build_products_list(self):
+        OUR_PRODUCTS = [
+            Product(name="Hummingbird printed t-shirt", price=23.9),
+            Product(name="Not Hummingbird printed t-shirt", price=22.9)
+        ]
+        products = self.importer.build_products()
+        self.assertEqual(products, OUR_PRODUCTS)
