@@ -48,4 +48,8 @@ Each different platform integration should be a separate self-contained director
 * external libraries must be included in some standard way (e.g. setup.py, requirements.txt etc) for all external software instead of just hard-coding them in the Dockerfile (when applicable)
 
 
+## Practicalities
 
+> Commit early, commit often!
+
+For each different integration, make a branch and a top level directory named after the 3rd party platform, e.g. `prestashop` or `magento` - and submit a pull request with a title `WIP: ...` as soon as you start.
