@@ -12,3 +12,8 @@ class PrestashopImporter:
         result = requests.get(f'{self.API_HOSTNAME}/api/products', auth=(self.API_KEY, ''),
                               params={'output_format': 'JSON'})
         return result.json()['products']
+
+    def fetch_single_product(self, id):
+        result = requests.get(f'{self.API_HOSTNAME}/api/products/{id}', auth=(self.API_KEY, ''),
+                              params={'output_format': 'JSON'})
+        return result.json()
