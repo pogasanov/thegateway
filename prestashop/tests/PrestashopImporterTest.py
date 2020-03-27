@@ -1,4 +1,5 @@
-from unittest import TestCase
+import os
+from unittest import TestCase, mock
 
 import responses
 
@@ -90,26 +91,36 @@ PRESTASHOP_PRODUCT_2 = {
 class PrestashopImporterTest(TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.importer = PrestashopImporter()
+        cls.HOSTNAME = 'http://123.456.789.0'
+        cls.API_KEY = 'NOTREALAPIKEY'
+        with mock.patch.dict(os.environ, {
+            'PRESTASHOP_HOSTNAME': cls.HOSTNAME,
+            'PRESTASHOP_API_KEY': cls.API_KEY
+        }):
+            cls.importer = PrestashopImporter()
 
     def setUp(self):
         responses.start()
         responses.add(responses.GET,
-                      'http://127.0.0.1:8080/api/products',
+                      f'{self.HOSTNAME}/api/products',
                       json={'products': PRESTASHOP_PRODUCTS},
                       status=200)
         responses.add(responses.GET,
-                      'http://127.0.0.1:8080/api/products/1',
+                      f'{self.HOSTNAME}/api/products/1',
                       json=PRESTASHOP_PRODUCT_1,
                       status=200)
         responses.add(responses.GET,
-                      'http://127.0.0.1:8080/api/products/2',
+                      f'{self.HOSTNAME}/api/products/2',
                       json=PRESTASHOP_PRODUCT_2,
                       status=200)
 
     def tearDown(self):
         responses.stop()
         responses.reset()
+
+    def test_can_set_parameters_with_environment_variables(self):
+        self.assertEqual(self.importer.API_HOSTNAME, self.HOSTNAME)
+        self.assertEqual(self.importer.API_KEY, self.API_KEY)
 
     def test_can_fetch_prestashop_products_ids(self):
         products = self.importer.fetch_products_ids()
