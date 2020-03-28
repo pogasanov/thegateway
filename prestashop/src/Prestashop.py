@@ -1,13 +1,8 @@
 import os
-from dataclasses import dataclass
 
 import requests
 
-
-@dataclass
-class Product:
-    name: str
-    price: float
+from prestashop.src.Product import Product
 
 
 class Prestashop:

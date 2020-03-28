@@ -3,7 +3,8 @@ from unittest import TestCase, mock
 
 import responses
 
-from prestashop.src.Prestashop import Prestashop, Product
+from prestashop.src.Prestashop import Prestashop
+from prestashop.src.Product import Product
 
 PRESTASHOP_PRODUCTS = [{'id': '1'}, {'id': '2'}]
 PRESTASHOP_PRODUCT_1 = {

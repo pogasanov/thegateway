@@ -4,7 +4,7 @@ from unittest import TestCase, mock
 import responses
 
 from prestashop.src.Gateway import Gateway
-from prestashop.src.PrestashopImporter import Product
+from prestashop.src.Product import Product
 
 GATEWAY_PRODUCT = {
     "activated": None,
