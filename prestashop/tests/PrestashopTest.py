@@ -3,7 +3,7 @@ from unittest import TestCase, mock
 
 import responses
 
-from prestashop.src.PrestashopImporter import PrestashopImporter, Product
+from prestashop.src.Prestashop import Prestashop, Product
 
 PRESTASHOP_PRODUCTS = [{'id': '1'}, {'id': '2'}]
 PRESTASHOP_PRODUCT_1 = {
@@ -88,7 +88,7 @@ PRESTASHOP_PRODUCT_2 = {
                                                       {"id": "27", "id_product_attribute": "8"}]}}}
 
 
-class PrestashopImporterTest(TestCase):
+class PrestashopTest(TestCase):
     @classmethod
     def setUpClass(cls):
         cls.HOSTNAME = 'http://123.456.789.0'
@@ -97,7 +97,7 @@ class PrestashopImporterTest(TestCase):
             'PRESTASHOP_HOSTNAME': cls.HOSTNAME,
             'PRESTASHOP_API_KEY': cls.API_KEY
         }):
-            cls.importer = PrestashopImporter()
+            cls.importer = Prestashop()
 
     def setUp(self):
         responses.start()
