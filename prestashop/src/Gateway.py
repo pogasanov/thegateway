@@ -45,8 +45,14 @@ class Gateway:
                                          "data":
                                              {
                                                  "imageFiles": [],
-                                                 "videos": []
+                                                 "videos": [],
+                                                 "fit": "d",
+                                                 "returns": "e",
+                                                 "fabric": "f"
                                              },
+                                         "desc": product.description,
+                                         "brief": product.description_short,
+                                         "sku": product.sku,
                                          "name": product.name,
                                          "images": [],
                                          "vat": "VAT23"
@@ -59,6 +65,7 @@ class Gateway:
                               "products": [
                                   {
                                       "product_guid": product_guid,
+                                      "stock_level": product.stock,
                                       "archived": False,
                                       "for_sale": True
                                   }

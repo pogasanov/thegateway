@@ -1,9 +1,9 @@
 from prestashop.src.Gateway import Gateway
-from prestashop.src.PrestashopImporter import PrestashopImporter
+from prestashop.src.Prestashop import Prestashop
 
 
 def run_import():
-    importer = PrestashopImporter()
+    importer = Prestashop()
     exporter = Gateway()
 
     products = importer.build_products()
