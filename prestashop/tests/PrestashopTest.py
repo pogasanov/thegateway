@@ -87,6 +87,16 @@ PRESTASHOP_PRODUCT_2 = {
                                                       {"id": "25", "id_product_attribute": "6"},
                                                       {"id": "26", "id_product_attribute": "7"},
                                                       {"id": "27", "id_product_attribute": "8"}]}}}
+PRESTASHOP_STOCK_1 = {
+    'stock_available': {
+        'quantity': 1
+    }
+}
+PRESTASHOP_STOCK_2 = {
+    'stock_available': {
+        'quantity': 2
+    }
+}
 
 
 class PrestashopTest(TestCase):
@@ -99,6 +109,23 @@ class PrestashopTest(TestCase):
             'PRESTASHOP_API_KEY': cls.API_KEY
         }):
             cls.importer = Prestashop()
+
+        cls.product_1 = Product(
+            name="Hummingbird printed t-shirt",
+            price=23.9,
+            stock=1.0,
+            description="Symbol of lightness and delicacy, the hummingbird evokes curiosity and joy. Studio Design' PolyFaune collection features classic products with colorful patterns, inspired by the traditional japanese origamis. To wear with a chino or jeans. The sublimation textile printing process provides an exceptional color rendering and a color, guaranteed overtime.",
+            description_short="Regular fit, round neckline, short sleeves. Made of extra long staple pima cotton. \r\n",
+            sku='demo_1'
+        )
+        cls.product_2 = Product(
+            name="Not Hummingbird printed t-shirt",
+            price=22.9,
+            stock=2.0,
+            description="Symbol of lightness and delicacy, the hummingbird evokes curiosity and joy. Studio Design' PolyFaune collection features classic products with colorful patterns, inspired by the traditional japanese origamis. To wear with a chino or jeans. The sublimation textile printing process provides an exceptional color rendering and a color, guaranteed overtime.",
+            description_short="Regular fit, round neckline, short sleeves. Made of extra long staple pima cotton. \r\n",
+            sku="demo_1"
+        )
 
     def setUp(self):
         responses.start()
@@ -113,6 +140,14 @@ class PrestashopTest(TestCase):
         responses.add(responses.GET,
                       f'{self.HOSTNAME}/api/products/2',
                       json=PRESTASHOP_PRODUCT_2,
+                      status=200)
+        responses.add(responses.GET,
+                      f'{self.HOSTNAME}/api/stock_availables/1',
+                      json=PRESTASHOP_STOCK_1,
+                      status=200)
+        responses.add(responses.GET,
+                      f'{self.HOSTNAME}/api/stock_availables/2',
+                      json=PRESTASHOP_STOCK_2,
                       status=200)
 
     def tearDown(self):
@@ -129,15 +164,15 @@ class PrestashopTest(TestCase):
 
     def test_can_fetch_prestashop_single_product(self):
         ID = 1
-        OUR_PRODUCT = Product(name="Hummingbird printed t-shirt", price=23.9)
+        OUR_PRODUCT = self.product_1
 
         product = self.importer.fetch_single_product(ID)
         self.assertEqual(product, OUR_PRODUCT)
 
     def test_can_build_products_list(self):
         OUR_PRODUCTS = [
-            Product(name="Hummingbird printed t-shirt", price=23.9),
-            Product(name="Not Hummingbird printed t-shirt", price=22.9)
+            self.product_1,
+            self.product_2
         ]
         products = self.importer.build_products()
         self.assertEqual(products, OUR_PRODUCTS)
