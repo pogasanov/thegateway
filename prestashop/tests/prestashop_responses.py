@@ -89,3 +89,5 @@ PRESTASHOP_STOCK_2 = {
         'quantity': 2
     }
 }
+PRESTASHOP_IMAGES_1 = b'<?xml version="1.0" encoding="UTF-8"?>\n<prestashop xmlns:xlink="http://www.w3.org/1999/xlink">\n<image id="1">\n<declination id="1" xlink:href="http://123.456.789.0/api/images/products/1/1"/>\n<declination id="2" xlink:href="http://123.456.789.0/api/images/products/1/2"/>\n</image>\n</prestashop>\n'
+PRESTASHOP_IMAGES_2 = b'<?xml version="1.0" encoding="UTF-8"?>\n<prestashop xmlns:xlink="http://www.w3.org/1999/xlink">\n<image id="2">\n</image>\n</prestashop>\n'
