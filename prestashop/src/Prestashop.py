@@ -1,4 +1,3 @@
-import os
 import re
 import tempfile
 from xml.etree import ElementTree
@@ -9,9 +8,9 @@ from prestashop.src.Product import Product
 
 
 class Prestashop:
-    def __init__(self):
-        self.API_HOSTNAME = os.environ.get('PRESTASHOP_HOSTNAME', 'http://127.0.0.1:8080')
-        self.API_KEY = os.environ.get('PRESTASHOP_API_KEY', 'RZY9E7L8AP5EPSMDZSXQ2SDJXZCEXBU4')
+    def __init__(self, BASE_URL, API_KEY):
+        self.API_HOSTNAME = BASE_URL
+        self.API_KEY = API_KEY
 
     def fetch_products_ids(self):
         result = requests.get(f'{self.API_HOSTNAME}/api/products', auth=(self.API_KEY, ''),

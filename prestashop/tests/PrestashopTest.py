@@ -1,5 +1,4 @@
-import os
-from unittest import TestCase, mock
+from unittest import TestCase
 
 import responses
 
@@ -11,13 +10,9 @@ from prestashop.tests.prestashop_responses import PRESTASHOP_PRODUCTS, PRESTASHO
 class PrestashopTest(TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.HOSTNAME = 'http://123.456.789.0'
+        cls.BASE_URL = 'http://123.456.789.0'
         cls.API_KEY = 'NOTREALAPIKEY'
-        with mock.patch.dict(os.environ, {
-            'PRESTASHOP_HOSTNAME': cls.HOSTNAME,
-            'PRESTASHOP_API_KEY': cls.API_KEY
-        }):
-            cls.importer = Prestashop()
+        cls.importer = Prestashop(cls.BASE_URL, cls.API_KEY)
 
         cls.DUMMY_IMAGE = b'abc'
 

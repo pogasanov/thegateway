@@ -1,5 +1,4 @@
-import os
-from unittest import TestCase, mock
+from unittest import TestCase
 
 import responses
 
@@ -14,12 +13,7 @@ class GatewayTest(TestCase):
         cls.BASE_URL = 'http://123.456.789.0'
         cls.SHOP_ID = 'a547de18-7a1d-450b-a57b-bbf7f177db84'
         cls.SECRET = 'OyB2YbwTVtRXuJv+VE4oJLVyGo8pf1XVibCk08lt4ys='
-        with mock.patch.dict(os.environ, {
-            'GATEWAY_BASE_URL': cls.BASE_URL,
-            'GATEWAY_SHOP_ID': cls.SHOP_ID,
-            'GATEWAY_SECRET': cls.SECRET
-        }):
-            cls.gateway = Gateway()
+        cls.gateway = Gateway(cls.BASE_URL, cls.SHOP_ID, cls.SECRET)
 
     def setUp(self):
         responses.start()
