@@ -8,6 +8,8 @@ from prestashop.src.Product import Product
 from prestashop.tests.prestashop_responses import PRESTASHOP_PRODUCTS, PRESTASHOP_PRODUCT_1, PRESTASHOP_PRODUCT_2, \
     PRESTASHOP_STOCK_1, PRESTASHOP_STOCK_2
 
+DUMMY_IMAGE = b'abc'
+
 
 class PrestashopTest(TestCase):
     @classmethod
@@ -59,6 +61,10 @@ class PrestashopTest(TestCase):
                       f'{self.HOSTNAME}/api/stock_availables/2',
                       json=PRESTASHOP_STOCK_2,
                       status=200)
+        responses.add(responses.GET,
+                      f'{self.HOSTNAME}/api/images/products/1/1',
+                      body=DUMMY_IMAGE,
+                      status=200)
 
     def tearDown(self):
         responses.stop()
@@ -86,3 +92,10 @@ class PrestashopTest(TestCase):
         ]
         products = self.importer.build_products()
         self.assertEqual(products, OUR_PRODUCTS)
+
+    def test_can_download_image(self):
+        IMAGE_URL = f'{self.HOSTNAME}/api/images/products/1/1'
+        image_file = self.importer.download_image(IMAGE_URL)
+        with image_file as f:
+            content = f.read()
+        self.assertEqual(content, DUMMY_IMAGE)

@@ -1,4 +1,6 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from tempfile import SpooledTemporaryFile
+from typing import List
 
 
 @dataclass
@@ -9,3 +11,4 @@ class Product:
     description: str = ''
     description_short: str = ''
     sku: str = ''
+    images: List[SpooledTemporaryFile] = field(default_factory=list)

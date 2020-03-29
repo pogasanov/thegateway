@@ -1,5 +1,6 @@
 import os
 import re
+import tempfile
 
 import requests
 
@@ -20,6 +21,7 @@ class Prestashop:
         result = requests.get(f'{self.API_HOSTNAME}/api/products/{id}', auth=(self.API_KEY, ''),
                               params={'output_format': 'JSON'})
         result_json = result.json()['product']
+
         product = Product(
             name=result_json['name'],
             price=float(result_json['price']),
@@ -36,6 +38,13 @@ class Prestashop:
     def build_products(self):
         products = self.fetch_products_ids()
         return [self.fetch_single_product(p) for p in products]
+
+    def download_image(self, url):
+        result = requests.get(url, auth=(self.API_KEY, ''))
+        f = tempfile.SpooledTemporaryFile()
+        f.write(result.content)
+        f.seek(0)
+        return f
 
 
 def strip_tags(in_str):
