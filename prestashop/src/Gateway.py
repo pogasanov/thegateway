@@ -26,6 +26,8 @@ class Gateway:
                  ), key, algorithm="HS256")
 
     def create_product(self, product):
+        image_urls = [self.upload_image(image) for image in product.images]
+
         # create product
         response = self.session.post(f"{self.BASE_URL}/organizations/{self.SHOP_ID}/products/",
                                      json={
@@ -54,7 +56,7 @@ class Gateway:
                                          "brief": product.description_short,
                                          "sku": product.sku,
                                          "name": product.name,
-                                         "images": [],
+                                         "images": image_urls,
                                          "vat": "VAT23"
                                      })
         product_guid = response.json()['guid']
@@ -70,3 +72,18 @@ class Gateway:
                                       "for_sale": True
                                   }
                               ]})
+
+    def upload_image(self, image_content):
+        response = self.session.post(f"{self.BASE_URL}/uploads/",
+                                     json={
+                                         "filename": "product_image.jpg",
+                                         "content_type": "image/jpeg"
+                                     })
+
+        url = response.json()['url']
+        fields = response.json()['fields']
+
+        requests.post(url, fields, files={
+            'file': ('file.jpg', image_content)
+        })
+        return url + fields['key']
