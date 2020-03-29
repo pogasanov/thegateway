@@ -4,7 +4,7 @@ from xml.etree import ElementTree
 
 import requests
 
-from prestashop.src.Product import Product
+from models import Product
 
 
 class Prestashop:

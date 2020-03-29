@@ -2,8 +2,8 @@ from unittest import TestCase
 
 import responses
 
-from prestashop.src.Prestashop import Prestashop
-from prestashop.tests.prestashop_responses import PRESTASHOP_PRODUCTS, PRESTASHOP_PRODUCT_1, PRESTASHOP_PRODUCT_2, \
+from importers import Prestashop
+from .prestashop_responses import PRESTASHOP_PRODUCTS, PRESTASHOP_PRODUCT_1, PRESTASHOP_PRODUCT_2, \
     PRESTASHOP_STOCK_1, PRESTASHOP_STOCK_2, PRESTASHOP_IMAGES_1, PRESTASHOP_IMAGES_2
 
 
@@ -45,39 +45,39 @@ class PrestashopTest(TestCase):
     def setUp(self):
         responses.start()
         responses.add(responses.GET,
-                      f'{self.HOSTNAME}/api/products',
+                      f'{self.BASE_URL}/api/products',
                       json={'products': PRESTASHOP_PRODUCTS},
                       status=200)
         responses.add(responses.GET,
-                      f'{self.HOSTNAME}/api/products/1',
+                      f'{self.BASE_URL}/api/products/1',
                       json=PRESTASHOP_PRODUCT_1,
                       status=200)
         responses.add(responses.GET,
-                      f'{self.HOSTNAME}/api/products/2',
+                      f'{self.BASE_URL}/api/products/2',
                       json=PRESTASHOP_PRODUCT_2,
                       status=200)
         responses.add(responses.GET,
-                      f'{self.HOSTNAME}/api/stock_availables/1',
+                      f'{self.BASE_URL}/api/stock_availables/1',
                       json=PRESTASHOP_STOCK_1,
                       status=200)
         responses.add(responses.GET,
-                      f'{self.HOSTNAME}/api/stock_availables/2',
+                      f'{self.BASE_URL}/api/stock_availables/2',
                       json=PRESTASHOP_STOCK_2,
                       status=200)
         responses.add(responses.GET,
-                      f'{self.HOSTNAME}/api/images/products/1',
+                      f'{self.BASE_URL}/api/images/products/1',
                       body=PRESTASHOP_IMAGES_1,
                       status=200)
         responses.add(responses.GET,
-                      f'{self.HOSTNAME}/api/images/products/1/1',
+                      f'{self.BASE_URL}/api/images/products/1/1',
                       body=self.DUMMY_IMAGE,
                       status=200)
         responses.add(responses.GET,
-                      f'{self.HOSTNAME}/api/images/products/1/2',
+                      f'{self.BASE_URL}/api/images/products/1/2',
                       body=self.DUMMY_IMAGE,
                       status=200)
         responses.add(responses.GET,
-                      f'{self.HOSTNAME}/api/images/products/2',
+                      f'{self.BASE_URL}/api/images/products/2',
                       body=PRESTASHOP_IMAGES_2,
                       status=200)
 
@@ -86,7 +86,7 @@ class PrestashopTest(TestCase):
         responses.reset()
 
     def test_can_set_parameters_with_environment_variables(self):
-        self.assertEqual(self.importer.API_HOSTNAME, self.HOSTNAME)
+        self.assertEqual(self.importer.API_HOSTNAME, self.BASE_URL)
         self.assertEqual(self.importer.API_KEY, self.API_KEY)
 
     def test_can_fetch_prestashop_products_ids(self):
@@ -106,7 +106,7 @@ class PrestashopTest(TestCase):
         self.assertIsProduct2(products[1])
 
     def test_can_download_image(self):
-        IMAGE_URL = f'{self.HOSTNAME}/api/images/products/1/1'
+        IMAGE_URL = f'{self.BASE_URL}/api/images/products/1/1'
         image_file = self.importer.download_image(IMAGE_URL)
         with image_file as f:
             content = f.read()

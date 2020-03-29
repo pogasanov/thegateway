@@ -1,7 +1,7 @@
 import os
 
-from prestashop.src.Gateway import Gateway
-from prestashop.src.Prestashop import Prestashop
+from exporters import Gateway
+from importers import Prestashop
 
 
 def run_import():

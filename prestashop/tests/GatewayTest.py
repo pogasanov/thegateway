@@ -2,9 +2,9 @@ from unittest import TestCase
 
 import responses
 
-from prestashop.src.Gateway import Gateway
-from prestashop.src.Product import Product
-from prestashop.tests.gateway_responses import GATEWAY_PRODUCT
+from exporters import Gateway
+from models import Product
+from .gateway_responses import GATEWAY_PRODUCT
 
 
 class GatewayTest(TestCase):
