@@ -28,49 +28,57 @@ class Gateway:
     def create_product(self, product):
         image_urls = [self.upload_image(image) for image in product.images]
 
+        payload = {
+            "base_price_type": "retail",
+            "cost_price":
+                {
+                    "currency": "zł",
+                    "vat_percent": 0,
+                    "amount": 0
+                },
+            "base_price":
+                {
+                    "currency": "zł",
+                    "vat_percent": 23,
+                    "amount": product.price
+                }, "tags": [],
+            "data":
+                {
+                    "imageFiles": [],
+                    "videos": [],
+                    "fit": "d",
+                    "returns": "e",
+                    "fabric": "f"
+                },
+            "name": product.name,
+            "images": image_urls,
+            "vat": "VAT23"
+        }
+
+        if product.description:
+            payload["desc"] = product.description
+        if product.description_short:
+            payload["brief"] = product.description_short
+        if product.sku:
+            payload["sku"] = product.sku
+
         # create product
         response = self.session.post(f"{self.BASE_URL}/organizations/{self.SHOP_ID}/products/",
-                                     json={
-                                         "base_price_type": "retail",
-                                         "cost_price":
-                                             {
-                                                 "currency": "zł",
-                                                 "vat_percent": 0,
-                                                 "amount": 0
-                                             },
-                                         "base_price":
-                                             {
-                                                 "currency": "zł",
-                                                 "vat_percent": 23,
-                                                 "amount": product.price
-                                             }, "tags": [],
-                                         "data":
-                                             {
-                                                 "imageFiles": [],
-                                                 "videos": [],
-                                                 "fit": "d",
-                                                 "returns": "e",
-                                                 "fabric": "f"
-                                             },
-                                         "desc": product.description,
-                                         "brief": product.description_short,
-                                         "sku": product.sku,
-                                         "name": product.name,
-                                         "images": image_urls,
-                                         "vat": "VAT23"
-                                     })
+                                     json=payload)
         product_guid = response.json()['guid']
 
+        payload = {
+            "product_guid": product_guid,
+            "archived": False,
+            "for_sale": True
+        }
+        if product.stock:
+            payload["stock_level"] = product.stock
         # add product to webshop
         self.session.post(f"{self.BASE_URL}/dashboard/webshops/{self.SHOP_ID}/products",
                           json={
                               "products": [
-                                  {
-                                      "product_guid": product_guid,
-                                      "stock_level": product.stock,
-                                      "archived": False,
-                                      "for_sale": True
-                                  }
+                                  payload
                               ]})
 
     def upload_image(self, image_content):
