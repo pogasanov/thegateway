@@ -6,10 +6,11 @@ from jose import jwt
 
 
 class Gateway:
-    def __init__(self, BASE_URL, SHOP_ID, SECRET):
+    def __init__(self, BASE_URL, SHOP_ID, SECRET, IMAGE_URL_PREFIX):
         self.BASE_URL = BASE_URL
         self.SHOP_ID = SHOP_ID
         self.SECRET = SECRET
+        self.image_prefix = IMAGE_URL_PREFIX
 
         self.token = self._build_token()
         self.session = requests.Session()
@@ -56,7 +57,7 @@ class Gateway:
                     "fabric": "f"
                 },
             "name": product.name,
-            "images": image_urls,
+            "images": [f'{self.image_prefix}/{url}' for url in image_urls],
             "vat": "VAT23"
         }
 

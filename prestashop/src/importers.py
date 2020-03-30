@@ -35,8 +35,19 @@ class Prestashop:
             for value in product_option_values:
                 self.variants_reverse[value] = name
 
+    def invoke(self, endpoint, method, output_format=None):
+        fn = getattr(requests, method)
+        if output_format:
+            params = dict(output_format=output_format)
+        else:
+            params = dict()
+        return fn(f'{self.API_HOSTNAME}/api/{endpoint}', auth=(self.API_KEY, ''), params=params)
+
+    def head(self, endpoint):
+        return self.invoke(endpoint, "head")
+
     def get(self, endpoint, output_format="JSON"):
-        response = requests.get(f'{self.API_HOSTNAME}/api/{endpoint}', auth=(self.API_KEY, ''), params=dict(output_format=output_format))
+        response = self.invoke(endpoint, "get", output_format)
         try:
             return response.json()
         except JSONDecodeError:
@@ -108,6 +119,16 @@ class Prestashop:
                 name = data['name']
                 description = strip_tags(data['description'])
                 description_short = strip_tags(data['description_short']),
+
+            # Images
+            images = list()
+            for image_id in image_ids:
+                r = self.head(f'/images/products/{product_id}/{image_id}')
+                sha1 = r.headers['Content-Sha1']
+                mimetype = r.headers['Content-Type']
+                filename = f'{sha1}.{mimetype.rsplit("/")[-1]}'
+                logger.debug(filename)
+                images.append(filename)
             products.append(Product(
                 name=name,
                 price=Decimal(data['price']),
@@ -116,7 +137,7 @@ class Prestashop:
                 sku=sku,
                 variant_data=variant_data,
                 stock=Decimal(stock_level),
-                # images=images
+                images=images,
             ))
         print(products)
         return products

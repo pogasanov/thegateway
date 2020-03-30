@@ -16,7 +16,8 @@ def run_import(get_variants):
     GATEWAY_BASE_URL = os.environ.get('GATEWAY_BASE_URL', 'https://sma.dev.gwapi.eu')
     GATEWAY_SHOP_ID = os.environ.get('GATEWAY_SHOP_ID', 'a547de18-7a1d-450b-a57b-bbf7f177db84')
     GATEWAY_SECRET = os.environ.get('GATEWAY_SECRET', 'OyB2YbwTVtRXuJv+VE4oJLVyGo8pf1XVibCk08lt4ys=')
-    exporter = Gateway(GATEWAY_BASE_URL, GATEWAY_SHOP_ID, GATEWAY_SECRET)
+    IMAGE_URL_PREFIX = f"{os.environ.get('IMAGEBUCKET_URL')}/{GATEWAY_SHOP_ID}/"
+    exporter = Gateway(GATEWAY_BASE_URL, GATEWAY_SHOP_ID, GATEWAY_SECRET, IMAGE_URL_PREFIX)
 
     if get_variants:
         importer.get_variants()
