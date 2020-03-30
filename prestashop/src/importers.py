@@ -12,25 +12,46 @@ class Prestashop:
     def __init__(self, BASE_URL, API_KEY):
         self.API_HOSTNAME = BASE_URL
         self.API_KEY = API_KEY
+        self.products = dict()
+        self.variants = dict()
+        self.product_options = dict()
+
+
+    def get_variants(self):
+        ids = [d['id'] for d in self.get('/product_options')['product_options']]
+        for id in ids:
+            data = self.get(f'/product_options/{id}')['product_option']
+            product_option_values = self._ids_to_list(data['associations']['product_option_values'])
+            name = self._get_by_id('1', data['public_name'])
+            self.variants[id] = dict(name=name, options=product_option_values)
 
     def get(self, endpoint, output_format="JSON"):
-        return requests.get(f'{self.API_HOSTNAME}/api/{endpoint}', auth=(self.API_KEY, ''), params=dict(output_format=output_format))
+        return requests.get(f'{self.API_HOSTNAME}/api/{endpoint}', auth=(self.API_KEY, ''), params=dict(output_format=output_format)).json()
+
+    def _get_by_id(self, id_, data):
+        for d in data:
+            if d['id'] == id_:
+                return d['value']
+        raise KeyError(id_)
+
+    def _ids_to_list(self, idlist):
+        return [int(d['id']) for d in idlist]
 
     def fetch_products_ids(self):
         result = self.get('products')
-        return [p['id'] for p in result.json()['products']]
+        return self._ids_to_list(result['products'])
 
     def fetch_single_product(self, id):
         result = self.get(f'products/{id}')
-        data = result.json()['product']
+        data = result['product']
 
         associations = data['associations']
-        image_ids = [d['id'] for d in associations['images']]
-        variant_ids = [d['id'] for d in associations['combinations']]
+        image_ids = self._ids_to_list(associations['images'])
+        variant_ids = self._ids_to_list(associations['combinations'])
         # TODO: Get '/api/combinations/<variant_ids> and map all product_option_values + get '/api/product_option_values/<product_option_value_id>" for values and map their values to "variant types"
         # e.g. product_option 2 is Kolor/color and product_option_value 11 is czarny/Black
 
-        images = self.fetch_product_images(id)
+        # images = self.fetch_product_images(id)
 
         product = Product(
             name=data['name'],
@@ -38,7 +59,7 @@ class Prestashop:
             description=strip_tags(data['description'][0]['value']),
             description_short=strip_tags(data['description_short'][1]['value']),
             sku=data['reference'],
-            images=images
+            # images=images
         )
 
         # TODO: Map stock_availables to variant_id's and get stock levels for all stock_available IDs
@@ -48,7 +69,7 @@ class Prestashop:
 
         result = requests.get(f'{self.API_HOSTNAME}/api/stock_availables/{id}', auth=(self.API_KEY, ''),
                               params={'output_format': 'JSON'})
-        product.stock = Decimal(result.json()['stock_available']['quantity'])
+        # product.stock = Decimal(result.json()['stock_available']['quantity'])
         return product
 
     def build_products(self):

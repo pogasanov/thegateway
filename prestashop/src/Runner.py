@@ -14,6 +14,9 @@ def run_import():
     GATEWAY_SECRET = os.environ.get('GATEWAY_SECRET', 'OyB2YbwTVtRXuJv+VE4oJLVyGo8pf1XVibCk08lt4ys=')
     exporter = Gateway(GATEWAY_BASE_URL, GATEWAY_SHOP_ID, GATEWAY_SECRET)
 
+    importer.get_variants()
+    print(importer.variants)
+    return
     products = importer.build_products()
     for product in products:
         exporter.create_product(product)
