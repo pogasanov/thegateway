@@ -1,0 +1,1 @@
+{"product_option": {"id": 3, "is_color_group": "0", "group_type": "select", "position": "2", "name": [{"id": "1", "value": "Dimension"}, {"id": "2", "value": "Dimension"}], "public_name": [{"id": "1", "value": "Dimension"}, {"id": "2", "value": "Dimension"}], "associations": {"product_option_values": [{"id": "19"}, {"id": "20"}, {"id": "21"}]}}}
