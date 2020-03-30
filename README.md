@@ -7,6 +7,145 @@ Our platform is a multivendor marketplace, built in-house. It's serverless & con
 
 The Swagger UI for the API (development version) can be found at https://sma.dev.gwapi.eu
 
+**Create a product**
+
+| HTTP Method | Route              | Description |
+| :---------: | ---------------------- | ---------------------- |
+|   `POST`    | `/organizations​/{organization_id}​/products​`  |  [Create new product](https://public.the.gw/apidoc/index.html?url=https%3A//sma.dev.gwapi.eu/swagger.json#/Product/post_organizations__organization_guid__products__guid__)
+
+---
+
+##### The Product Object
+`Product` is an object representing a product that belongs to a shop. It can also represent a delivery method, depending on the type. 
+
+**Parameters**
+
+| Parameter        |              Type               | Description                                                                                                              |
+| ---------------- | :-----------------------------: | ------------------------------------------------------------------------------------------------------------------------ |
+| **`activated`**  |             string              | Timestamp[^1] representing the UTC datetime of the product's most recent activation. Null means product is not activated |
+| **`brief`**      |             string              | Short one line description of the product.                                                                               |
+| **`created`**    |             string              |                                                                                                                          |
+| **`data`**       |             object              | Miscelenious field for additional product data. TODO                                                                     |
+| **`desc`**       |             string              | Detailed description of the product.                                                                                     |
+| **`guid`**       |             string              | Unique identifier for the object.                                                                                        |
+| **`images`**     |         Array of string         | List of image urls belonging to the object.                                                                              |
+| **`name`**       |             string              | Name of the product                                                                                                      |
+| **`owner_guid`** |             string              | Unique identifier of the retailer that owns the product.                                                                 |
+| **`price`**      |   [VatPrice](#vatPriceObject)   |                                                                                                                          |
+| **`pricing`**    |             string              | Unique identifier of a pricing object.                                                                                   |
+| **`suppliers`**  |         Array of string         | List of unique identifiers of retailers currently selling the product                                                    |
+| **`tags`**       |          Array of Tags          | List of Tag objects that are associated with the product.                                                                |
+| **`timestamps`** | [Timestamps](#timestampsObject) |                                                                                                                          |
+| **`type`**       |             string              | Type equals to 'default' if object is a normal product, or'delivery_method' if object is a delivery method.              |
+| **`updated`**    |             string              | Timestamp[^1] respresenting the last UTC datetime whenthe object was edited.                                             |
+
+<details>
+
+  <summary>
+  OPEN Example product object
+  </summary>
+
+```JSON
+{
+  "activated": "2019-09-24T12:52:18.249Z",
+  "brief": "string",
+  "created": "2019-09-24T12:52:18.249Z",
+  "data": {},
+  "desc": "string",
+  "guid": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "images": [
+    "http://www.image-source.com/image-id/"
+  ],
+  "name": "A Product Name",
+  "owner_guid": "4ka85f64-5717-4562-b3fc-2c063f66afa6",
+  "price": {
+    "base": {
+      "unit": {
+        "amount": 0,
+        "vat": 0,
+        "vat0": 0,
+        "vat_percent": 0
+      }
+    },
+    "cost": {
+      "unit": {
+        "amount": 0,
+        "vat": 0,
+        "vat0": 0,
+        "vat_percent": 0
+      }
+    },
+    "final": {
+      "unit": {
+        "amount": 0,
+        "vat": 0,
+        "vat0": 0,
+        "vat_percent": 0
+      }
+    },
+    "original": {
+      "unit": {
+        "amount": 0,
+        "vat": 0,
+        "vat0": 0,
+        "vat_percent": 0
+      }
+    },
+    "vat_class": 0
+  },
+  "pricing": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "suppliers": [
+    "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+  ],
+  "tags": [
+    {
+      "active": true,
+      "guid": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "images": [
+        {
+          "url": "string"
+        }
+      ],
+      "name": "string",
+      "owner": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "parent_guid": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "subtags": [
+        "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+      ]
+    }
+  ],
+  "timestamps": {
+    "created": "2019-09-24T12:52:18.249Z"
+  },
+  "type": "string",
+  "updated": "string"
+}
+
+```
+</details>
+
+---
+
+### Other relevant objects
+
+##### VatPrice object
+| Parameter / Argument                                                                | Type   | Description                                                                     |
+| ----------------------------------------------------------------------------------- | ------ | ------------------------------------------------------------------------------- |
+| **`amount`** <span style="color:red; font-variant: small-caps">required</span>      | number | Number larger than 0 representing the price                                     |
+| **`currency`** <span style="color:red; font-variant: small-caps">required</span>    | string | Should be `zl`                                                                  |
+| **`vat`** <span style="color:red; font-variant: small-caps">required</span>         | number |                                                                             |
+| **`vat0`** <span style="color:red; font-variant: small-caps">required</span>        | number |                                                                             |
+| **`vat_percent`** <span style="color:red; font-variant: small-caps">required</span> | number | Number larger than 0 representing the value added tax. e.g. `23` would mean 23% |
+
+---
+
+##### Timestamps object
+| Parameter / Argument                                        | Type   | Description                                                                    |
+| ----------------------------------------------------------- | ------ | ------------------------------------------------------------------------------ |
+| **`created`** <span style="color:lightgrey">optional</span> | string | Timestamp[^1] representing the UTC datetime when the object was first created. |
+
+[^1]: Timestamp strings are always written in ISO 8601 datetime extended notation. (yyyy-mm-ddThh:mm:ss.ffffff	2008-09-15T15:53:00)
+
 ## Authentication
 The authorization is a fixed -format JWT token with '{"iss": "shop:{shop_guid}", "organization_guid": "{shop_guid}"} signed with a per-shop shared secret HS256 key. There will be multiple vendors using each of the 3rd party platforms and each will probably have different credentials to those systems - we really haven't had time to look in to the 3rd party platform documentation so I don't have much info that isn't available with 10 seconds of googling, sorry! :/  
 
