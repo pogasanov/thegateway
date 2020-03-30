@@ -1,4 +1,5 @@
 import logging
+import os
 import re
 import tempfile
 from decimal import Decimal
@@ -12,9 +13,10 @@ logger = logging.getLogger(__name__)
 
 
 class Prestashop:
-    def __init__(self, BASE_URL, API_KEY, language_id=None):
+    def __init__(self, BASE_URL, API_KEY, imageurl_prefix, language_id=None):
         self.API_HOSTNAME = BASE_URL
         self.API_KEY = API_KEY
+        self.imageurl_prefix = imageurl_prefix
         self.products = dict()
         self.variants = dict()
         self.variants_reverse = dict()
@@ -114,21 +116,31 @@ class Prestashop:
             if self.strings_by_reference:
                 name = self._get_by_id(1, data['name'])
                 description = strip_tags(data['description'][0]['value'])
-                description_short = strip_tags(data['description_short'][1]['value']),
+                description_short = strip_tags(data['description_short'][1]['value'])
             else:
                 name = data['name']
                 description = strip_tags(data['description'])
-                description_short = strip_tags(data['description_short']),
+                description_short = strip_tags(data['description_short'])
 
             # Images
             images = list()
             for image_id in image_ids:
-                r = self.head(f'/images/products/{product_id}/{image_id}')
-                sha1 = r.headers['Content-Sha1']
+                image_url = f'/images/products/{product_id}/{image_id}'
+                r = self.head(image_url)
+                sha1 = r.headers.get('Content-Sha1', f'{product_id}{image_id}')
                 mimetype = r.headers['Content-Type']
                 filename = f'{sha1}.{mimetype.rsplit("/")[-1]}'
                 logger.debug(filename)
-                images.append(filename)
+                images.append(f'{self.imageurl_prefix}{filename}')
+                fn = f"images/{filename}"
+                if os.path.exists(fn):
+                    logger.info(f"Skipping existing image file {fn}")
+                    continue
+                with open(fn, "wb+") as f:
+                    r = self.invoke(image_url, 'get')
+                    for chunk in r.iter_content(chunk_size=1024):
+                        f.write(chunk)
+
             products.append(Product(
                 name=name,
                 price=Decimal(data['price']),
@@ -139,7 +151,7 @@ class Prestashop:
                 stock=Decimal(stock_level),
                 images=images,
             ))
-        print(products)
+        logger.info(products)
         return products
 
     def fetch_single_product(self, product_id):
@@ -163,7 +175,8 @@ class Prestashop:
     def build_products(self):  # TODO: Add "with variants"
         self.get_variants()
         products = self.fetch_products_ids()
-        return [self.fetch_single_product_variant(p) for p in products]
+        for p in products:
+            yield self.fetch_single_product_variant(p)
 
     def fetch_product_images(self, id, image_ids):
         # For some reason API is constantly throwing 500 error if accessing with JSON
