@@ -12,3 +12,4 @@ class Product:
     description_short: str = ''
     sku: str = ''
     images: List[SpooledTemporaryFile] = field(default_factory=list)
+    variant_data: dict = field(default_factory=dict)

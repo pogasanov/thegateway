@@ -1,3 +1,4 @@
+import logging
 import os
 
 from exporters import Gateway
@@ -16,6 +17,8 @@ def run_import():
 
     importer.get_variants()
     print(importer.variants)
+    product = importer.fetch_single_product(32)
+    print(product)
     return
     products = importer.build_products()
     for product in products:
@@ -23,4 +26,5 @@ def run_import():
 
 
 if __name__ == '__main__':
+    logging.basicConfig()
     run_import()
