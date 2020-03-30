@@ -54,7 +54,6 @@ class Gateway:
                         "vat_percent": 23,
                         "amount": product.price
                     }, "tags": [],
-                "data": product.variant_data,
                 "name": product.name,
                 "images": product.images,
                 "vat": "VAT23"
@@ -68,6 +67,7 @@ class Gateway:
                 payload["sku"] = product.sku
             if variant_tag:
                 payload["tags"] = [str(variant_tag.guid)]
+                payload["data"] = dict(variants=product.variant_data)
 
             # create product
             response = self.session.post(f"{self.BASE_URL}/organizations/{self.SHOP_ID}/products/",
