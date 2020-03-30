@@ -17,12 +17,9 @@ def run_import():
 
     importer.get_variants()
     print(importer.variants)
-    product = importer.fetch_single_product(32)
-    print(product)
-    return
     products = importer.build_products()
-    for product in products:
-        exporter.create_product(product)
+    for product_variants in products:
+        exporter.create_product(product_variants)
 
 
 if __name__ == '__main__':

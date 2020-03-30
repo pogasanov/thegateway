@@ -53,48 +53,44 @@ class Prestashop:
         return self._ids_to_list(result['products'])
 
     def fetch_single_product(self, product_id):
+        products = list()
         result = self.get(f'products/{product_id}')
         data = result['product']
 
         associations = data['associations']
         image_ids = self._ids_to_list(associations['images'])
         variant_ids = self._ids_to_list(associations['combinations'])
-        variant_data = dict()
-        product_option_values = self._ids_to_list(associations['product_option_values'])
-        for option_value in product_option_values:
-            try:
-                variant_ = self.product_options[option_value]
-            except KeyError:
-                variant_ = self.get(f'/product_option_values/{option_value}')['product_option_value']
-                self.product_options[option_value] = variant_
-            value = self._get_by_id(1, variant_['name'])
-            key = self.variants_reverse[option_value]
-            variant_data[key] = value
+        stock_level_mapping = {int(d['id_product_attribute']): int(d['id']) for d in associations['stock_availables']}
 
-        # TODO: Get '/api/combinations/<variant_ids> and map all product_option_values + get '/api/product_option_values/<product_option_value_id>" for values and map their values to "variant types"
-        # e.g. product_option 2 is Kolor/color and product_option_value 11 is czarny/Black
+        for variant_id in variant_ids:
+            stock_level = self.get(f'/stock_availables/{stock_level_mapping[variant_id]}')['stock_available']['quantity']
+            variant_data = dict()
+            combination = self.get(f'/combinations/{variant_id}')['combination']
+            logger.info(combination)
+            var_associations = combination['associations']
+            product_option_values = self._ids_to_list(var_associations['product_option_values'])
+            for option_value in product_option_values:
+                try:
+                    variant_ = self.product_options[option_value]
+                except KeyError:
+                    variant_ = self.get(f'/product_option_values/{option_value}')['product_option_value']
+                    self.product_options[option_value] = variant_
+                value = self._get_by_id(1, variant_['name'])
+                key = self.variants_reverse[option_value]
+                variant_data[key] = value
 
-        # images = self.fetch_product_images(id)
+            products.append(Product(
+                name=self._get_by_id(1, data['name']),
+                price=Decimal(data['price']),
+                description=strip_tags(data['description'][0]['value']),
+                description_short=strip_tags(data['description_short'][1]['value']),
+                sku=data['reference'],
+                variant_data=variant_data,
+                stock=Decimal(stock_level),
+                # images=images
+            ))
 
-        product = Product(
-            name=data['name'],
-            price=Decimal(data['price']),
-            description=strip_tags(data['description'][0]['value']),
-            description_short=strip_tags(data['description_short'][1]['value']),
-            sku=data['reference'],
-            variant_data=variant_data
-            # images=images
-        )
-
-        # TODO: Map stock_availables to option_value's and get stock levels for all stock_available IDs
-        # 'stock_availables': [{'id': '327', 'id_product_attribute': '0'},
-        #                    {'id': '326', 'id_product_attribute': '246'},
-        #                     {'id': '328', 'id_product_attribute': '248'}]}}
-
-        result = requests.get(f'{self.API_HOSTNAME}/api/stock_availables/{product_id}', auth=(self.API_KEY, ''),
-                              params={'output_format': 'JSON'})
-        # product.stock = Decimal(result.json()['stock_available']['quantity'])
-        return product
+        return products
 
     def build_products(self):
         products = self.fetch_products_ids()

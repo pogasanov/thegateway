@@ -24,7 +24,13 @@ class Gateway:
                  groups=['shopkeeper']
                  ), key, algorithm="HS256")
 
-    def create_product(self, product):
+    def create_product(self, product_variants):
+        if len(product_variants) > 1:
+            # TODO: Check length of product_variants list - if multiple, create variant tag and tag all product_variants with it, otherwise just do the following.
+            raise NotImplemented
+        else:
+            product = product_variants[0]
+
         image_urls = [self.upload_image(image) for image in product.images]
 
         payload = {
