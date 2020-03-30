@@ -5,28 +5,32 @@ from decimal import Decimal
 from xml.etree import ElementTree
 
 import requests
-from simplejson import JSONDecodeError
-
 from models import Product
+from simplejson import JSONDecodeError
 
 logger = logging.getLogger(__name__)
 
 
 class Prestashop:
-    def __init__(self, BASE_URL, API_KEY):
+    def __init__(self, BASE_URL, API_KEY, language_id=None):
         self.API_HOSTNAME = BASE_URL
         self.API_KEY = API_KEY
         self.products = dict()
         self.variants = dict()
         self.variants_reverse = dict()
         self.product_options = dict()
+        self.strings_by_reference = language_id is not None
+        self.language_id = language_id
 
     def get_variants(self):
         ids = [d['id'] for d in self.get('/product_options')['product_options']]
         for id in ids:
             data = self.get(f'/product_options/{id}')['product_option']
             product_option_values = self._ids_to_list(data['associations']['product_option_values'])
-            name = self._get_by_id(1, data['public_name'])
+            if self.strings_by_reference:
+                name = self._get_by_id(self.language_id, data['public_name'])
+            else:
+                name = data['public_name']
             self.variants[id] = dict(name=name, options=product_option_values)
             for value in product_option_values:
                 self.variants_reverse[value] = name
@@ -52,50 +56,93 @@ class Prestashop:
         result = self.get('products')
         return self._ids_to_list(result['products'])
 
-    def fetch_single_product(self, product_id):
+    def fetch_single_product_variant(self, product_id):
         products = list()
         result = self.get(f'products/{product_id}')
         data = result['product']
-
         associations = data['associations']
-        image_ids = self._ids_to_list(associations['images'])
-        variant_ids = self._ids_to_list(associations['combinations'])
+        try:
+            image_ids = self._ids_to_list(associations['images'])
+        except KeyError:
+            image_ids = tuple()
+        try:
+            ids = self._ids_to_list(associations['combinations'])
+            get_variants = True
+        except KeyError:
+            # No variants
+            ids = product_id,
+            get_variants = False
         stock_level_mapping = {int(d['id_product_attribute']): int(d['id']) for d in associations['stock_availables']}
 
-        for variant_id in variant_ids:
-            stock_level = self.get(f'/stock_availables/{stock_level_mapping[variant_id]}')['stock_available']['quantity']
+        for id_ in ids:
+            stock_level_id = stock_level_mapping.get(id_, stock_level_mapping[0])
+            stock_level = self.get(f'/stock_availables/{stock_level_id}')['stock_available']['quantity']
             variant_data = dict()
-            combination = self.get(f'/combinations/{variant_id}')['combination']
-            logger.info(combination)
-            var_associations = combination['associations']
-            product_option_values = self._ids_to_list(var_associations['product_option_values'])
+            if get_variants:
+                combination = self.get(f'/combinations/{id_}')['combination']
+                logger.info(combination)
+                sku_ = combination['reference']
+                sku = sku_ if sku_ else data['reference']
+                associations = combination['associations']
+            else:
+                sku = data['reference']
+            try:
+                product_option_values = self._ids_to_list(associations['product_option_values'])
+            except KeyError:
+                product_option_values = tuple()
             for option_value in product_option_values:
                 try:
                     variant_ = self.product_options[option_value]
                 except KeyError:
                     variant_ = self.get(f'/product_option_values/{option_value}')['product_option_value']
                     self.product_options[option_value] = variant_
-                value = self._get_by_id(1, variant_['name'])
+                value = variant_['name']
                 key = self.variants_reverse[option_value]
                 variant_data[key] = value
 
+            if self.strings_by_reference:
+                name = self._get_by_id(1, data['name'])
+                description = strip_tags(data['description'][0]['value'])
+                description_short = strip_tags(data['description_short'][1]['value']),
+            else:
+                name = data['name']
+                description = strip_tags(data['description'])
+                description_short = strip_tags(data['description_short']),
             products.append(Product(
-                name=self._get_by_id(1, data['name']),
+                name=name,
                 price=Decimal(data['price']),
-                description=strip_tags(data['description'][0]['value']),
-                description_short=strip_tags(data['description_short'][1]['value']),
-                sku=data['reference'],
+                description=description,
+                description_short=description_short,
+                sku=sku,
                 variant_data=variant_data,
                 stock=Decimal(stock_level),
                 # images=images
             ))
-
+        print(products)
         return products
 
-    def build_products(self):
+    def fetch_single_product(self, product_id):
+        result = self.get(f'products/{product_id}')
+
+        data = result['product']
+        associations = data['associations']
+        image_ids = self._ids_to_list(associations['images'])
+        stock_level_mapping = {int(d['id_product_attribute']): int(d['id']) for d in associations['stock_availables']}
+        stock_level = self.get(f'/stock_availables/{stock_level_mapping[product_id]}')['stock_available']['quantity']
+        return Product(
+            name=self._get_by_id(1, data['name']),
+            price=Decimal(data['price']),
+            description=strip_tags(data['description'][0]['value']),
+            description_short=strip_tags(data['description_short'][1]['value']),
+            sku=data['reference'],
+            stock=Decimal(stock_level),
+            # images=images
+        )
+
+    def build_products(self):  # TODO: Add "with variants"
+        self.get_variants()
         products = self.fetch_products_ids()
-        # TODO: Fetch /product_options/ and all their IDs and set them as "variant types"
-        return [self.fetch_single_product(p) for p in products]
+        return [self.fetch_single_product_variant(p) for p in products]
 
     def fetch_product_images(self, id, image_ids):
         # For some reason API is constantly throwing 500 error if accessing with JSON
