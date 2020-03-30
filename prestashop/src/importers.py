@@ -175,7 +175,9 @@ class Prestashop:
     def build_products(self):  # TODO: Add "with variants"
         self.get_variants()
         products = self.fetch_products_ids()
-        for p in products:
+        total = len(products)
+        for i, p in enumerate(products):
+            print(f'{i}/{total}')
             yield self.fetch_single_product_variant(p)
 
     def fetch_product_images(self, id, image_ids):
