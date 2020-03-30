@@ -59,6 +59,7 @@ class Prestashop:
     def fetch_product_images(self, id, image_ids):
         # For some reason API is constantly throwing 500 error if accessing with JSON
         # But XML works fine
+        # TODO: This is unnecessary - self.get('/images/products/{product_id}/{image_id}') will return the actual image.
         result = requests.get(f"{self.API_HOSTNAME}/api/images/products/{id}", auth=(self.API_KEY, ''))
         tree = ElementTree.fromstring(result.content)
         return [self.download_image(image.attrib['{http://www.w3.org/1999/xlink}href']) for image in tree[0]]
