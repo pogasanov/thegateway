@@ -1,5 +1,5 @@
 import base64
-import json
+import simplejson as json
 import logging
 import uuid
 
@@ -74,7 +74,7 @@ class Gateway:
                                          json=payload)
             if response.status_code >= 400:
                 with open(f'failed_{uuid.uuid4()}.json', 'w+') as f:
-                    json.dump(payload, f)
+                    json.dump(payload, f, use_decimal=True)
                 logger.fatal(response.text)
                 continue
             product_guid = response.json()['guid']

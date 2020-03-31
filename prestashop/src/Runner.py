@@ -15,7 +15,7 @@ def run_import(get_variants):
     GATEWAY_BASE_URL = os.environ.get('GATEWAY_BASE_URL', 'https://sma.dev.gwapi.eu')
     GATEWAY_SHOP_ID = os.environ.get('GATEWAY_SHOP_ID', 'a547de18-7a1d-450b-a57b-bbf7f177db84')
     GATEWAY_SECRET = os.environ.get('GATEWAY_SECRET', 'OyB2YbwTVtRXuJv+VE4oJLVyGo8pf1XVibCk08lt4ys=')
-    IMAGE_URL_PREFIX = f"{os.environ.get('IMAGEBUCKET_URL')}/{GATEWAY_SHOP_ID}/"
+    IMAGE_URL_PREFIX = f"{os.environ.get('IMAGEBUCKET_URL')}{GATEWAY_SHOP_ID}/"
     importer = Prestashop(PRESTASHOP_BASE_URL, PRESTASHOP_API_KEY, IMAGE_URL_PREFIX)
     exporter = Gateway(GATEWAY_BASE_URL, GATEWAY_SHOP_ID, GATEWAY_SECRET, IMAGE_URL_PREFIX)
 
