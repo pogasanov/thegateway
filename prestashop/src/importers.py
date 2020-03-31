@@ -96,9 +96,12 @@ class Prestashop:
                 logger.info(combination)
                 sku_ = combination['reference']
                 sku = sku_ if sku_ else data['reference']
+                price_ = combination['price']
+                price = Decimal(price_ if price_ else data['price'])
                 associations = combination['associations']
             else:
                 sku = data['reference']
+                price = Decimal(data['price'])
             try:
                 product_option_values = self._ids_to_list(associations['product_option_values'])
             except KeyError:
@@ -133,6 +136,7 @@ class Prestashop:
                 logger.debug(filename)
                 images.append(f'{self.imageurl_prefix}{filename}')
                 fn = f"images/{filename}"
+                continue  # TODO: Remove this - hack for uploading images out of band
                 if os.path.exists(fn):
                     logger.info(f"Skipping existing image file {fn}")
                     continue
@@ -143,7 +147,7 @@ class Prestashop:
 
             products.append(Product(
                 name=name,
-                price=Decimal(data['price']),
+                price=price,
                 description=description,
                 description_short=description_short,
                 sku=sku,
