@@ -41,6 +41,10 @@ class Gateway:
         payloads = list()
         for product in product_variants:
             payload = {
+                "archived": False,
+                "for_sale": True
+            }
+            product_data = {
                 "base_price_type": "retail",
                 "cost_price":
                     {
@@ -53,39 +57,34 @@ class Gateway:
                         "currency": "zł",
                         "vat_percent": 23,
                         "amount": product.price
-                    }, "tags": [],
+                    },
                 "name": product.name,
                 "images": product.images,
-                "vat": "VAT23"
+                "vat": "VAT23",
             }
 
             if product.description:
-                payload["desc"] = product.description
+                product_data["desc"] = product.description
             if product.description_short:
-                payload["brief"] = product.description_short
+                product_data["brief"] = product.description_short
             if product.sku:
-                payload["sku"] = product.sku
+                product_data["sku"] = product.sku
             if variant_tag:
-                payload["tag_guids"] = [str(variant_tag.guid)]
-                payload["data"] = dict(variants=product.variant_data)
+                product_data["tag_guids"] = [str(variant_tag.guid)]
+                product_data["data"] = dict(variants=product.variant_data)
 
+            payload['product'] = product_data
             # create product
-            payload = {
-                "archived": False,
-                "for_sale": True
-            }
             if product.stock:
                 payload["stock_level"] = product.stock
             payloads.append(payload)
 
+        data = {"products": payloads}
         response = self.session.post(f"{self.BASE_URL}/dashboard/webshops/{self.SHOP_ID}/products",
-                                     json={
-                                         "products": [
-                                             payloads
-                                         ]})
+                                     json=data)
         if response.status_code >= 400:
             with open(f'failed_{uuid.uuid4()}.json', 'w+') as f:
-                json.dump(payloads, f, use_decimal=True)
+                json.dump(data, f, use_decimal=True)
             logger.fatal(response.text)
 
     def upload_image(self, image_content):
