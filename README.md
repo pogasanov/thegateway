@@ -139,6 +139,35 @@ The Swagger UI for the API (development version) can be found at https://sma.dev
 
 ---
 
+### Creating new products with variants
+To create products with variants, a variant tag must first be created. The variant tag will be the identfier allowing the system to know that these prodcuts are variants of each other.
+
+#### Create new variant tag
+| HTTP Method | Route              | Description |
+| :---------: | ---------------------- | ---------------------- |
+|   `POST`    | `/tags/`  |  [Create new variant tag](https://public.the.gw/apidoc/index.html?url=https%3A//sma.dev.gwapi.eu/swagger.json#/Tags/post_tags_)
+
+##### Request payload
+**Template**
+```
+{
+  name: ""
+  type: "variant"
+}
+```
+**Properties of concern**
+| Property | Type | Required | Example | Description
+| :--------: | :--------:|:--------: |:--------: |:--------: |
+| name | string | Yes|"Phone S6"| The name of the product variant |
+
+**Example**
+```
+{
+  name: "Phone S6"
+  type: "variant"
+}
+```
+
 ##### Timestamps object
 | Parameter / Argument                                        | Type   | Description                                                                    |
 | ----------------------------------------------------------- | ------ | ------------------------------------------------------------------------------ |
