@@ -4,7 +4,6 @@ import uuid
 
 import requests
 import simplejson as json
-from gwio.models import tags
 from jose import jwt
 
 logger = logging.getLogger(__name__)
@@ -31,11 +30,30 @@ class Gateway:
                  groups=['shopkeeper']
                  ), key, algorithm="HS256")
 
+    @staticmethod
+    def _log_failed(data, response):
+        with open(f'failed_{uuid.uuid4()}.json', 'w+') as f:
+            json.dump(data, f, use_decimal=True)
+        logger.fatal(response.text)
+
+    def _create_tag(self, name: str):
+        # TODO should check if tag exists
+        data = {
+            "name": name,
+            "type": "variant"
+        }
+        response = self.session.post(
+            f"{self.BASE_URL}/webshops/{self.SHOP_ID}/tags/",
+            json=data
+        )
+        if response.status_code >= 400:
+            self._log_failed(data, response)
+        return None
+
     def create_product(self, product_variants):
         if len(product_variants) > 1:
             # TODO: Make this to work over API - required arguments should be pretty much the same - just need to keep the tag guid from the response.
-            variant_tag = tags.Tags(type=tags.TagType.VARIANT, name=product_variants[0].name, owner=self.shop_guid)
-            variant_tag.save()
+            variant_tag = self._create_tag(product_variants[0].name)
         else:
             variant_tag = None
         payloads = list()
@@ -83,9 +101,7 @@ class Gateway:
         response = self.session.post(f"{self.BASE_URL}/dashboard/webshops/{self.SHOP_ID}/products",
                                      json=data)
         if response.status_code >= 400:
-            with open(f'failed_{uuid.uuid4()}.json', 'w+') as f:
-                json.dump(data, f, use_decimal=True)
-            logger.fatal(response.text)
+            self._log_failed(data, response)
 
     def upload_image(self, image_content):
         """

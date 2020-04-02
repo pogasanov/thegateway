@@ -67,7 +67,7 @@ class Prestashop:
         Needed for PrestaShop translation support.
         """
         for d in data:
-            if int(d['id']) == id_:
+            if int(d['id']) == int(id_):
                 return d['value']
         raise KeyError(id_)
 
