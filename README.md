@@ -182,8 +182,6 @@ To add an already created product to a variant tag, the following API should be 
 
 ---
 
-#### Products with variants
-When creating a new products that are variants of each other, a 
 
 ### Other relevant objects
 
