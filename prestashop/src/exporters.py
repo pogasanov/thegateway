@@ -33,7 +33,7 @@ class Gateway:
 
     def create_product(self, product_variants):
         if len(product_variants) > 1:
-            # TODO: Make this work over API.
+            # TODO: Make this to work over API - required arguments should be pretty much the same - just need to keep the tag guid from the response.
             variant_tag = tags.Tags(type=tags.TagType.VARIANT, name=product_variants[0].name, owner=self.shop_guid)
             variant_tag.save()
         else:
@@ -55,12 +55,12 @@ class Gateway:
                 "base_price":
                     {
                         "currency": "zł",
-                        "vat_percent": 23,
+                        "vat_percent": 23,  # TODO: For now I think all products are Vat 23, but we need to keep in mind that this needs to come from the source
                         "amount": product.price
                     },
                 "name": product.name,
                 "images": product.images,
-                "vat": "VAT23",
+                "vat": "VAT23",  # See above
             }
 
             if product.description:
@@ -88,6 +88,18 @@ class Gateway:
             logger.fatal(response.text)
 
     def upload_image(self, image_content):
+        """
+        TODO: Rewrite this - you get the file as a stream from the /images/products/{product_id}/{image_id} so you can upload them without temp files if
+        you do the uploads call and subsequent S3 call with the utils.io.StreamResponse to the presigned url returned by GW API /uploads/
+        bucket.put_object(
+            Body=stream,
+            Key=key_,
+            ContentType=content_type,
+            Metadata=dict(
+                original_url=url,
+            ),
+        )
+        """
         response = self.session.post(f"{self.BASE_URL}/uploads/",
                                      json={
                                          "filename": "product_image.jpg",
