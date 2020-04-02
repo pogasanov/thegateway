@@ -7,11 +7,67 @@ Our platform is a multivendor marketplace, built in-house. It's serverless & con
 
 The Swagger UI for the API (development version) can be found at https://sma.dev.gwapi.eu
 
-**Create a product**
+### Create new product
+To create a new product, use the following details to access the exposed API. Each API call create one product.
 
-| HTTP Method | Route              | Description |
-| :---------: | ---------------------- | ---------------------- |
-|   `POST`    | `/organizations​/{organization_id}​/products​`  |  [Create new product](https://public.the.gw/apidoc/index.html?url=https%3A//sma.dev.gwapi.eu/swagger.json#/Product/post_organizations__organization_guid__products__guid__)
+| HTTP Method | Route | Description|
+| :---------: | ----- | ---------- |
+|   `POST`    | `/organizations​/{organization_id}​/products​` | [Create new product](https://public.the.gw/apidoc/index.html?url=https%3A//sma.dev.gwapi.eu/swagger.json#/Product/post_organizations__organization_guid__products__guid__) |
+
+#### Products variants for new products
+
+When creating product variants, a variant tag must first be created (see below at **"Create new variant tag"**).
+Once a variant tag has been created, the variant tag id `tag.guid` can be assigned to a product when it is being created.
+
+In the request payload, add the variant tag guid to the `payload.tags` array. Products that have the variant tag guid in its `tags` field will be created and assigned to the correct variant tag.
+
+**Properties of concern**
+
+| Property | Type  | Required |                  Example                   |                           Description                           |
+| :------: | :---: | :------: | :----------------------------------------: | :-------------------------------------------------------------: |
+|   tags   | Array |    No    | `["1c41b469-unique-id4a-a59a-32ee473292da"]` | List of tag guids, representing the tags the products belong to |
+
+**Example payload**
+```
+{
+  "base_price_type": "retail",
+  "cost_price": { "currency": "zł", "vat_percent": 0, "amount": 0 },
+  "base_price": { "currency": "zł", "vat_percent": 23, "amount": 0 },
+  "tags": ["1c41b469-unique-id4a-a59a-32ee473292da"],
+  "data": { "imageFiles": [], "videos": [] },
+  "name": "testestest doc",
+  "images": [],
+  "vat": "VAT23"
+}
+```
+
+#### Products variants for existing products
+To add an already created product to a variant tag, the following API should be used.
+
+**Request payload template**
+
+| HTTP Method | Route | Description |
+| :---------: | ----- | ----------- |
+|   `PUT`    | `/product_tags/{tag_guid}`  |  [Add or remove tag from products](https://public.the.gw/apidoc/index.html?url=https%3A//sma.dev.gwapi.eu/swagger.json#/Product/put_product_tags__guid__)
+
+
+**Properties of concern**
+
+| Property |       Type       | Required |                   Example                    | Description |
+| :------: | :--------------: | :------: | :------------------------------------------: | :---------: |
+|   add    | Array of strings |   Yes    | `["1c41b469-unique-id4a-a59a-32ee473292da"]` | List of guids of products that should have this tag added |
+|  delete  | Array of strings |   Yes    | `["1c41b469-unique-id4a-a59a-32ee473292da"]` | List of guids of products that should have this tag removed |
+
+
+**Request payload example** (Assigning a tag to a product)
+
+```
+{
+  "add": ["1c41b469-unique-id4a-a59a-32ee473292da"],
+  "delete": []
+}
+```
+
 
 ---
 
@@ -126,6 +182,9 @@ The Swagger UI for the API (development version) can be found at https://sma.dev
 
 ---
 
+#### Products with variants
+When creating a new products that are variants of each other, a 
+
 ### Other relevant objects
 
 ##### VatPrice object
@@ -137,41 +196,47 @@ The Swagger UI for the API (development version) can be found at https://sma.dev
 | **`vat0`** <span style="color:red; font-variant: small-caps">required</span>        | number |                                                                             |
 | **`vat_percent`** <span style="color:red; font-variant: small-caps">required</span> | number | Number larger than 0 representing the value added tax. e.g. `23` would mean 23% |
 
----
-
-### Creating new products with variants
-To create products with variants, a variant tag must first be created. The variant tag will be the identfier allowing the system to know that these prodcuts are variants of each other.
-
-#### Create new variant tag
-| HTTP Method | Route              | Description |
-| :---------: | ---------------------- | ---------------------- |
-|   `POST`    | `/tags/`  |  [Create new variant tag](https://public.the.gw/apidoc/index.html?url=https%3A//sma.dev.gwapi.eu/swagger.json#/Tags/post_tags_)
-
-##### Request payload
-**Template**
-```
-{
-  name: ""
-  type: "variant"
-}
-```
-**Properties of concern**
-| Property | Type | Required | Example | Description
-| :--------: | :--------:|:--------: |:--------: |:--------: |
-| name | string | Yes|"Phone S6"| The name of the product variant |
-
-**Example**
-```
-{
-  name: "Phone S6"
-  type: "variant"
-}
-```
 
 ##### Timestamps object
 | Parameter / Argument                                        | Type   | Description                                                                    |
 | ----------------------------------------------------------- | ------ | ------------------------------------------------------------------------------ |
 | **`created`** <span style="color:lightgrey">optional</span> | string | Timestamp[^1] representing the UTC datetime when the object was first created. |
+
+---
+
+### Create new variant tag
+To create products with variants, a variant tag must first be created. The variant tag will be assigned to products and acts as the identfier allowing the system to know that these products are variants of each other. Follow instructions "Create new variant tag" and "Create new products"
+
+| HTTP Method | Route              | Description |
+| :---------: | ---------------------- | ---------------------- |
+|   `POST`    | `/tags/`  |  [Create new variant tag](https://public.the.gw/apidoc/index.html?url=https%3A//sma.dev.gwapi.eu/swagger.json#/Tags/post_tags_)
+
+
+**Request payload template**
+
+```
+{
+  "name": ""
+  "type": "variant"
+}
+```
+
+**Properties of concern**
+
+| Property | Type | Required | Example | Description
+| :--------: | :--------:|:--------: |:--------: |:--------: |
+| name | string | Yes|"Phone S6"| The name of the product variant |
+
+
+**Request payload example**
+
+```
+{
+  "name": "Phone S6"
+  "type": "variant"
+}
+```
+
 
 [^1]: Timestamp strings are always written in ISO 8601 datetime extended notation. (yyyy-mm-ddThh:mm:ss.ffffff	2008-09-15T15:53:00)
 
