@@ -94,12 +94,12 @@ class Gateway:
                 "base_price":
                     {
                         "currency": "zł",
-                        "vat_percent": 23,  # TODO: For now I think all products are Vat 23, but we need to keep in mind that this needs to come from the source
+                        "vat_percent": product.vat_percent,
                         "amount": product.price
                     },
                 "name": product.name,
                 "images": product.images,
-                "vat": "VAT23",  # See above
+                "vat": f"VAT{product.vat_percent}",
             }
 
             if product.description:
@@ -109,7 +109,7 @@ class Gateway:
             if product.sku:
                 product_data["sku"] = product.sku
             if variant_tag:
-                product_data["tag_guids"] = variant_tag
+                product_data["tag_guids"] = [variant_tag]
                 product_data["data"] = dict(variants=product.variant_data)
 
             payload['product'] = product_data

@@ -7,6 +7,7 @@ from typing import List
 class Product:
     name: str
     price: float
+    vat_percent: int
     stock: float = 0
     description: str = ''
     description_short: str = ''

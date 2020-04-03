@@ -81,10 +81,21 @@ class Prestashop:
         result = self.get('products')
         return self._ids_to_list(result['products'])
 
+    @staticmethod
+    def _get_percent_value_from_tax_rule_group_name(name: str):
+        return re.search(r"\((.*%)\)", name).group(1).rstrip("%")
+
+    def _get_tax_percent(self, tax_rule_group_id) -> int:
+        tax_rule_group = self.get(f"/tax_rule_groups/{tax_rule_group_id}")["tax_rule_group"]
+        tax_percent = self._get_percent_value_from_tax_rule_group_name(tax_rule_group["name"])
+        return int(tax_percent)
+
     def fetch_single_product_variant(self, product_id):
         products = list()
         result = self.get(f'products/{product_id}')
         data = result['product']
+        tax_rule_group_id = data["id_tax_rules_group"]
+        tax_percent = self._get_tax_percent(tax_rule_group_id)
         associations = data['associations']
         try:
             image_ids = self._ids_to_list(associations['images'])
@@ -174,6 +185,7 @@ class Prestashop:
                 sku=sku,
                 variant_data=variant_data,
                 stock=Decimal(stock_level),
+                vat_percent=tax_percent,
                 images=images,
             ))
         logger.info(products)
