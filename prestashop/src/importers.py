@@ -142,26 +142,7 @@ class Prestashop:
                 description_short = strip_tags(data['description_short'])
 
             # Images
-            images = list()
-            for image_id in image_ids:
-                # TODO: This is currently out of band just saving the URLs and do aws s3 sync to upload the images to a bucket -
-                # the image data needs to be returned as part of the "Product" as a fileobject or inline-data to exporter
-                # (the previous is obviously the right way to do it, but requires a context manager)
-                image_url = f'/images/products/{product_id}/{image_id}'
-
-                r = self.head(image_url)
-                sha1 = r.headers.get('Content-Sha1', f'{product_id}{image_id}')
-                mimetype = r.headers['Content-Type']
-                filename = f'{sha1}.{mimetype.rsplit("/")[-1]}'
-
-                logger.debug(filename)
-
-                stream = ResponseStream(self.invoke(image_url, 'get').iter_content(64))
-                images.append({
-                    'filename': filename,
-                    'mime': mimetype,
-                    'data': stream
-                })
+            images = [self.download_image(product_id, image_id) for image_id in image_ids]
 
             products.append(Product(
                 name=name,
@@ -201,6 +182,23 @@ class Prestashop:
         for i, p in enumerate(products):
             print(f'{i}/{total}')
             yield self.fetch_single_product_variant(p)
+
+    def download_image(self, product_id, image_id):
+        image_url = f'/images/products/{product_id}/{image_id}'
+
+        r = self.head(image_url)
+        sha1 = r.headers.get('Content-Sha1', f'{product_id}{image_id}')
+        mimetype = r.headers['Content-Type']
+        filename = f'{sha1}.{mimetype.rsplit("/")[-1]}'
+
+        logger.debug(filename)
+
+        stream = ResponseStream(self.invoke(image_url, 'get').iter_content(64))
+        return {
+            'filename': filename,
+            'mime': mimetype,
+            'data': stream
+        }
 
 
 def strip_tags(in_str):
