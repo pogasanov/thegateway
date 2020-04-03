@@ -5,7 +5,7 @@ from decimal import Decimal
 import requests
 from simplejson import JSONDecodeError
 
-from models import Product
+from models import Product, Image
 from utils.io import ResponseStream
 
 logger = logging.getLogger(__name__)
@@ -194,11 +194,11 @@ class Prestashop:
         logger.debug(filename)
 
         stream = ResponseStream(self.invoke(image_url, 'get', stream=True).iter_content(64))
-        return {
-            'filename': filename,
-            'mime': mimetype,
-            'data': stream
-        }
+        return Image(
+            filename=filename,
+            mimetype=mimetype,
+            data=stream
+        )
 
 
 def strip_tags(in_str):

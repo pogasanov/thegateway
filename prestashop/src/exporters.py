@@ -106,8 +106,8 @@ class Gateway:
     def upload_image(self, image_content):
         response = self.session.post(f"{self.BASE_URL}/uploads/",
                                      json={
-                                         "filename": image_content['filename'],
-                                         "content_type": image_content['mime']
+                                         "filename": image_content.filename,
+                                         "content_type": image_content.mimetype
                                      })
         response.raise_for_status()
 
@@ -115,7 +115,7 @@ class Gateway:
         fields = response.json()['fields']
 
         response = requests.post(url, fields, files={
-            'file': (image_content['filename'], image_content['data'])
+            'file': (image_content.filename, image_content.data)
         })
         response.raise_for_status()
 

@@ -1,12 +1,14 @@
 from dataclasses import dataclass, field
-from typing import List, BinaryIO
+from typing import List
+
+from utils.io import ResponseStream
 
 
 @dataclass
 class Image:
     filename: str
     mimetype: str
-    data: BinaryIO
+    data: ResponseStream
 
 
 @dataclass
