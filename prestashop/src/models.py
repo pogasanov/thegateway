@@ -1,7 +1,5 @@
 from dataclasses import dataclass, field
-from typing import List, Dict
-
-from utils.io import ResponseStream
+from typing import List
 
 
 @dataclass
@@ -12,5 +10,5 @@ class Product:
     description: str = ''
     description_short: str = ''
     sku: str = ''
-    images: List[Dict[str, str, ResponseStream]] = field(default_factory=list)
+    images: List[object] = field(default_factory=list)
     variant_data: dict = field(default_factory=dict)
