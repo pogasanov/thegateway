@@ -1,0 +1,7 @@
+site_name: The Reseller Gateway API integrations
+theme: readthedocs
+
+nav:
+  - Home: 'README.md'
+  - OpenAPISpec:  'https://sma.dev.gwapi.eu'
+  - Contribution guidelines: 'CONTRIBUTING.md'
