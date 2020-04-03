@@ -21,7 +21,7 @@ class Gateway:
         self.token = self._build_token()
         self.session = requests.Session()
         self.session.headers.update({'Authorization': f'Bearer {self.token}'})
-        self.tags_in_db = self._get_tags_in_db()
+        self.tags_in_db = None
 
     def _build_token(self):
         shop_guid = uuid.UUID(self.SHOP_ID)
@@ -43,6 +43,8 @@ class Gateway:
         logger.fatal(response.text)
 
     def _get_tag(self, name):
+        if not self.tags_in_db:
+            self.tags_in_db = self._get_tags_in_db()
         for tag in self.tags_in_db:
             if tag["name"] == name:
                 return tag
