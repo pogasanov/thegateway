@@ -1,5 +1,4 @@
 from dataclasses import dataclass, field
-from tempfile import SpooledTemporaryFile
 from typing import List
 
 
@@ -11,5 +10,5 @@ class Product:
     description: str = ''
     description_short: str = ''
     sku: str = ''
-    images: List[SpooledTemporaryFile] = field(default_factory=list)
+    images: List[object] = field(default_factory=list)
     variant_data: dict = field(default_factory=dict)

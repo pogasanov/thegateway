@@ -1,13 +1,14 @@
 import logging
-import os
 import re
 import tempfile
 from decimal import Decimal
 from xml.etree import ElementTree
 
 import requests
-from models import Product
 from simplejson import JSONDecodeError
+
+from models import Product
+from utils.io import ResponseStream
 
 logger = logging.getLogger(__name__)
 
@@ -40,7 +41,7 @@ class Prestashop:
             for value in product_option_values:
                 self.variants_reverse[value] = name
 
-    def invoke(self, endpoint, method, output_format=None):
+    def invoke(self, endpoint, method, output_format=None, stream=False):
         """
         Just a wrapper to expose requests HTTP method calls without passing all the auth etc params every time.
         """
@@ -49,7 +50,7 @@ class Prestashop:
             params = dict(output_format=output_format)
         else:
             params = dict()
-        return fn(f'{self.API_HOSTNAME}/api/{endpoint}', auth=(self.API_KEY, ''), params=params)
+        return fn(f'{self.API_HOSTNAME}/api/{endpoint}', auth=(self.API_KEY, ''), params=params, stream=stream)
 
     def head(self, endpoint):
         return self.invoke(endpoint, "head")
@@ -149,22 +150,20 @@ class Prestashop:
                 # the image data needs to be returned as part of the "Product" as a fileobject or inline-data to exporter
                 # (the previous is obviously the right way to do it, but requires a context manager)
                 image_url = f'/images/products/{product_id}/{image_id}'
+
                 r = self.head(image_url)
                 sha1 = r.headers.get('Content-Sha1', f'{product_id}{image_id}')
                 mimetype = r.headers['Content-Type']
                 filename = f'{sha1}.{mimetype.rsplit("/")[-1]}'
+
                 logger.debug(filename)
-                images.append(f'{self.imageurl_prefix}{filename}')
-                fn = f"images/{filename}"
-                continue  # TODO: Remove this - hack for uploading images out of band & trial and error to speed things up.
-                if os.path.exists(fn):
-                    logger.info(f"Skipping existing image file {fn}")
-                    continue
-                # TODO: This needs to implement the context manager that can be "with product.get_image() as f: upload_to_s3":ed in the exporter.
-                with open(fn, "wb+") as f:
-                    r = self.invoke(image_url, 'get')
-                    for chunk in r.iter_content(chunk_size=1024):
-                        f.write(chunk)
+
+                stream = ResponseStream(self.invoke(image_url, 'get').iter_content(64))
+                images.append({
+                    'filename': filename,
+                    'mime': mimetype,
+                    'data': stream
+                })
 
             products.append(Product(
                 name=name,
