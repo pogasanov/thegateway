@@ -115,7 +115,7 @@ class Gateway:
         fields = response.json()['fields']
 
         response = requests.post(url, fields, files={
-            'file': ('file.jpg', image_content['data'])
+            'file': (image_content['filename'], image_content['data'])
         })
         response.raise_for_status()
 
