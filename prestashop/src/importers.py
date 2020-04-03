@@ -1,8 +1,6 @@
 import logging
 import re
-import tempfile
 from decimal import Decimal
-from xml.etree import ElementTree
 
 import requests
 from simplejson import JSONDecodeError
@@ -203,22 +201,6 @@ class Prestashop:
         for i, p in enumerate(products):
             print(f'{i}/{total}')
             yield self.fetch_single_product_variant(p)
-
-    def fetch_product_images(self, id, image_ids):
-        # For some reason API is constantly throwing 500 error if accessing with JSON
-        # But XML works fine
-        # TODO: This is unnecessary - self.get('/images/products/{product_id}/{image_id}') will return the actual image.
-        result = requests.get(f"{self.API_HOSTNAME}/api/images/products/{id}", auth=(self.API_KEY, ''))
-        tree = ElementTree.fromstring(result.content)
-        return [self.download_image(image.attrib['{http://www.w3.org/1999/xlink}href']) for image in tree[0]]
-
-    def download_image(self, url):
-        # TODO: remove as unnecessary as the context manager and exporter will do this.
-        result = requests.get(url, auth=(self.API_KEY, ''))
-        f = tempfile.SpooledTemporaryFile()
-        f.write(result.content)
-        f.seek(0)
-        return f
 
 
 def strip_tags(in_str):
