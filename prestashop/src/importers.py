@@ -193,7 +193,7 @@ class Prestashop:
 
         logger.debug(filename)
 
-        stream = ResponseStream(self.invoke(image_url, 'get').iter_content(64))
+        stream = ResponseStream(self.invoke(image_url, 'get', stream=True).iter_content(64))
         return {
             'filename': filename,
             'mime': mimetype,
