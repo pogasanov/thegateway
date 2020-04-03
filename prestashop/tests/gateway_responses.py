@@ -46,3 +46,17 @@ GATEWAY_PRODUCT = {
     "vat": "VAT23",
     "weight": None
 }
+GATEWAY_TAG = {
+    "active": False,
+    "data": None,
+    "duration": None,
+    "guid": "7328d05e-cee7-5ad6-bb04-70dece680b84",
+    "images": [],
+    "item_count": 0,
+    "name": "Test 3",
+    "owner": "a547de18-7a1d-450b-a57b-bbf7f177db84",
+    "parent_guid": "7328d05e-cee7-5ad6-bb04-70dece680b84",
+    "product_guids": [],
+    "subtags": [],
+    "type": "variant"
+}

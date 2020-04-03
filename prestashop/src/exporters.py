@@ -1,5 +1,6 @@
 import base64
 import logging
+import re
 import uuid
 
 import requests
@@ -20,6 +21,7 @@ class Gateway:
         self.token = self._build_token()
         self.session = requests.Session()
         self.session.headers.update({'Authorization': f'Bearer {self.token}'})
+        self.tags_in_db = self._get_tags_in_db()
 
     def _build_token(self):
         shop_guid = uuid.UUID(self.SHOP_ID)
@@ -30,14 +32,29 @@ class Gateway:
                  groups=['shopkeeper']
                  ), key, algorithm="HS256")
 
+    def _get_tags_in_db(self):
+        response = self.session.get(f"{self.BASE_URL}/webshops/{self.SHOP_ID}/tags/")
+        return response.json()
+
     @staticmethod
     def _log_failed(data, response):
         with open(f'failed_{uuid.uuid4()}.json', 'w+') as f:
             json.dump(data, f, use_decimal=True)
         logger.fatal(response.text)
 
+    def _get_tag(self, name):
+        for tag in self.tags_in_db:
+            if tag["name"] == name:
+                return tag
+
+    @staticmethod
+    def _get_tag_guid_from_conflict_message(message: str):
+        return re.search(r"\((.*)\)", message).group(1)
+
     def _create_tag(self, name: str):
-        # TODO should check if tag exists
+        tag = self._get_tag(name)
+        if tag:
+            return tag["guid"]
         data = {
             "name": name,
             "type": "variant"
@@ -46,14 +63,18 @@ class Gateway:
             f"{self.BASE_URL}/webshops/{self.SHOP_ID}/tags/",
             json=data
         )
+        if response.status_code == 409:
+            return self._get_tag_guid_from_conflict_message(response.json()["message"])
         if response.status_code >= 400:
             self._log_failed(data, response)
-        return None
+            return None
+        return response.json()["guid"]
 
     def create_product(self, product_variants):
         if len(product_variants) > 1:
-            # TODO: Make this to work over API - required arguments should be pretty much the same - just need to keep the tag guid from the response.
             variant_tag = self._create_tag(product_variants[0].name)
+            if not variant_tag:
+                return
         else:
             variant_tag = None
         payloads = list()
@@ -88,7 +109,7 @@ class Gateway:
             if product.sku:
                 product_data["sku"] = product.sku
             if variant_tag:
-                product_data["tag_guids"] = [str(variant_tag.guid)]
+                product_data["tag_guids"] = variant_tag
                 product_data["data"] = dict(variants=product.variant_data)
 
             payload['product'] = product_data
