@@ -1,0 +1,18 @@
+default:
+  image: thegw/gwio-devenv:latest
+
+stages:
+  - build
+  - deploy
+
+build-docs:
+  artifacts:
+    paths:
+      - _build/html
+
+  stage: build
+  only:
+    refs:
+      - master
+  script:
+    - make docs
