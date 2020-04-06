@@ -58,7 +58,7 @@ class GatewayTest(TestCase):
 
     def test_can_create_product(self):
         product = Product(name='abc', price=12)
-        self.gateway.create_product([product])
+        self.gateway.create_products([product])
 
     def test_can_upload_image(self):
         new_url = self.gateway.upload_image(b'abc')

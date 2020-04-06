@@ -63,43 +63,29 @@ class Gateway:
             json.dump(data, f, use_decimal=True)
         logger.fatal(response.text)
 
-    def _get_tag(self, name):
-        if not self.tags_in_db:
-            self.tags_in_db = self.list_of_tags()
-        for tag in self.tags_in_db:
-            if tag["name"] == name:
-                return tag
+    def list_of_products(self):
+        response = self.session.post(self.ENDPOINTS['product']['list'],
+                                     json={
+                                         "dsl": {
+                                             "size": 100,
+                                             "sort": [{"timestamps.created": "desc"}, {"guid": "asc"}],
+                                             "query": {
+                                                 "bool": {
+                                                     "must": [{"match": {"owner_guid": self.SHOP_ID}}],
+                                                     "must_not": [{"exists": {"field": "archived"}}]
+                                                 }
+                                             }
+                                         }})
+        return response.json()['products']
 
-    @staticmethod
-    def _get_tag_guid_from_conflict_message(message: str):
-        return re.search(r"\((.*)\)", message).group(1)
-
-    def _create_tag(self, name: str):
-        tag = self._get_tag(name)
-        if tag:
-            return tag["guid"]
-        data = {
-            "name": name,
-            "type": "variant"
-        }
-        response = self.session.post(
-            self.ENDPOINTS['tag']['create'],
-            json=data
-        )
-        if response.status_code == 409:
-            return self._get_tag_guid_from_conflict_message(response.json()["message"])
-        if response.status_code >= 400:
-            self._log_failed(data, response)
-            return None
-        return response.json()["guid"]
-
-    def create_product(self, product_variants):
+    def create_products(self, product_variants):
         if len(product_variants) > 1:
             variant_tag = self._create_tag(product_variants[0].name)
             if not variant_tag:
                 return
         else:
             variant_tag = None
+
         payloads = list()
         for product in product_variants:
             payload = {
@@ -117,7 +103,8 @@ class Gateway:
                 "base_price":
                     {
                         "currency": "zł",
-                        "vat_percent": 23,  # TODO: For now I think all products are Vat 23, but we need to keep in mind that this needs to come from the source
+                        "vat_percent": 23,
+                        # TODO: For now I think all products are Vat 23, but we need to keep in mind that this needs to come from the source
                         "amount": product.price
                     },
                 "name": product.name,
@@ -147,6 +134,57 @@ class Gateway:
         if response.status_code >= 400:
             self._log_failed(data, response)
 
+    def delete_all_products(self):
+        products = self.list_of_products()
+        for product in products:
+            self.delete_product_by_id(product['guid'])
+
+    def delete_product_by_id(self, id):
+        self.session.delete(self.ENDPOINTS['product']['delete'].format(id))
+        self.session.delete(self.ENDPOINTS['organization']['product']['delete'].format(id))
+
+    def list_of_tags(self):
+        response = self.session.get(self.ENDPOINTS['tag']['list'])
+        return response.json()
+
+    def _create_tag(self, name: str):
+        tag = self._get_tag(name)
+        if tag:
+            return tag["guid"]
+        data = {
+            "name": name,
+            "type": "variant"
+        }
+        response = self.session.post(
+            self.ENDPOINTS['tag']['create'],
+            json=data
+        )
+        if response.status_code == 409:
+            return self._get_tag_guid_from_conflict_message(response.json()["message"])
+        if response.status_code >= 400:
+            self._log_failed(data, response)
+            return None
+        return response.json()["guid"]
+
+    def _get_tag(self, name):
+        if not self.tags_in_db:
+            self.tags_in_db = self.list_of_tags()
+        for tag in self.tags_in_db:
+            if tag["name"] == name:
+                return tag
+
+    @staticmethod
+    def _get_tag_guid_from_conflict_message(message: str):
+        return re.search(r"\((.*)\)", message).group(1)
+
+    def delete_all_tags(self):
+        tags = self.list_of_tags()
+        for tag in tags:
+            self.delete_tag_by_id(tag['guid'])
+
+    def delete_tag_by_id(self, id):
+        self.session.delete(self.ENDPOINTS['tag']['delete'].format(id))
+
     def upload_image(self, image_content):
         response = self.session.post(self.ENDPOINTS['image']['upload'],
                                      json={
@@ -164,39 +202,3 @@ class Gateway:
         response.raise_for_status()
 
         return url + fields['key']
-
-    def list_of_products(self):
-        response = self.session.post(self.ENDPOINTS['product']['list'],
-                                     json={
-                                         "dsl": {
-                                             "size": 100,
-                                             "sort": [{"timestamps.created": "desc"}, {"guid": "asc"}],
-                                             "query": {
-                                                 "bool": {
-                                                     "must": [{"match": {"owner_guid": self.SHOP_ID}}],
-                                                     "must_not": [{"exists": {"field": "archived"}}]
-                                                 }
-                                             }
-                                         }})
-        return response.json()['products']
-
-    def list_of_tags(self):
-        response = self.session.get(self.ENDPOINTS['tag']['list'])
-        return response.json()
-
-    def delete_all_products(self):
-        products = self.list_of_products()
-        for product in products:
-            self.delete_product(product['guid'])
-
-    def delete_product(self, id):
-        self.session.delete(self.ENDPOINTS['product']['delete'].format(id))
-        self.session.delete(self.ENDPOINTS['organization']['product']['delete'].format(id))
-
-    def delete_all_tags(self):
-        tags = self.list_of_tags()
-        for tag in tags:
-            self.delete_tag(tag['guid'])
-
-    def delete_tag(self, id):
-        self.session.delete(self.ENDPOINTS['tag']['delete'].format(id))

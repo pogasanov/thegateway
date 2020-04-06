@@ -22,7 +22,7 @@ def run_import(get_variants):
     exporter = Gateway(GATEWAY_BASE_URL, GATEWAY_SHOP_ID, GATEWAY_SECRET, IMAGE_URL_PREFIX)
 
     for product in importer.build_products():
-        exporter.create_product(product)
+        exporter.create_products(product)
 
 
 if __name__ == '__main__':
