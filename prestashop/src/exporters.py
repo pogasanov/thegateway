@@ -145,6 +145,10 @@ class Gateway:
                                          }})
         return response.json()['products']
 
+    def list_of_tags(self):
+        response = self.session.get(f"{self.BASE_URL}/webshops/{self.SHOP_ID}/tags/")
+        return response.json()
+
     def delete_all_products(self):
         products = self.list_of_products()
         for product in products:
@@ -163,8 +167,8 @@ class Gateway:
         return response.json()
 
     def delete_all_tags(self):
-        response = self.session.get(f"{self.BASE_URL}/webshops/{self.SHOP_ID}/tags/")
-        for tag in response.json():
+        tags = self.list_of_tags()
+        for tag in tags:
             self.delete_tag(tag['guid'])
 
     def delete_tag(self, id):
