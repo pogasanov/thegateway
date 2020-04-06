@@ -2,10 +2,15 @@ import base64
 import logging
 import re
 import uuid
+from decimal import Decimal
+from itertools import groupby
 
 import requests
 import simplejson as json
 from jose import jwt
+
+from gateway.models import Product
+from utils.io import download_image
 
 logger = logging.getLogger(__name__)
 
@@ -64,6 +69,27 @@ class Gateway:
         logger.fatal(response.text)
 
     def list_of_products(self):
+        fetched = self._fetch_products()
+
+        constructed = list()
+        for product in fetched:
+            constructed.append(Product(
+                name=product['name'],
+                price=Decimal(product['price']['base']['unit']['amount']),
+                stock=Decimal(product['stock_level']),
+                description=product['desc'],
+                description_short=product['brief'],
+                sku=product['sku'],
+                images=[download_image(url, default_filename=product['name']) for url in product['images']],
+                variant_data=product['data']['variants']
+            ))
+
+        grouped = list()
+        for _, grouped_products in groupby(constructed, lambda x: x.name):
+            grouped.append(list(grouped_products))
+        return grouped
+
+    def _fetch_products(self):
         response = self.session.post(self.ENDPOINTS['product']['list'],
                                      json={
                                          "dsl": {
@@ -135,7 +161,7 @@ class Gateway:
             self._log_failed(data, response)
 
     def delete_all_products(self):
-        products = self.list_of_products()
+        products = self._fetch_products()
         for product in products:
             self.delete_product_by_id(product['guid'])
 
