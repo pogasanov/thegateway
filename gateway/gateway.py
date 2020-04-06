@@ -106,7 +106,7 @@ class Gateway:
 
     def create_products(self, product_variants):
         if len(product_variants) > 1:
-            variant_tag = self._create_tag(product_variants[0].name)
+            variant_tag = self.create_tag(product_variants[0].name)
             if not variant_tag:
                 return
         else:
@@ -173,7 +173,7 @@ class Gateway:
         response = self.session.get(self.ENDPOINTS['tag']['list'])
         return response.json()
 
-    def _create_tag(self, name: str):
+    def create_tag(self, name: str):
         tag = self._get_tag(name)
         if tag:
             return tag["guid"]
