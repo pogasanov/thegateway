@@ -17,10 +17,8 @@ class Prestashop:
         self.API_KEY = API_KEY
         self.imageurl_prefix = imageurl_prefix
         self.products = dict()
-        self.variants = dict()
         self.variants_reverse = dict()
         self.product_options = dict()
-        self.strings_by_reference = language_id is not None
         self.language_id = language_id
 
     def get_variants(self):
@@ -31,11 +29,12 @@ class Prestashop:
         for id in ids:
             data = self.get(f'/product_options/{id}')['product_option']
             product_option_values = self._ids_to_list(data['associations']['product_option_values'])
-            if self.strings_by_reference:
+
+            if self.language_id:
                 name = self._get_by_id(self.language_id, data['public_name'])
             else:
                 name = data['public_name']
-            self.variants[id] = dict(name=name, options=product_option_values)
+
             for value in product_option_values:
                 self.variants_reverse[value] = name
 
@@ -115,6 +114,7 @@ class Prestashop:
                 # Ok, this shop has no combinations.
                 sku = data['reference']
                 price = Decimal(data['price'])
+
             try:
                 # But let's see if they have product_options, which are somewhat same thing?
                 product_option_values = self._ids_to_list(associations['product_option_values'])
@@ -132,7 +132,7 @@ class Prestashop:
                 variant_data[key] = value
 
             # Translation support
-            if self.strings_by_reference:
+            if self.language_id:
                 name = self._get_by_id(1, data['name'])
                 description = strip_tags(data['description'][0]['value'])
                 description_short = strip_tags(data['description_short'][1]['value'])
@@ -175,7 +175,7 @@ class Prestashop:
             # images=images
         )
 
-    def build_products(self):  # TODO: Add "with variants"
+    def build_products(self):
         self.get_variants()
         products = self.fetch_products_ids()
         total = len(products)
