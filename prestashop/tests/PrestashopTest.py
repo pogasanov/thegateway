@@ -209,7 +209,7 @@ class PrestashopTest(TestCase):
 
     def test_can_fetch_prestashop_products_ids(self):
         products = self.importer.fetch_products_ids()
-        self.assertEqual(products, ["1", "2"])
+        self.assertEqual(products, [1, 2])
 
     def test_can_fetch_prestashop_single_product(self):
         ID = 1

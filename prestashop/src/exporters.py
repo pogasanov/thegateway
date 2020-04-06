@@ -18,10 +18,33 @@ class Gateway:
         self.SECRET = SECRET
         self.image_prefix = IMAGE_URL_PREFIX
 
+        self.ENDPOINTS = self._generate_endpoints(self.BASE_URL, self.SHOP_ID)
+
         self.token = self._build_token()
         self.session = requests.Session()
         self.session.headers.update({"Authorization": f"Bearer {self.token}"})
-        self.tags_in_db = self._get_tags_in_db()
+        self.tags_in_db = None
+
+    @staticmethod
+    def _generate_endpoints(base_url, shop_id):
+        return {
+            "product": {
+                "list": f"{base_url}/dashboard/webshop_products/_query",
+                "create": f"{base_url}/dashboard/webshops/{shop_id}/products",
+                "delete": f"{base_url}/dashboard/webshops/{shop_id}/products/{{}}/",
+            },
+            "organization": {
+                "product": {
+                    "delete": f"{base_url}/organizations/{shop_id}/products/{{}}/"
+                }
+            },
+            "tag": {
+                "list": f"{base_url}/webshops/{shop_id}/tags/",
+                "create": f"{base_url}/webshops/{shop_id}/tags/",
+                "delete": f"{base_url}/webshops/{shop_id}/tags/{{}}/",
+            },
+            "image": {"upload": f"{base_url}/uploads/"},
+        }
 
     def _build_token(self):
         shop_guid = uuid.UUID(self.SHOP_ID)
@@ -36,17 +59,15 @@ class Gateway:
             algorithm="HS256",
         )
 
-    def _get_tags_in_db(self):
-        response = self.session.get(f"{self.BASE_URL}/webshops/{self.SHOP_ID}/tags/")
-        return response.json()
-
     @staticmethod
     def _log_failed(data, response):
-        with open(f'failed_{uuid.uuid4()}.json', 'w+') as f:
+        with open(f"failed_{uuid.uuid4()}.json", "w+") as f:
             json.dump(data, f, use_decimal=True)
         logger.fatal(response.text)
 
     def _get_tag(self, name):
+        if not self.tags_in_db:
+            self.tags_in_db = self.list_of_tags()
         for tag in self.tags_in_db:
             if tag["name"] == name:
                 return tag
@@ -60,9 +81,7 @@ class Gateway:
         if tag:
             return tag["guid"]
         data = {"name": name, "type": "variant"}
-        response = self.session.post(
-            f"{self.BASE_URL}/webshops/{self.SHOP_ID}/tags/", json=data
-        )
+        response = self.session.post(self.ENDPOINTS["tag"]["create"], json=data)
         if response.status_code == 409:
             return self._get_tag_guid_from_conflict_message(response.json()["message"])
         if response.status_code >= 400:
@@ -89,8 +108,8 @@ class Gateway:
                     "amount": product.price,
                 },
                 "name": product.name,
-                "images": product.images,
                 "vat": f"VAT{product.vat_percent}",
+                "images": [self.upload_image(image) for image in product.images],
             }
 
             if product.description:
@@ -110,32 +129,67 @@ class Gateway:
             payloads.append(payload)
 
         data = {"products": payloads}
-        response = self.session.post(
-            f"{self.BASE_URL}/dashboard/webshops/{self.SHOP_ID}/products", json=data
-        )
+        response = self.session.post(self.ENDPOINTS["product"]["create"], json=data)
         if response.status_code >= 400:
             self._log_failed(data, response)
 
     def upload_image(self, image_content):
-        """
-        TODO: Rewrite this - you get the file as a stream from the /images/products/{product_id}/{image_id} so you can upload them without temp files if
-        you do the uploads call and subsequent S3 call with the utils.io.StreamResponse to the presigned url returned by GW API /uploads/
-        bucket.put_object(
-            Body=stream,
-            Key=key_,
-            ContentType=content_type,
-            Metadata=dict(
-                original_url=url,
-            ),
-        )
-        """
         response = self.session.post(
-            f"{self.BASE_URL}/uploads/",
-            json={"filename": "product_image.jpg", "content_type": "image/jpeg"},
+            self.ENDPOINTS["image"]["upload"],
+            json={
+                "filename": image_content.filename,
+                "content_type": image_content.mimetype,
+            },
         )
+        response.raise_for_status()
 
         url = response.json()["url"]
         fields = response.json()["fields"]
 
-        requests.post(url, fields, files={"file": ("file.jpg", image_content)})
+        response = requests.post(
+            url, fields, files={"file": (image_content.filename, image_content.data)}
+        )
+        response.raise_for_status()
+
         return url + fields["key"]
+
+    def list_of_products(self):
+        response = self.session.post(
+            self.ENDPOINTS["product"]["list"],
+            json={
+                "dsl": {
+                    "size": 100,
+                    "sort": [{"timestamps.created": "desc"}, {"guid": "asc"}],
+                    "query": {
+                        "bool": {
+                            "must": [{"match": {"owner_guid": self.SHOP_ID}}],
+                            "must_not": [{"exists": {"field": "archived"}}],
+                        }
+                    },
+                }
+            },
+        )
+        return response.json()["products"]
+
+    def list_of_tags(self):
+        response = self.session.get(self.ENDPOINTS["tag"]["list"])
+        return response.json()
+
+    def delete_all_products(self):
+        products = self.list_of_products()
+        for product in products:
+            self.delete_product(product["guid"])
+
+    def delete_product(self, id):
+        self.session.delete(self.ENDPOINTS["product"]["delete"].format(id))
+        self.session.delete(
+            self.ENDPOINTS["organization"]["product"]["delete"].format(id)
+        )
+
+    def delete_all_tags(self):
+        tags = self.list_of_tags()
+        for tag in tags:
+            self.delete_tag(tag["guid"])
+
+    def delete_tag(self, id):
+        self.session.delete(self.ENDPOINTS["tag"]["delete"].format(id))

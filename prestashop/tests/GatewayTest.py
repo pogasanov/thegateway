@@ -14,11 +14,9 @@ class GatewayTest(TestCase):
         cls.SHOP_ID = "a547de18-7a1d-450b-a57b-bbf7f177db84"
         cls.SECRET = "OyB2YbwTVtRXuJv+VE4oJLVyGo8pf1XVibCk08lt4ys="
         cls.IMAGE_URL_PREFIX = "test_"
-        with mock.patch.object(Gateway, "_get_tags_in_db") as mock_get_tags_func:
-            mock_get_tags_func.return_value = []
-            cls.gateway = Gateway(
-                cls.BASE_URL, cls.SHOP_ID, cls.SECRET, cls.IMAGE_URL_PREFIX
-            )
+        cls.gateway = Gateway(
+            cls.BASE_URL, cls.SHOP_ID, cls.SECRET, cls.IMAGE_URL_PREFIX
+        )
 
     def setUp(self):
         responses.start()
@@ -40,6 +38,12 @@ class GatewayTest(TestCase):
             json=GATEWAY_TAG,
             status=201,
         )
+        responses.add(
+            responses.GET,
+            f"{self.BASE_URL}/webshops/{self.SHOP_ID}/tags/",
+            json=[],
+            status=200,
+        ),
         responses.add(
             responses.POST,
             f"{self.BASE_URL}/uploads/",
@@ -91,6 +95,12 @@ class GatewayTest(TestCase):
         with responses.RequestsMock() as responses_mock:
             expected_tag_guid = "403b62c1-5370-53ad-b71d-8ed1916c94f7"
             responses_mock.add(
+                responses.GET,
+                f"{self.BASE_URL}/webshops/{self.SHOP_ID}/tags/",
+                json=[],
+                status=200,
+            ),
+            responses_mock.add(
                 responses.POST,
                 f"{self.BASE_URL}/webshops/{self.SHOP_ID}/tags/",
                 json={
@@ -102,8 +112,8 @@ class GatewayTest(TestCase):
             )
             tag = self.gateway._create_tag("test")
             assert (
-                responses_mock.calls[0].request.url
+                responses_mock.calls[1].request.url
                 == f"{self.BASE_URL}/webshops/{self.SHOP_ID}/tags/"
             )
-            assert responses_mock.calls[0].response.status_code == 409
+            assert responses_mock.calls[1].response.status_code == 409
             assert tag == expected_tag_guid
