@@ -98,7 +98,7 @@ class Gateway:
                         "amount": product.price
                     },
                 "name": product.name,
-                "images": product.images,
+                "images": [self.upload_image(image) for image in product.images],
                 "vat": "VAT23",  # See above
             }
 
@@ -125,28 +125,19 @@ class Gateway:
             self._log_failed(data, response)
 
     def upload_image(self, image_content):
-        """
-        TODO: Rewrite this - you get the file as a stream from the /images/products/{product_id}/{image_id} so you can upload them without temp files if
-        you do the uploads call and subsequent S3 call with the utils.io.StreamResponse to the presigned url returned by GW API /uploads/
-        bucket.put_object(
-            Body=stream,
-            Key=key_,
-            ContentType=content_type,
-            Metadata=dict(
-                original_url=url,
-            ),
-        )
-        """
         response = self.session.post(f"{self.BASE_URL}/uploads/",
                                      json={
-                                         "filename": "product_image.jpg",
-                                         "content_type": "image/jpeg"
+                                         "filename": image_content.filename,
+                                         "content_type": image_content.mimetype
                                      })
+        response.raise_for_status()
 
         url = response.json()['url']
         fields = response.json()['fields']
 
-        requests.post(url, fields, files={
-            'file': ('file.jpg', image_content)
+        response = requests.post(url, fields, files={
+            'file': (image_content.filename, image_content.data)
         })
+        response.raise_for_status()
+
         return url + fields['key']

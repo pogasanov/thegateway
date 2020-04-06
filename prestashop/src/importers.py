@@ -1,13 +1,12 @@
 import logging
-import os
 import re
-import tempfile
 from decimal import Decimal
-from xml.etree import ElementTree
 
 import requests
-from models import Product
 from simplejson import JSONDecodeError
+
+from models import Product, Image
+from utils.io import ResponseStream
 
 logger = logging.getLogger(__name__)
 
@@ -40,7 +39,7 @@ class Prestashop:
             for value in product_option_values:
                 self.variants_reverse[value] = name
 
-    def invoke(self, endpoint, method, output_format=None):
+    def invoke(self, endpoint, method, output_format=None, stream=False):
         """
         Just a wrapper to expose requests HTTP method calls without passing all the auth etc params every time.
         """
@@ -49,7 +48,7 @@ class Prestashop:
             params = dict(output_format=output_format)
         else:
             params = dict()
-        return fn(f'{self.API_HOSTNAME}/api/{endpoint}', auth=(self.API_KEY, ''), params=params)
+        return fn(f'{self.API_HOSTNAME}/api/{endpoint}', auth=(self.API_KEY, ''), params=params, stream=stream)
 
     def head(self, endpoint):
         return self.invoke(endpoint, "head")
@@ -143,28 +142,7 @@ class Prestashop:
                 description_short = strip_tags(data['description_short'])
 
             # Images
-            images = list()
-            for image_id in image_ids:
-                # TODO: This is currently out of band just saving the URLs and do aws s3 sync to upload the images to a bucket -
-                # the image data needs to be returned as part of the "Product" as a fileobject or inline-data to exporter
-                # (the previous is obviously the right way to do it, but requires a context manager)
-                image_url = f'/images/products/{product_id}/{image_id}'
-                r = self.head(image_url)
-                sha1 = r.headers.get('Content-Sha1', f'{product_id}{image_id}')
-                mimetype = r.headers['Content-Type']
-                filename = f'{sha1}.{mimetype.rsplit("/")[-1]}'
-                logger.debug(filename)
-                images.append(f'{self.imageurl_prefix}{filename}')
-                fn = f"images/{filename}"
-                continue  # TODO: Remove this - hack for uploading images out of band & trial and error to speed things up.
-                if os.path.exists(fn):
-                    logger.info(f"Skipping existing image file {fn}")
-                    continue
-                # TODO: This needs to implement the context manager that can be "with product.get_image() as f: upload_to_s3":ed in the exporter.
-                with open(fn, "wb+") as f:
-                    r = self.invoke(image_url, 'get')
-                    for chunk in r.iter_content(chunk_size=1024):
-                        f.write(chunk)
+            images = [self.download_image(product_id, image_id) for image_id in image_ids]
 
             products.append(Product(
                 name=name,
@@ -205,21 +183,22 @@ class Prestashop:
             print(f'{i}/{total}')
             yield self.fetch_single_product_variant(p)
 
-    def fetch_product_images(self, id, image_ids):
-        # For some reason API is constantly throwing 500 error if accessing with JSON
-        # But XML works fine
-        # TODO: This is unnecessary - self.get('/images/products/{product_id}/{image_id}') will return the actual image.
-        result = requests.get(f"{self.API_HOSTNAME}/api/images/products/{id}", auth=(self.API_KEY, ''))
-        tree = ElementTree.fromstring(result.content)
-        return [self.download_image(image.attrib['{http://www.w3.org/1999/xlink}href']) for image in tree[0]]
+    def download_image(self, product_id, image_id):
+        image_url = f'/images/products/{product_id}/{image_id}'
 
-    def download_image(self, url):
-        # TODO: remove as unnecessary as the context manager and exporter will do this.
-        result = requests.get(url, auth=(self.API_KEY, ''))
-        f = tempfile.SpooledTemporaryFile()
-        f.write(result.content)
-        f.seek(0)
-        return f
+        r = self.head(image_url)
+        sha1 = r.headers.get('Content-Sha1', f'{product_id}{image_id}')
+        mimetype = r.headers['Content-Type']
+        filename = f'{sha1}.{mimetype.rsplit("/")[-1]}'
+
+        logger.debug(filename)
+
+        stream = ResponseStream(self.invoke(image_url, 'get', stream=True).iter_content(64))
+        return Image(
+            filename=filename,
+            mimetype=mimetype,
+            data=stream
+        )
 
 
 def strip_tags(in_str):
