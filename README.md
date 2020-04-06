@@ -53,3 +53,12 @@ Each different platform integration should be a separate self-contained director
 > Commit early, commit often!
 
 For each different integration, make a branch and a top level directory named after the 3rd party platform, e.g. `prestashop` or `magento` - and submit a pull request with a title `WIP: ...` as soon as you start.
+
+## Static code analysis
+On CI pipeline there are pylint and black checks. 
+
+Currently pylint is set to fail under score 7.0 but we should improve it gradually.
+Black is added to pre-commit hooks so in order to use it install pre-commit `pip install pre-commit` and add hook `pre-commit install`.
+After this black will run automatically before each commit.
+
+> I also suggest adding black as File Watcher if you're using PyCharm.

@@ -1,0 +1,16 @@
+test:
+  image: python3
+  stage: test
+
+  cache:
+    paths:
+      - "$CI_PROJECT_DIR/pip-cache"
+    key: "$CI_PROJECT_ID"
+
+  script:
+    - pip install -r requirements.txt
+    - black --check .
+    - pylint-fail-under --fail_under 7.0 $PWD # this can be changed after reaching 10/10 score
+    - coverage run -m unittest
+    - coverage report
+  coverage: '/TOTAL.*\s(\d+)%/'
