@@ -158,14 +158,6 @@ class Gateway:
         self.session.delete(f"{self.BASE_URL}/dashboard/webshops/{self.SHOP_ID}/products/{id}/")
         self.session.delete(f"{self.BASE_URL}/organizations/{self.SHOP_ID}/products/{id}/")
 
-    def create_tag(self, name):
-        response = self.session.post(f"{self.BASE_URL}/webshops/{self.SHOP_ID}/tags/",
-                                     json={
-                                         "name": name,
-                                         "type": "variant"
-                                     })
-        return response.json()
-
     def delete_all_tags(self):
         tags = self.list_of_tags()
         for tag in tags:
