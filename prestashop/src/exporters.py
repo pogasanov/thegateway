@@ -132,7 +132,7 @@ class Gateway:
             if product.sku:
                 product_data["sku"] = product.sku
             if variant_tag:
-                product_data["tag_guids"] = variant_tag
+                product_data["tag_guids"] = [variant_tag]
                 product_data["data"] = dict(variants=product.variant_data)
 
             payload['product'] = product_data
