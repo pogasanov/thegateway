@@ -5,8 +5,8 @@ from decimal import Decimal
 import requests
 from simplejson import JSONDecodeError
 
-from gateway.models import Product, Image
-from utils.io import ResponseStream
+from gateway.models import Product
+from utils.io import download_image
 
 logger = logging.getLogger(__name__)
 
@@ -47,7 +47,10 @@ class Prestashop:
             params = dict(output_format=output_format)
         else:
             params = dict()
-        return fn(f'{self.API_HOSTNAME}/api/{endpoint}', auth=(self.API_KEY, ''), params=params, stream=stream)
+        return fn(self._get_api_url(endpoint), auth=(self.API_KEY, ''), params=params, stream=stream)
+
+    def _get_api_url(self, endpoint):
+        return f'{self.API_HOSTNAME}/api/{endpoint}'
 
     def head(self, endpoint):
         return self.invoke(endpoint, "head")
@@ -171,21 +174,8 @@ class Prestashop:
             yield self.fetch_single_product(p)
 
     def download_image(self, product_id, image_id):
-        image_url = f'/images/products/{product_id}/{image_id}'
-
-        r = self.head(image_url)
-        sha1 = r.headers.get('Content-Sha1', f'{product_id}{image_id}')
-        mimetype = r.headers['Content-Type']
-        filename = f'{sha1}.{mimetype.rsplit("/")[-1]}'
-
-        logger.debug(filename)
-
-        stream = ResponseStream(self.invoke(image_url, 'get', stream=True).iter_content(64))
-        return Image(
-            filename=filename,
-            mimetype=mimetype,
-            data=stream
-        )
+        image_url = self._get_api_url(f'/images/products/{product_id}/{image_id}')
+        return download_image(image_url, default_filename=f'{product_id}{image_id}', auth=(self.API_KEY, ''))
 
 
 def strip_tags(in_str):
