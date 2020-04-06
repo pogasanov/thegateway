@@ -3,7 +3,7 @@ import os
 
 import click
 
-from exporters import Gateway
+from gateway.gateway import Gateway
 from importers import Prestashop
 
 

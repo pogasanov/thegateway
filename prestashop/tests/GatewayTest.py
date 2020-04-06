@@ -2,7 +2,7 @@ from unittest import TestCase, mock
 
 import responses
 
-from gateway.exporters import Gateway
+from gateway.gateway import Gateway
 from gateway.models import Product
 from .gateway_responses import GATEWAY_PRODUCT, GATEWAY_TAG
 
