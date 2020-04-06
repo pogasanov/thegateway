@@ -166,7 +166,7 @@ class Prestashop:
         self.get_variants()
         products = self.fetch_products_ids()
         total = len(products)
-        for i, p in enumerate(products):
+        for i, p in enumerate(products, 1):
             print(f'{i}/{total}')
             yield self.fetch_single_product_variant(p)
 
