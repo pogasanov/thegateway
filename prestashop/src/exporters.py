@@ -129,3 +129,43 @@ class Gateway:
             'file': ('file.jpg', image_content)
         })
         return url + fields['key']
+
+    def list_of_products(self):
+        response = self.session.post(f"{self.BASE_URL}/dashboard/webshop_products/_query",
+                                     json={
+                                         "dsl": {
+                                             "size": 100,
+                                             "sort": [{"timestamps.created": "desc"}, {"guid": "asc"}],
+                                             "query": {
+                                                 "bool": {
+                                                     "must": [{"match": {"owner_guid": self.SHOP_ID}}],
+                                                     "must_not": [{"exists": {"field": "archived"}}]
+                                                 }
+                                             }
+                                         }})
+        return response.json()['products']
+
+    def delete_all_products(self):
+        products = self.list_of_products()
+        for product in products:
+            self.delete_product(product['guid'])
+
+    def delete_product(self, id):
+        self.session.delete(f"{self.BASE_URL}/dashboard/webshops/{self.SHOP_ID}/products/{id}/")
+        self.session.delete(f"{self.BASE_URL}/organizations/{self.SHOP_ID}/products/{id}/")
+
+    def create_tag(self, name):
+        response = self.session.post(f"{self.BASE_URL}/webshops/{self.SHOP_ID}/tags/",
+                                     json={
+                                         "name": name,
+                                         "type": "variant"
+                                     })
+        return response.json()
+
+    def delete_all_tags(self):
+        response = self.session.get(f"{self.BASE_URL}/webshops/{self.SHOP_ID}/tags/")
+        for tag in response.json():
+            self.delete_tag(tag['guid'])
+
+    def delete_tag(self, id):
+        self.session.delete(f"{self.BASE_URL}/webshops/{self.SHOP_ID}/tags/{id}/")
