@@ -52,9 +52,6 @@ class Prestashop:
     def _get_api_url(self, endpoint):
         return f'{self.API_HOSTNAME}/api/{endpoint}'
 
-    def head(self, endpoint):
-        return self.invoke(endpoint, "head")
-
     def get(self, endpoint, output_format="JSON"):
         response = self.invoke(endpoint, "get", output_format)
         try:
