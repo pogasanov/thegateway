@@ -79,7 +79,7 @@ class Prestashop:
         result = self.get('products')
         return self._ids_to_list(result['products'])
 
-    def fetch_single_product_variant(self, product_id):
+    def fetch_single_product(self, product_id):
         products = list()
         result = self.get(f'products/{product_id}')
         data = result['product']
@@ -168,7 +168,7 @@ class Prestashop:
         total = len(products)
         for i, p in enumerate(products, 1):
             print(f'{i}/{total}')
-            yield self.fetch_single_product_variant(p)
+            yield self.fetch_single_product(p)
 
     def download_image(self, product_id, image_id):
         image_url = f'/images/products/{product_id}/{image_id}'
