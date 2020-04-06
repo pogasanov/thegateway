@@ -38,22 +38,24 @@ class Prestashop:
             for value in product_option_values:
                 self.variants_reverse[value] = name
 
-    def invoke(self, endpoint, method, output_format=None, stream=False):
+    def invoke(self, endpoint, method):
         """
         Just a wrapper to expose requests HTTP method calls without passing all the auth etc params every time.
         """
         fn = getattr(requests, method)
-        if output_format:
-            params = dict(output_format=output_format)
-        else:
-            params = dict()
-        return fn(self._get_api_url(endpoint), auth=(self.API_KEY, ''), params=params, stream=stream)
+        return fn(**self._build_requests_paramters(endpoint))
 
-    def _get_api_url(self, endpoint):
-        return f'{self.API_HOSTNAME}/api/{endpoint}'
+    def _build_requests_paramters(self, endpoint):
+        return {
+            'url': f'{self.API_HOSTNAME}/api/{endpoint}',
+            'auth': (self.API_KEY, ''),
+            'params': {
+                'output_format': 'JSON'
+            }
+        }
 
-    def get(self, endpoint, output_format="JSON"):
-        response = self.invoke(endpoint, "get", output_format)
+    def get(self, endpoint):
+        response = self.invoke(endpoint, "get")
         try:
             return response.json()
         except JSONDecodeError:
@@ -171,8 +173,8 @@ class Prestashop:
             yield self.fetch_single_product(p)
 
     def download_image(self, product_id, image_id):
-        image_url = self._get_api_url(f'/images/products/{product_id}/{image_id}')
-        return download_image(image_url, default_filename=f'{product_id}{image_id}', auth=(self.API_KEY, ''))
+        image_url = self._build_requests_paramters(f'/images/products/{product_id}/{image_id}')
+        return download_image(**image_url)
 
 
 def strip_tags(in_str):
