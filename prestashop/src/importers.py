@@ -127,15 +127,20 @@ class Prestashop:
                 except KeyError:
                     variant_ = self.get(f'/product_option_values/{option_value}')['product_option_value']
                     self.product_options[option_value] = variant_
-                value = variant_['name']
+
+                if self.language_id:
+                    value = self._get_by_id(self.language_id, variant_['name'])
+                else:
+                    value = variant_['name']
                 key = self.variants_reverse[option_value]
                 variant_data[key] = value
 
             # Translation support
             if self.language_id:
-                name = self._get_by_id(1, data['name'])
-                description = strip_tags(data['description'][0]['value'])
-                description_short = strip_tags(data['description_short'][1]['value'])
+                name = self._get_by_id(self.language_id, data['name'])
+                description = strip_tags(next(x for x in data['description'] if x['id'] == self.language_id)['value'])
+                description_short = strip_tags(
+                    next(x for x in data['description_short'] if x['id'] == self.language_id)['value'])
             else:
                 name = data['name']
                 description = strip_tags(data['description'])
