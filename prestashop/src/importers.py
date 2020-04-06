@@ -5,7 +5,7 @@ from decimal import Decimal
 import requests
 from simplejson import JSONDecodeError
 
-from models import Product, Image
+from gateway.models import Product, Image
 from utils.io import ResponseStream
 
 logger = logging.getLogger(__name__)
