@@ -162,24 +162,6 @@ class Prestashop:
         logger.info(products)
         return products
 
-    def fetch_single_product(self, product_id):
-        result = self.get(f'products/{product_id}')
-
-        data = result['product']
-        associations = data['associations']
-        image_ids = self._ids_to_list(associations['images'])
-        stock_level_mapping = {int(d['id_product_attribute']): int(d['id']) for d in associations['stock_availables']}
-        stock_level = self.get(f'/stock_availables/{stock_level_mapping[product_id]}')['stock_available']['quantity']
-        return Product(
-            name=self._get_by_id(1, data['name']),
-            price=Decimal(data['price']),
-            description=strip_tags(data['description'][0]['value']),
-            description_short=strip_tags(data['description_short'][1]['value']),
-            sku=data['reference'],
-            stock=Decimal(stock_level),
-            # images=images
-        )
-
     def build_products(self):
         self.get_variants()
         products = self.fetch_products_ids()
