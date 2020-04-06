@@ -17,9 +17,34 @@ class Gateway:
         self.SECRET = SECRET
         self.image_prefix = IMAGE_URL_PREFIX
 
+        self.ENDPOINTS = self._generate_endpoints(self.BASE_URL, self.SHOP_ID)
+
         self.token = self._build_token()
         self.session = requests.Session()
         self.session.headers.update({'Authorization': f'Bearer {self.token}'})
+
+    @staticmethod
+    def _generate_endpoints(base_url, shop_id):
+        return {
+            'product': {
+                'list': f"{base_url}/dashboard/webshop_products/_query",
+                'create': f"{base_url}/dashboard/webshops/{shop_id}/products",
+                'delete': f"{base_url}/dashboard/webshops/{shop_id}/products/{{}}/"
+            },
+            'organization': {
+                'product': {
+                    'delete': f"{base_url}/organizations/{shop_id}/products/{{}}/"
+                }
+            },
+            'tag': {
+                'list': f"{base_url}/webshops/{shop_id}/tags/",
+                'create': f"{base_url}/webshops/{shop_id}/tags/",
+                'delete': f"{base_url}/webshops/{shop_id}/tags/{{}}/"
+            },
+            'image': {
+                'upload': f"{base_url}/uploads/"
+            }
+        }
 
     def _build_token(self):
         shop_guid = uuid.UUID(self.SHOP_ID)
@@ -42,10 +67,9 @@ class Gateway:
             "name": name,
             "type": "variant"
         }
-        response = self.session.post(
-            f"{self.BASE_URL}/webshops/{self.SHOP_ID}/tags/",
-            json=data
-        )
+        response = self.session.post(self.ENDPOINTS['tag']['create'],
+                                     json=data
+                                     )
         if response.status_code >= 400:
             self._log_failed(data, response)
         return None
@@ -73,7 +97,8 @@ class Gateway:
                 "base_price":
                     {
                         "currency": "zł",
-                        "vat_percent": 23,  # TODO: For now I think all products are Vat 23, but we need to keep in mind that this needs to come from the source
+                        "vat_percent": 23,
+                        # TODO: For now I think all products are Vat 23, but we need to keep in mind that this needs to come from the source
                         "amount": product.price
                     },
                 "name": product.name,
@@ -98,7 +123,7 @@ class Gateway:
             payloads.append(payload)
 
         data = {"products": payloads}
-        response = self.session.post(f"{self.BASE_URL}/dashboard/webshops/{self.SHOP_ID}/products",
+        response = self.session.post(self.ENDPOINTS['product']['create'],
                                      json=data)
         if response.status_code >= 400:
             self._log_failed(data, response)
@@ -116,7 +141,7 @@ class Gateway:
             ),
         )
         """
-        response = self.session.post(f"{self.BASE_URL}/uploads/",
+        response = self.session.post(self.ENDPOINTS['image']['upload'],
                                      json={
                                          "filename": "product_image.jpg",
                                          "content_type": "image/jpeg"
@@ -131,7 +156,7 @@ class Gateway:
         return url + fields['key']
 
     def list_of_products(self):
-        response = self.session.post(f"{self.BASE_URL}/dashboard/webshop_products/_query",
+        response = self.session.post(self.ENDPOINTS['product']['list'],
                                      json={
                                          "dsl": {
                                              "size": 100,
@@ -146,7 +171,7 @@ class Gateway:
         return response.json()['products']
 
     def list_of_tags(self):
-        response = self.session.get(f"{self.BASE_URL}/webshops/{self.SHOP_ID}/tags/")
+        response = self.session.get(self.ENDPOINTS['tag']['list'])
         return response.json()
 
     def delete_all_products(self):
@@ -155,8 +180,8 @@ class Gateway:
             self.delete_product(product['guid'])
 
     def delete_product(self, id):
-        self.session.delete(f"{self.BASE_URL}/dashboard/webshops/{self.SHOP_ID}/products/{id}/")
-        self.session.delete(f"{self.BASE_URL}/organizations/{self.SHOP_ID}/products/{id}/")
+        self.session.delete(self.ENDPOINTS['product']['delete'].format(id))
+        self.session.delete(self.ENDPOINTS['organization']['product']['delete'].format(id))
 
     def delete_all_tags(self):
         tags = self.list_of_tags()
@@ -164,4 +189,4 @@ class Gateway:
             self.delete_tag(tag['guid'])
 
     def delete_tag(self, id):
-        self.session.delete(f"{self.BASE_URL}/webshops/{self.SHOP_ID}/tags/{id}/")
+        self.session.delete(self.ENDPOINTS['tag']['delete'].format(id))
