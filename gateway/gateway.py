@@ -81,7 +81,7 @@ class Gateway:
                 description_short=product['brief'],
                 sku=product['sku'],
                 images=[download_image(url, default_filename=product['name']) for url in product['images']],
-                variant_data=product['data']['variants']
+                variant_data=product['data']['variants'] if product['data'] else []
             ))
 
         grouped = list()
