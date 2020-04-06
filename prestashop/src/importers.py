@@ -6,7 +6,7 @@ import requests
 from simplejson import JSONDecodeError
 
 from gateway.models import Product
-from utils.io import download_image
+from gateway.utils import download_image
 
 logger = logging.getLogger(__name__)
 
