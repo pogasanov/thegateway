@@ -20,17 +20,21 @@ class Gateway:
 
         self.token = self._build_token()
         self.session = requests.Session()
-        self.session.headers.update({'Authorization': f'Bearer {self.token}'})
+        self.session.headers.update({"Authorization": f"Bearer {self.token}"})
         self.tags_in_db = self._get_tags_in_db()
 
     def _build_token(self):
         shop_guid = uuid.UUID(self.SHOP_ID)
         key = base64.b64decode(self.SECRET)
         return jwt.encode(
-            dict(iss=f"shop:{shop_guid}",
-                 organization_guid=str(shop_guid),
-                 groups=['shopkeeper']
-                 ), key, algorithm="HS256")
+            dict(
+                iss=f"shop:{shop_guid}",
+                organization_guid=str(shop_guid),
+                groups=["shopkeeper"],
+            ),
+            key,
+            algorithm="HS256",
+        )
 
     def _get_tags_in_db(self):
         response = self.session.get(f"{self.BASE_URL}/webshops/{self.SHOP_ID}/tags/")
@@ -55,13 +59,9 @@ class Gateway:
         tag = self._get_tag(name)
         if tag:
             return tag["guid"]
-        data = {
-            "name": name,
-            "type": "variant"
-        }
+        data = {"name": name, "type": "variant"}
         response = self.session.post(
-            f"{self.BASE_URL}/webshops/{self.SHOP_ID}/tags/",
-            json=data
+            f"{self.BASE_URL}/webshops/{self.SHOP_ID}/tags/", json=data
         )
         if response.status_code == 409:
             return self._get_tag_guid_from_conflict_message(response.json()["message"])
@@ -79,24 +79,15 @@ class Gateway:
             variant_tag = None
         payloads = list()
         for product in product_variants:
-            payload = {
-                "archived": False,
-                "for_sale": True
-            }
+            payload = {"archived": False, "for_sale": True}
             product_data = {
                 "base_price_type": "retail",
-                "cost_price":
-                    {
-                        "currency": "zł",
-                        "vat_percent": 0,
-                        "amount": 0
-                    },
-                "base_price":
-                    {
-                        "currency": "zł",
-                        "vat_percent": product.vat_percent,
-                        "amount": product.price
-                    },
+                "cost_price": {"currency": "zł", "vat_percent": 0, "amount": 0},
+                "base_price": {
+                    "currency": "zł",
+                    "vat_percent": product.vat_percent,
+                    "amount": product.price,
+                },
                 "name": product.name,
                 "images": product.images,
                 "vat": f"VAT{product.vat_percent}",
@@ -112,15 +103,16 @@ class Gateway:
                 product_data["tag_guids"] = [variant_tag]
                 product_data["data"] = dict(variants=product.variant_data)
 
-            payload['product'] = product_data
+            payload["product"] = product_data
             # create product
             if product.stock:
                 payload["stock_level"] = product.stock
             payloads.append(payload)
 
         data = {"products": payloads}
-        response = self.session.post(f"{self.BASE_URL}/dashboard/webshops/{self.SHOP_ID}/products",
-                                     json=data)
+        response = self.session.post(
+            f"{self.BASE_URL}/dashboard/webshops/{self.SHOP_ID}/products", json=data
+        )
         if response.status_code >= 400:
             self._log_failed(data, response)
 
@@ -137,16 +129,13 @@ class Gateway:
             ),
         )
         """
-        response = self.session.post(f"{self.BASE_URL}/uploads/",
-                                     json={
-                                         "filename": "product_image.jpg",
-                                         "content_type": "image/jpeg"
-                                     })
+        response = self.session.post(
+            f"{self.BASE_URL}/uploads/",
+            json={"filename": "product_image.jpg", "content_type": "image/jpeg"},
+        )
 
-        url = response.json()['url']
-        fields = response.json()['fields']
+        url = response.json()["url"]
+        fields = response.json()["fields"]
 
-        requests.post(url, fields, files={
-            'file': ('file.jpg', image_content)
-        })
-        return url + fields['key']
+        requests.post(url, fields, files={"file": ("file.jpg", image_content)})
+        return url + fields["key"]
