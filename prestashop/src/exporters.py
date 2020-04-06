@@ -57,10 +57,6 @@ class Gateway:
                  groups=['shopkeeper']
                  ), key, algorithm="HS256")
 
-    def _get_tags_in_db(self):
-        response = self.session.get(f"{self.BASE_URL}/webshops/{self.SHOP_ID}/tags/")
-        return response.json()
-
     @staticmethod
     def _log_failed(data, response):
         with open(f'failed_{uuid.uuid4()}.json', 'w+') as f:
@@ -69,7 +65,7 @@ class Gateway:
 
     def _get_tag(self, name):
         if not self.tags_in_db:
-            self.tags_in_db = self._get_tags_in_db()
+            self.tags_in_db = self.list_of_tags()
         for tag in self.tags_in_db:
             if tag["name"] == name:
                 return tag
