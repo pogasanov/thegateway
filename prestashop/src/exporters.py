@@ -1,5 +1,6 @@
 import base64
 import logging
+import re
 import uuid
 
 import requests
@@ -22,6 +23,7 @@ class Gateway:
         self.token = self._build_token()
         self.session = requests.Session()
         self.session.headers.update({'Authorization': f'Bearer {self.token}'})
+        self.tags_in_db = None
 
     @staticmethod
     def _generate_endpoints(base_url, shop_id):
@@ -55,29 +57,51 @@ class Gateway:
                  groups=['shopkeeper']
                  ), key, algorithm="HS256")
 
+    def _get_tags_in_db(self):
+        response = self.session.get(f"{self.BASE_URL}/webshops/{self.SHOP_ID}/tags/")
+        return response.json()
+
     @staticmethod
     def _log_failed(data, response):
         with open(f'failed_{uuid.uuid4()}.json', 'w+') as f:
             json.dump(data, f, use_decimal=True)
         logger.fatal(response.text)
 
+    def _get_tag(self, name):
+        if not self.tags_in_db:
+            self.tags_in_db = self._get_tags_in_db()
+        for tag in self.tags_in_db:
+            if tag["name"] == name:
+                return tag
+
+    @staticmethod
+    def _get_tag_guid_from_conflict_message(message: str):
+        return re.search(r"\((.*)\)", message).group(1)
+
     def _create_tag(self, name: str):
-        # TODO should check if tag exists
+        tag = self._get_tag(name)
+        if tag:
+            return tag["guid"]
         data = {
             "name": name,
             "type": "variant"
         }
-        response = self.session.post(self.ENDPOINTS['tag']['create'],
-                                     json=data
-                                     )
+        response = self.session.post(
+            self.ENDPOINTS['tag']['create'],
+            json=data
+        )
+        if response.status_code == 409:
+            return self._get_tag_guid_from_conflict_message(response.json()["message"])
         if response.status_code >= 400:
             self._log_failed(data, response)
-        return None
+            return None
+        return response.json()["guid"]
 
     def create_product(self, product_variants):
         if len(product_variants) > 1:
-            # TODO: Make this to work over API - required arguments should be pretty much the same - just need to keep the tag guid from the response.
             variant_tag = self._create_tag(product_variants[0].name)
+            if not variant_tag:
+                return
         else:
             variant_tag = None
         payloads = list()
@@ -97,12 +121,11 @@ class Gateway:
                 "base_price":
                     {
                         "currency": "zł",
-                        "vat_percent": 23,
-                        # TODO: For now I think all products are Vat 23, but we need to keep in mind that this needs to come from the source
+                        "vat_percent": 23,  # TODO: For now I think all products are Vat 23, but we need to keep in mind that this needs to come from the source
                         "amount": product.price
                     },
                 "name": product.name,
-                "images": product.images,
+                "images": [self.upload_image(image) for image in product.images],
                 "vat": "VAT23",  # See above
             }
 
@@ -113,7 +136,7 @@ class Gateway:
             if product.sku:
                 product_data["sku"] = product.sku
             if variant_tag:
-                product_data["tag_guids"] = [str(variant_tag.guid)]
+                product_data["tag_guids"] = variant_tag
                 product_data["data"] = dict(variants=product.variant_data)
 
             payload['product'] = product_data
@@ -129,30 +152,21 @@ class Gateway:
             self._log_failed(data, response)
 
     def upload_image(self, image_content):
-        """
-        TODO: Rewrite this - you get the file as a stream from the /images/products/{product_id}/{image_id} so you can upload them without temp files if
-        you do the uploads call and subsequent S3 call with the utils.io.StreamResponse to the presigned url returned by GW API /uploads/
-        bucket.put_object(
-            Body=stream,
-            Key=key_,
-            ContentType=content_type,
-            Metadata=dict(
-                original_url=url,
-            ),
-        )
-        """
         response = self.session.post(self.ENDPOINTS['image']['upload'],
                                      json={
-                                         "filename": "product_image.jpg",
-                                         "content_type": "image/jpeg"
+                                         "filename": image_content.filename,
+                                         "content_type": image_content.mimetype
                                      })
+        response.raise_for_status()
 
         url = response.json()['url']
         fields = response.json()['fields']
 
-        requests.post(url, fields, files={
-            'file': ('file.jpg', image_content)
+        response = requests.post(url, fields, files={
+            'file': (image_content.filename, image_content.data)
         })
+        response.raise_for_status()
+
         return url + fields['key']
 
     def list_of_products(self):
