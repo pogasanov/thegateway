@@ -1,0 +1,14 @@
+test:
+  image: python:3
+  stage: test
+
+  cache:
+    paths:
+      - "$CI_PROJECT_DIR/pip-cache"
+    key: "$CI_PROJECT_ID"
+
+  script:
+    - make install-lint-dep
+    - make lint-test
+    - make test
+  coverage: '/TOTAL.*\s(\d+)%/'

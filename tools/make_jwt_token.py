@@ -10,13 +10,7 @@ def main():
     shop_guid = uuid.UUID(click.prompt("Shop GUID: "))
     key = base64.b64decode(click.prompt("Base64 encoded token signing key: "))
     token = jwt.encode(
-        dict(
-            iss=f"shop:{shop_guid}",
-            organization_guid=str(shop_guid),
-            groups=["shopkeeper"],
-        ),
-        key,
-        algorithm="HS256",
+        dict(iss=f"shop:{shop_guid}", organization_guid=str(shop_guid), groups=["shopkeeper"],), key, algorithm="HS256",
     )
 
     print(f"Bearer {token}")

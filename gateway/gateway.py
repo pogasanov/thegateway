@@ -38,11 +38,7 @@ class Gateway:
                 "create": f"{base_url}/dashboard/webshops/{shop_id}/products",
                 "delete": f"{base_url}/dashboard/webshops/{shop_id}/products/{{}}/",
             },
-            "organization": {
-                "product": {
-                    "delete": f"{base_url}/organizations/{shop_id}/products/{{}}/"
-                }
-            },
+            "organization": {"product": {"delete": f"{base_url}/organizations/{shop_id}/products/{{}}/"}},
             "tag": {
                 "list": f"{base_url}/webshops/{shop_id}/tags/",
                 "create": f"{base_url}/webshops/{shop_id}/tags/",
@@ -55,11 +51,7 @@ class Gateway:
         shop_guid = uuid.UUID(self.SHOP_ID)
         key = base64.b64decode(self.SECRET)
         return jwt.encode(
-            dict(
-                iss=f"shop:{shop_guid}",
-                organization_guid=str(shop_guid),
-                groups=["shopkeeper"],
-            ),
+            dict(iss=f"shop:{shop_guid}", organization_guid=str(shop_guid), groups=["shopkeeper"],),
             key,
             algorithm="HS256",
         )
@@ -83,10 +75,7 @@ class Gateway:
                     description=product["desc"],
                     description_short=product["brief"],
                     sku=product["sku"],
-                    images=[
-                        download_image(url, default_filename=product["name"])
-                        for url in product["images"]
-                    ],
+                    images=[download_image(url, default_filename=product["name"]) for url in product["images"]],
                     variant_data=product["data"]["variants"] if product["data"] else [],
                 )
             )
@@ -128,11 +117,7 @@ class Gateway:
             product_data = {
                 "base_price_type": "retail",
                 "cost_price": {"currency": "zł", "vat_percent": 0, "amount": 0},
-                "base_price": {
-                    "currency": "zł",
-                    "vat_percent": product.vat_percent,
-                    "amount": product.price,
-                },
+                "base_price": {"currency": "zł", "vat_percent": product.vat_percent, "amount": product.price,},
                 "name": product.name,
                 "vat": f"VAT{product.vat_percent}",
                 "images": [self.upload_image(image) for image in product.images],
@@ -166,9 +151,7 @@ class Gateway:
 
     def delete_product_by_id(self, id):
         self.session.delete(self.ENDPOINTS["product"]["delete"].format(id))
-        self.session.delete(
-            self.ENDPOINTS["organization"]["product"]["delete"].format(id)
-        )
+        self.session.delete(self.ENDPOINTS["organization"]["product"]["delete"].format(id))
 
     def list_of_tags(self):
         response = self.session.get(self.ENDPOINTS["tag"]["list"])
@@ -209,19 +192,14 @@ class Gateway:
     def upload_image(self, image_content):
         response = self.session.post(
             self.ENDPOINTS["image"]["upload"],
-            json={
-                "filename": image_content.filename,
-                "content_type": image_content.mimetype,
-            },
+            json={"filename": image_content.filename, "content_type": image_content.mimetype,},
         )
         response.raise_for_status()
 
         url = response.json()["url"]
         fields = response.json()["fields"]
 
-        response = requests.post(
-            url, fields, files={"file": (image_content.filename, image_content.data)}
-        )
+        response = requests.post(url, fields, files={"file": (image_content.filename, image_content.data)})
         response.raise_for_status()
 
         return url + fields["key"]

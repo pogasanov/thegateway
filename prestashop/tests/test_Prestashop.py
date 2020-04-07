@@ -3,7 +3,7 @@ from unittest import TestCase
 
 import responses
 
-from prestashop.src.importers import Prestashop
+from prestashop.importers import Prestashop
 from .prestashop_responses import *
 
 
@@ -53,64 +53,34 @@ class PrestashopTest(TestCase):
     def setUp(self):
         responses.start()
         responses.add(
-            responses.GET,
-            f"{self.BASE_URL}/api/products",
-            json={"products": PRESTASHOP_PRODUCTS},
-            status=200,
+            responses.GET, f"{self.BASE_URL}/api/products", json={"products": PRESTASHOP_PRODUCTS}, status=200,
         )
         responses.add(
-            responses.GET,
-            f"{self.BASE_URL}/api/products/1",
-            json=PRESTASHOP_PRODUCT_1,
-            status=200,
+            responses.GET, f"{self.BASE_URL}/api/products/1", json=PRESTASHOP_PRODUCT_1, status=200,
         )
         responses.add(
-            responses.GET,
-            f"{self.BASE_URL}/api/products/2",
-            json=PRESTASHOP_PRODUCT_2,
-            status=200,
+            responses.GET, f"{self.BASE_URL}/api/products/2", json=PRESTASHOP_PRODUCT_2, status=200,
         )
         responses.add(
-            responses.GET,
-            f"{self.BASE_URL}/api/stock_availables/1",
-            json=PRESTASHOP_STOCK_1,
-            status=200,
+            responses.GET, f"{self.BASE_URL}/api/stock_availables/1", json=PRESTASHOP_STOCK_1, status=200,
         )
         responses.add(
-            responses.GET,
-            f"{self.BASE_URL}/api/stock_availables/2",
-            json=PRESTASHOP_STOCK_2,
-            status=200,
+            responses.GET, f"{self.BASE_URL}/api/stock_availables/2", json=PRESTASHOP_STOCK_2, status=200,
         )
         responses.add(
-            responses.GET,
-            f"{self.BASE_URL}/api/images/products/1",
-            body=PRESTASHOP_IMAGES_1,
-            status=200,
+            responses.GET, f"{self.BASE_URL}/api/images/products/1", body=PRESTASHOP_IMAGES_1, status=200,
         )
         responses.add(
-            responses.GET,
-            f"{self.BASE_URL}/api/images/products/1/1",
-            body=self.DUMMY_IMAGE,
-            status=200,
+            responses.GET, f"{self.BASE_URL}/api/images/products/1/1", body=self.DUMMY_IMAGE, status=200,
         )
         responses.add(
-            responses.GET,
-            f"{self.BASE_URL}/api/images/products/1/2",
-            body=self.DUMMY_IMAGE,
-            status=200,
+            responses.GET, f"{self.BASE_URL}/api/images/products/1/2", body=self.DUMMY_IMAGE, status=200,
         )
         responses.add(
-            responses.GET,
-            f"{self.BASE_URL}/api/images/products/2/1",
-            body=self.DUMMY_IMAGE,
-            status=200,
+            responses.GET, f"{self.BASE_URL}/api/images/products/2/1", body=self.DUMMY_IMAGE, status=200,
         )
         responses.add(
-            responses.GET,
-            f"{self.BASE_URL}/api/images/products/2/2",
-            body=self.DUMMY_IMAGE,
-            status=200,
+            responses.GET, f"{self.BASE_URL}/api/images/products/2/2", body=self.DUMMY_IMAGE, status=200,
         )
         responses.add(
             responses.Response(
@@ -145,10 +115,7 @@ class PrestashopTest(TestCase):
             )
         )
         responses.add(
-            responses.GET,
-            f"{self.BASE_URL}/api/images/products/2",
-            body=PRESTASHOP_IMAGES_2,
-            status=200,
+            responses.GET, f"{self.BASE_URL}/api/images/products/2", body=PRESTASHOP_IMAGES_2, status=200,
         )
         responses.add(
             responses.GET,

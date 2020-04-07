@@ -1,0 +1,15 @@
+jose
+simplejson
+click
+requests
+python-jose[cryptography]
+
+# Code style
+black
+pylint
+pylint-fail-under # To be removed after reaching 10/10 score
+pre-commit
+
+# Testing
+responses
+coverage

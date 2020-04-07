@@ -75,10 +75,7 @@ PRESTASHOP_PRODUCT_1 = {
             "images": [{"id": "1"}, {"id": "2"}],
             "combinations": [{"id": "1"},],
             "product_option_values": [{"id": "1"}, {"id": "2"},],
-            "product_features": [
-                {"id": "1", "id_feature_value": "4"},
-                {"id": "2", "id_feature_value": "8"},
-            ],
+            "product_features": [{"id": "1", "id_feature_value": "4"}, {"id": "2", "id_feature_value": "8"},],
             "stock_availables": [{"id": "1", "id_product_attribute": "0"},],
         },
     }
@@ -159,14 +156,8 @@ PRESTASHOP_PRODUCT_2 = {
             "images": [{"id": "1"}, {"id": "2"}],
             "combinations": [{"id": "1"},],
             "product_option_values": [{"id": "1"}, {"id": "2"},],
-            "product_features": [
-                {"id": "1", "id_feature_value": "4"},
-                {"id": "2", "id_feature_value": "8"},
-            ],
-            "stock_availables": [
-                {"id": "1", "id_product_attribute": "0"},
-                {"id": "2", "id_product_attribute": "1"},
-            ],
+            "product_features": [{"id": "1", "id_feature_value": "4"}, {"id": "2", "id_feature_value": "8"},],
+            "stock_availables": [{"id": "1", "id_product_attribute": "0"}, {"id": "2", "id_product_attribute": "1"},],
         },
     }
 }
@@ -228,27 +219,12 @@ PRESTASHOP_COMBINATION_1 = {
         "low_stock_alert": "0",
         "default_on": "1",
         "available_date": "0000-00-00",
-        "associations": {
-            "product_option_values": [{"id": "1"}, {"id": "2"}],
-            "images": [{"id": "2"}],
-        },
+        "associations": {"product_option_values": [{"id": "1"}, {"id": "2"}], "images": [{"id": "2"}],},
     }
 }
 PRESTASHOP_PRODUCT_OPTION_VALUE_1 = {
-    "product_option_value": {
-        "id": 1,
-        "id_attribute_group": "1",
-        "color": "",
-        "position": "0",
-        "name": "S",
-    }
+    "product_option_value": {"id": 1, "id_attribute_group": "1", "color": "", "position": "0", "name": "S",}
 }
 PRESTASHOP_PRODUCT_OPTION_VALUE_2 = {
-    "product_option_value": {
-        "id": 2,
-        "id_attribute_group": "2",
-        "color": "#AAB2BD",
-        "position": "0",
-        "name": "Grey",
-    }
+    "product_option_value": {"id": 2, "id_attribute_group": "2", "color": "#AAB2BD", "position": "0", "name": "Grey",}
 }

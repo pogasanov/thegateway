@@ -20,6 +20,9 @@ Save **email** and **password** for admin.
 7. Follow up with https://devdocs.prestashop.com/1.7/development/webservice/tutorials/provide-access/ describing process of enabling API.
 Save **Key**
 
+8. If Prestashop is using more then one language then PRESTASHOP_LANGUAGE_ID environmental variable should be set.
+To find it go to: https://127.0.0.1:8080/admin1/ -> Improve -> International -> Localization -> Languages
+
 ## Running
 
 ### Locally
@@ -47,7 +50,7 @@ Save **Key**
     ```
 3. Run script using network name and internal ip
 ```
-docker run --network prestashop_default --env PRESTASHOP_BASE_URL=http://172.28.0.3 -it prestashop-importer
+docker run --network prestashop_default --env PRESTASHOP_BASE_URL=http://172.28.0.3 --env PRESTASHOP_LANGUAGE_ID=1 -it prestashop-importer
 ```
 
 **Note - On prestashop install it will save shop url as `http://127.0.0.1:8080`. When script runs from docker network, it will be constantly redirected to that url instead of internal (http://127.28.0.1 in my example). You will need to fix database table row in `ps_shop_url` to your ip address.**
