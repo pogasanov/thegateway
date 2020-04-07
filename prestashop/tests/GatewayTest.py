@@ -2,8 +2,8 @@ from unittest import TestCase, mock
 
 import responses
 
-from exporters import Gateway
-from models import Product
+from gateway.gateway import Gateway
+from gateway.models import Product
 from .gateway_responses import GATEWAY_PRODUCT, GATEWAY_TAG
 
 
@@ -58,7 +58,7 @@ class GatewayTest(TestCase):
 
     def test_can_create_product(self):
         product = Product(name='abc', price=12)
-        self.gateway.create_product([product])
+        self.gateway.create_products([product])
 
     def test_can_upload_image(self):
         new_url = self.gateway.upload_image(b'abc')
@@ -66,7 +66,7 @@ class GatewayTest(TestCase):
 
     @mock.patch("exporters.Gateway._get_tag", return_value=None)
     def test_create_tag_which_doesnt_exist(self, mock_get_tag):
-        tag = self.gateway._create_tag("test")
+        tag = self.gateway.create_tag("test")
         assert mock_get_tag.called
         assert len(responses.calls) == 1
         assert responses.calls[0].request.url == f"{self.BASE_URL}/webshops/{self.SHOP_ID}/tags/"
@@ -74,7 +74,7 @@ class GatewayTest(TestCase):
 
     @mock.patch("exporters.Gateway._get_tag", return_value=GATEWAY_TAG)
     def test_create_tag_which_exists(self, mock_get_tag):
-        tag = self.gateway._create_tag("test")
+        tag = self.gateway.create_tag("test")
         assert mock_get_tag.called
         assert len(responses.calls) == 0
         assert tag == GATEWAY_TAG["guid"]
@@ -99,7 +99,7 @@ class GatewayTest(TestCase):
                                    'message': f'"Tag ({expected_tag_guid}) already exists"'
                                },
                                status=409)
-            tag = self.gateway._create_tag("test")
+            tag = self.gateway.create_tag("test")
             assert responses_mock.calls[1].request.url == f"{self.BASE_URL}/webshops/{self.SHOP_ID}/tags/"
             assert responses_mock.calls[1].response.status_code == 409
             assert tag == expected_tag_guid

@@ -1,4 +1,5 @@
 from dataclasses import dataclass, field
+from decimal import Decimal
 from typing import List
 
 from utils.io import ResponseStream
@@ -14,8 +15,8 @@ class Image:
 @dataclass
 class Product:
     name: str
-    price: float
-    stock: float = 0
+    price: Decimal
+    stock: Decimal = 0
     description: str = ''
     description_short: str = ''
     sku: str = ''

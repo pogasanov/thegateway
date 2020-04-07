@@ -2,7 +2,8 @@ import logging
 import os
 
 import click
-from exporters import Gateway
+
+from gateway.gateway import Gateway
 from importers import Prestashop
 
 
@@ -20,14 +21,8 @@ def run_import(get_variants):
     importer = Prestashop(PRESTASHOP_BASE_URL, PRESTASHOP_API_KEY, IMAGE_URL_PREFIX, language_id=LANGUAGE_ID)
     exporter = Gateway(GATEWAY_BASE_URL, GATEWAY_SHOP_ID, GATEWAY_SECRET, IMAGE_URL_PREFIX)
 
-    if get_variants:
-        importer.get_variants()
-        print(importer.variants)
-        # TODO: Do variants.
-        variant_lists = importer.build_products()
-    else:
-        for product in importer.build_products():
-            exporter.create_product(product)
+    for product in importer.build_products():
+        exporter.create_products(product)
 
 
 if __name__ == '__main__':
