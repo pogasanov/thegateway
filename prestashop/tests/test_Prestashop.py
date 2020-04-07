@@ -2,7 +2,7 @@ from unittest import TestCase
 
 import responses
 
-from prestashop.src.importers import Prestashop
+from prestashop.importers import Prestashop
 from utils.io import ResponseStream
 from .prestashop_responses import (
     PRESTASHOP_PRODUCTS,

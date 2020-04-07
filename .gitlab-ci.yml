@@ -8,9 +8,7 @@ test:
     key: "$CI_PROJECT_ID"
 
   script:
-    - pip install -r requirements.txt
-    - black --check .
-    - pylint-fail-under --fail_under 7.0 $PWD # this can be changed after reaching 10/10 score
-    - coverage run -m unittest
-    - coverage report
+    - make install-lint-dep
+    - make lint-test
+    - make test
   coverage: '/TOTAL.*\s(\d+)%/'

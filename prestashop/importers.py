@@ -43,9 +43,9 @@ class Prestashop:
         Just a wrapper to expose requests HTTP method calls without passing all the auth etc params every time.
         """
         fn = getattr(requests, method)
-        return fn(**self._build_requests_paramters(endpoint))
+        return fn(**self._build_requests_parameters(endpoint))
 
-    def _build_requests_paramters(self, endpoint):
+    def _build_requests_parameters(self, endpoint):
         return {
             "url": f"{self.API_HOSTNAME}/api/{endpoint}",
             "auth": (self.API_KEY, ""),
@@ -173,7 +173,7 @@ class Prestashop:
             yield self.fetch_single_product(p)
 
     def download_image(self, product_id, image_id):
-        image_url = self._build_requests_paramters(f"images/products/{product_id}/{image_id}")
+        image_url = self._build_requests_parameters(f"images/products/{product_id}/{image_id}")
         return download_image(**image_url)
 
 
