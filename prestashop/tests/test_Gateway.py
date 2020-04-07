@@ -1,9 +1,12 @@
+import io
+from decimal import Decimal
 from unittest import TestCase, mock
 
 import responses
 
-from exporters import Gateway
-from models import Product
+from gateway.gateway import Gateway
+from gateway.models import Product, Image
+from utils.io import ResponseStream
 from .gateway_responses import GATEWAY_PRODUCT, GATEWAY_TAG
 
 
@@ -61,16 +64,22 @@ class GatewayTest(TestCase):
         self.assertEqual(self.gateway.token, EXPECTED_TOKEN)
 
     def test_can_create_product(self):
-        product = Product(name="abc", price=12, vat_percent=23)
-        self.gateway.create_product([product])
+        product = Product(name="abc", price=Decimal("12.0"), vat_percent=23)
+        self.gateway.create_products([product])
 
     def test_can_upload_image(self):
-        new_url = self.gateway.upload_image(b"abc")
+        new_url = self.gateway.upload_image(
+            Image(
+                filename="abc.jpeg",
+                mimetype="image/jpeg",
+                data=ResponseStream(io.BytesIO(b"abc")),
+            )
+        )
         self.assertEqual(new_url, "http://dummy.com/abc")
 
-    @mock.patch("exporters.Gateway._get_tag", return_value=None)
+    @mock.patch("gateway.gateway.Gateway._get_tag", return_value=None)
     def test_create_tag_which_doesnt_exist(self, mock_get_tag):
-        tag = self.gateway._create_tag("test")
+        tag = self.gateway.create_tag("test")
         assert mock_get_tag.called
         assert len(responses.calls) == 1
         assert (
@@ -79,9 +88,9 @@ class GatewayTest(TestCase):
         )
         assert tag == GATEWAY_TAG["guid"]
 
-    @mock.patch("exporters.Gateway._get_tag", return_value=GATEWAY_TAG)
+    @mock.patch("gateway.gateway.Gateway._get_tag", return_value=GATEWAY_TAG)
     def test_create_tag_which_exists(self, mock_get_tag):
-        tag = self.gateway._create_tag("test")
+        tag = self.gateway.create_tag("test")
         assert mock_get_tag.called
         assert len(responses.calls) == 0
         assert tag == GATEWAY_TAG["guid"]
@@ -110,7 +119,7 @@ class GatewayTest(TestCase):
                 },
                 status=409,
             )
-            tag = self.gateway._create_tag("test")
+            tag = self.gateway.create_tag("test")
             assert (
                 responses_mock.calls[1].request.url
                 == f"{self.BASE_URL}/webshops/{self.SHOP_ID}/tags/"

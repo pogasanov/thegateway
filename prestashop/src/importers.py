@@ -6,8 +6,8 @@ from typing import List
 import requests
 from simplejson import JSONDecodeError
 
-from models import Product, Image
-from utils.io import ResponseStream
+from gateway.models import Product
+from gateway.utils import download_image
 
 logger = logging.getLogger(__name__)
 
@@ -18,10 +18,8 @@ class Prestashop:
         self.API_KEY = API_KEY
         self.imageurl_prefix = imageurl_prefix
         self.products = dict()
-        self.variants = dict()
         self.variants_reverse = dict()
         self.product_options = dict()
-        self.strings_by_reference = language_id is not None
         self.language_id = language_id
 
     def get_variants(self):
@@ -34,35 +32,31 @@ class Prestashop:
             product_option_values = self._ids_to_list(
                 data["associations"]["product_option_values"]
             )
-            if self.strings_by_reference:
+
+            if self.language_id:
                 name = self._get_by_id(self.language_id, data["public_name"])
             else:
                 name = data["public_name"]
-            self.variants[id] = dict(name=name, options=product_option_values)
+
             for value in product_option_values:
                 self.variants_reverse[value] = name
 
-    def invoke(self, endpoint, method, output_format=None, stream=False):
+    def invoke(self, endpoint, method):
         """
         Just a wrapper to expose requests HTTP method calls without passing all the auth etc params every time.
         """
         fn = getattr(requests, method)
-        if output_format:
-            params = dict(output_format=output_format)
-        else:
-            params = dict()
-        return fn(
-            f"{self.API_HOSTNAME}/api/{endpoint}",
-            auth=(self.API_KEY, ""),
-            params=params,
-            stream=stream,
-        )
+        return fn(**self._build_requests_paramters(endpoint))
 
-    def head(self, endpoint):
-        return self.invoke(endpoint, "head")
+    def _build_requests_paramters(self, endpoint):
+        return {
+            "url": f"{self.API_HOSTNAME}/api/{endpoint}",
+            "auth": (self.API_KEY, ""),
+            "params": {"output_format": "JSON"},
+        }
 
-    def get(self, endpoint, output_format="JSON"):
-        response = self.invoke(endpoint, "get", output_format)
+    def get(self, endpoint):
+        response = self.invoke(endpoint, "get")
         try:
             return response.json()
         except JSONDecodeError:
@@ -101,7 +95,7 @@ class Prestashop:
         )
         return int(tax_percent)
 
-    def fetch_single_product_variants(self, product_id) -> List[Product]:
+    def fetch_single_product(self, product_id) -> List[Product]:
         products = list()
         result = self.get(f"products/{product_id}")
         data = result["product"]
@@ -159,15 +153,29 @@ class Prestashop:
                         "product_option_value"
                     ]
                     self.product_options[option_value] = variant_
-                value = variant_["name"]
+
+                if self.language_id:
+                    value = self._get_by_id(self.language_id, variant_["name"])
+                else:
+                    value = variant_["name"]
                 key = self.variants_reverse[option_value]
                 variant_data[key] = value
 
             # Translation support
-            if self.strings_by_reference:
-                name = self._get_by_id(1, data["name"])
-                description = strip_tags(data["description"][0]["value"])
-                description_short = strip_tags(data["description_short"][1]["value"])
+            if self.language_id:
+                name = self._get_by_id(self.language_id, data["name"])
+                description = strip_tags(
+                    next(x for x in data["description"] if x["id"] == self.language_id)[
+                        "value"
+                    ]
+                )
+                description_short = strip_tags(
+                    next(
+                        x
+                        for x in data["description_short"]
+                        if x["id"] == self.language_id
+                    )["value"]
+                )
             else:
                 name = data["name"]
                 description = strip_tags(data["description"])
@@ -194,50 +202,19 @@ class Prestashop:
         logger.info(products)
         return products
 
-    def fetch_single_product(self, product_id):
-        result = self.get(f"products/{product_id}")
-
-        data = result["product"]
-        associations = data["associations"]
-        image_ids = self._ids_to_list(associations["images"])
-        stock_level_mapping = {
-            int(d["id_product_attribute"]): int(d["id"])
-            for d in associations["stock_availables"]
-        }
-        stock_level = self.get(f"stock_availables/{stock_level_mapping[product_id]}")[
-            "stock_available"
-        ]["quantity"]
-        return Product(
-            name=self._get_by_id(1, data["name"]),
-            price=Decimal(data["price"]),
-            description=strip_tags(data["description"][0]["value"]),
-            description_short=strip_tags(data["description_short"][1]["value"]),
-            sku=data["reference"],
-            stock=Decimal(stock_level),
-            # images=images
-        )
-
-    def build_products(self):  # TODO: Add "with variants"
+    def build_products(self):
         self.get_variants()
         products = self.fetch_products_ids()
         total = len(products)
-        for i, p in enumerate(products):
+        for i, p in enumerate(products, 1):
             print(f"{i}/{total}")
-            yield self.fetch_single_product_variants(p)
+            yield self.fetch_single_product(p)
 
     def download_image(self, product_id, image_id):
-        image_url = f"images/products/{product_id}/{image_id}"
-        r = self.head(image_url)
-        sha1 = r.headers.get("Content-Sha1", f"{product_id}{image_id}")
-        mimetype = r.headers["Content-Type"]
-        filename = f'{sha1}.{mimetype.rsplit("/")[-1]}'
-
-        logger.debug(filename)
-
-        stream = ResponseStream(
-            self.invoke(image_url, "get", stream=True).iter_content(64)
+        image_url = self._build_requests_paramters(
+            f"images/products/{product_id}/{image_id}"
         )
-        return Image(filename=filename, mimetype=mimetype, data=stream)
+        return download_image(**image_url)
 
 
 def strip_tags(in_str):

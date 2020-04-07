@@ -3,7 +3,7 @@ from unittest import TestCase
 
 import responses
 
-from importers import Prestashop
+from prestashop.src.importers import Prestashop
 from .prestashop_responses import *
 
 
@@ -32,8 +32,7 @@ class PrestashopTest(TestCase):
         self.assertEqual(product.sku, "demo_1")
         self.assertEqual(len(product.images), 2)
         for image in product.images:
-            with image as f:
-                content = f.read()
+            content = image.data.read()
             self.assertEqual(content, self.DUMMY_IMAGE)
 
     def assertIsProduct2(self, product):
@@ -49,7 +48,7 @@ class PrestashopTest(TestCase):
             "Regular fit, round neckline, short sleeves. Made of extra long staple pima cotton. \r\n",
         )
         self.assertEqual(product.sku, "demo_1")
-        self.assertEqual(len(product.images), 0)
+        self.assertEqual(len(product.images), 2)
 
     def setUp(self):
         responses.start()
@@ -213,9 +212,12 @@ class PrestashopTest(TestCase):
 
     def test_can_fetch_prestashop_single_product(self):
         ID = 1
-
+        self.importer.variants_reverse[1] = "Size"
+        self.importer.variants_reverse[2] = "Size"
+        self.importer.variants_reverse[3] = "Color"
+        self.importer.variants_reverse[4] = "Color"
         product = self.importer.fetch_single_product(ID)
-        self.assertIsProduct1(product)
+        self.assertIsProduct1(product[0])
 
     def test_can_build_products_list(self):
         products = list(self.importer.build_products())
@@ -224,20 +226,9 @@ class PrestashopTest(TestCase):
         self.assertIsProduct2(products[1][0])
 
     def test_can_download_image(self):
-        IMAGE_URL = f"{self.BASE_URL}/api/images/products/1/1"
-        image_file = self.importer.download_image(IMAGE_URL)
-        with image_file as f:
-            content = f.read()
+        image_file = self.importer.download_image(1, 1)
+        content = image_file.data.read()
         self.assertEqual(content, self.DUMMY_IMAGE)
-
-    def test_can_fetch_product_images(self):
-        ID = 1
-        images = self.importer.fetch_product_images(ID)
-        self.assertEqual(len(images), 2)
-        for image in images:
-            with image as f:
-                content = f.read()
-            self.assertEqual(content, self.DUMMY_IMAGE)
 
     def test_get_percent_value_from_tax_rule_group_name(self):
         name = "PL Standard Rate (23%)"
@@ -249,11 +240,9 @@ class PrestashopTest(TestCase):
         self.assertEqual(tax_percent, 23)
 
     def test_product_variants_have_vat_percent_set(self):
-        self.importer.variants[1] = dict(name="Size", options=[1, 2])
         self.importer.variants_reverse[1] = "Size"
         self.importer.variants_reverse[2] = "Size"
-        self.importer.variants[2] = dict(name="Color", options=[3, 4])
         self.importer.variants_reverse[3] = "Color"
         self.importer.variants_reverse[4] = "Color"
-        product_variants = self.importer.fetch_single_product_variants(1)
+        product_variants = self.importer.fetch_single_product(1)
         self.assertTrue(all(map(lambda x: x.vat_percent == 23, product_variants)))
