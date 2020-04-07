@@ -3,10 +3,10 @@ from unittest import TestCase, mock
 
 import responses
 
+from gateway.gateway import Gateway
+from gateway.models import Product, Image
 from utils.io import ResponseStream
 from .gateway_responses import GATEWAY_PRODUCT, GATEWAY_TAG
-from prestashop.src.exporters import Gateway
-from prestashop.src.models import Product, Image
 
 
 class GatewayTest(TestCase):
@@ -21,15 +21,13 @@ class GatewayTest(TestCase):
     def setUp(self):
         responses.start()
         responses.add(
-            responses.POST, f"{self.BASE_URL}/organizations/{self.SHOP_ID}/products/", json=GATEWAY_PRODUCT, status=200,
+            responses.POST, f"{self.BASE_URL}/organizations/{self.SHOP_ID}/products/", json=GATEWAY_PRODUCT, status=200
         )
         responses.add(
-            responses.POST, f"{self.BASE_URL}/dashboard/webshops/{self.SHOP_ID}/products", json={}, status=200,
+            responses.POST, f"{self.BASE_URL}/dashboard/webshops/{self.SHOP_ID}/products", json={}, status=200
         )
-        responses.add(
-            responses.POST, f"{self.BASE_URL}/webshops/{self.SHOP_ID}/tags/", json=GATEWAY_TAG, status=201,
-        )
-        responses.add(responses.GET, f"{self.BASE_URL}/webshops/{self.SHOP_ID}/tags/", json=[], status=200,),
+        responses.add(responses.POST, f"{self.BASE_URL}/webshops/{self.SHOP_ID}/tags/", json=GATEWAY_TAG, status=201)
+        responses.add(responses.GET, f"{self.BASE_URL}/webshops/{self.SHOP_ID}/tags/", json=[], status=200),
         responses.add(
             responses.POST,
             f"{self.BASE_URL}/uploads/",
@@ -48,7 +46,7 @@ class GatewayTest(TestCase):
 
     def test_can_create_product(self):
         product = Product(name="abc", price=12)
-        self.gateway.create_product([product])
+        self.gateway.create_products([product])
 
     def test_can_upload_image(self):
         new_url = self.gateway.upload_image(
@@ -56,17 +54,17 @@ class GatewayTest(TestCase):
         )
         self.assertEqual(new_url, "http://dummy.com/abc")
 
-    @mock.patch("prestashop.src.exporters.Gateway._get_tag", return_value=None)
+    @mock.patch("gateway.gateway.Gateway._get_tag", return_value=None)
     def test_create_tag_which_doesnt_exist(self, mock_get_tag):
-        tag = self.gateway._create_tag("test")
+        tag = self.gateway.create_tag("test")
         assert mock_get_tag.called
         assert len(responses.calls) == 1
         assert responses.calls[0].request.url == f"{self.BASE_URL}/webshops/{self.SHOP_ID}/tags/"
         assert tag == GATEWAY_TAG["guid"]
 
-    @mock.patch("prestashop.src.exporters.Gateway._get_tag", return_value=GATEWAY_TAG)
+    @mock.patch("gateway.gateway.Gateway._get_tag", return_value=GATEWAY_TAG)
     def test_create_tag_which_exists(self, mock_get_tag):
-        tag = self.gateway._create_tag("test")
+        tag = self.gateway.create_tag("test")
         assert mock_get_tag.called
         assert len(responses.calls) == 0
         assert tag == GATEWAY_TAG["guid"]
@@ -79,14 +77,14 @@ class GatewayTest(TestCase):
     def test_create_tag_with_409_response(self):
         with responses.RequestsMock() as responses_mock:
             expected_tag_guid = "403b62c1-5370-53ad-b71d-8ed1916c94f7"
-            responses_mock.add(responses.GET, f"{self.BASE_URL}/webshops/{self.SHOP_ID}/tags/", json=[], status=200,),
+            responses_mock.add(responses.GET, f"{self.BASE_URL}/webshops/{self.SHOP_ID}/tags/", json=[], status=200),
             responses_mock.add(
                 responses.POST,
                 f"{self.BASE_URL}/webshops/{self.SHOP_ID}/tags/",
-                json={"code": 409, "error": "409 Conflict", "message": f'"Tag ({expected_tag_guid}) already exists"',},
+                json={"code": 409, "error": "409 Conflict", "message": f'"Tag ({expected_tag_guid}) already exists"'},
                 status=409,
             )
-            tag = self.gateway._create_tag("test")
+            tag = self.gateway.create_tag("test")
             assert responses_mock.calls[1].request.url == f"{self.BASE_URL}/webshops/{self.SHOP_ID}/tags/"
             assert responses_mock.calls[1].response.status_code == 409
             assert tag == expected_tag_guid

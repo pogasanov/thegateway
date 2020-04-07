@@ -13,7 +13,7 @@ from .prestashop_responses import (
     PRESTASHOP_IMAGES_1,
     PRESTASHOP_IMAGES_2,
 )
-from ..src.models import Image
+from gateway.models import Image
 
 
 class PrestashopTest(TestCase):
@@ -118,12 +118,3 @@ class PrestashopTest(TestCase):
         with image_file as f:
             content = f.read()
         self.assertEqual(content, self.DUMMY_IMAGE)
-
-    def test_can_fetch_product_images(self):
-        ID = 1
-        images = self.importer.fetch_product_images(ID)
-        self.assertEqual(len(images), 2)
-        for image in images:
-            with image as f:
-                content = f.read()
-            self.assertEqual(content, self.DUMMY_IMAGE)
