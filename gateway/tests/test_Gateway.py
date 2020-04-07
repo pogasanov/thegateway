@@ -1,4 +1,5 @@
 import io
+from decimal import Decimal
 from unittest import TestCase, mock
 
 import responses
@@ -21,13 +22,15 @@ class GatewayTest(TestCase):
     def setUp(self):
         responses.start()
         responses.add(
-            responses.POST, f"{self.BASE_URL}/organizations/{self.SHOP_ID}/products/", json=GATEWAY_PRODUCT, status=200
+            responses.POST, f"{self.BASE_URL}/organizations/{self.SHOP_ID}/products/", json=GATEWAY_PRODUCT, status=200,
         )
         responses.add(
-            responses.POST, f"{self.BASE_URL}/dashboard/webshops/{self.SHOP_ID}/products", json={}, status=200
+            responses.POST, f"{self.BASE_URL}/dashboard/webshops/{self.SHOP_ID}/products", json={}, status=200,
         )
-        responses.add(responses.POST, f"{self.BASE_URL}/webshops/{self.SHOP_ID}/tags/", json=GATEWAY_TAG, status=201)
-        responses.add(responses.GET, f"{self.BASE_URL}/webshops/{self.SHOP_ID}/tags/", json=[], status=200),
+        responses.add(
+            responses.POST, f"{self.BASE_URL}/webshops/{self.SHOP_ID}/tags/", json=GATEWAY_TAG, status=201,
+        )
+        responses.add(responses.GET, f"{self.BASE_URL}/webshops/{self.SHOP_ID}/tags/", json=[], status=200,),
         responses.add(
             responses.POST,
             f"{self.BASE_URL}/uploads/",
@@ -45,7 +48,7 @@ class GatewayTest(TestCase):
         self.assertEqual(self.gateway.token, EXPECTED_TOKEN)
 
     def test_can_create_product(self):
-        product = Product(name="abc", price=12)
+        product = Product(name="abc", price=Decimal("12.0"), vat_percent=23)
         self.gateway.create_products([product])
 
     def test_can_upload_image(self):
@@ -77,11 +80,11 @@ class GatewayTest(TestCase):
     def test_create_tag_with_409_response(self):
         with responses.RequestsMock() as responses_mock:
             expected_tag_guid = "403b62c1-5370-53ad-b71d-8ed1916c94f7"
-            responses_mock.add(responses.GET, f"{self.BASE_URL}/webshops/{self.SHOP_ID}/tags/", json=[], status=200),
+            responses_mock.add(responses.GET, f"{self.BASE_URL}/webshops/{self.SHOP_ID}/tags/", json=[], status=200,),
             responses_mock.add(
                 responses.POST,
                 f"{self.BASE_URL}/webshops/{self.SHOP_ID}/tags/",
-                json={"code": 409, "error": "409 Conflict", "message": f'"Tag ({expected_tag_guid}) already exists"'},
+                json={"code": 409, "error": "409 Conflict", "message": f'"Tag ({expected_tag_guid}) already exists"',},
                 status=409,
             )
             tag = self.gateway.create_tag("test")

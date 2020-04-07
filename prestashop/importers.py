@@ -1,6 +1,7 @@
 import logging
 import re
 from decimal import Decimal
+from typing import List
 
 import requests
 from simplejson import JSONDecodeError
@@ -27,7 +28,7 @@ class Prestashop:
         """
         ids = [d["id"] for d in self.get("product_options")["product_options"]]
         for id in ids:
-            data = self.get(f"/product_options/{id}")["product_option"]
+            data = self.get(f"product_options/{id}")["product_option"]
             product_option_values = self._ids_to_list(data["associations"]["product_option_values"])
 
             if self.language_id:
@@ -79,10 +80,21 @@ class Prestashop:
         result = self.get("products")
         return self._ids_to_list(result["products"])
 
-    def fetch_single_product(self, product_id):
+    @staticmethod
+    def _get_percent_value_from_tax_rule_group_name(name: str):
+        return re.search(r"\((.*%)\)", name).group(1).rstrip("%")
+
+    def _get_tax_percent(self, tax_rule_group_id) -> int:
+        tax_rule_group = self.get(f"tax_rule_groups/{tax_rule_group_id}")["tax_rule_group"]
+        tax_percent = self._get_percent_value_from_tax_rule_group_name(tax_rule_group["name"])
+        return int(tax_percent)
+
+    def fetch_single_product(self, product_id) -> List[Product]:
         products = list()
         result = self.get(f"products/{product_id}")
         data = result["product"]
+        tax_rule_group_id = data["id_tax_rules_group"]
+        tax_percent = self._get_tax_percent(tax_rule_group_id)
         associations = data["associations"]
         try:
             image_ids = self._ids_to_list(associations["images"])
@@ -103,12 +115,12 @@ class Prestashop:
             variant_data = dict()
             if get_variants:
                 # Try to load variants from "combinations"
-                combination = self.get(f"/combinations/{id_}")["combination"]
+                combination = self.get(f"combinations/{id_}")["combination"]
                 logger.info(combination)
                 sku_ = combination["reference"]
                 sku = sku_ if sku_ else data["reference"]
-                price_ = combination["price"]
-                price = Decimal(price_ if price_ else data["price"])
+                price_ = Decimal(combination["price"])
+                price = Decimal(price_ if price_ and price_ != 0 else data["price"])
                 associations = combination["associations"]
             else:
                 # Ok, this shop has no combinations.
@@ -124,7 +136,7 @@ class Prestashop:
                 try:
                     variant_ = self.product_options[option_value]
                 except KeyError:
-                    variant_ = self.get(f"/product_option_values/{option_value}")["product_option_value"]
+                    variant_ = self.get(f"product_option_values/{option_value}")["product_option_value"]
                     self.product_options[option_value] = variant_
 
                 if self.language_id:
@@ -158,6 +170,7 @@ class Prestashop:
                     sku=sku,
                     variant_data=variant_data,
                     stock=Decimal(stock_level),
+                    vat_percent=tax_percent,
                     images=images,
                 )
             )

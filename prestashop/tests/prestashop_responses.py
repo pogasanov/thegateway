@@ -73,29 +73,10 @@ PRESTASHOP_PRODUCT_1 = {
         "associations": {
             "categories": [{"id": "2"}, {"id": "3"}, {"id": "4"}],
             "images": [{"id": "1"}, {"id": "2"}],
-            "combinations": [
-                {"id": "1"},
-                {"id": "2"},
-                {"id": "3"},
-                {"id": "4"},
-                {"id": "5"},
-                {"id": "6"},
-                {"id": "7"},
-                {"id": "8"},
-            ],
-            "product_option_values": [{"id": "1"}, {"id": "11"}, {"id": "2"}, {"id": "8"}, {"id": "3"}, {"id": "4"}],
-            "product_features": [{"id": "1", "id_feature_value": "4"}, {"id": "2", "id_feature_value": "8"}],
-            "stock_availables": [
-                {"id": "1", "id_product_attribute": "0"},
-                {"id": "20", "id_product_attribute": "1"},
-                {"id": "21", "id_product_attribute": "2"},
-                {"id": "22", "id_product_attribute": "3"},
-                {"id": "23", "id_product_attribute": "4"},
-                {"id": "24", "id_product_attribute": "5"},
-                {"id": "25", "id_product_attribute": "6"},
-                {"id": "26", "id_product_attribute": "7"},
-                {"id": "27", "id_product_attribute": "8"},
-            ],
+            "combinations": [{"id": "1"},],
+            "product_option_values": [{"id": "1"}, {"id": "2"},],
+            "product_features": [{"id": "1", "id_feature_value": "4"}, {"id": "2", "id_feature_value": "8"},],
+            "stock_availables": [{"id": "1", "id_product_attribute": "0"},],
         },
     }
 }
@@ -173,29 +154,10 @@ PRESTASHOP_PRODUCT_2 = {
         "associations": {
             "categories": [{"id": "2"}, {"id": "3"}, {"id": "4"}],
             "images": [{"id": "1"}, {"id": "2"}],
-            "combinations": [
-                {"id": "1"},
-                {"id": "2"},
-                {"id": "3"},
-                {"id": "4"},
-                {"id": "5"},
-                {"id": "6"},
-                {"id": "7"},
-                {"id": "8"},
-            ],
-            "product_option_values": [{"id": "1"}, {"id": "11"}, {"id": "2"}, {"id": "8"}, {"id": "3"}, {"id": "4"}],
-            "product_features": [{"id": "1", "id_feature_value": "4"}, {"id": "2", "id_feature_value": "8"}],
-            "stock_availables": [
-                {"id": "1", "id_product_attribute": "0"},
-                {"id": "20", "id_product_attribute": "1"},
-                {"id": "21", "id_product_attribute": "2"},
-                {"id": "22", "id_product_attribute": "3"},
-                {"id": "23", "id_product_attribute": "4"},
-                {"id": "24", "id_product_attribute": "5"},
-                {"id": "25", "id_product_attribute": "6"},
-                {"id": "26", "id_product_attribute": "7"},
-                {"id": "27", "id_product_attribute": "8"},
-            ],
+            "combinations": [{"id": "1"},],
+            "product_option_values": [{"id": "1"}, {"id": "2"},],
+            "product_features": [{"id": "1", "id_feature_value": "4"}, {"id": "2", "id_feature_value": "8"},],
+            "stock_availables": [{"id": "1", "id_product_attribute": "0"}, {"id": "2", "id_product_attribute": "1"},],
         },
     }
 }
@@ -203,3 +165,66 @@ PRESTASHOP_STOCK_1 = {"stock_available": {"quantity": 1}}
 PRESTASHOP_STOCK_2 = {"stock_available": {"quantity": 2}}
 PRESTASHOP_IMAGES_1 = b'<?xml version="1.0" encoding="UTF-8"?>\n<prestashop xmlns:xlink="http://www.w3.org/1999/xlink">\n<image id="1">\n<declination id="1" xlink:href="http://123.456.789.0/api/images/products/1/1"/>\n<declination id="2" xlink:href="http://123.456.789.0/api/images/products/1/2"/>\n</image>\n</prestashop>\n'
 PRESTASHOP_IMAGES_2 = b'<?xml version="1.0" encoding="UTF-8"?>\n<prestashop xmlns:xlink="http://www.w3.org/1999/xlink">\n<image id="2">\n</image>\n</prestashop>\n'
+PRESTASHOP_PRODUCT_OPTIONS = {"product_options": [{"id": 1}, {"id": 2}]}
+PRESTASHOP_PRODUCT_OPTIONS_1 = {
+    "product_option": {
+        "id": 1,
+        "is_color_group": "0",
+        "group_type": "select",
+        "position": "0",
+        "name": "Size",
+        "public_name": "Size",
+        "associations": {"product_option_values": [{"id": "1"}, {"id": "2"},]},
+    }
+}
+PRESTASHOP_PRODUCT_OPTIONS_2 = {
+    "product_option": {
+        "id": 2,
+        "is_color_group": "1",
+        "group_type": "color",
+        "position": "1",
+        "name": "Color",
+        "public_name": "Color",
+        "associations": {"product_option_values": [{"id": "3"}, {"id": "4"},]},
+    }
+}
+PRESTASHOP_TAX_RULE_GROUP_1 = {
+    "tax_rule_group": {
+        "id": 1,
+        "name": "PL Standard Rate (23%)",
+        "active": "1",
+        "deleted": "0",
+        "date_add": "2020-04-02 13:05:56",
+        "date_upd": "2020-04-02 13:05:56",
+    }
+}
+PRESTASHOP_COMBINATION_1 = {
+    "combination": {
+        "id": 1,
+        "id_product": "1",
+        "location": "",
+        "ean13": "",
+        "isbn": "",
+        "upc": "",
+        "quantity": "300",
+        "reference": "demo_1",
+        "supplier_reference": "",
+        "wholesale_price": "0.000000",
+        "price": "0.000000",
+        "ecotax": "0.000000",
+        "weight": "0.000000",
+        "unit_price_impact": "0.000000",
+        "minimal_quantity": "1",
+        "low_stock_threshold": None,
+        "low_stock_alert": "0",
+        "default_on": "1",
+        "available_date": "0000-00-00",
+        "associations": {"product_option_values": [{"id": "1"}, {"id": "2"}], "images": [{"id": "2"}],},
+    }
+}
+PRESTASHOP_PRODUCT_OPTION_VALUE_1 = {
+    "product_option_value": {"id": 1, "id_attribute_group": "1", "color": "", "position": "0", "name": "S",}
+}
+PRESTASHOP_PRODUCT_OPTION_VALUE_2 = {
+    "product_option_value": {"id": 2, "id_attribute_group": "2", "color": "#AAB2BD", "position": "0", "name": "Grey",}
+}

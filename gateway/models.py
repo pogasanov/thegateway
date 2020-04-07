@@ -16,6 +16,7 @@ class Image:
 class Product:
     name: str
     price: Decimal
+    vat_percent: int
     stock: Decimal = 0
     description: str = ""
     description_short: str = ""

@@ -117,15 +117,10 @@ class Gateway:
             product_data = {
                 "base_price_type": "retail",
                 "cost_price": {"currency": "zł", "vat_percent": 0, "amount": 0},
-                "base_price": {
-                    "currency": "zł",
-                    "vat_percent": 23,
-                    # TODO: For now I think all products are Vat 23, but we need to keep in mind that this needs to come from the source
-                    "amount": product.price,
-                },
+                "base_price": {"currency": "zł", "vat_percent": product.vat_percent, "amount": product.price,},
                 "name": product.name,
+                "vat": f"VAT{product.vat_percent}",
                 "images": [self.upload_image(image) for image in product.images],
-                "vat": "VAT23",  # See above
             }
 
             if product.description:
