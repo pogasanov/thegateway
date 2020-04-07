@@ -27,44 +27,46 @@ class Gateway:
 
         self.token = self._build_token()
         self.session = requests.Session()
-        self.session.headers.update({'Authorization': f'Bearer {self.token}'})
+        self.session.headers.update({"Authorization": f"Bearer {self.token}"})
         self.tags_in_db = None
 
     @staticmethod
     def _generate_endpoints(base_url, shop_id):
         return {
-            'product': {
-                'list': f"{base_url}/dashboard/webshop_products/_query",
-                'create': f"{base_url}/dashboard/webshops/{shop_id}/products",
-                'delete': f"{base_url}/dashboard/webshops/{shop_id}/products/{{}}/"
+            "product": {
+                "list": f"{base_url}/dashboard/webshop_products/_query",
+                "create": f"{base_url}/dashboard/webshops/{shop_id}/products",
+                "delete": f"{base_url}/dashboard/webshops/{shop_id}/products/{{}}/",
             },
-            'organization': {
-                'product': {
-                    'delete': f"{base_url}/organizations/{shop_id}/products/{{}}/"
+            "organization": {
+                "product": {
+                    "delete": f"{base_url}/organizations/{shop_id}/products/{{}}/"
                 }
             },
-            'tag': {
-                'list': f"{base_url}/webshops/{shop_id}/tags/",
-                'create': f"{base_url}/webshops/{shop_id}/tags/",
-                'delete': f"{base_url}/webshops/{shop_id}/tags/{{}}/"
+            "tag": {
+                "list": f"{base_url}/webshops/{shop_id}/tags/",
+                "create": f"{base_url}/webshops/{shop_id}/tags/",
+                "delete": f"{base_url}/webshops/{shop_id}/tags/{{}}/",
             },
-            'image': {
-                'upload': f"{base_url}/uploads/"
-            }
+            "image": {"upload": f"{base_url}/uploads/"},
         }
 
     def _build_token(self):
         shop_guid = uuid.UUID(self.SHOP_ID)
         key = base64.b64decode(self.SECRET)
         return jwt.encode(
-            dict(iss=f"shop:{shop_guid}",
-                 organization_guid=str(shop_guid),
-                 groups=['shopkeeper']
-                 ), key, algorithm="HS256")
+            dict(
+                iss=f"shop:{shop_guid}",
+                organization_guid=str(shop_guid),
+                groups=["shopkeeper"],
+            ),
+            key,
+            algorithm="HS256",
+        )
 
     @staticmethod
     def _log_failed(data, response):
-        with open(f'failed_{uuid.uuid4()}.json', 'w+') as f:
+        with open(f"failed_{uuid.uuid4()}.json", "w+") as f:
             json.dump(data, f, use_decimal=True)
         logger.fatal(response.text)
 
@@ -73,16 +75,21 @@ class Gateway:
 
         constructed = list()
         for product in fetched:
-            constructed.append(Product(
-                name=product['name'],
-                price=Decimal(product['price']['base']['unit']['amount']),
-                stock=Decimal(product['stock_level']),
-                description=product['desc'],
-                description_short=product['brief'],
-                sku=product['sku'],
-                images=[download_image(url, default_filename=product['name']) for url in product['images']],
-                variant_data=product['data']['variants'] if product['data'] else []
-            ))
+            constructed.append(
+                Product(
+                    name=product["name"],
+                    price=Decimal(product["price"]["base"]["unit"]["amount"]),
+                    stock=Decimal(product["stock_level"]),
+                    description=product["desc"],
+                    description_short=product["brief"],
+                    sku=product["sku"],
+                    images=[
+                        download_image(url, default_filename=product["name"])
+                        for url in product["images"]
+                    ],
+                    variant_data=product["data"]["variants"] if product["data"] else [],
+                )
+            )
 
         grouped = list()
         for _, grouped_products in groupby(constructed, lambda x: x.name):
@@ -90,19 +97,22 @@ class Gateway:
         return grouped
 
     def _fetch_products(self):
-        response = self.session.post(self.ENDPOINTS['product']['list'],
-                                     json={
-                                         "dsl": {
-                                             "size": 100,
-                                             "sort": [{"timestamps.created": "desc"}, {"guid": "asc"}],
-                                             "query": {
-                                                 "bool": {
-                                                     "must": [{"match": {"owner_guid": self.SHOP_ID}}],
-                                                     "must_not": [{"exists": {"field": "archived"}}]
-                                                 }
-                                             }
-                                         }})
-        return response.json()['products']
+        response = self.session.post(
+            self.ENDPOINTS["product"]["list"],
+            json={
+                "dsl": {
+                    "size": 100,
+                    "sort": [{"timestamps.created": "desc"}, {"guid": "asc"}],
+                    "query": {
+                        "bool": {
+                            "must": [{"match": {"owner_guid": self.SHOP_ID}}],
+                            "must_not": [{"exists": {"field": "archived"}}],
+                        }
+                    },
+                }
+            },
+        )
+        return response.json()["products"]
 
     def create_products(self, product_variants):
         if len(product_variants) > 1:
@@ -114,28 +124,18 @@ class Gateway:
 
         payloads = list()
         for product in product_variants:
-            payload = {
-                "archived": False,
-                "for_sale": True
-            }
+            payload = {"archived": False, "for_sale": True}
             product_data = {
                 "base_price_type": "retail",
-                "cost_price":
-                    {
-                        "currency": "zł",
-                        "vat_percent": 0,
-                        "amount": 0
-                    },
-                "base_price":
-                    {
-                        "currency": "zł",
-                        "vat_percent": 23,
-                        # TODO: For now I think all products are Vat 23, but we need to keep in mind that this needs to come from the source
-                        "amount": product.price
-                    },
+                "cost_price": {"currency": "zł", "vat_percent": 0, "amount": 0},
+                "base_price": {
+                    "currency": "zł",
+                    "vat_percent": product.vat_percent,
+                    "amount": product.price,
+                },
                 "name": product.name,
+                "vat": f"VAT{product.vat_percent}",
                 "images": [self.upload_image(image) for image in product.images],
-                "vat": "VAT23",  # See above
             }
 
             if product.description:
@@ -148,43 +148,38 @@ class Gateway:
                 product_data["tag_guids"] = [variant_tag]
                 product_data["data"] = dict(variants=product.variant_data)
 
-            payload['product'] = product_data
+            payload["product"] = product_data
             # create product
             if product.stock:
                 payload["stock_level"] = product.stock
             payloads.append(payload)
 
         data = {"products": payloads}
-        response = self.session.post(self.ENDPOINTS['product']['create'],
-                                     json=data)
+        response = self.session.post(self.ENDPOINTS["product"]["create"], json=data)
         if response.status_code >= 400:
             self._log_failed(data, response)
 
     def delete_all_products(self):
         products = self._fetch_products()
         for product in products:
-            self.delete_product_by_id(product['guid'])
+            self.delete_product_by_id(product["guid"])
 
     def delete_product_by_id(self, id):
-        self.session.delete(self.ENDPOINTS['product']['delete'].format(id))
-        self.session.delete(self.ENDPOINTS['organization']['product']['delete'].format(id))
+        self.session.delete(self.ENDPOINTS["product"]["delete"].format(id))
+        self.session.delete(
+            self.ENDPOINTS["organization"]["product"]["delete"].format(id)
+        )
 
     def list_of_tags(self):
-        response = self.session.get(self.ENDPOINTS['tag']['list'])
+        response = self.session.get(self.ENDPOINTS["tag"]["list"])
         return response.json()
 
     def create_tag(self, name: str):
         tag = self._get_tag(name)
         if tag:
             return tag["guid"]
-        data = {
-            "name": name,
-            "type": "variant"
-        }
-        response = self.session.post(
-            self.ENDPOINTS['tag']['create'],
-            json=data
-        )
+        data = {"name": name, "type": "variant"}
+        response = self.session.post(self.ENDPOINTS["tag"]["create"], json=data)
         if response.status_code == 409:
             return self._get_tag_guid_from_conflict_message(response.json()["message"])
         if response.status_code >= 400:
@@ -206,25 +201,27 @@ class Gateway:
     def delete_all_tags(self):
         tags = self.list_of_tags()
         for tag in tags:
-            self.delete_tag_by_id(tag['guid'])
+            self.delete_tag_by_id(tag["guid"])
 
     def delete_tag_by_id(self, id):
-        self.session.delete(self.ENDPOINTS['tag']['delete'].format(id))
+        self.session.delete(self.ENDPOINTS["tag"]["delete"].format(id))
 
     def upload_image(self, image_content):
-        response = self.session.post(self.ENDPOINTS['image']['upload'],
-                                     json={
-                                         "filename": image_content.filename,
-                                         "content_type": image_content.mimetype
-                                     })
+        response = self.session.post(
+            self.ENDPOINTS["image"]["upload"],
+            json={
+                "filename": image_content.filename,
+                "content_type": image_content.mimetype,
+            },
+        )
         response.raise_for_status()
 
-        url = response.json()['url']
-        fields = response.json()['fields']
+        url = response.json()["url"]
+        fields = response.json()["fields"]
 
-        response = requests.post(url, fields, files={
-            'file': (image_content.filename, image_content.data)
-        })
+        response = requests.post(
+            url, fields, files={"file": (image_content.filename, image_content.data)}
+        )
         response.raise_for_status()
 
-        return url + fields['key']
+        return url + fields["key"]
