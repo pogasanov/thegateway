@@ -4,9 +4,9 @@ from unittest import TestCase, mock
 
 import responses
 
-from gateway.gateway import Gateway
-from gateway.models import Product, Image
-from utils.io import ResponseStream
+from gateway.gateway.gateway import Gateway
+from gateway.gateway.io import ResponseStream
+from gateway.gateway.models import Product, Image
 from .gateway_responses import GATEWAY_PRODUCT, GATEWAY_TAG
 
 

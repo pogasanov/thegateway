@@ -7,10 +7,9 @@ from itertools import groupby
 
 import requests
 import simplejson as json
-from jose import jwt
-
 from gateway.models import Product
 from gateway.utils import download_image
+from jose import jwt
 
 logger = logging.getLogger(__name__)
 
