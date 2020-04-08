@@ -1,0 +1,8 @@
+jose
+simplejson
+click
+requests
+python-jose[cryptography]
+
+# For testing only
+responses

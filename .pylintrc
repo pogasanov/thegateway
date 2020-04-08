@@ -1,0 +1,8 @@
+[MESSAGES CONTROL]
+disable=missing-docstring,bad-continuation
+
+[FORMAT]
+max-line-length=120
+
+[SIMILARITIES]
+ignore-imports=yes

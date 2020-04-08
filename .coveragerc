@@ -1,0 +1,7 @@
+[run]
+omit =
+    *site-packages*
+
+[report]
+omit =
+    *site-packages*
