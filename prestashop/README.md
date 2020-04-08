@@ -1,7 +1,33 @@
 # Prestashop importer
 
+Python script that downloads all products from **prestashop** and uploads to **gateway**. Includes following fields:
+* Name
+* Description
+* Short description
+* Price
+* Stock size
+* SKU (reference in prestashop)
+* VAT
+* Images
+* Variants
+
+Requires following environment variables to be set before running script:
+* `PRESTASHOP_BASE_URL` - Url of prestashop;
+* `PRESTASHOP_API_KEY` - API key for prestashop. Follow with setup to know how retrieve it;
+* `PRESTASHOP_LANGUAGE_ID` - Language id for desired language of products to be retrieved. For multilanguage prestashop sites only;
+* `GATEWAY_BASE_URL` - Url of gateway;
+* `GATEWAY_SHOP_ID` - Shop ID of gateway;
+* `GATEWAY_SECRET` - Secret key for selected gateway shop id.
+
 ## Setup
 
+### Script
+
+```
+pip install ./gateway ./prestashop
+```
+
+### Prestashop
 1. Run `docker-compose up`
 2. Visit https://127.0.0.1:8080
 3. Follow up with prestashop installation. Fill up database:
@@ -19,38 +45,20 @@ Save **email** and **password** for admin.
 6. Visit https://127.0.0.1:8080/admin1/ Use email and password from step 3.
 7. Follow up with https://devdocs.prestashop.com/1.7/development/webservice/tutorials/provide-access/ describing process of enabling API.
 Save **Key**
-
-8. If Prestashop is using more then one language then PRESTASHOP_LANGUAGE_ID environmental variable should be set.
+8. If Prestashop is using more then one language then `PRESTASHOP_LANGUAGE_ID` environmental variable should be set.
 To find it go to: https://127.0.0.1:8080/admin1/ -> Improve -> International -> Localization -> Languages
 
 ## Running
 
-### Locally
-1. Make sure prestashop docker-compose is running `docker-compose up`
-2. Find prestashop internal ip
-    ```
-    docker network ls
-    # ...
-    # 2e2c5239cfab        prestashop_default        bridge              local
-    # ...
-    
-    docker network inspect prestashop_default
-    # ...
-    #        "Containers": {
-    # ...
-    #            "a4806d1b1392c9a5c72853e1096a731c990ad62758bd508ee6a2da211a35d3a6": {
-    #                "Name": "prestashop_prestashop_1",
-    #                "EndpointID": "8aa2f54f62df6a26de0d4a5bee56cd90cd77b6dae8a29f9ff5638d26fdac21cc",
-    #                "MacAddress": "02:42:ac:1c:00:03",
-    #                "IPv4Address": "172.28.0.3/16",
-    #                "IPv6Address": ""
-    #            }
-    #        },
-    # ...
-    ```
-3. Run script using network name and internal ip
 ```
-docker run --network prestashop_default --env PRESTASHOP_BASE_URL=http://172.28.0.3 --env PRESTASHOP_LANGUAGE_ID=1 -it prestashop-importer
+python -m prestashop.Runner
 ```
 
-**Note - On prestashop install it will save shop url as `http://127.0.0.1:8080`. When script runs from docker network, it will be constantly redirected to that url instead of internal (http://127.28.0.1 in my example). You will need to fix database table row in `ps_shop_url` to your ip address.**
+Don't forget to setup environment variables!
+
+## Uninstall
+
+```
+pip uninstall prestashop
+pip uninstall gateway  # Optionally
+```
