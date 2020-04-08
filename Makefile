@@ -1,3 +1,6 @@
+install-importers:
+	pip install ./gateway ./prestashop
+
 install-lint-dep:
 	pip install -r requirements.txt
 
