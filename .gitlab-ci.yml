@@ -13,3 +13,16 @@ test:
     - make lint-test
     - make test
   coverage: '/TOTAL.*\s(\d+)%/'
+
+docs:
+  image: thegw/gwio-devenv:latest
+  artifacts:
+    paths:
+      - _build/html
+
+  stage: build
+  only:
+    refs:
+      - master
+  script:
+    - make docs

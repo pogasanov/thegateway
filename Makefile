@@ -1,3 +1,5 @@
+.PHONY: install-importers install-lint-dep lint-test test docs
+
 install-importers:
 	pip install ./gateway_pkg ./prestashop_pkg
 
@@ -12,3 +14,6 @@ lint-test:
 test:
 	coverage run -m unittest
 	coverage report
+
+docs:
+	python -m mkdocs build --clean --site-dir _build/html --config-file mkdocs.yml
