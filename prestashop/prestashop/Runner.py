@@ -1,4 +1,3 @@
-import logging
 import os
 
 import click
@@ -22,8 +21,3 @@ def run_import():
 
     for product in importer.build_products():
         exporter.create_products(product)
-
-
-if __name__ == "__main__":
-    logging.basicConfig()
-    run_import()
