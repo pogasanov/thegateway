@@ -2,8 +2,8 @@ from decimal import Decimal
 from unittest import TestCase
 
 import responses
-
 from prestashop.importers import Prestashop
+
 from .prestashop_responses import *
 
 

@@ -3,8 +3,9 @@
 from setuptools import setup
 
 setup(
-    name="prestashop",
-    py_modules=["importers", "Runner"],
+    name="gateway",
+    py_modules=["gateway", "models", "utils"],
     install_requires=["jose", "simplejson", "click", "requests", "python-jose[cryptography]"],
     python_requires=">=3.7",
+    packages=["gateway",],
 )

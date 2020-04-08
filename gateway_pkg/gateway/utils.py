@@ -1,7 +1,7 @@
 import requests
 
-from gateway.models import Image
-from utils.io import ResponseStream
+from .io import ResponseStream
+from .models import Image
 
 
 def download_image(url, default_filename=None, **kwargs):

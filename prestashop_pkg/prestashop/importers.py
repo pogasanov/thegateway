@@ -4,10 +4,9 @@ from decimal import Decimal
 from typing import List
 
 import requests
-from simplejson import JSONDecodeError
-
 from gateway.models import Product
 from gateway.utils import download_image
+from simplejson import JSONDecodeError
 
 logger = logging.getLogger(__name__)
 

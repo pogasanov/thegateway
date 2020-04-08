@@ -9,8 +9,8 @@ import requests
 import simplejson as json
 from jose import jwt
 
-from gateway.models import Product
-from gateway.utils import download_image
+from .models import Product
+from .utils import download_image
 
 logger = logging.getLogger(__name__)
 
