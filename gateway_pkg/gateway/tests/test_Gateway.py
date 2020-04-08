@@ -2,11 +2,9 @@ import io
 from decimal import Decimal
 from unittest import TestCase, mock
 
+import gateway
 import responses
 
-from gateway.gateway.gateway import Gateway
-from gateway.gateway.io import ResponseStream
-from gateway.gateway.models import Product, Image
 from .gateway_responses import GATEWAY_PRODUCT, GATEWAY_TAG
 
 
@@ -17,7 +15,7 @@ class GatewayTest(TestCase):
         cls.SHOP_ID = "a547de18-7a1d-450b-a57b-bbf7f177db84"
         cls.SECRET = "OyB2YbwTVtRXuJv+VE4oJLVyGo8pf1XVibCk08lt4ys="
         cls.IMAGE_URL_PREFIX = "test_"
-        cls.gateway = Gateway(cls.BASE_URL, cls.SHOP_ID, cls.SECRET, cls.IMAGE_URL_PREFIX)
+        cls.gateway = gateway.Gateway(cls.BASE_URL, cls.SHOP_ID, cls.SECRET, cls.IMAGE_URL_PREFIX)
 
     def setUp(self):
         responses.start()
@@ -48,12 +46,12 @@ class GatewayTest(TestCase):
         self.assertEqual(self.gateway.token, EXPECTED_TOKEN)
 
     def test_can_create_product(self):
-        product = Product(name="abc", price=Decimal("12.0"), vat_percent=23)
+        product = gateway.Product(name="abc", price=Decimal("12.0"), vat_percent=23)
         self.gateway.create_products([product])
 
     def test_can_upload_image(self):
         new_url = self.gateway.upload_image(
-            Image(filename="abc.jpeg", mimetype="image/jpeg", data=ResponseStream(io.BytesIO(b"abc")),)
+            gateway.Image(filename="abc.jpeg", mimetype="image/jpeg", data=gateway.ResponseStream(io.BytesIO(b"abc")),)
         )
         self.assertEqual(new_url, "http://dummy.com/abc")
 

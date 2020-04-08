@@ -1,9 +1,9 @@
 import os
 
 import click
-
 from gateway.gateway import Gateway
-from prestashop.importers import Prestashop
+
+from .importers import Prestashop
 
 
 @click.command()
