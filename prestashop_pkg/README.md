@@ -24,7 +24,7 @@ Requires following environment variables to be set before running script:
 ### Script
 
 ```
-pip install ./gateway ./prestashop
+pip install ./gateway_pkg ./prestashop_pkg
 ```
 
 ### Prestashop
