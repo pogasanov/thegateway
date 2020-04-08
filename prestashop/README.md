@@ -51,7 +51,7 @@ To find it go to: https://127.0.0.1:8080/admin1/ -> Improve -> International -> 
 ## Running
 
 ```
-python -m prestashop.Runner
+python -m prestashop
 ```
 
 Don't forget to setup environment variables!
