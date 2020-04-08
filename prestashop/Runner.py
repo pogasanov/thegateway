@@ -8,8 +8,7 @@ from prestashop.importers import Prestashop
 
 
 @click.command()
-@click.option("--get-variants", "-g", is_flag=True)
-def run_import(get_variants):
+def run_import():
     PRESTASHOP_BASE_URL = os.environ.get("PRESTASHOP_BASE_URL", "http://127.0.0.1:8080")
     PRESTASHOP_API_KEY = os.environ.get("PRESTASHOP_API_KEY", "RZY9E7L8AP5EPSMDZSXQ2SDJXZCEXBU4")
     LANGUAGE_ID = os.environ.get("PRESTASHOP_LANGUAGE_ID")
