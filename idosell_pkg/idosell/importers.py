@@ -211,7 +211,7 @@ class IdoSell:
         return key.hexdigest()
 
     @staticmethod
-    def is_response_contains_file(response: requests.Response) -> bool:
+    def response_contains_file(response: requests.Response) -> bool:
         return "html" not in response.headers["content-type"] and "attachment" in response.headers.get(
             "content-disposition", ""
         )
@@ -240,7 +240,7 @@ class IdoSell:
         file_url = xml_full_tag.attrib["url"]
         response_with_xml_file = requests.get(file_url)
 
-        if self.is_response_contains_file(response_with_xml_file):
+        if self.response_contains_file(response_with_xml_file):
             return response_with_xml_file.text
 
         logging.error(
