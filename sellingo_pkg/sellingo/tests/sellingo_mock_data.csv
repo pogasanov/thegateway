@@ -1,0 +1,60 @@
+ID produktu,title,catalog_number,ean,symbol,price_brutto,price_netto,vat,weight,images,manufacturer,category,quantity,variants,attributes,tags,text,textshort
+13,MOE008,pepitko,,,84,84,0,,public/upload/catalog/product/13/minigallery/original_13973135681.jpg;public/upload/catalog/product/13/minigallery/original_13973135722.jpg;public/upload/catalog/product/13/minigallery/original_13973135763.jpg,MOE,bluzki,4,,,,"
+<div>
+<div>
+<div>
+<div><span style=""font-weight: bold; text-decoration: underline; font-family: Verdana, Geneva, sans-serif; font-size: 10pt;""></span></div>
+<div><span style=""font-weight: bold; text-decoration: underline; font-family: Verdana, Geneva, sans-serif; font-size: 10pt;""></span></div>
+<div><span style=""font-weight: bold; text-decoration: underline; font-family: Verdana, Geneva, sans-serif; font-size: 10pt;""></span></div>
+<div><span style=""font-weight: bold; text-decoration: underline; font-family: Verdana, Geneva, sans-serif; font-size: 10pt;"">KOLOR:</span></div>
+<div><br />
+</div>
+<ul>
+<li><span style=""font-family: Verdana, Geneva, sans-serif; font-size: 10pt;"">pepito</span></li>
+</ul>
+<div>&nbsp;</div>
+<div><span style=""font-family: Verdana, Geneva, sans-serif; font-size: 13.333333969116211px; font-weight: bold; text-decoration: underline;"">SKŁAD MATERIAŁU:</span></div>
+<div><span style=""font-family: Verdana, Geneva, sans-serif; font-size: 10pt;""><br />
+</span></div>
+<ul>
+<li><span style=""font-family: Verdana, Geneva, sans-serif; font-size: 10pt;"">65% bawełna</span></li>
+<li><span style=""font-family: Verdana, Geneva, sans-serif; font-size: 10pt;"">35% poliester</span></li>
+</ul>
+<div><span style=""font-family: Verdana, Geneva, sans-serif; font-size: 10pt;""> </span></div>
+<div><span style=""font-weight: bold; text-decoration: underline; font-family: Verdana, Geneva, sans-serif; font-size: 10pt;"">OPIS PRODUKTU:</span></div>
+<div><span style=""font-family: Verdana, Geneva, sans-serif; font-size: 10pt;""><br />
+</span></div>
+<div><span style=""font-family: Verdana, Geneva, sans-serif; font-size: 10pt;"">Dopasowana dzianinowa bluzka z baskinką - wzór pepitko, z przeszyciami na biuście. </span><span style=""font-family: Verdana, Geneva, sans-serif; font-size: 10pt;"">Rękaw przed łokcie. Z tyłu ukryty suwak.</span></div>
+<div>&nbsp;</div>
+<div><br />
+</div></div></div></div>                                                                                    ",
+,,pepitka,,,84,,,,,,,1,Rozmiar:Rozmiar M#Kolor:pepitka,,,,
+,,pepitka,,,84,,,,,,,1,Rozmiar:Rozmiar M#Kolor:pepitka#Rozmiar:Rozmiar L#Kolor:pepitka,,,,
+,,pepitka,,,84,,,,,,,1,Rozmiar:Rozmiar M#Kolor:pepitka#Rozmiar:Rozmiar L#Kolor:pepitka#Rozmiar:Rozmiar XL#Kolor:pepitka,,,,
+14,MOE007,czarny,,,55,55,0,,public/upload/catalog/product/14/minigallery/original_13995638461.jpg;public/upload/catalog/product/14/minigallery/original_13995638502.jpg;public/upload/catalog/product/14/minigallery/original_13995638533.jpg,MOE,bluzki,2,,,,"
+<div>
+<div>
+<div><span style=""font-weight: bold; text-decoration: underline; font-family: Verdana, Geneva, sans-serif; font-size: 10pt;"">KOLOR:</span></div>
+<div>&nbsp;</div>
+<ul>
+<li><span style=""font-family: Verdana, Geneva, sans-serif; font-size: 10pt;"">czarny</span></li>
+</ul>
+<div>&nbsp;</div>
+<div>
+<div><span style=""font-weight: bold; text-decoration: underline; font-family: Verdana, Geneva, sans-serif; font-size: 10pt;"">SKŁAD MATERIAŁU:</span></div>
+<div><br />
+</div></div>
+<ul>
+<li><span style=""font-family: Verdana, Geneva, sans-serif; font-size: 10pt;"">65% bawełna</span></li>
+<li><span style=""font-family: Verdana, Geneva, sans-serif; font-size: 10pt;"">35% poliester</span></li>
+</ul>
+<div><span style=""font-family: Verdana, Geneva, sans-serif; font-size: 10pt;""> </span></div>
+<div><span style=""font-weight: bold; text-decoration: underline; font-family: Verdana, Geneva, sans-serif; font-size: 10pt;"">OPIS PRODUKTU:</span></div>
+<div><span style=""font-family: Verdana, Geneva, sans-serif; font-size: 10pt;""><br />
+</span></div>
+<div><span style=""font-family: Verdana, Geneva, sans-serif; font-size: 10pt;"">Dopasowana dzianinowa bluzka z baskinką, z przeszyciami na biuście. </span><span style=""font-family: Verdana, Geneva, sans-serif; font-size: 10pt;"">Rękaw przed łokcie, z tyłu ukryty suwak.</span></div>
+<div>&nbsp;</div>
+<div><br />
+</div></div></div>                                            ",
+,,czarny,,,74,,,,,,,1,Rozmiar:Rozmiar M#Kolor:czarny,,,,
+,,czarny,,,74,,,,,,,1,Rozmiar:Rozmiar M#Kolor:czarny#Rozmiar:Rozmiar L#Kolor:czarny,,,,

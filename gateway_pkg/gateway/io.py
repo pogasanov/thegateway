@@ -4,7 +4,7 @@
 from io import BytesIO, SEEK_SET, SEEK_END
 
 
-class ResponseStream(object):
+class ResponseStream:
     def __init__(self, request_iterator):
         self._bytes = BytesIO()
         self._iterator = request_iterator

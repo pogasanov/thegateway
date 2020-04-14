@@ -17,7 +17,7 @@ class PrestashopTest(TestCase):
 
         cls.DUMMY_IMAGE = b"abc"
 
-    def assertIsProduct1(self, product):
+    def assertIsCombination1(self, product):
         self.assertEqual(product.name, "Hummingbird printed t-shirt")
         self.assertEqual(product.price, Decimal("23.9"))
         self.assertEqual(product.stock, 1.0)
@@ -30,12 +30,12 @@ class PrestashopTest(TestCase):
             "Regular fit, round neckline, short sleeves. Made of extra long staple pima cotton. \r\n",
         )
         self.assertEqual(product.sku, "demo_1")
-        self.assertEqual(len(product.images), 2)
+        self.assertEqual(len(product.images), 1)
         for image in product.images:
             content = image.data.read()
             self.assertEqual(content, self.DUMMY_IMAGE)
 
-    def assertIsProduct2(self, product):
+    def assertIsCombination2(self, product):
         self.assertEqual(product.name, "Not Hummingbird printed t-shirt")
         self.assertEqual(product.price, Decimal("22.9"))
         self.assertEqual(product.stock, 2.0)
@@ -48,7 +48,7 @@ class PrestashopTest(TestCase):
             "Regular fit, round neckline, short sleeves. Made of extra long staple pima cotton. \r\n",
         )
         self.assertEqual(product.sku, "demo_1")
-        self.assertEqual(len(product.images), 2)
+        self.assertEqual(len(product.images), 1)
 
     def setUp(self):
         responses.start()
@@ -170,8 +170,8 @@ class PrestashopTest(TestCase):
         responses.reset()
 
     def test_can_set_parameters_with_environment_variables(self):
-        self.assertEqual(self.importer.API_HOSTNAME, self.BASE_URL)
-        self.assertEqual(self.importer.API_KEY, self.API_KEY)
+        self.assertEqual(self.importer.api_hostname, self.BASE_URL)
+        self.assertEqual(self.importer.api_key, self.API_KEY)
 
     def test_can_fetch_prestashop_products_ids(self):
         products = self.importer.fetch_products_ids()
@@ -184,13 +184,13 @@ class PrestashopTest(TestCase):
         self.importer.variants_reverse[3] = "Color"
         self.importer.variants_reverse[4] = "Color"
         product = self.importer.fetch_single_product(ID)
-        self.assertIsProduct1(product[0])
+        self.assertIsCombination1(product[0])
 
     def test_can_build_products_list(self):
         products = list(self.importer.build_products())
         self.assertEqual(len(products), 2)
-        self.assertIsProduct1(products[0][0])
-        self.assertIsProduct2(products[1][0])
+        self.assertIsCombination1(products[0][0])
+        self.assertIsCombination2(products[1][0])
 
     def test_can_download_image(self):
         image_file = self.importer.download_image(1, 1)

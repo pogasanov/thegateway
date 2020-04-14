@@ -10,10 +10,10 @@ GATEWAY_PRODUCT = {
     "owner_guid": "a547de18-7a1d-450b-a57b-bbf7f177db84",
     "price": {
         "currency": "zł",
-        "final": {"unit": {"amount": 1.00, "currency": "zł", "vat": 0.19, "vat0": 0.81, "vat_percent": 23,}},
+        "final": {"unit": {"amount": 1.00, "currency": "zł", "vat": 0.19, "vat0": 0.81, "vat_percent": 23}},
         "original": {
             "campaign_modifier": None,
-            "unit": {"amount": 1.00, "currency": "zł", "vat": 0.19, "vat0": 0.81, "vat_percent": 23,},
+            "unit": {"amount": 1.00, "currency": "zł", "vat": 0.19, "vat0": 0.81, "vat_percent": 23},
         },
         "vat_class": 23,
     },
