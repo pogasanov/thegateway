@@ -1,0 +1,2011 @@
+<?xml version="1.0" encoding="utf-8"?>
+<offer file_format="IOF" version="3.0" generated_by="IdoSell Shop" generated="2020-04-03 04:06:23" expires="2020-04-04 04:06:23" extensions="yes">
+  <products xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml" language="pol" currency="PLN">
+<product type="regular" id="5" vat="23.0" code_on_card="10000053" site="1" currency="PLN">
+      <producer id="1308137276" name="Sony"/>
+      <category id="1214553884" name="WIOSNA-LATO 2011/ATLETICO"/>
+      <unit id="0" name="szt."/>
+      <series id="1" name="seria testowa"/>
+      <card xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml" url="https://demo46-pl.yourtechnicaldomain.com/product-pol-5-Apple-iPad-PRO-9-8-64-GB-Gold-version-iCloud-ready.feed10000.html"/>
+      <description>
+        <name type="name" xml:lang="pol"><![CDATA[Apple iPad PRO 9,8” 64 GB Gold version iCloud ready]]></name>
+        <short_desc xml:lang="pol"><![CDATA[Atrakcyjny wygląd, precyzyjna konstrukcja]]></short_desc>
+        <long_desc xml:lang="pol"><![CDATA[<style>
+
+	#product_description_cms{text-align: center; overflow-x: hidden;}
+	#product_description_cms h4{font-size: 2.5em; font-weight:normal;}
+	#product_description_cms .product_property_wrapper{background: #0090f6; padding: 2vw; color:#fff; height: 100%;}
+	#product_description_cms .product_property_wrapper > img {display: block; margin: 0 auto 30px;}
+	#product_description_cms .product_property_wrapper > strong { display: block; font-size: 1.5em; padding-bottom: 10px; }
+	#product_description_cms p{   line-height: 1.5em; padding: 0 9vw 20px;}
+	#product_description_cms input[type="radio"] {display: none;}
+	#product_description_cms .tab-wrap {
+	  width: 100%;
+	  list-style: none;
+	  position: relative;
+	  margin: 0 0 60px!important;
+	  padding: 0!important;
+	}
+
+	#product_description_cms .tab-wrap label {
+	    border-top: 3px solid transparent;
+	    bottom: -30px;
+	    line-height: 30px;
+	    position: absolute;
+	    width: 100px;
+	    font-size: 1.1em;
+	    font-weight: bold;
+	}
+	#product_description_cms .tab-wrap .label-1{left: calc(50% - 150px);}
+	#product_description_cms .tab-wrap .label-2{left: calc(50% - 50px);}
+	#product_description_cms .tab-wrap .label-3{left: calc(50% + 50px);}
+	#product_description_cms .tab-wrap .tab-content {
+	  display: none;
+	  overflow: hidden;
+	  width: 100%;
+	  background: #fff;
+	}
+
+	#product_description_cms .tab-wrap [id^="tab"]:checked ~ .tab-content{display: block;}
+	#product_description_cms .tab-wrap [id^="tab"]:checked + label { border-top: 3px solid #0090f6; color:#0090f6;}
+        #product_description_cms .tab-wrap [id^="tab"] + label:hover{cursor: pointer;}
+	#product_description_cms .tab-wrap [id^="tab"]:checked + label:before {border-left: 4px solid rgba(0, 0, 0, 0);
+	    border-right: 4px solid rgba(0, 0, 0, 0);
+	    border-top: 4px solid #0090f6;
+	    content: "";
+	    display: block;
+	    left: 50%;
+	    margin-left: -4px;
+	    position: absolute;
+	    top: 0px;}
+
+@media only screen and (max-width: 979px){
+#product_description_cms h4{font-size: 1.5em;}
+#product_description_cms .product_property_wrapper > strong {font-size: 1.1em;}
+}
+@media only screen and (max-width: 757px){
+	#product_description_cms h4{font-size: 1.35em;}
+	#product_description_cms p{padding: 0;}
+	#product_description_cms .product_property_wrapper{padding: 15px;}
+	#product_description_cms .product_property_wrapper > img{ margin: 0 auto 10px;}
+}
+@media only screen and (min-width: 1200px) and (min-height: 768px){}
+</style>
+
+<div id="product_description_cms">
+	<div class="mrg-b">
+		<h4>
+		Przesuwając granice rozgrywki
+		</h4>
+		<p>
+		Jak firma Sony przygotowywała się do zdobycia tytułu „Najlepszej konsoli na świecie”? Zaczynając od podstaw. Ośmiordzeniowy procesor AMD Jaguar zapewnił maksymalną wydajność. Karta graficzna o mocy 1,84 teraflopa oraz nowoczesna pamięć GDDR5 dają twórcom niesamowite możliwości tworzenia gier nowej generacji.
+		</p>
+		<img src="/data/include/cms/product_photo_desc/product_photo_desc_01.jpg">
+	</div>
+
+	<div class="row clearfix ">
+		<div class="col-md-4 col-xs-12 mrg-b">
+			<div class="product_property_wrapper">
+				<img src="/data/include/cms/product_photo_desc/product_icon_desc_01.png">
+				<strong>Niestandardowy procesor x86-64</strong>
+				<div>Firma Sony zdecydowała się skorzystać z 8-rdzeniowego procesora x86-64 AMD „Jaguar” — a następnie dokonała zmian zwiększających jego wydajność.</div>
+			</div>
+		</div>
+		<div class="col-md-4 col-xs-12 mrg-b">
+			<div class="product_property_wrapper">
+				<img src="/data/include/cms/product_photo_desc/product_icon_desc_02.png">
+				<strong>Procesor 1,84 teraflopa</strong>
+				<div>Konsola PS4 deklasuje konkurencję dzięki większej o 50% liczbie rdzeni graficznych oraz wyższej przepustowości modułu shadera.</div>
+			</div>
+		</div>
+		<div class="col-md-4 col-xs-12 mrg-b">
+			<div class="product_property_wrapper">
+				<img src="/data/include/cms/product_photo_desc/product_icon_desc_03.png">
+				<strong>Pamięć graficzna 8 GB GDDR5</strong>
+				<div>Pamięć GDDR5 najnowszej generacji oferuje najwyższą szybkość i udostępnia twórcom niesamowite możliwości.</div>
+		</div>
+	</div>
+	</div>
+
+	<div class="mrg-b">
+		<h4>
+		Atrakcyjny wygląd, precyzyjna konstrukcja
+		</h4>
+		<p>
+		Smukła, wyrazista sylwetka konsoli PS4 ma w sobie coś zniewalającego. Jej forma — zarys, kontrastujące ze sobą ścianki i panele z błyszczącym oraz matowym wykończeniem — harmonizuje z każdym nowoczesnym centrum rozrywki.
+		</p>
+
+
+				<ul class="tab-wrap">
+				    <li>
+				   		<input type="radio" id="tab-1" name="tab" checked />
+     					 <label for="tab-1" class="label-1">Przód</label>
+     					 <div class="tab-content">
+							<img src="/data/include/cms/product_photo_desc/product_photo_desc_02.jpg">
+				        </div>
+
+				    </li>
+
+				    <li>
+				        <input type="radio" id="tab-2" name="tab"  />
+				        <label for="tab-2" class="label-2">Bok</label>
+				        <div class="tab-content">
+				             <img src="/data/include/cms/product_photo_desc/product_photo_desc_03.jpg">
+				        </div>
+
+				    </li>
+
+				      <li>
+				        <input type="radio" id="tab-3" name="tab" />
+				        <label for="tab-3" class="label-3">Tył</label>
+				        <div class="tab-content">
+					             <img src="/data/include/cms/product_photo_desc/product_photo_desc_04.jpg">
+					    </div>
+				    </li>
+				</ul>
+
+	</div>
+</div>
+
+
+
+]]></long_desc>
+      </description>
+      <iaiext:visibility xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml">
+        <iaiext:price_comparator visible="yes"/>
+      </iaiext:visibility>
+      <price gross="5143.13" net="4181.41"/>
+      <srp gross="0" net="0"/>
+      <iaiext:price_retail xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml">
+        <iaiext:site id="1" size_id="0" gross="5143.13" net="4181.41"/>
+      </iaiext:price_retail>
+      <iaiext:price_wholesale xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml">
+        <iaiext:site id="1" size_id="0" gross="5143.13" net="4181.41"/>
+      </iaiext:price_wholesale>
+      <iaiext:price_minimal xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml">
+        <iaiext:site id="1" size_id="0" gross="0" net="0"/>
+      </iaiext:price_minimal>
+      <promotion name=""/>
+      <iaiext:hotspots xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml">
+        <iaiext:site id="1" manual_config="no">
+          <flag type="newproduct" visible="yes"/>
+        </iaiext:site>
+      </iaiext:hotspots>
+      <sizes>
+        <size available="unavailable" id="uniw" name="uniwersalny" panel_name="uniw" code="5-uniw" weight="0">
+          <price gross="5143.13" net="4181.41">
+            
+            
+            
+            
+            
+            
+            
+            <price_marketplace_site id="10000">
+              <delivery_cost carrierId="51">
+                <prepayment gross="15.56" net="12.65"/>
+                <cash_on_delivery gross="15.9" net="12.93"/>
+              </delivery_cost>
+            </price_marketplace_site>
+          </price>
+          <srp gross="0" net="0"/>
+        </size>
+      </sizes>
+      <images>
+        <large>
+          <image url="https://demo46-pl.yourtechnicaldomain.com/data/gfx/pictures/large/5/0/5_3.jpg" changed="2019-03-28 13:27:43" hash="06ba19e352039adbe49874f394172ca3" width="1000" height="1000"/>
+          <image url="https://demo46-pl.yourtechnicaldomain.com/data/gfx/pictures/large/5/0/5_2.jpg" changed="2019-03-28 13:27:40" hash="cf1748ba32ac7522b5c3ef252158784d" width="1297" height="1500"/>
+          <image url="https://demo46-pl.yourtechnicaldomain.com/data/gfx/pictures/large/5/0/5_1.jpg" changed="2019-03-28 13:27:44" hash="7d24833f139585385f0c34b52b25c136" width="512" height="512"/>
+        </large>
+        <icons>
+          <icon url="https://demo46-pl.yourtechnicaldomain.com/data/gfx/icons/large/5/0/5.jpg" changed="2019-10-16 12:52:56" hash="5f51c4dc0e2d928b29dc5144539ed4ed" width="216" height="250"/>
+        </icons>
+      </images>
+      <iaiext:navigation xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml">
+        <iaiext:site id="1">
+          <iaiext:menu id="1">
+            <iaiext:item id="160" menu_id="1" textid="Nowości" iaiext:priority_menu="3"/>
+            <iaiext:item id="161" menu_id="1" textid="Bestsellery" iaiext:priority_menu="4"/>
+            <iaiext:item id="233" menu_id="1" textid="Elektronika\iPad" iaiext:priority_menu="3"/>
+          </iaiext:menu>
+          <iaiext:menu id="2"/>
+          <iaiext:menu id="4"/>
+          <iaiext:menu id="5"/>
+        </iaiext:site>
+      </iaiext:navigation>
+      <warranty id="1" type="producer" period="12" name="Gwarancja testowa"/>
+      <iaiext:sell_by xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml">
+        <iaiext:retail quantity="1"/>
+        <iaiext:wholesale quantity="1"/>
+      </iaiext:sell_by>
+      <iaiext:inwrapper xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml" quantity="1"/>
+    </product><product type="regular" id="6" vat="23.0" site="1" currency="PLN">
+      <producer id="0" name="producent niezdefiniowany"/>
+      <category id="0" name="*Kategoria tymczasowa"/>
+      <unit id="0" name="szt."/>
+      <series id="1" name="seria testowa"/>
+      <card xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml" url="https://demo46-pl.yourtechnicaldomain.com/product-pol-6-Apple-MacBook-Air-EDU-11-1-4GHz-4GB-128GB.feed10000.html"/>
+      <description>
+        <name type="name" xml:lang="pol"><![CDATA[Apple MacBook Air EDU 11″ 1.4GHz/4GB/128GB]]></name>
+        <short_desc xml:lang="pol"><![CDATA[Atrakcyjny wygląd, precyzyjna konstrukcja.]]></short_desc>
+        <long_desc xml:lang="pol"><![CDATA[<style>
+
+	#product_description_cms{text-align: center; overflow-x: hidden;}
+	#product_description_cms h4{font-size: 2.5em; font-weight:normal;}
+	#product_description_cms .product_property_wrapper{background: #0090f6; padding: 2vw; color:#fff; height: 100%;}
+	#product_description_cms .product_property_wrapper > img {display: block; margin: 0 auto 30px;}
+	#product_description_cms .product_property_wrapper > strong { display: block; font-size: 1.5em; padding-bottom: 10px; }
+	#product_description_cms p{   line-height: 1.5em; padding: 0 9vw 20px;}
+	#product_description_cms input[type="radio"] {display: none;}
+	#product_description_cms .tab-wrap {
+	  width: 100%;
+	  list-style: none;
+	  position: relative;
+	  margin: 0 0 60px!important;
+	  padding: 0!important;
+	}
+
+	#product_description_cms .tab-wrap label {
+	    border-top: 3px solid transparent;
+	    bottom: -30px;
+	    line-height: 30px;
+	    position: absolute;
+	    width: 100px;
+	    font-size: 1.1em;
+	    font-weight: bold;
+	}
+	#product_description_cms .tab-wrap .label-1{left: calc(50% - 150px);}
+	#product_description_cms .tab-wrap .label-2{left: calc(50% - 50px);}
+	#product_description_cms .tab-wrap .label-3{left: calc(50% + 50px);}
+	#product_description_cms .tab-wrap .tab-content {
+	  display: none;
+	  overflow: hidden;
+	  width: 100%;
+	  background: #fff;
+	}
+
+	#product_description_cms .tab-wrap [id^="tab"]:checked ~ .tab-content{display: block;}
+	#product_description_cms .tab-wrap [id^="tab"]:checked + label { border-top: 3px solid #0090f6; color:#0090f6;}
+        #product_description_cms .tab-wrap [id^="tab"] + label:hover{cursor: pointer;}
+	#product_description_cms .tab-wrap [id^="tab"]:checked + label:before {border-left: 4px solid rgba(0, 0, 0, 0);
+	    border-right: 4px solid rgba(0, 0, 0, 0);
+	    border-top: 4px solid #0090f6;
+	    content: "";
+	    display: block;
+	    left: 50%;
+	    margin-left: -4px;
+	    position: absolute;
+	    top: 0px;}
+
+@media only screen and (max-width: 979px){
+#product_description_cms h4{font-size: 1.5em;}
+#product_description_cms .product_property_wrapper > strong {font-size: 1.1em;}
+}
+@media only screen and (max-width: 757px){
+	#product_description_cms h4{font-size: 1.35em;}
+	#product_description_cms p{padding: 0;}
+	#product_description_cms .product_property_wrapper{padding: 15px;}
+	#product_description_cms .product_property_wrapper > img{ margin: 0 auto 10px;}
+}
+@media only screen and (min-width: 1200px) and (min-height: 768px){}
+</style>
+
+<div id="product_description_cms">
+	<div class="mrg-b">
+		<h4>
+		Przesuwając granice rozgrywki
+		</h4>
+		<p>
+		Jak firma Sony przygotowywała się do zdobycia tytułu „Najlepszej konsoli na świecie”? Zaczynając od podstaw. Ośmiordzeniowy procesor AMD Jaguar zapewnił maksymalną wydajność. Karta graficzna o mocy 1,84 teraflopa oraz nowoczesna pamięć GDDR5 dają twórcom niesamowite możliwości tworzenia gier nowej generacji.
+		</p>
+		<img src="/data/include/cms/product_photo_desc/product_photo_desc_01.jpg">
+	</div>
+
+	<div class="row clearfix ">
+		<div class="col-md-4 col-xs-12 mrg-b">
+			<div class="product_property_wrapper">
+				<img src="/data/include/cms/product_photo_desc/product_icon_desc_01.png">
+				<strong>Niestandardowy procesor x86-64</strong>
+				<div>Firma Sony zdecydowała się skorzystać z 8-rdzeniowego procesora x86-64 AMD „Jaguar” — a następnie dokonała zmian zwiększających jego wydajność.</div>
+			</div>
+		</div>
+		<div class="col-md-4 col-xs-12 mrg-b">
+			<div class="product_property_wrapper">
+				<img src="/data/include/cms/product_photo_desc/product_icon_desc_02.png">
+				<strong>Procesor 1,84 teraflopa</strong>
+				<div>Konsola PS4 deklasuje konkurencję dzięki większej o 50% liczbie rdzeni graficznych oraz wyższej przepustowości modułu shadera.</div>
+			</div>
+		</div>
+		<div class="col-md-4 col-xs-12 mrg-b">
+			<div class="product_property_wrapper">
+				<img src="/data/include/cms/product_photo_desc/product_icon_desc_03.png">
+				<strong>Pamięć graficzna 8 GB GDDR5</strong>
+				<div>Pamięć GDDR5 najnowszej generacji oferuje najwyższą szybkość i udostępnia twórcom niesamowite możliwości.</div>
+		</div>
+	</div>
+	</div>
+
+	<div class="mrg-b">
+		<h4>
+		Atrakcyjny wygląd, precyzyjna konstrukcja
+		</h4>
+		<p>
+		Smukła, wyrazista sylwetka konsoli PS4 ma w sobie coś zniewalającego. Jej forma — zarys, kontrastujące ze sobą ścianki i panele z błyszczącym oraz matowym wykończeniem — harmonizuje z każdym nowoczesnym centrum rozrywki.
+		</p>
+
+
+				<ul class="tab-wrap">
+				    <li>
+				   		<input type="radio" id="tab-1" name="tab" checked />
+     					 <label for="tab-1" class="label-1">Przód</label>
+     					 <div class="tab-content">
+							<img src="/data/include/cms/product_photo_desc/product_photo_desc_02.jpg">
+				        </div>
+
+				    </li>
+
+				    <li>
+				        <input type="radio" id="tab-2" name="tab"  />
+				        <label for="tab-2" class="label-2">Bok</label>
+				        <div class="tab-content">
+				             <img src="/data/include/cms/product_photo_desc/product_photo_desc_03.jpg">
+				        </div>
+
+				    </li>
+
+				      <li>
+				        <input type="radio" id="tab-3" name="tab" />
+				        <label for="tab-3" class="label-3">Tył</label>
+				        <div class="tab-content">
+					             <img src="/data/include/cms/product_photo_desc/product_photo_desc_04.jpg">
+					    </div>
+				    </li>
+				</ul>
+
+	</div>
+</div>
+
+
+
+]]></long_desc>
+      </description>
+      <iaiext:visibility xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml">
+        <iaiext:price_comparator visible="yes"/>
+      </iaiext:visibility>
+      <price gross="0" net="0"/>
+      <srp gross="0" net="0"/>
+      <iaiext:price_retail xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml">
+        <iaiext:site id="1" size_id="0" gross="0" net="0"/>
+      </iaiext:price_retail>
+      <iaiext:price_wholesale xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml">
+        <iaiext:site id="1" size_id="0" gross="0" net="0"/>
+      </iaiext:price_wholesale>
+      <iaiext:price_minimal xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml">
+        <iaiext:site id="1" size_id="0" gross="0" net="0"/>
+      </iaiext:price_minimal>
+      <promotion name=""/>
+      <iaiext:hotspots xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml">
+        <iaiext:site id="1" manual_config="no">
+          <flag type="newproduct" visible="yes"/>
+        </iaiext:site>
+      </iaiext:hotspots>
+      <sizes>
+        <size available="unavailable" id="uniw" name="uniwersalny" panel_name="uniw" code="6-uniw" weight="0">
+          <price gross="0" net="0">
+            
+            
+            
+            
+            
+            
+            
+            <price_marketplace_site id="10000">
+              <delivery_cost carrierId="51">
+                <prepayment gross="15.56" net="12.65"/>
+                <cash_on_delivery gross="15.9" net="12.93"/>
+              </delivery_cost>
+            </price_marketplace_site>
+          </price>
+          <srp gross="0" net="0"/>
+        </size>
+      </sizes>
+      <images>
+        <large>
+          <image url="https://demo46-pl.yourtechnicaldomain.com/data/gfx/pictures/large/6/0/6_1.jpg" changed="2019-03-28 13:27:40" hash="6996bd6b2418eb5a57e3310b67a3f1fc" width="1000" height="600"/>
+        </large>
+        <icons>
+          <icon url="https://demo46-pl.yourtechnicaldomain.com/data/gfx/icons/large/6/0/6.jpg" changed="2019-10-16 12:52:57" hash="5cc7a24833d47a657a2e53c669146bbf" width="350" height="210"/>
+        </icons>
+      </images>
+      <iaiext:navigation xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml">
+        <iaiext:site id="1">
+          <iaiext:menu id="1">
+            <iaiext:item id="160" menu_id="1" textid="Nowości" iaiext:priority_menu="3"/>
+            <iaiext:item id="161" menu_id="1" textid="Bestsellery" iaiext:priority_menu="4"/>
+            <iaiext:item id="232" menu_id="1" textid="Elektronika\MacBook" iaiext:priority_menu="2"/>
+          </iaiext:menu>
+          <iaiext:menu id="2"/>
+          <iaiext:menu id="4"/>
+          <iaiext:menu id="5"/>
+        </iaiext:site>
+      </iaiext:navigation>
+      <warranty id="1" type="producer" period="12" name="Gwarancja testowa"/>
+      <iaiext:sell_by xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml">
+        <iaiext:retail quantity="1"/>
+        <iaiext:wholesale quantity="1"/>
+      </iaiext:sell_by>
+      <iaiext:inwrapper xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml" quantity="1"/>
+    </product><product type="regular" id="7" vat="23.0" code_on_card="10000053" site="1" currency="PLN">
+      <producer id="1308137276" name="Sony"/>
+      <category id="0" name="*Kategoria tymczasowa"/>
+      <unit id="0" name="szt."/>
+      <series id="1" name="seria testowa"/>
+      <card xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml" url="https://demo46-pl.yourtechnicaldomain.com/product-pol-7-Playstation-4-Slim.feed10000.html"/>
+      <description>
+        <name type="name" xml:lang="pol"><![CDATA[Playstation 4 Slim]]></name>
+        <short_desc xml:lang="pol"><![CDATA[Łącząc w sobie niezrównane treści, wciągające gry, ulubione aplikacje oraz ekskluzywne dla PlayStation® materiały, PlayStation®4 to najlepsze urządzenie do rozrywki. Najszybsza dostępna w konsolach do gry grafika i pamięć.]]></short_desc>
+        <long_desc xml:lang="pol"><![CDATA[<style>
+
+	#product_description_cms{text-align: center; overflow-x: hidden;}
+	#product_description_cms h4{font-size: 2.5em; font-weight:normal;}
+	#product_description_cms .product_property_wrapper{background: #0090f6; padding: 2vw; color:#fff; height: 100%;}
+	#product_description_cms .product_property_wrapper > img {display: block; margin: 0 auto 30px;}
+	#product_description_cms .product_property_wrapper > strong { display: block; font-size: 1.5em; padding-bottom: 10px; }
+	#product_description_cms p{   line-height: 1.5em; padding: 0 9vw 20px;}
+	#product_description_cms input[type="radio"] {display: none;}
+	#product_description_cms .tab-wrap {
+	  width: 100%;
+	  list-style: none;
+	  position: relative;
+	  margin: 0 0 60px!important;
+	  padding: 0!important;
+	}
+
+	#product_description_cms .tab-wrap label {
+	    border-top: 3px solid transparent;
+	    bottom: -25px;
+	    line-height: 30px;
+	    position: absolute;
+	    width: 100px;
+	    font-size: 1.1em;
+	    font-weight: bold;
+	}
+	#product_description_cms .tab-wrap .label-1{left: calc(50% - 150px);}
+	#product_description_cms .tab-wrap .label-2{left: calc(50% - 50px);}
+	#product_description_cms .tab-wrap .label-3{left: calc(50% + 50px);}
+	#product_description_cms .tab-wrap .tab-content {
+	  display: none;
+	  overflow: hidden;
+	  width: 100%;
+	  background: #fff;
+	}
+
+	#product_description_cms .tab-wrap [id^="tab"]:checked ~ .tab-content{display: block;}
+	#product_description_cms .tab-wrap [id^="tab"]:checked + label { border-top: 3px solid #0090f6; color:#0090f6;}
+        #product_description_cms .tab-wrap [id^="tab"] + label:hover{cursor: pointer;}
+	#product_description_cms .tab-wrap [id^="tab"]:checked + label:before {border-left: 4px solid rgba(0, 0, 0, 0);
+	    border-right: 4px solid rgba(0, 0, 0, 0);
+	    border-top: 4px solid #0090f6;
+	    content: "";
+	    display: block;
+	    left: 50%;
+	    margin-left: -4px;
+	    position: absolute;
+	    top: 0px;}
+
+@media only screen and (max-width: 979px){
+#product_description_cms h4{font-size: 1.5em;}
+#product_description_cms .product_property_wrapper > strong {font-size: 1.1em;}
+}
+@media only screen and (max-width: 757px){
+	#product_description_cms h4{font-size: 1.35em;}
+	#product_description_cms p{padding: 0;}
+	#product_description_cms .product_property_wrapper{padding: 15px;}
+	#product_description_cms .product_property_wrapper > img{ margin: 0 auto 10px;}
+}
+@media only screen and (min-width: 1200px) and (min-height: 768px){}
+</style>
+
+<div id="product_description_cms">
+	<div class="mrg-b">
+		<h4>
+		Przesuwając granice rozgrywki
+		</h4>
+		<p>
+		Jak firma Sony przygotowywała się do zdobycia tytułu „Najlepszej konsoli na świecie”? Zaczynając od podstaw. Ośmiordzeniowy procesor AMD Jaguar zapewnił maksymalną wydajność. Karta graficzna o mocy 1,84 teraflopa oraz nowoczesna pamięć GDDR5 dają twórcom niesamowite możliwości tworzenia gier nowej generacji.
+		</p>
+		<img src="/data/include/cms/product_photo_desc/product_photo_desc_01.jpg">
+	</div>
+
+	<div class="row clearfix ">
+		<div class="col-md-4 col-xs-12 mrg-b">
+			<div class="product_property_wrapper">
+				<img src="/data/include/cms/product_photo_desc/product_icon_desc_01.png">
+				<strong>Niestandardowy procesor x86-64</strong>
+				<div>Firma Sony zdecydowała się skorzystać z 8-rdzeniowego procesora x86-64 AMD „Jaguar” — a następnie dokonała zmian zwiększających jego wydajność.</div>
+			</div>
+		</div>
+		<div class="col-md-4 col-xs-12 mrg-b">
+			<div class="product_property_wrapper">
+				<img src="/data/include/cms/product_photo_desc/product_icon_desc_02.png">
+				<strong>Procesor 1,84 teraflopa</strong>
+				<div>Konsola PS4 deklasuje konkurencję dzięki większej o 50% liczbie rdzeni graficznych oraz wyższej przepustowości modułu shadera.</div>
+			</div>
+		</div>
+		<div class="col-md-4 col-xs-12 mrg-b">
+			<div class="product_property_wrapper">
+				<img src="/data/include/cms/product_photo_desc/product_icon_desc_03.png">
+				<strong>Pamięć graficzna 8 GB GDDR5</strong>
+				<div>Pamięć GDDR5 najnowszej generacji oferuje najwyższą szybkość i udostępnia twórcom niesamowite możliwości.</div>
+		</div>
+	</div>
+	</div>
+
+	<div class="mrg-b">
+		<h4>
+		Atrakcyjny wygląd, precyzyjna konstrukcja
+		</h4>
+		<p>
+		Smukła, wyrazista sylwetka konsoli PS4 ma w sobie coś zniewalającego. Jej forma — zarys, kontrastujące ze sobą ścianki i panele z błyszczącym oraz matowym wykończeniem — harmonizuje z każdym nowoczesnym centrum rozrywki.
+		</p>
+
+
+				<ul class="tab-wrap">
+				    <li>
+				   		<input type="radio" id="tab-1" name="tab" checked />
+     					 <label for="tab-1" class="label-1">Przód</label>
+     					 <div class="tab-content">
+							<img src="/data/include/cms/product_photo_desc/product_photo_desc_02.jpg">
+				        </div>
+
+				    </li>
+
+				    <li>
+				        <input type="radio" id="tab-2" name="tab"  />
+				        <label for="tab-2" class="label-2">Bok</label>
+				        <div class="tab-content">
+				             <img src="/data/include/cms/product_photo_desc/product_photo_desc_03.jpg">
+				        </div>
+
+				    </li>
+
+				      <li>
+				        <input type="radio" id="tab-3" name="tab" />
+				        <label for="tab-3" class="label-3">Tył</label>
+				        <div class="tab-content">
+					             <img src="/data/include/cms/product_photo_desc/product_photo_desc_04.jpg">
+					    </div>
+				    </li>
+				</ul>
+
+	</div>
+</div>
+
+
+
+]]></long_desc>
+      </description>
+      <iaiext:delivery_time xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml" unit="day" value="0">
+        <iaiext:mode type="deliverer"/>
+        <iaiext:time days="0"/>
+      </iaiext:delivery_time>
+      <iaiext:visibility xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml">
+        <iaiext:price_comparator visible="yes"/>
+      </iaiext:visibility>
+      <price gross="3343.13" net="2717.99"/>
+      <srp gross="3343.13" net="2717.99"/>
+      <strikethrough_retail_price gross="3899.99" net="3170.72"/>
+      <strikethrough_wholesale_price gross="3343.13" net="2717.99"/>
+      <iaiext:price_retail xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml">
+        <iaiext:site id="1" size_id="0" gross="3343.13" net="2717.99"/>
+        <iaiext:site id="1" size_id="U" gross="3388.82" net="2755.14"/>
+        <iaiext:site id="1" size_id="V" gross="3468.82" net="2820.18"/>
+        <iaiext:site id="1" size_id="W" gross="3548.82" net="2885.22"/>
+      </iaiext:price_retail>
+      <iaiext:price_wholesale xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml">
+        <iaiext:site id="1" size_id="0" gross="2950" net="2398.37"/>
+        <iaiext:site id="1" size_id="U" gross="3287" net="2672.36"/>
+        <iaiext:site id="1" size_id="V" gross="3383" net="2750.41"/>
+        <iaiext:site id="1" size_id="W" gross="3479" net="2828.46"/>
+      </iaiext:price_wholesale>
+      <iaiext:price_minimal xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml">
+        <iaiext:site id="1" size_id="0" gross="2550.2" net="2073.33"/>
+        <iaiext:site id="1" size_id="U" gross="2750.2" net="2235.93"/>
+        <iaiext:site id="1" size_id="V" gross="2950.2" net="2398.54"/>
+        <iaiext:site id="1" size_id="W" gross="3150.2" net="2561.14"/>
+      </iaiext:price_minimal>
+      <promotion name="Przykłądowa promocja" start_date="2011-06-15">
+        <price>
+          <normal_retail_price gross="3714.59"/>
+          <normal_wholesale_price gross="3010.2"/>
+        </price>
+        <shown_in_the_zone promotion="yes" discount="yes" distinguished="yes" special="yes"/>
+      </promotion>
+      <iaiext:hotspots xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml">
+        <iaiext:site id="1" manual_config="no">
+          <flag type="promotion" visible="yes"/>
+          <flag type="discount" visible="yes"/>
+          <flag type="distinguished" visible="yes"/>
+          <flag type="special" visible="yes"/>
+          <flag type="newproduct" visible="yes"/>
+        </iaiext:site>
+      </iaiext:hotspots>
+      <sizes>
+        <size available="in_stock" id="U" name="128GB" panel_name="128GB" code="7-U" weight="0">
+          <price gross="3388.82" net="2755.14">
+            
+            
+            
+            
+            
+            
+            
+            <price_marketplace_site id="10000">
+              <delivery_cost carrierId="51">
+                <prepayment gross="15.56" net="12.65"/>
+                <cash_on_delivery gross="15.9" net="12.93"/>
+              </delivery_cost>
+            </price_marketplace_site>
+          </price>
+          <srp gross="2750.2" net="2235.93"/>
+          <strikethrough_retail_price gross="3899.99" net="3170.72"/>
+          <strikethrough_wholesale_price gross="3343.13" net="2717.99"/>
+          <stock id="0" quantity="-1" availability_id="1" available_stock_quantity="-1"/>
+          <stock id="1" quantity="-1" availability_id="1" available_stock_quantity="-1"/>
+        </size>
+        <size available="in_stock" id="V" name="256GB" panel_name="256GB" code="7-V" weight="0">
+          <price gross="3468.82" net="2820.18">
+            
+            
+            
+            
+            
+            
+            
+            <price_marketplace_site id="10000">
+              <delivery_cost carrierId="51">
+                <prepayment gross="15.56" net="12.65"/>
+                <cash_on_delivery gross="15.9" net="12.93"/>
+              </delivery_cost>
+            </price_marketplace_site>
+          </price>
+          <srp gross="3743.13" net="3043.2"/>
+          <strikethrough_retail_price gross="3899.99" net="3170.72"/>
+          <strikethrough_wholesale_price gross="3343.13" net="2717.99"/>
+          <stock id="0" quantity="-1" availability_id="1" available_stock_quantity="-1"/>
+          <stock id="1" quantity="-1" availability_id="1" available_stock_quantity="-1"/>
+        </size>
+        <size available="in_stock" id="W" name="500GB" panel_name="500GB" code="7-W" weight="0">
+          <price gross="3548.82" net="2885.22">
+            
+            
+            
+            
+            
+            
+            
+            <price_marketplace_site id="10000">
+              <delivery_cost carrierId="51">
+                <prepayment gross="15.56" net="12.65"/>
+                <cash_on_delivery gross="15.9" net="12.93"/>
+              </delivery_cost>
+            </price_marketplace_site>
+          </price>
+          <srp gross="3943.13" net="3205.8"/>
+          <strikethrough_retail_price gross="3899.99" net="3170.72"/>
+          <strikethrough_wholesale_price gross="3343.13" net="2717.99"/>
+          <stock id="0" quantity="-1" availability_id="1" available_stock_quantity="-1"/>
+          <stock id="1" quantity="-1" availability_id="1" available_stock_quantity="-1"/>
+        </size>
+      </sizes>
+      <images>
+        <large>
+          <image url="https://demo46-pl.yourtechnicaldomain.com/data/gfx/pictures/large/7/0/7_1.jpg" changed="2019-03-28 13:27:20" hash="558a1da1c8e06ef03fdb29fa512bb8b5" width="1500" height="877"/>
+          <image url="https://demo46-pl.yourtechnicaldomain.com/data/gfx/pictures/large/7/0/7_2.jpg" changed="2019-03-28 13:28:49" hash="019795912ead9d49464675c4fb22b8cc" width="1500" height="954"/>
+          <image url="https://demo46-pl.yourtechnicaldomain.com/data/gfx/pictures/large/7/0/7_4.png" changed="2019-03-28 13:28:49" hash="976a8d75cfa47b38cf4233f3c59c4afa" width="1500" height="877"/>
+        </large>
+        <icons>
+          <icon url="https://demo46-pl.yourtechnicaldomain.com/data/gfx/icons/large/7/0/7.jpg" changed="2020-03-24 14:57:41" hash="80ae61e0da5dd50cd562912186bb58b6" width="450" height="286"/>
+          <group_icon url="https://demo46-pl.yourtechnicaldomain.com/data/gfx/icons/versions/7/0/7.jpg" changed="2020-03-24 14:57:41" hash="80ae61e0da5dd50cd562912186bb58b6" width="200" height="127"/>
+        </icons>
+      </images>
+      <iaiext:navigation xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml">
+        <iaiext:site id="1">
+          <iaiext:menu id="1">
+            <iaiext:item id="152" menu_id="1" textid="Konsole" iaiext:priority_menu="1"/>
+            <iaiext:item id="160" menu_id="1" textid="Nowości" iaiext:priority_menu="3"/>
+            <iaiext:item id="161" menu_id="1" textid="Bestsellery" iaiext:priority_menu="4"/>
+          </iaiext:menu>
+          <iaiext:menu id="2"/>
+          <iaiext:menu id="4"/>
+          <iaiext:menu id="5"/>
+        </iaiext:site>
+      </iaiext:navigation>
+      <warranty id="1" type="producer" period="12" name="Gwarancja testowa"/>
+      <parameters>
+        <parameter type="parameter" id="32" priority="0" distinction="y" group_distinction="n" hide="n" auction_template_hide="n" xml:lang="pol" name="Procesor">
+          <value id="33" priority="0" xml:lang="pol" name="AMD Jaguar 4.0 GHz x64 bit "/>
+        </parameter>
+        <parameter type="parameter" id="34" priority="1" distinction="y" group_distinction="n" hide="n" auction_template_hide="n" xml:lang="pol" name="Pamięć">
+          <value id="35" priority="0" xml:lang="pol" name="&#9; 4 GB 1333 MHz "/>
+        </parameter>
+        <parameter type="parameter" id="36" priority="2" distinction="n" group_distinction="n" hide="n" auction_template_hide="n" xml:lang="pol" name="Typ obudowy">
+          <value id="37" priority="0" xml:lang="pol" name="Czarna błyszcząca "/>
+        </parameter>
+        <parameter type="parameter" id="39" priority="3" distinction="y" group_distinction="n" hide="n" auction_template_hide="n" xml:lang="pol" name="Ilość kontrolerów">
+          <value id="40" priority="0" xml:lang="pol" name="2 pady Dual Shock 4 "/>
+        </parameter>
+        <parameter type="parameter" id="58" priority="4" distinction="y" group_distinction="y" hide="n" auction_template_hide="n" xml:lang="pol" name="Model">
+          <value id="61" priority="0" xml:lang="pol" name="Supreme"/>
+        </parameter>
+      </parameters>
+      <group id="7" first_product_id="7">
+        <group_by_parameter id="a559b87068921eec05086ce5485e9784">
+          <name xml:lang="pol"><![CDATA[Model]]></name>
+          <product_value id="cbd0d0f5c3850644db55689e6194c968">
+            <name xml:lang="pol"><![CDATA[Supreme]]></name>
+          </product_value>
+        </group_by_parameter>
+      </group>
+      <iaiext:sell_by xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml">
+        <iaiext:retail quantity="1"/>
+        <iaiext:wholesale quantity="1"/>
+      </iaiext:sell_by>
+      <iaiext:inwrapper xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml" quantity="1"/>
+    </product><product type="regular" id="8" vat="23.0" code_on_card="10000053" site="1" currency="PLN">
+      <producer id="1308137276" name="Sony"/>
+      <category id="0" name="*Kategoria tymczasowa"/>
+      <unit id="0" name="szt."/>
+      <series id="1" name="seria testowa"/>
+      <card xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml" url="https://demo46-pl.yourtechnicaldomain.com/product-pol-8-Playstation-4-Slim.feed10000.html"/>
+      <description>
+        <name type="name" xml:lang="pol"><![CDATA[Playstation 4 Slim]]></name>
+        <short_desc xml:lang="pol"><![CDATA[Łącząc w sobie niezrównane treści, wciągające gry, ulubione aplikacje oraz ekskluzywne dla PlayStation® materiały, PlayStation®4 to najlepsze urządzenie do rozrywki. Najszybsza dostępna w konsolach do gry grafika i pamięć.]]></short_desc>
+        <long_desc xml:lang="pol"><![CDATA[<style>
+
+	#product_description_cms{text-align: center; overflow-x: hidden;}
+	#product_description_cms h4{font-size: 2.5em; font-weight:normal;}
+	#product_description_cms .product_property_wrapper{background: #0090f6; padding: 2vw; color:#fff; height: 100%;}
+	#product_description_cms .product_property_wrapper > img {display: block; margin: 0 auto 30px;}
+	#product_description_cms .product_property_wrapper > strong { display: block; font-size: 1.5em; padding-bottom: 10px; }
+	#product_description_cms p{   line-height: 1.5em; padding: 0 9vw 20px;}
+	#product_description_cms input[type="radio"] {display: none;}
+	#product_description_cms .tab-wrap {
+	  width: 100%;
+	  list-style: none;
+	  position: relative;
+	  margin: 0 0 60px!important;
+	  padding: 0!important;
+	}
+
+	#product_description_cms .tab-wrap label {
+	    border-top: 3px solid transparent;
+	    bottom: -25px;
+	    line-height: 30px;
+	    position: absolute;
+	    width: 100px;
+	    font-size: 1.1em;
+	    font-weight: bold;
+	}
+	#product_description_cms .tab-wrap .label-1{left: calc(50% - 150px);}
+	#product_description_cms .tab-wrap .label-2{left: calc(50% - 50px);}
+	#product_description_cms .tab-wrap .label-3{left: calc(50% + 50px);}
+	#product_description_cms .tab-wrap .tab-content {
+	  display: none;
+	  overflow: hidden;
+	  width: 100%;
+	  background: #fff;
+	}
+
+	#product_description_cms .tab-wrap [id^="tab"]:checked ~ .tab-content{display: block;}
+	#product_description_cms .tab-wrap [id^="tab"]:checked + label { border-top: 3px solid #0090f6; color:#0090f6;}
+        #product_description_cms .tab-wrap [id^="tab"] + label:hover{cursor: pointer;}
+	#product_description_cms .tab-wrap [id^="tab"]:checked + label:before {border-left: 4px solid rgba(0, 0, 0, 0);
+	    border-right: 4px solid rgba(0, 0, 0, 0);
+	    border-top: 4px solid #0090f6;
+	    content: "";
+	    display: block;
+	    left: 50%;
+	    margin-left: -4px;
+	    position: absolute;
+	    top: 0px;}
+
+@media only screen and (max-width: 979px){
+#product_description_cms h4{font-size: 1.5em;}
+#product_description_cms .product_property_wrapper > strong {font-size: 1.1em;}
+}
+@media only screen and (max-width: 757px){
+	#product_description_cms h4{font-size: 1.35em;}
+	#product_description_cms p{padding: 0;}
+	#product_description_cms .product_property_wrapper{padding: 15px;}
+	#product_description_cms .product_property_wrapper > img{ margin: 0 auto 10px;}
+}
+@media only screen and (min-width: 1200px) and (min-height: 768px){}
+</style>
+
+<div id="product_description_cms">
+	<div class="mrg-b">
+		<h4>
+		Przesuwając granice rozgrywki
+		</h4>
+		<p>
+		Jak firma Sony przygotowywała się do zdobycia tytułu „Najlepszej konsoli na świecie”? Zaczynając od podstaw. Ośmiordzeniowy procesor AMD Jaguar zapewnił maksymalną wydajność. Karta graficzna o mocy 1,84 teraflopa oraz nowoczesna pamięć GDDR5 dają twórcom niesamowite możliwości tworzenia gier nowej generacji.
+		</p>
+		<img src="/data/include/cms/product_photo_desc/product_photo_desc_01.jpg">
+	</div>
+
+	<div class="row clearfix ">
+		<div class="col-md-4 col-xs-12 mrg-b">
+			<div class="product_property_wrapper">
+				<img src="/data/include/cms/product_photo_desc/product_icon_desc_01.png">
+				<strong>Niestandardowy procesor x86-64</strong>
+				<div>Firma Sony zdecydowała się skorzystać z 8-rdzeniowego procesora x86-64 AMD „Jaguar” — a następnie dokonała zmian zwiększających jego wydajność.</div>
+			</div>
+		</div>
+		<div class="col-md-4 col-xs-12 mrg-b">
+			<div class="product_property_wrapper">
+				<img src="/data/include/cms/product_photo_desc/product_icon_desc_02.png">
+				<strong>Procesor 1,84 teraflopa</strong>
+				<div>Konsola PS4 deklasuje konkurencję dzięki większej o 50% liczbie rdzeni graficznych oraz wyższej przepustowości modułu shadera.</div>
+			</div>
+		</div>
+		<div class="col-md-4 col-xs-12 mrg-b">
+			<div class="product_property_wrapper">
+				<img src="/data/include/cms/product_photo_desc/product_icon_desc_03.png">
+				<strong>Pamięć graficzna 8 GB GDDR5</strong>
+				<div>Pamięć GDDR5 najnowszej generacji oferuje najwyższą szybkość i udostępnia twórcom niesamowite możliwości.</div>
+		</div>
+	</div>
+	</div>
+
+	<div class="mrg-b">
+		<h4>
+		Atrakcyjny wygląd, precyzyjna konstrukcja
+		</h4>
+		<p>
+		Smukła, wyrazista sylwetka konsoli PS4 ma w sobie coś zniewalającego. Jej forma — zarys, kontrastujące ze sobą ścianki i panele z błyszczącym oraz matowym wykończeniem — harmonizuje z każdym nowoczesnym centrum rozrywki.
+		</p>
+
+
+				<ul class="tab-wrap">
+				    <li>
+				   		<input type="radio" id="tab-1" name="tab" checked />
+     					 <label for="tab-1" class="label-1">Przód</label>
+     					 <div class="tab-content">
+							<img src="/data/include/cms/product_photo_desc/product_photo_desc_02.jpg">
+				        </div>
+
+				    </li>
+
+				    <li>
+				        <input type="radio" id="tab-2" name="tab"  />
+				        <label for="tab-2" class="label-2">Bok</label>
+				        <div class="tab-content">
+				             <img src="/data/include/cms/product_photo_desc/product_photo_desc_03.jpg">
+				        </div>
+
+				    </li>
+
+				      <li>
+				        <input type="radio" id="tab-3" name="tab" />
+				        <label for="tab-3" class="label-3">Tył</label>
+				        <div class="tab-content">
+					             <img src="/data/include/cms/product_photo_desc/product_photo_desc_04.jpg">
+					    </div>
+				    </li>
+				</ul>
+
+	</div>
+</div>
+
+
+
+]]></long_desc>
+      </description>
+      <iaiext:delivery_time xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml" unit="day" value="0">
+        <iaiext:mode type="deliverer"/>
+        <iaiext:time days="0"/>
+      </iaiext:delivery_time>
+      <iaiext:visibility xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml">
+        <iaiext:price_comparator visible="yes"/>
+      </iaiext:visibility>
+      <price gross="3223.13" net="2620.43"/>
+      <srp gross="3343.13" net="2717.99"/>
+      <strikethrough_retail_price gross="3899.99" net="3170.72"/>
+      <strikethrough_wholesale_price gross="3343.13" net="2717.99"/>
+      <iaiext:price_retail xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml">
+        <iaiext:site id="1" size_id="0" gross="3223.13" net="2620.43"/>
+      </iaiext:price_retail>
+      <iaiext:price_wholesale xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml">
+        <iaiext:site id="1" size_id="0" gross="3110.2" net="2528.62"/>
+      </iaiext:price_wholesale>
+      <iaiext:price_minimal xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml">
+        <iaiext:site id="1" size_id="0" gross="3110.2" net="2528.62"/>
+      </iaiext:price_minimal>
+      <promotion name=""/>
+      <iaiext:hotspots xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml">
+        <iaiext:site id="1" manual_config="no">
+          <flag type="newproduct" visible="yes"/>
+        </iaiext:site>
+      </iaiext:hotspots>
+      <sizes>
+        <size available="in_stock" id="U" name="128GB" panel_name="128GB" code="8-U" weight="0">
+          <price gross="3223.13" net="2620.43">
+            
+            
+            
+            
+            
+            
+            
+            <price_marketplace_site id="10000">
+              <delivery_cost carrierId="51">
+                <prepayment gross="15.56" net="12.65"/>
+                <cash_on_delivery gross="15.9" net="12.93"/>
+              </delivery_cost>
+            </price_marketplace_site>
+          </price>
+          <srp gross="3343.13" net="2717.99"/>
+          <strikethrough_retail_price gross="3899.99" net="3170.72"/>
+          <strikethrough_wholesale_price gross="3343.13" net="2717.99"/>
+          <stock id="0" quantity="-1" availability_id="1" available_stock_quantity="-1"/>
+          <stock id="1" quantity="-1" availability_id="1" available_stock_quantity="-1"/>
+        </size>
+        <size available="in_stock" id="V" name="256GB" panel_name="256GB" code="8-V" weight="0">
+          <price gross="3223.13" net="2620.43">
+            
+            
+            
+            
+            
+            
+            
+            <price_marketplace_site id="10000">
+              <delivery_cost carrierId="51">
+                <prepayment gross="15.56" net="12.65"/>
+                <cash_on_delivery gross="15.9" net="12.93"/>
+              </delivery_cost>
+            </price_marketplace_site>
+          </price>
+          <srp gross="3343.13" net="2717.99"/>
+          <strikethrough_retail_price gross="3899.99" net="3170.72"/>
+          <strikethrough_wholesale_price gross="3343.13" net="2717.99"/>
+          <stock id="0" quantity="-1" availability_id="1" available_stock_quantity="-1"/>
+          <stock id="1" quantity="-1" availability_id="1" available_stock_quantity="-1"/>
+        </size>
+        <size available="in_stock" id="W" name="500GB" panel_name="500GB" code="8-W" weight="0">
+          <price gross="3223.13" net="2620.43">
+            
+            
+            
+            
+            
+            
+            
+            <price_marketplace_site id="10000">
+              <delivery_cost carrierId="51">
+                <prepayment gross="15.56" net="12.65"/>
+                <cash_on_delivery gross="15.9" net="12.93"/>
+              </delivery_cost>
+            </price_marketplace_site>
+          </price>
+          <srp gross="3343.13" net="2717.99"/>
+          <strikethrough_retail_price gross="3899.99" net="3170.72"/>
+          <strikethrough_wholesale_price gross="3343.13" net="2717.99"/>
+          <stock id="0" quantity="-1" availability_id="1" available_stock_quantity="-1"/>
+          <stock id="1" quantity="-1" availability_id="1" available_stock_quantity="-1"/>
+        </size>
+      </sizes>
+      <images>
+        <large>
+          <image url="https://demo46-pl.yourtechnicaldomain.com/data/gfx/pictures/large/8/0/8_4.jpg" changed="2019-03-28 13:27:22" hash="d4230377f55af8c0f83bfffa5464dae1" width="1500" height="877"/>
+          <image url="https://demo46-pl.yourtechnicaldomain.com/data/gfx/pictures/large/8/0/8_1.jpg" changed="2019-03-28 13:31:03" hash="8b83ace98c4b2a87dd41ba5a6d27d22c" width="1500" height="954"/>
+          <image url="https://demo46-pl.yourtechnicaldomain.com/data/gfx/pictures/large/8/0/8_3.png" changed="2019-03-28 13:31:01" hash="f6437c1c7ba45029003198fa4b2c1892" width="1500" height="877"/>
+        </large>
+        <icons>
+          <icon url="https://demo46-pl.yourtechnicaldomain.com/data/gfx/icons/large/8/0/8.jpg" changed="2019-10-16 12:52:55" hash="1f29ad594e00b7a5b16d4a070a7673de" width="450" height="286"/>
+          <group_icon url="https://demo46-pl.yourtechnicaldomain.com/data/gfx/icons/versions/8/0/8.jpg" changed="2020-03-10 20:56:32" hash="1f29ad594e00b7a5b16d4a070a7673de" width="200" height="127"/>
+        </icons>
+      </images>
+      <iaiext:navigation xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml">
+        <iaiext:site id="1">
+          <iaiext:menu id="1">
+            <iaiext:item id="152" menu_id="1" textid="Konsole" iaiext:priority_menu="1"/>
+            <iaiext:item id="160" menu_id="1" textid="Nowości" iaiext:priority_menu="3"/>
+            <iaiext:item id="161" menu_id="1" textid="Bestsellery" iaiext:priority_menu="4"/>
+          </iaiext:menu>
+          <iaiext:menu id="2"/>
+          <iaiext:menu id="4"/>
+          <iaiext:menu id="5"/>
+        </iaiext:site>
+      </iaiext:navigation>
+      <warranty id="1" type="producer" period="12" name="Gwarancja testowa"/>
+      <parameters>
+        <parameter type="parameter" id="32" priority="0" distinction="y" group_distinction="n" hide="n" auction_template_hide="n" xml:lang="pol" name="Procesor">
+          <value id="33" priority="0" xml:lang="pol" name="AMD Jaguar 4.0 GHz x64 bit "/>
+        </parameter>
+        <parameter type="parameter" id="34" priority="1" distinction="y" group_distinction="n" hide="n" auction_template_hide="n" xml:lang="pol" name="Pamięć">
+          <value id="35" priority="0" xml:lang="pol" name="&#9; 4 GB 1333 MHz "/>
+        </parameter>
+        <parameter type="parameter" id="36" priority="2" distinction="n" group_distinction="n" hide="n" auction_template_hide="n" xml:lang="pol" name="Typ obudowy">
+          <value id="38" priority="0" xml:lang="pol" name="Czarna matowa"/>
+        </parameter>
+        <parameter type="parameter" id="39" priority="3" distinction="y" group_distinction="n" hide="n" auction_template_hide="n" xml:lang="pol" name="Ilość kontrolerów">
+          <value id="41" priority="0" xml:lang="pol" name="1 pad Dual Shock 4"/>
+        </parameter>
+        <parameter type="parameter" id="58" priority="4" distinction="y" group_distinction="y" hide="n" auction_template_hide="n" xml:lang="pol" name="Model">
+          <value id="60" priority="0" xml:lang="pol" name="Optimum"/>
+        </parameter>
+      </parameters>
+      <group id="7" first_product_id="7">
+        <group_by_parameter id="a559b87068921eec05086ce5485e9784">
+          <name xml:lang="pol"><![CDATA[Model]]></name>
+          <product_value id="9936886d3be53d8c1e376cd2cae09233">
+            <name xml:lang="pol"><![CDATA[Optimum]]></name>
+          </product_value>
+        </group_by_parameter>
+      </group>
+      <iaiext:sell_by xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml">
+        <iaiext:retail quantity="1"/>
+        <iaiext:wholesale quantity="1"/>
+      </iaiext:sell_by>
+      <iaiext:inwrapper xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml" quantity="1"/>
+    </product><product type="bundle" id="9" vat="23.0" code_on_card="10000053" site="1" currency="PLN">
+      <producer id="1308137276" name="Sony"/>
+      <category id="0" name="*Kategoria tymczasowa"/>
+      <unit id="0" name="szt."/>
+      <series id="1" name="seria testowa"/>
+      <card xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml" url="https://demo46-pl.yourtechnicaldomain.com/product-pol-9-Playstation-4-zestaw-VR.feed10000.html"/>
+      <description>
+        <name type="name" xml:lang="pol"><![CDATA[Playstation 4 zestaw VR]]></name>
+        <short_desc xml:lang="pol"><![CDATA[Łącząc w sobie niezrównane treści, wciągające gry, ulubione aplikacje oraz ekskluzywne dla PlayStation® materiały, PlayStation®4 to najlepsze urządzenie do rozrywki. Najszybsza dostępna w konsolach do gry grafika i pamięć.]]></short_desc>
+        <long_desc xml:lang="pol"><![CDATA[<style>
+
+	#product_description_cms{text-align: center; overflow-x: hidden;}
+	#product_description_cms h4{font-size: 2.5em; font-weight:normal;}
+	#product_description_cms .product_property_wrapper{background: #0090f6; padding: 2vw; color:#fff; height: 100%;}
+	#product_description_cms .product_property_wrapper > img {display: block; margin: 0 auto 30px;}
+	#product_description_cms .product_property_wrapper > strong { display: block; font-size: 1.5em; padding-bottom: 10px; }
+	#product_description_cms p{   line-height: 1.5em; padding: 0 9vw 20px;}
+	#product_description_cms input[type="radio"] {display: none;}
+	#product_description_cms .tab-wrap {
+	  width: 100%;
+	  list-style: none;
+	  position: relative;
+	  margin: 0 0 60px!important;
+	  padding: 0!important;
+	}
+
+	#product_description_cms .tab-wrap label {
+	    border-top: 3px solid transparent;
+	    bottom: -25px;
+	    line-height: 30px;
+	    position: absolute;
+	    width: 100px;
+	    font-size: 1.1em;
+	    font-weight: bold;
+	}
+	#product_description_cms .tab-wrap .label-1{left: calc(50% - 150px);}
+	#product_description_cms .tab-wrap .label-2{left: calc(50% - 50px);}
+	#product_description_cms .tab-wrap .label-3{left: calc(50% + 50px);}
+	#product_description_cms .tab-wrap .tab-content {
+	  display: none;
+	  overflow: hidden;
+	  width: 100%;
+	  background: #fff;
+	}
+
+	#product_description_cms .tab-wrap [id^="tab"]:checked ~ .tab-content{display: block;}
+	#product_description_cms .tab-wrap [id^="tab"]:checked + label { border-top: 3px solid #0090f6; color:#0090f6;}
+        #product_description_cms .tab-wrap [id^="tab"] + label:hover{cursor: pointer;}
+	#product_description_cms .tab-wrap [id^="tab"]:checked + label:before {border-left: 4px solid rgba(0, 0, 0, 0);
+	    border-right: 4px solid rgba(0, 0, 0, 0);
+	    border-top: 4px solid #0090f6;
+	    content: "";
+	    display: block;
+	    left: 50%;
+	    margin-left: -4px;
+	    position: absolute;
+	    top: 0px;}
+
+@media only screen and (max-width: 979px){
+#product_description_cms h4{font-size: 1.5em;}
+#product_description_cms .product_property_wrapper > strong {font-size: 1.1em;}
+}
+@media only screen and (max-width: 757px){
+	#product_description_cms h4{font-size: 1.35em;}
+	#product_description_cms p{padding: 0;}
+	#product_description_cms .product_property_wrapper{padding: 15px;}
+	#product_description_cms .product_property_wrapper > img{ margin: 0 auto 10px;}
+}
+@media only screen and (min-width: 1200px) and (min-height: 768px){}
+</style>
+
+<div id="product_description_cms">
+	<div class="mrg-b">
+		<h4>
+		Przesuwając granice rozgrywki
+		</h4>
+		<p>
+		Jak firma Sony przygotowywała się do zdobycia tytułu „Najlepszej konsoli na świecie”? Zaczynając od podstaw. Ośmiordzeniowy procesor AMD Jaguar zapewnił maksymalną wydajność. Karta graficzna o mocy 1,84 teraflopa oraz nowoczesna pamięć GDDR5 dają twórcom niesamowite możliwości tworzenia gier nowej generacji.
+		</p>
+		<img src="/data/include/cms/product_photo_desc/product_photo_desc_01.jpg">
+	</div>
+
+	<div class="row clearfix ">
+		<div class="col-md-4 col-xs-12 mrg-b">
+			<div class="product_property_wrapper">
+				<img src="/data/include/cms/product_photo_desc/product_icon_desc_01.png">
+				<strong>Niestandardowy procesor x86-64</strong>
+				<div>Firma Sony zdecydowała się skorzystać z 8-rdzeniowego procesora x86-64 AMD „Jaguar” — a następnie dokonała zmian zwiększających jego wydajność.</div>
+			</div>
+		</div>
+		<div class="col-md-4 col-xs-12 mrg-b">
+			<div class="product_property_wrapper">
+				<img src="/data/include/cms/product_photo_desc/product_icon_desc_02.png">
+				<strong>Procesor 1,84 teraflopa</strong>
+				<div>Konsola PS4 deklasuje konkurencję dzięki większej o 50% liczbie rdzeni graficznych oraz wyższej przepustowości modułu shadera.</div>
+			</div>
+		</div>
+		<div class="col-md-4 col-xs-12 mrg-b">
+			<div class="product_property_wrapper">
+				<img src="/data/include/cms/product_photo_desc/product_icon_desc_03.png">
+				<strong>Pamięć graficzna 8 GB GDDR5</strong>
+				<div>Pamięć GDDR5 najnowszej generacji oferuje najwyższą szybkość i udostępnia twórcom niesamowite możliwości.</div>
+		</div>
+	</div>
+	</div>
+
+	<div class="mrg-b">
+		<h4>
+		Atrakcyjny wygląd, precyzyjna konstrukcja
+		</h4>
+		<p>
+		Smukła, wyrazista sylwetka konsoli PS4 ma w sobie coś zniewalającego. Jej forma — zarys, kontrastujące ze sobą ścianki i panele z błyszczącym oraz matowym wykończeniem — harmonizuje z każdym nowoczesnym centrum rozrywki.
+		</p>
+
+
+				<ul class="tab-wrap">
+				    <li>
+				   		<input type="radio" id="tab-1" name="tab" checked />
+     					 <label for="tab-1" class="label-1">Przód</label>
+     					 <div class="tab-content">
+							<img src="/data/include/cms/product_photo_desc/product_photo_desc_02.jpg">
+				        </div>
+
+				    </li>
+
+				    <li>
+				        <input type="radio" id="tab-2" name="tab"  />
+				        <label for="tab-2" class="label-2">Bok</label>
+				        <div class="tab-content">
+				             <img src="/data/include/cms/product_photo_desc/product_photo_desc_03.jpg">
+				        </div>
+
+				    </li>
+
+				      <li>
+				        <input type="radio" id="tab-3" name="tab" />
+				        <label for="tab-3" class="label-3">Tył</label>
+				        <div class="tab-content">
+					             <img src="/data/include/cms/product_photo_desc/product_photo_desc_04.jpg">
+					    </div>
+				    </li>
+				</ul>
+
+	</div>
+</div>
+
+
+
+]]></long_desc>
+      </description>
+      <iaiext:delivery_time xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml" unit="day" value="0">
+        <iaiext:mode type="deliverer"/>
+        <iaiext:time days="0"/>
+      </iaiext:delivery_time>
+      <iaiext:visibility xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml">
+        <iaiext:price_comparator visible="yes"/>
+      </iaiext:visibility>
+      <price gross="4022.13" net="3270.02"/>
+      <srp gross="3343.13" net="2717.99"/>
+      <strikethrough_retail_price gross="3899.99" net="3170.72"/>
+      <strikethrough_wholesale_price gross="3343.13" net="2717.99"/>
+      <iaiext:price_retail xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml">
+        <iaiext:site id="1" size_id="0" gross="4022.13" net="3270.02"/>
+      </iaiext:price_retail>
+      <iaiext:price_wholesale xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml">
+        <iaiext:site id="1" size_id="0" gross="3909.2" net="3178.21"/>
+      </iaiext:price_wholesale>
+      <iaiext:price_minimal xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml">
+        <iaiext:site id="1" size_id="0" gross="3110.2" net="2528.62"/>
+      </iaiext:price_minimal>
+      <promotion name=""/>
+      <iaiext:hotspots xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml">
+        <iaiext:site id="1" manual_config="no">
+          <flag type="newproduct" visible="yes"/>
+        </iaiext:site>
+      </iaiext:hotspots>
+      <sizes>
+        <size available="on_order" id="uniw" panel_name="uniw" code="9-uniw" weight="0">
+          <price gross="4022.13" net="3270.02">
+            
+            
+            
+            
+            
+            
+            
+            <price_marketplace_site id="10000">
+              <delivery_cost carrierId="51">
+                <prepayment gross="15.56" net="12.65"/>
+                <cash_on_delivery gross="15.9" net="12.93"/>
+              </delivery_cost>
+            </price_marketplace_site>
+          </price>
+          <srp gross="3343.13" net="2717.99"/>
+          <strikethrough_retail_price gross="3899.99" net="3170.72"/>
+          <strikethrough_wholesale_price gross="3343.13" net="2717.99"/>
+          <stock id="0" quantity="-1" availability_id="1" available_stock_quantity="-1"/>
+        </size>
+      </sizes>
+      <images>
+        <large>
+          <image url="https://demo46-pl.yourtechnicaldomain.com/data/gfx/pictures/large/9/0/9_3.jpg" changed="2019-03-28 13:32:10" hash="6809fdb0192be94e1fb8ab08b7f9fb4d" width="1500" height="880"/>
+          <image url="https://demo46-pl.yourtechnicaldomain.com/data/gfx/pictures/large/9/0/9_2.jpg" changed="2019-03-28 13:32:11" hash="2a309d9e5fbdad4a1295c13b4233233a" width="1500" height="954"/>
+          <image url="https://demo46-pl.yourtechnicaldomain.com/data/gfx/pictures/large/9/0/9_4.png" changed="2019-03-28 13:32:09" hash="eaf66a856b97758d1f8876848765c799" width="1500" height="877"/>
+        </large>
+        <icons>
+          <icon url="https://demo46-pl.yourtechnicaldomain.com/data/gfx/icons/large/9/0/9.jpg" changed="2019-10-16 12:52:55" hash="8b22c171af25966bcf393cf781eff887" width="450" height="286"/>
+          <group_icon url="https://demo46-pl.yourtechnicaldomain.com/data/gfx/icons/versions/9/0/9.jpg" changed="2019-10-16 12:52:55" hash="8b22c171af25966bcf393cf781eff887" width="200" height="127"/>
+        </icons>
+      </images>
+      <iaiext:navigation xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml">
+        <iaiext:site id="1">
+          <iaiext:menu id="1">
+            <iaiext:item id="152" menu_id="1" textid="Konsole" iaiext:priority_menu="1"/>
+            <iaiext:item id="160" menu_id="1" textid="Nowości" iaiext:priority_menu="3"/>
+            <iaiext:item id="161" menu_id="1" textid="Bestsellery" iaiext:priority_menu="4"/>
+          </iaiext:menu>
+          <iaiext:menu id="2"/>
+          <iaiext:menu id="4"/>
+          <iaiext:menu id="5"/>
+        </iaiext:site>
+      </iaiext:navigation>
+      <warranty id="1" type="producer" period="12" name="Gwarancja testowa"/>
+      <parameters>
+        <parameter type="parameter" id="58" priority="0" distinction="y" group_distinction="n" hide="n" auction_template_hide="n" xml:lang="pol" name="Model">
+          <value id="59" priority="0" xml:lang="pol" name="Standard"/>
+        </parameter>
+        <parameter type="parameter" id="32" priority="1" distinction="y" group_distinction="n" hide="n" auction_template_hide="n" xml:lang="pol" name="Procesor">
+          <value id="33" priority="0" xml:lang="pol" name="AMD Jaguar 4.0 GHz x64 bit "/>
+        </parameter>
+        <parameter type="parameter" id="34" priority="2" distinction="y" group_distinction="n" hide="n" auction_template_hide="n" xml:lang="pol" name="Pamięć">
+          <value id="57" priority="1" xml:lang="pol" name="&#9; 8 GB 1333 MHz "/>
+        </parameter>
+        <parameter type="parameter" id="36" priority="3" distinction="n" group_distinction="n" hide="n" auction_template_hide="n" xml:lang="pol" name="Typ obudowy">
+          <value id="38" priority="0" xml:lang="pol" name="Czarna matowa"/>
+        </parameter>
+        <parameter type="parameter" id="39" priority="4" distinction="y" group_distinction="n" hide="n" auction_template_hide="n" xml:lang="pol" name="Ilość kontrolerów">
+          <value id="41" priority="0" xml:lang="pol" name="1 pad Dual Shock 4"/>
+        </parameter>
+      </parameters>
+      <bundled>
+        <product id="8" quantity="1.000" type="client_chooses_size"/>
+        <product id="28" quantity="1.000" type="client_chooses_variant"/>
+      </bundled>
+      <iaiext:sell_by xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml">
+        <iaiext:retail quantity="1"/>
+        <iaiext:wholesale quantity="1"/>
+      </iaiext:sell_by>
+      <iaiext:inwrapper xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml" quantity="1"/>
+    </product><product type="regular" id="10" vat="23.0" code_on_card="10000056" site="1" currency="PLN">
+      <producer id="1142347122" name="Apple"/>
+      <category id="0" name="*Kategoria tymczasowa"/>
+      <unit id="0" name="szt."/>
+      <series id="1" name="seria testowa"/>
+      <card xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml" url="https://demo46-pl.yourtechnicaldomain.com/product-pol-10-Apple-27.feed10000.html"/>
+      <description>
+        <name type="name" xml:lang="pol"><![CDATA[Apple 27"]]></name>
+        <short_desc xml:lang="pol"><![CDATA[ Atrakcyjny wygląd, precyzyjna konstrukcja]]></short_desc>
+        <long_desc xml:lang="pol"><![CDATA[<style>
+
+	#product_description_cms{text-align: center; overflow-x: hidden;}
+	#product_description_cms h4{font-size: 2.5em; font-weight:normal;}
+	#product_description_cms .product_property_wrapper{background: #0090f6; padding: 2vw; color:#fff; height: 100%;}
+	#product_description_cms .product_property_wrapper > img {display: block; margin: 0 auto 30px;}
+	#product_description_cms .product_property_wrapper > strong { display: block; font-size: 1.5em; padding-bottom: 10px; }
+	#product_description_cms p{   line-height: 1.5em; padding: 0 9vw 20px;}
+	#product_description_cms input[type="radio"] {display: none;}
+	#product_description_cms .tab-wrap {
+	  width: 100%;
+	  list-style: none;
+	  position: relative;
+	  margin: 0 0 60px!important;
+	  padding: 0!important;
+	}
+
+	#product_description_cms .tab-wrap label {
+	    border-top: 3px solid transparent;
+	    bottom: -30px;
+	    line-height: 30px;
+	    position: absolute;
+	    width: 100px;
+	    font-size: 1.1em;
+	    font-weight: bold;
+	}
+	#product_description_cms .tab-wrap .label-1{left: calc(50% - 150px);}
+	#product_description_cms .tab-wrap .label-2{left: calc(50% - 50px);}
+	#product_description_cms .tab-wrap .label-3{left: calc(50% + 50px);}
+	#product_description_cms .tab-wrap .tab-content {
+	  display: none;
+	  overflow: hidden;
+	  width: 100%;
+	  background: #fff;
+	}
+
+	#product_description_cms .tab-wrap [id^="tab"]:checked ~ .tab-content{display: block;}
+	#product_description_cms .tab-wrap [id^="tab"]:checked + label { border-top: 3px solid #0090f6; color:#0090f6;}
+        #product_description_cms .tab-wrap [id^="tab"] + label:hover{cursor: pointer;}
+	#product_description_cms .tab-wrap [id^="tab"]:checked + label:before {border-left: 4px solid rgba(0, 0, 0, 0);
+	    border-right: 4px solid rgba(0, 0, 0, 0);
+	    border-top: 4px solid #0090f6;
+	    content: "";
+	    display: block;
+	    left: 50%;
+	    margin-left: -4px;
+	    position: absolute;
+	    top: 0px;}
+
+@media only screen and (max-width: 979px){
+#product_description_cms h4{font-size: 1.5em;}
+#product_description_cms .product_property_wrapper > strong {font-size: 1.1em;}
+}
+@media only screen and (max-width: 757px){
+	#product_description_cms h4{font-size: 1.35em;}
+	#product_description_cms p{padding: 0;}
+	#product_description_cms .product_property_wrapper{padding: 15px;}
+	#product_description_cms .product_property_wrapper > img{ margin: 0 auto 10px;}
+}
+@media only screen and (min-width: 1200px) and (min-height: 768px){}
+</style>
+
+<div id="product_description_cms">
+	<div class="mrg-b">
+		<h4>
+		Przesuwając granice rozgrywki
+		</h4>
+		<p>
+		Jak firma Sony przygotowywała się do zdobycia tytułu „Najlepszej konsoli na świecie”? Zaczynając od podstaw. Ośmiordzeniowy procesor AMD Jaguar zapewnił maksymalną wydajność. Karta graficzna o mocy 1,84 teraflopa oraz nowoczesna pamięć GDDR5 dają twórcom niesamowite możliwości tworzenia gier nowej generacji.
+		</p>
+		<img src="/data/include/cms/product_photo_desc/product_photo_desc_01.jpg">
+	</div>
+
+	<div class="row clearfix ">
+		<div class="col-md-4 col-xs-12 mrg-b">
+			<div class="product_property_wrapper">
+				<img src="/data/include/cms/product_photo_desc/product_icon_desc_01.png">
+				<strong>Niestandardowy procesor x86-64</strong>
+				<div>Firma Sony zdecydowała się skorzystać z 8-rdzeniowego procesora x86-64 AMD „Jaguar” — a następnie dokonała zmian zwiększających jego wydajność.</div>
+			</div>
+		</div>
+		<div class="col-md-4 col-xs-12 mrg-b">
+			<div class="product_property_wrapper">
+				<img src="/data/include/cms/product_photo_desc/product_icon_desc_02.png">
+				<strong>Procesor 1,84 teraflopa</strong>
+				<div>Konsola PS4 deklasuje konkurencję dzięki większej o 50% liczbie rdzeni graficznych oraz wyższej przepustowości modułu shadera.</div>
+			</div>
+		</div>
+		<div class="col-md-4 col-xs-12 mrg-b">
+			<div class="product_property_wrapper">
+				<img src="/data/include/cms/product_photo_desc/product_icon_desc_03.png">
+				<strong>Pamięć graficzna 8 GB GDDR5</strong>
+				<div>Pamięć GDDR5 najnowszej generacji oferuje najwyższą szybkość i udostępnia twórcom niesamowite możliwości.</div>
+		</div>
+	</div>
+	</div>
+
+	<div class="mrg-b">
+		<h4>
+		Atrakcyjny wygląd, precyzyjna konstrukcja
+		</h4>
+		<p>
+		Smukła, wyrazista sylwetka konsoli PS4 ma w sobie coś zniewalającego. Jej forma — zarys, kontrastujące ze sobą ścianki i panele z błyszczącym oraz matowym wykończeniem — harmonizuje z każdym nowoczesnym centrum rozrywki.
+		</p>
+
+
+				<ul class="tab-wrap">
+				    <li>
+				   		<input type="radio" id="tab-1" name="tab" checked />
+     					 <label for="tab-1" class="label-1">Przód</label>
+     					 <div class="tab-content">
+							<img src="/data/include/cms/product_photo_desc/product_photo_desc_02.jpg">
+				        </div>
+
+				    </li>
+
+				    <li>
+				        <input type="radio" id="tab-2" name="tab"  />
+				        <label for="tab-2" class="label-2">Bok</label>
+				        <div class="tab-content">
+				             <img src="/data/include/cms/product_photo_desc/product_photo_desc_03.jpg">
+				        </div>
+
+				    </li>
+
+				      <li>
+				        <input type="radio" id="tab-3" name="tab" />
+				        <label for="tab-3" class="label-3">Tył</label>
+				        <div class="tab-content">
+					             <img src="/data/include/cms/product_photo_desc/product_photo_desc_04.jpg">
+					    </div>
+				    </li>
+				</ul>
+	</div>
+</div>
+
+]]></long_desc>
+      </description>
+      <iaiext:visibility xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml">
+        <iaiext:price_comparator visible="yes"/>
+      </iaiext:visibility>
+      <price gross="323.13" net="262.71"/>
+      <srp gross="343.13" net="278.97"/>
+      <strikethrough_retail_price gross="399.99" net="325.2"/>
+      <strikethrough_wholesale_price gross="343.13" net="278.97"/>
+      <iaiext:price_retail xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml">
+        <iaiext:site id="1" size_id="0" gross="323.13" net="262.71"/>
+      </iaiext:price_retail>
+      <iaiext:price_wholesale xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml">
+        <iaiext:site id="1" size_id="0" gross="310.2" net="252.2"/>
+      </iaiext:price_wholesale>
+      <iaiext:price_minimal xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml">
+        <iaiext:site id="1" size_id="0" gross="310.2" net="252.2"/>
+      </iaiext:price_minimal>
+      <promotion name=""/>
+      <iaiext:hotspots xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml">
+        <iaiext:site id="1" manual_config="no">
+          <flag type="newproduct" visible="yes"/>
+        </iaiext:site>
+      </iaiext:hotspots>
+      <sizes>
+        <size available="unavailable" id="U" name="128GB" panel_name="128GB" code="10-U" weight="0">
+          <price gross="323.13" net="262.71">
+            <price_marketplace_site id="10000">
+              <delivery_cost carrierId="51">
+                <prepayment gross="15.56" net="12.65"/>
+                <cash_on_delivery gross="15.9" net="12.93"/>
+              </delivery_cost>
+            </price_marketplace_site>
+          </price>
+          <srp gross="343.13" net="278.97"/>
+          <strikethrough_retail_price gross="399.99" net="325.2"/>
+          <strikethrough_wholesale_price gross="343.13" net="278.97"/>
+        </size>
+        <size available="unavailable" id="V" name="256GB" panel_name="256GB" code="10-V" weight="0">
+          <price gross="323.13" net="262.71">
+            <price_marketplace_site id="10000">
+              <delivery_cost carrierId="51">
+                <prepayment gross="15.56" net="12.65"/>
+                <cash_on_delivery gross="15.9" net="12.93"/>
+              </delivery_cost>
+            </price_marketplace_site>
+          </price>
+          <srp gross="343.13" net="278.97"/>
+          <strikethrough_retail_price gross="399.99" net="325.2"/>
+          <strikethrough_wholesale_price gross="343.13" net="278.97"/>
+        </size>
+        <size available="unavailable" id="W" name="500GB" panel_name="500GB" code="10-W" weight="0">
+          <price gross="323.13" net="262.71">
+            <price_marketplace_site id="10000">
+              <delivery_cost carrierId="51">
+                <prepayment gross="15.56" net="12.65"/>
+                <cash_on_delivery gross="15.9" net="12.93"/>
+              </delivery_cost>
+            </price_marketplace_site>
+          </price>
+          <srp gross="343.13" net="278.97"/>
+          <strikethrough_retail_price gross="399.99" net="325.2"/>
+          <strikethrough_wholesale_price gross="343.13" net="278.97"/>
+        </size>
+      </sizes>
+      <images>
+        <large>
+          <image url="https://demo46-pl.yourtechnicaldomain.com/data/gfx/pictures/large/0/1/10_1.jpg" changed="2019-03-28 13:27:41" hash="41a110f320af2914d0db1fc8bbfa59d9" width="1500" height="1207"/>
+        </large>
+        <icons>
+          <icon url="https://demo46-pl.yourtechnicaldomain.com/data/gfx/icons/large/0/1/10.jpg" changed="2019-10-16 12:52:57" hash="f2a13dbdec78051ac68525f7ab6035ac" width="311" height="250"/>
+        </icons>
+      </images>
+      <iaiext:navigation xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml">
+        <iaiext:site id="1">
+          <iaiext:menu id="1">
+            <iaiext:item id="160" menu_id="1" textid="Nowości" iaiext:priority_menu="3"/>
+            <iaiext:item id="161" menu_id="1" textid="Bestsellery" iaiext:priority_menu="4"/>
+            <iaiext:item id="231" menu_id="1" textid="Elektronika\iMac" iaiext:priority_menu="1"/>
+          </iaiext:menu>
+          <iaiext:menu id="2"/>
+          <iaiext:menu id="4"/>
+          <iaiext:menu id="5"/>
+        </iaiext:site>
+      </iaiext:navigation>
+      <warranty id="1" type="producer" period="12" name="Gwarancja testowa"/>
+      <parameters>
+        <parameter type="parameter" id="32" priority="0" distinction="y" group_distinction="n" hide="n" auction_template_hide="n" xml:lang="pol" name="Procesor">
+          <value id="33" priority="0" xml:lang="pol" name="AMD Jaguar 4.0 GHz x64 bit "/>
+        </parameter>
+        <parameter type="parameter" id="34" priority="1" distinction="y" group_distinction="n" hide="n" auction_template_hide="n" xml:lang="pol" name="Pamięć">
+          <value id="35" priority="0" xml:lang="pol" name="&#9; 4 GB 1333 MHz "/>
+        </parameter>
+        <parameter type="parameter" id="36" priority="2" distinction="n" group_distinction="n" hide="n" auction_template_hide="n" xml:lang="pol" name="Typ obudowy">
+          <value id="38" priority="0" xml:lang="pol" name="Czarna matowa"/>
+        </parameter>
+        <parameter type="parameter" id="39" priority="3" distinction="y" group_distinction="n" hide="n" auction_template_hide="n" xml:lang="pol" name="Ilość kontrolerów">
+          <value id="41" priority="0" xml:lang="pol" name="1 pad Dual Shock 4"/>
+        </parameter>
+      </parameters>
+      <iaiext:sell_by xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml">
+        <iaiext:retail quantity="1"/>
+        <iaiext:wholesale quantity="1"/>
+      </iaiext:sell_by>
+      <iaiext:inwrapper xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml" quantity="1"/>
+    </product><product type="regular" id="11" vat="23.0" site="1" currency="PLN">
+      <producer id="1142347122" name="Apple"/>
+      <category id="0" name="*Kategoria tymczasowa"/>
+      <unit id="0" name="szt."/>
+      <series id="1" name="seria testowa"/>
+      <card xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml" url="https://demo46-pl.yourtechnicaldomain.com/product-pol-11-Apple-iPad-PRO-9-8-64-GB-Gold-version-iCloud-ready.feed10000.html"/>
+      <description>
+        <name type="name" xml:lang="pol"><![CDATA[Apple iPad PRO 9,8” 64 GB Gold version iCloud ready]]></name>
+        <short_desc xml:lang="pol"><![CDATA[Atrakcyjny wygląd, precyzyjna konstrukcja]]></short_desc>
+        <long_desc xml:lang="pol"><![CDATA[<style>
+
+	#product_description_cms{text-align: center; overflow-x: hidden;}
+	#product_description_cms h4{font-size: 2.5em; font-weight:normal;}
+	#product_description_cms .product_property_wrapper{background: #0090f6; padding: 2vw; color:#fff; height: 100%;}
+	#product_description_cms .product_property_wrapper > img {display: block; margin: 0 auto 30px;}
+	#product_description_cms .product_property_wrapper > strong { display: block; font-size: 1.5em; padding-bottom: 10px; }
+	#product_description_cms p{   line-height: 1.5em; padding: 0 9vw 20px;}
+	#product_description_cms input[type="radio"] {display: none;}
+	#product_description_cms .tab-wrap {
+	  width: 100%;
+	  list-style: none;
+	  position: relative;
+	  margin: 0 0 60px!important;
+	  padding: 0!important;
+	}
+
+	#product_description_cms .tab-wrap label {
+	    border-top: 3px solid transparent;
+	    bottom: -30px;
+	    line-height: 30px;
+	    position: absolute;
+	    width: 100px;
+	    font-size: 1.1em;
+	    font-weight: bold;
+	}
+	#product_description_cms .tab-wrap .label-1{left: calc(50% - 150px);}
+	#product_description_cms .tab-wrap .label-2{left: calc(50% - 50px);}
+	#product_description_cms .tab-wrap .label-3{left: calc(50% + 50px);}
+	#product_description_cms .tab-wrap .tab-content {
+	  display: none;
+	  overflow: hidden;
+	  width: 100%;
+	  background: #fff;
+	}
+
+	#product_description_cms .tab-wrap [id^="tab"]:checked ~ .tab-content{display: block;}
+	#product_description_cms .tab-wrap [id^="tab"]:checked + label { border-top: 3px solid #0090f6; color:#0090f6;}
+        #product_description_cms .tab-wrap [id^="tab"] + label:hover{cursor: pointer;}
+	#product_description_cms .tab-wrap [id^="tab"]:checked + label:before {border-left: 4px solid rgba(0, 0, 0, 0);
+	    border-right: 4px solid rgba(0, 0, 0, 0);
+	    border-top: 4px solid #0090f6;
+	    content: "";
+	    display: block;
+	    left: 50%;
+	    margin-left: -4px;
+	    position: absolute;
+	    top: 0px;}
+
+@media only screen and (max-width: 979px){
+#product_description_cms h4{font-size: 1.5em;}
+#product_description_cms .product_property_wrapper > strong {font-size: 1.1em;}
+}
+@media only screen and (max-width: 757px){
+	#product_description_cms h4{font-size: 1.35em;}
+	#product_description_cms p{padding: 0;}
+	#product_description_cms .product_property_wrapper{padding: 15px;}
+	#product_description_cms .product_property_wrapper > img{ margin: 0 auto 10px;}
+}
+@media only screen and (min-width: 1200px) and (min-height: 768px){}
+</style>
+
+<div id="product_description_cms">
+	<div class="mrg-b">
+		<h4>
+		Przesuwając granice rozgrywki
+		</h4>
+		<p>
+		Jak firma Sony przygotowywała się do zdobycia tytułu „Najlepszej konsoli na świecie”? Zaczynając od podstaw. Ośmiordzeniowy procesor AMD Jaguar zapewnił maksymalną wydajność. Karta graficzna o mocy 1,84 teraflopa oraz nowoczesna pamięć GDDR5 dają twórcom niesamowite możliwości tworzenia gier nowej generacji.
+		</p>
+		<img src="/data/include/cms/product_photo_desc/product_photo_desc_01.jpg">
+	</div>
+
+	<div class="row clearfix ">
+		<div class="col-md-4 col-xs-12 mrg-b">
+			<div class="product_property_wrapper">
+				<img src="/data/include/cms/product_photo_desc/product_icon_desc_01.png">
+				<strong>Niestandardowy procesor x86-64</strong>
+				<div>Firma Sony zdecydowała się skorzystać z 8-rdzeniowego procesora x86-64 AMD „Jaguar” — a następnie dokonała zmian zwiększających jego wydajność.</div>
+			</div>
+		</div>
+		<div class="col-md-4 col-xs-12 mrg-b">
+			<div class="product_property_wrapper">
+				<img src="/data/include/cms/product_photo_desc/product_icon_desc_02.png">
+				<strong>Procesor 1,84 teraflopa</strong>
+				<div>Konsola PS4 deklasuje konkurencję dzięki większej o 50% liczbie rdzeni graficznych oraz wyższej przepustowości modułu shadera.</div>
+			</div>
+		</div>
+		<div class="col-md-4 col-xs-12 mrg-b">
+			<div class="product_property_wrapper">
+				<img src="/data/include/cms/product_photo_desc/product_icon_desc_03.png">
+				<strong>Pamięć graficzna 8 GB GDDR5</strong>
+				<div>Pamięć GDDR5 najnowszej generacji oferuje najwyższą szybkość i udostępnia twórcom niesamowite możliwości.</div>
+		</div>
+	</div>
+	</div>
+
+	<div class="mrg-b">
+		<h4>
+		Atrakcyjny wygląd, precyzyjna konstrukcja
+		</h4>
+		<p>
+		Smukła, wyrazista sylwetka konsoli PS4 ma w sobie coś zniewalającego. Jej forma — zarys, kontrastujące ze sobą ścianki i panele z błyszczącym oraz matowym wykończeniem — harmonizuje z każdym nowoczesnym centrum rozrywki.
+		</p>
+
+
+				<ul class="tab-wrap">
+				    <li>
+				   		<input type="radio" id="tab-1" name="tab" checked />
+     					 <label for="tab-1" class="label-1">Przód</label>
+     					 <div class="tab-content">
+							<img src="/data/include/cms/product_photo_desc/product_photo_desc_02.jpg">
+				        </div>
+
+				    </li>
+
+				    <li>
+				        <input type="radio" id="tab-2" name="tab"  />
+				        <label for="tab-2" class="label-2">Bok</label>
+				        <div class="tab-content">
+				             <img src="/data/include/cms/product_photo_desc/product_photo_desc_03.jpg">
+				        </div>
+
+				    </li>
+
+				      <li>
+				        <input type="radio" id="tab-3" name="tab" />
+				        <label for="tab-3" class="label-3">Tył</label>
+				        <div class="tab-content">
+					             <img src="/data/include/cms/product_photo_desc/product_photo_desc_04.jpg">
+					    </div>
+				    </li>
+				</ul>
+
+	</div>
+</div>
+
+
+
+]]></long_desc>
+      </description>
+      <iaiext:delivery_time xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml" unit="day" value="0">
+        <iaiext:mode type="deliverer"/>
+        <iaiext:time days="0"/>
+      </iaiext:delivery_time>
+      <iaiext:visibility xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml">
+        <iaiext:price_comparator visible="yes"/>
+      </iaiext:visibility>
+      <price gross="890" net="723.58"/>
+      <srp gross="0" net="0"/>
+      <iaiext:price_retail xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml">
+        <iaiext:site id="1" size_id="0" gross="890" net="723.58"/>
+      </iaiext:price_retail>
+      <iaiext:price_wholesale xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml">
+        <iaiext:site id="1" size_id="0" gross="890" net="723.58"/>
+      </iaiext:price_wholesale>
+      <iaiext:price_minimal xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml">
+        <iaiext:site id="1" size_id="0" gross="0" net="0"/>
+      </iaiext:price_minimal>
+      <promotion name=""/>
+      <iaiext:hotspots xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml">
+        <iaiext:site id="1" manual_config="no">
+          <flag type="newproduct" visible="yes"/>
+        </iaiext:site>
+      </iaiext:hotspots>
+      <sizes>
+        <size available="in_stock" id="uniw" name="uniwersalny" panel_name="uniw" code="11-uniw" weight="0">
+          <price gross="890" net="723.58">
+            <price_marketplace_site id="10000">
+              <delivery_cost carrierId="51">
+                <prepayment gross="15.56" net="12.65"/>
+                <cash_on_delivery gross="15.9" net="12.93"/>
+              </delivery_cost>
+            </price_marketplace_site>
+          </price>
+          <srp gross="0" net="0"/>
+          <stock id="0" quantity="-1" availability_id="1" available_stock_quantity="-1"/>
+          <stock id="1" quantity="-1" availability_id="1" available_stock_quantity="-1"/>
+        </size>
+      </sizes>
+      <images>
+        <large>
+          <image url="https://demo46-pl.yourtechnicaldomain.com/data/gfx/pictures/large/1/1/11_4.jpg" changed="2019-03-28 13:27:42" hash="8d20b18ec2f8bb7d4139e3dab551b191" width="1297" height="1500"/>
+          <image url="https://demo46-pl.yourtechnicaldomain.com/data/gfx/pictures/large/1/1/11_2.jpg" changed="2019-03-28 13:32:12" hash="b0e96ebb9c041c018fe08c627c4517e6" width="1000" height="1000"/>
+          <image url="https://demo46-pl.yourtechnicaldomain.com/data/gfx/pictures/large/1/1/11_3.jpg" changed="2019-03-28 13:32:11" hash="61e60671dded946aecf4356ed6ec0e46" width="512" height="512"/>
+        </large>
+        <icons>
+          <icon url="https://demo46-pl.yourtechnicaldomain.com/data/gfx/icons/large/1/1/11.jpg" changed="2019-10-16 12:52:57" hash="dffa1f26d8abb916129e1e040b829ec1" width="216" height="250"/>
+        </icons>
+      </images>
+      <iaiext:navigation xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml">
+        <iaiext:site id="1">
+          <iaiext:menu id="1">
+            <iaiext:item id="160" menu_id="1" textid="Nowości" iaiext:priority_menu="3"/>
+            <iaiext:item id="161" menu_id="1" textid="Bestsellery" iaiext:priority_menu="4"/>
+            <iaiext:item id="233" menu_id="1" textid="Elektronika\iPad" iaiext:priority_menu="3"/>
+          </iaiext:menu>
+          <iaiext:menu id="2"/>
+          <iaiext:menu id="4"/>
+          <iaiext:menu id="5"/>
+        </iaiext:site>
+      </iaiext:navigation>
+      <warranty id="1" type="producer" period="12" name="Gwarancja testowa"/>
+      <iaiext:sell_by xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml">
+        <iaiext:retail quantity="1"/>
+        <iaiext:wholesale quantity="1"/>
+      </iaiext:sell_by>
+      <iaiext:inwrapper xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml" quantity="1"/>
+    </product><product type="collection" id="12" vat="23.0" code_on_card="10000053" site="1" currency="PLN">
+      <producer id="1308137276" name="Sony"/>
+      <category id="0" name="*Kategoria tymczasowa"/>
+      <unit id="0" name="szt."/>
+      <series id="1" name="seria testowa"/>
+      <card xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml" url="https://demo46-pl.yourtechnicaldomain.com/product-pol-12-Playstation-4-kolekcja-VR.feed10000.html"/>
+      <description>
+        <name type="name" xml:lang="pol"><![CDATA[Playstation 4 kolekcja VR]]></name>
+        <short_desc xml:lang="pol"><![CDATA[Łącząc w sobie niezrównane treści, wciągające gry, ulubione aplikacje oraz ekskluzywne dla PlayStation® materiały, PlayStation®4 to najlepsze urządzenie do rozrywki. Najszybsza dostępna w konsolach do gry grafika i pamięć.]]></short_desc>
+        <long_desc xml:lang="pol"><![CDATA[<style>
+
+	#product_description_cms{text-align: center; overflow-x: hidden;}
+	#product_description_cms h4{font-size: 2.5em; font-weight:normal;}
+	#product_description_cms .product_property_wrapper{background: #0090f6; padding: 2vw; color:#fff; height: 100%;}
+	#product_description_cms .product_property_wrapper > img {display: block; margin: 0 auto 30px;}
+	#product_description_cms .product_property_wrapper > strong { display: block; font-size: 1.5em; padding-bottom: 10px; }
+	#product_description_cms p{   line-height: 1.5em; padding: 0 9vw 20px;}
+	#product_description_cms input[type="radio"] {display: none;}
+	#product_description_cms .tab-wrap {
+	  width: 100%;
+	  list-style: none;
+	  position: relative;
+	  margin: 0 0 60px!important;
+	  padding: 0!important;
+	}
+
+	#product_description_cms .tab-wrap label {
+	    border-top: 3px solid transparent;
+	    bottom: -30px;
+	    line-height: 30px;
+	    position: absolute;
+	    width: 100px;
+	    font-size: 1.1em;
+	    font-weight: bold;
+	}
+	#product_description_cms .tab-wrap .label-1{left: calc(50% - 150px);}
+	#product_description_cms .tab-wrap .label-2{left: calc(50% - 50px);}
+	#product_description_cms .tab-wrap .label-3{left: calc(50% + 50px);}
+	#product_description_cms .tab-wrap .tab-content {
+	  display: none;
+	  overflow: hidden;
+	  width: 100%;
+	  background: #fff;
+	}
+
+	#product_description_cms .tab-wrap [id^="tab"]:checked ~ .tab-content{display: block;}
+	#product_description_cms .tab-wrap [id^="tab"]:checked + label { border-top: 3px solid #0090f6; color:#0090f6;}
+        #product_description_cms .tab-wrap [id^="tab"] + label:hover{cursor: pointer;}
+	#product_description_cms .tab-wrap [id^="tab"]:checked + label:before {border-left: 4px solid rgba(0, 0, 0, 0);
+	    border-right: 4px solid rgba(0, 0, 0, 0);
+	    border-top: 4px solid #0090f6;
+	    content: "";
+	    display: block;
+	    left: 50%;
+	    margin-left: -4px;
+	    position: absolute;
+	    top: 0px;}
+
+@media only screen and (max-width: 979px){
+#product_description_cms h4{font-size: 1.5em;}
+#product_description_cms .product_property_wrapper > strong {font-size: 1.1em;}
+}
+@media only screen and (max-width: 757px){
+	#product_description_cms h4{font-size: 1.35em;}
+	#product_description_cms p{padding: 0;}
+	#product_description_cms .product_property_wrapper{padding: 15px;}
+	#product_description_cms .product_property_wrapper > img{ margin: 0 auto 10px;}
+}
+@media only screen and (min-width: 1200px) and (min-height: 768px){}
+</style>
+
+<div id="product_description_cms">
+	<div class="mrg-b">
+		<h4>
+		Przesuwając granice rozgrywki
+		</h4>
+		<p>
+		Jak firma Sony przygotowywała się do zdobycia tytułu „Najlepszej konsoli na świecie”? Zaczynając od podstaw. Ośmiordzeniowy procesor AMD Jaguar zapewnił maksymalną wydajność. Karta graficzna o mocy 1,84 teraflopa oraz nowoczesna pamięć GDDR5 dają twórcom niesamowite możliwości tworzenia gier nowej generacji.
+		</p>
+		<img src="/data/include/cms/product_photo_desc/product_photo_desc_01.jpg">
+	</div>
+
+	<div class="row clearfix ">
+		<div class="col-md-4 col-xs-12 mrg-b">
+			<div class="product_property_wrapper">
+				<img src="/data/include/cms/product_photo_desc/product_icon_desc_01.png">
+				<strong>Niestandardowy procesor x86-64</strong>
+				<div>Firma Sony zdecydowała się skorzystać z 8-rdzeniowego procesora x86-64 AMD „Jaguar” — a następnie dokonała zmian zwiększających jego wydajność.</div>
+			</div>
+		</div>
+		<div class="col-md-4 col-xs-12 mrg-b">
+			<div class="product_property_wrapper">
+				<img src="/data/include/cms/product_photo_desc/product_icon_desc_02.png">
+				<strong>Procesor 1,84 teraflopa</strong>
+				<div>Konsola PS4 deklasuje konkurencję dzięki większej o 50% liczbie rdzeni graficznych oraz wyższej przepustowości modułu shadera.</div>
+			</div>
+		</div>
+		<div class="col-md-4 col-xs-12 mrg-b">
+			<div class="product_property_wrapper">
+				<img src="/data/include/cms/product_photo_desc/product_icon_desc_03.png">
+				<strong>Pamięć graficzna 8 GB GDDR5</strong>
+				<div>Pamięć GDDR5 najnowszej generacji oferuje najwyższą szybkość i udostępnia twórcom niesamowite możliwości.</div>
+		</div>
+	</div>
+	</div>
+
+	<div class="mrg-b">
+		<h4>
+		Atrakcyjny wygląd, precyzyjna konstrukcja
+		</h4>
+		<p>
+		Smukła, wyrazista sylwetka konsoli PS4 ma w sobie coś zniewalającego. Jej forma — zarys, kontrastujące ze sobą ścianki i panele z błyszczącym oraz matowym wykończeniem — harmonizuje z każdym nowoczesnym centrum rozrywki.
+		</p>
+
+
+				<ul class="tab-wrap">
+				    <li>
+				   		<input type="radio" id="tab-1" name="tab" checked />
+     					 <label for="tab-1" class="label-1">Przód</label>
+     					 <div class="tab-content">
+							<img src="/data/include/cms/product_photo_desc/product_photo_desc_02.jpg">
+				        </div>
+
+				    </li>
+
+				    <li>
+				        <input type="radio" id="tab-2" name="tab"  />
+				        <label for="tab-2" class="label-2">Bok</label>
+				        <div class="tab-content">
+				             <img src="/data/include/cms/product_photo_desc/product_photo_desc_03.jpg">
+				        </div>
+
+				    </li>
+
+				      <li>
+				        <input type="radio" id="tab-3" name="tab" />
+				        <label for="tab-3" class="label-3">Tył</label>
+				        <div class="tab-content">
+					             <img src="/data/include/cms/product_photo_desc/product_photo_desc_04.jpg">
+					    </div>
+				    </li>
+				</ul>
+
+	</div>
+</div>
+
+
+
+]]></long_desc>
+      </description>
+      <iaiext:delivery_time xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml" unit="day" value="0">
+        <iaiext:mode type="deliverer"/>
+        <iaiext:time days="0"/>
+      </iaiext:delivery_time>
+      <iaiext:visibility xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml">
+        <iaiext:price_comparator visible="yes"/>
+      </iaiext:visibility>
+      <price gross="4022.13" net="3270.02"/>
+      <srp gross="3343.13" net="2717.99"/>
+      <strikethrough_retail_price gross="3899.99" net="3170.72"/>
+      <strikethrough_wholesale_price gross="3343.13" net="2717.99"/>
+      <iaiext:price_retail xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml">
+        <iaiext:site id="1" size_id="0" gross="4022.13" net="3270.02"/>
+      </iaiext:price_retail>
+      <iaiext:price_wholesale xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml">
+        <iaiext:site id="1" size_id="0" gross="3909.2" net="3178.21"/>
+      </iaiext:price_wholesale>
+      <iaiext:price_minimal xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml">
+        <iaiext:site id="1" size_id="0" gross="3110.2" net="2528.62"/>
+      </iaiext:price_minimal>
+      <promotion name=""/>
+      <iaiext:hotspots xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml">
+        <iaiext:site id="1" manual_config="no">
+          <flag type="newproduct" visible="yes"/>
+        </iaiext:site>
+      </iaiext:hotspots>
+      <sizes>
+        <size available="in_stock" id="uniw" name="uniwersalny" panel_name="uniw" code="12-uniw" weight="0">
+          <price gross="4022.13" net="3270.02">
+            <price_marketplace_site id="10000">
+              <delivery_cost carrierId="51">
+                <prepayment gross="15.56" net="12.65"/>
+                <cash_on_delivery gross="15.9" net="12.93"/>
+              </delivery_cost>
+            </price_marketplace_site>
+          </price>
+          <srp gross="3343.13" net="2717.99"/>
+          <strikethrough_retail_price gross="3899.99" net="3170.72"/>
+          <strikethrough_wholesale_price gross="3343.13" net="2717.99"/>
+          <stock id="1" quantity="-1" availability_id="1" available_stock_quantity="-1"/>
+        </size>
+      </sizes>
+      <images>
+        <large>
+          <image url="https://demo46-pl.yourtechnicaldomain.com/data/gfx/pictures/large/2/1/12_1.jpg" changed="2019-03-28 13:33:20" hash="7c0684f7c7c4e3e1512a022fc1c76e63" width="1500" height="1417"/>
+          <image url="https://demo46-pl.yourtechnicaldomain.com/data/gfx/pictures/large/2/1/12_2.jpg" changed="2019-03-28 13:33:18" hash="f2f66557e3b67aa1c3251c375e45bf5e" width="1500" height="954"/>
+          <image url="https://demo46-pl.yourtechnicaldomain.com/data/gfx/pictures/large/2/1/12_3.jpg" changed="2019-03-28 13:33:19" hash="df48bcdc836ef80ae1242864fc38db1f" width="1500" height="880"/>
+          <image url="https://demo46-pl.yourtechnicaldomain.com/data/gfx/pictures/large/2/1/12_4.png" changed="2019-03-28 13:33:18" hash="0e1241f5baae4d4bde7718fccb9f6d7d" width="1500" height="877"/>
+        </large>
+        <icons>
+          <icon url="https://demo46-pl.yourtechnicaldomain.com/data/gfx/icons/large/2/1/12.jpg" changed="2019-10-16 12:52:57" hash="19e5821150a7b51df62059c30c89da66" width="265" height="250"/>
+          <group_icon url="https://demo46-pl.yourtechnicaldomain.com/data/gfx/icons/versions/2/1/12.jpg" changed="2019-10-16 12:52:57" hash="19e5821150a7b51df62059c30c89da66" width="200" height="189"/>
+        </icons>
+      </images>
+      <iaiext:navigation xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml">
+        <iaiext:site id="1">
+          <iaiext:menu id="1">
+            <iaiext:item id="152" menu_id="1" textid="Konsole" iaiext:priority_menu="1"/>
+            <iaiext:item id="160" menu_id="1" textid="Nowości" iaiext:priority_menu="3"/>
+            <iaiext:item id="161" menu_id="1" textid="Bestsellery" iaiext:priority_menu="4"/>
+          </iaiext:menu>
+          <iaiext:menu id="2"/>
+          <iaiext:menu id="4"/>
+          <iaiext:menu id="5"/>
+        </iaiext:site>
+      </iaiext:navigation>
+      <warranty id="1" type="producer" period="12" name="Gwarancja testowa"/>
+      <parameters>
+        <parameter type="parameter" id="32" priority="0" distinction="y" group_distinction="n" hide="n" auction_template_hide="n" xml:lang="pol" name="Procesor">
+          <value id="33" priority="0" xml:lang="pol" name="AMD Jaguar 4.0 GHz x64 bit "/>
+        </parameter>
+        <parameter type="parameter" id="34" priority="1" distinction="y" group_distinction="n" hide="n" auction_template_hide="n" xml:lang="pol" name="Pamięć">
+          <value id="35" priority="0" xml:lang="pol" name="&#9; 4 GB 1333 MHz "/>
+        </parameter>
+        <parameter type="parameter" id="36" priority="2" distinction="n" group_distinction="n" hide="n" auction_template_hide="n" xml:lang="pol" name="Typ obudowy">
+          <value id="38" priority="0" xml:lang="pol" name="Czarna matowa"/>
+        </parameter>
+        <parameter type="parameter" id="39" priority="3" distinction="y" group_distinction="n" hide="n" auction_template_hide="n" xml:lang="pol" name="Ilość kontrolerów">
+          <value id="41" priority="0" xml:lang="pol" name="1 pad Dual Shock 4"/>
+        </parameter>
+      </parameters>
+      <bundled>
+        <product id="8" quantity="1.000" type="client_chooses_size"/>
+        <product id="28" quantity="1.000" type="client_chooses_variant"/>
+      </bundled>
+      <iaiext:sell_by xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml">
+        <iaiext:retail quantity="1"/>
+        <iaiext:wholesale quantity="1"/>
+      </iaiext:sell_by>
+      <iaiext:inwrapper xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml" quantity="1"/>
+    </product>
+  </products>
+</offer>

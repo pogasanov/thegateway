@@ -1,7 +1,7 @@
 .PHONY: install-importers install-lint-dep lint-test test docs
 
 install-importers:
-	pip install ./gateway_pkg ./prestashop_pkg
+	pip install ./gateway_pkg ./prestashop_pkg ./idosell_pkg
 
 install-lint-dep:
 	pip install -r requirements.txt
