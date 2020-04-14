@@ -1,9 +1,15 @@
-.PHONY: install-importers install-lint-dep lint-test test docs
+.PHONY: install-importers develop-importers install-lint-dep lint-test test docs
 
 install-importers:
-	pip install ./gateway_pkg ./prestashop_pkg ./idosell_pkg
+	pip install ./gateway_pkg ./prestashop_pkg ./sellingo_pkg ./idosell_pkg
+
+develop-importers:
+	pip install -e ./gateway_pkg
+	pip install -e ./prestashop_pkg -e ./sellingo_pkg -e ./idosell_pkg
 
 install-lint-dep:
+	pip install -e ./gateway_pkg
+	pip install -e ./prestashop_pkg -e ./sellingo_pkg -e ./idosell_pkg
 	pip install -r requirements.txt
 
 lint-test:
@@ -12,8 +18,7 @@ lint-test:
 	# this can be changed after reaching 10/10 score
 
 test:
-	coverage run -m unittest
-	coverage report
+	py.test --cov=. -v
 
 docs:
 	python -m mkdocs build --clean --site-dir _build/html --config-file mkdocs.yml

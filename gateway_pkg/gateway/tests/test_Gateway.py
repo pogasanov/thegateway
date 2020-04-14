@@ -42,8 +42,9 @@ class GatewayTest(TestCase):
         responses.reset()
 
     def test_can_build_token(self):
-        EXPECTED_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzaG9wOmE1NDdkZTE4LTdhMWQtNDUwYi1hNTdiLWJiZjdmMTc3ZGI4NCIsIm9yZ2FuaXphdGlvbl9ndWlkIjoiYTU0N2RlMTgtN2ExZC00NTBiLWE1N2ItYmJmN2YxNzdkYjg0IiwiZ3JvdXBzIjpbInNob3BrZWVwZXIiXX0.qtkzVdLOEpG2KrLqYHGbHyNTCoNX_r8-_0krBXCMUMo"
-        self.assertEqual(self.gateway.token, EXPECTED_TOKEN)
+        expected_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzaG9wOmE1NDdkZTE4LTdhMWQtNDUwYi1hNTdiLWJiZjdmMTc3ZGI4NCIsIm9yZ2FuaXphdGlvbl9ndWlkIjoiYTU0N2RlMTgtN2ExZC00NTBiLWE1N2ItYmJmN2YxNzdkYjg0IiwiZ3JvdXBzIjpbInNob3BrZWVwZXIiXX0.qtkzVdLOEpG2KrLqYHGbHyNTCoNX_r8-_0krBXCMUMo"
+        token = self.gateway._build_token(self.SECRET)
+        self.assertEqual(token, expected_token)
 
     def test_can_create_product(self):
         product = gateway.Product(name="abc", price=Decimal("12.0"), vat_percent=23)
@@ -82,7 +83,7 @@ class GatewayTest(TestCase):
             responses_mock.add(
                 responses.POST,
                 f"{self.BASE_URL}/webshops/{self.SHOP_ID}/tags/",
-                json={"code": 409, "error": "409 Conflict", "message": f'"Tag ({expected_tag_guid}) already exists"',},
+                json={"code": 409, "error": "409 Conflict", "message": f'"Tag ({expected_tag_guid}) already exists"'},
                 status=409,
             )
             tag = self.gateway.create_tag("test")

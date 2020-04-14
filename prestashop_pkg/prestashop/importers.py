@@ -4,18 +4,19 @@ from decimal import Decimal
 from typing import List
 
 import requests
-from gateway.models import Product
-from gateway.utils import download_image
 from simplejson import JSONDecodeError
 
-logger = logging.getLogger(__name__)
+from gateway.models import Product
+from gateway.utils import download_image
+
+LOGGER = logging.getLogger(__name__)
 
 
 class Prestashop:
-    def __init__(self, BASE_URL, API_KEY, imageurl_prefix, language_id=None):
-        self.API_HOSTNAME = BASE_URL
-        self.API_KEY = API_KEY
-        self.imageurl_prefix = imageurl_prefix
+    def __init__(self, base_url, api_key, image_url_prefix, language_id=None):
+        self.api_hostname = base_url
+        self.api_key = api_key
+        self.image_url_prefix = image_url_prefix
         self.products = dict()
         self.variants_reverse = dict()
         self.product_options = dict()
@@ -25,9 +26,10 @@ class Prestashop:
         """
         Converts PrestaShop product_options to Gateway variants
         """
-        ids = [d["id"] for d in self.get("product_options")["product_options"]]
-        for id in ids:
-            data = self.get(f"product_options/{id}")["product_option"]
+        product_options = self.get("product_options")["product_options"]
+        product_option_ids = [product_option["id"] for product_option in product_options]
+        for product_option_id in product_option_ids:
+            data = self.get(f"product_options/{product_option_id}")["product_option"]
             product_option_values = self._ids_to_list(data["associations"]["product_option_values"])
 
             if self.language_id:
@@ -42,13 +44,13 @@ class Prestashop:
         """
         Just a wrapper to expose requests HTTP method calls without passing all the auth etc params every time.
         """
-        fn = getattr(requests, method)
-        return fn(**self._build_requests_parameters(endpoint))
+        function = getattr(requests, method)
+        return function(**self._build_requests_parameters(endpoint))
 
     def _build_requests_parameters(self, endpoint):
         return {
-            "url": f"{self.API_HOSTNAME}/api/{endpoint}",
-            "auth": (self.API_KEY, ""),
+            "url": f"{self.api_hostname}/api/{endpoint}",
+            "auth": (self.api_key, ""),
             "params": {"output_format": "JSON"},
         }
 
@@ -57,23 +59,25 @@ class Prestashop:
         try:
             return response.json()
         except JSONDecodeError:
-            logger.fatal(f"{response.status_code}: {response.text}")
+            LOGGER.fatal("%s: %s", response.status_code, response.text)
             raise
 
-    def _get_by_id(self, id_, data):
+    @staticmethod
+    def _get_by_id(_id, data):
         """
         Needed for PrestaShop translation support.
         """
-        for d in data:
-            if int(d["id"]) == int(id_):
-                return d["value"]
-        raise KeyError(id_)
+        for element in data:
+            if int(element["id"]) == int(_id):
+                return element["value"]
+        raise KeyError(_id)
 
-    def _ids_to_list(self, idlist):
+    @staticmethod
+    def _ids_to_list(ids):
         """
         converts '[{'id': '1'}, {'id': '2'}] -> [1,2]
         """
-        return [int(d["id"]) for d in idlist]
+        return [int(d["id"]) for d in ids]
 
     def fetch_products_ids(self):
         result = self.get("products")
@@ -88,101 +92,111 @@ class Prestashop:
         tax_percent = self._get_percent_value_from_tax_rule_group_name(tax_rule_group["name"])
         return int(tax_percent)
 
-    def fetch_single_product(self, product_id) -> List[Product]:
-        products = list()
-        result = self.get(f"products/{product_id}")
-        data = result["product"]
-        tax_rule_group_id = data["id_tax_rules_group"]
-        tax_percent = self._get_tax_percent(tax_rule_group_id)
+    @staticmethod
+    def _get_variant_sku(data, combination):
+        if combination:
+            variant_sku = combination["reference"]
+            return variant_sku if variant_sku else data["reference"]
+        return data["reference"]
+
+    @staticmethod
+    def _get_variant_price(data, combination):
+        if combination:
+            variant_price = Decimal(combination["price"])
+            return Decimal(variant_price if variant_price and variant_price != 0 else data["price"])
+        return data["price"]
+
+    def _get_variant_data(self, associations):
+        variant_data = dict()
+        try:
+            # But let's see if they have product_options, which are somewhat same thing?
+            product_option_values = self._ids_to_list(associations["product_option_values"])
+        except KeyError:
+            # Product had no options / variants.
+            product_option_values = tuple()
+        for option_value in product_option_values:
+            try:
+                variant = self.product_options[option_value]
+            except KeyError:
+                variant = self.get(f"product_option_values/{option_value}")["product_option_value"]
+                self.product_options[option_value] = variant
+
+            if self.language_id:
+                value = self._get_by_id(self.language_id, variant["name"])
+            else:
+                value = variant["name"]
+            key = self.variants_reverse[option_value]
+            variant_data[key] = value
+        return variant_data
+
+    def _get_variant_name(self, data):
+        if self.language_id:
+            return self._get_by_id(self.language_id, data["name"])
+        return data["name"]
+
+    def _get_variant_description(self, data):
+        if self.language_id:
+            return strip_tags(next(x for x in data["description"] if x["id"] == self.language_id)["value"])
+        return strip_tags(data["description"])
+
+    def _get_variant_short_description(self, data):
+        if self.language_id:
+            return strip_tags(next(x for x in data["description_short"] if x["id"] == self.language_id)["value"])
+        return strip_tags(data["description_short"])
+
+    def _get_variant(self, data, product_id, stock_level, variant_id):
         associations = data["associations"]
+
+        if data["associations"].get("combinations"):
+            combination = self.get(f"combinations/{variant_id}")["combination"]
+            LOGGER.info(combination)
+            associations = combination["associations"]
+        else:
+            combination = None
+
         try:
             image_ids = self._ids_to_list(associations["images"])
         except KeyError:
             image_ids = tuple()
+        images = [self.download_image(product_id, image_id) for image_id in image_ids]
+        return Product(
+            name=self._get_variant_name(data),
+            price=self._get_variant_price(data, combination),
+            description=self._get_variant_description(data),
+            description_short=self._get_variant_short_description(data),
+            sku=self._get_variant_sku(data, combination),
+            variant_data=self._get_variant_data(associations),
+            stock=Decimal(stock_level),
+            vat_percent=self._get_tax_percent(data["id_tax_rules_group"]),
+            images=images,
+        )
+
+    def fetch_single_product(self, product_id) -> List[Product]:
+        products = list()
+        data = self.get(f"products/{product_id}")["product"]
+        associations = data["associations"]
         try:
-            ids = self._ids_to_list(associations["combinations"])
-            get_variants = True
+            variants_ids = self._ids_to_list(associations["combinations"])
         except KeyError:
             # No variants
-            ids = (product_id,)
-            get_variants = False
+            variants_ids = (product_id,)
         stock_level_mapping = {int(d["id_product_attribute"]): int(d["id"]) for d in associations["stock_availables"]}
 
-        for id_ in ids:
-            stock_level_id = stock_level_mapping.get(id_, stock_level_mapping[0])
+        for variant_id in variants_ids:
+            stock_level_id = stock_level_mapping.get(variant_id, stock_level_mapping[0])
             stock_level = self.get(f"stock_availables/{stock_level_id}")["stock_available"]["quantity"]
-            variant_data = dict()
-            if get_variants:
-                # Try to load variants from "combinations"
-                combination = self.get(f"combinations/{id_}")["combination"]
-                logger.info(combination)
-                sku_ = combination["reference"]
-                sku = sku_ if sku_ else data["reference"]
-                price_ = Decimal(combination["price"])
-                price = Decimal(price_ if price_ and price_ != 0 else data["price"])
-                associations = combination["associations"]
-            else:
-                # Ok, this shop has no combinations.
-                sku = data["reference"]
-                price = Decimal(data["price"])
-            try:
-                # But let's see if they have product_options, which are somewhat same thing?
-                product_option_values = self._ids_to_list(associations["product_option_values"])
-            except KeyError:
-                # Product had no options / variants.
-                product_option_values = tuple()
-            for option_value in product_option_values:
-                try:
-                    variant_ = self.product_options[option_value]
-                except KeyError:
-                    variant_ = self.get(f"product_option_values/{option_value}")["product_option_value"]
-                    self.product_options[option_value] = variant_
-
-                if self.language_id:
-                    value = self._get_by_id(self.language_id, variant_["name"])
-                else:
-                    value = variant_["name"]
-                key = self.variants_reverse[option_value]
-                variant_data[key] = value
-
-            # Translation support
-            if self.language_id:
-                name = self._get_by_id(self.language_id, data["name"])
-                description = strip_tags(next(x for x in data["description"] if x["id"] == self.language_id)["value"])
-                description_short = strip_tags(
-                    next(x for x in data["description_short"] if x["id"] == self.language_id)["value"]
-                )
-            else:
-                name = data["name"]
-                description = strip_tags(data["description"])
-                description_short = strip_tags(data["description_short"])
-
-            # Images
-            images = [self.download_image(product_id, image_id) for image_id in image_ids]
-
-            products.append(
-                Product(
-                    name=name,
-                    price=price,
-                    description=description,
-                    description_short=description_short,
-                    sku=sku,
-                    variant_data=variant_data,
-                    stock=Decimal(stock_level),
-                    vat_percent=tax_percent,
-                    images=images,
-                )
-            )
-        logger.info(products)
+            variant = self._get_variant(data, product_id, stock_level, variant_id)
+            products.append(variant)
+        LOGGER.info(products)
         return products
 
     def build_products(self):
         self.get_variants()
         products = self.fetch_products_ids()
         total = len(products)
-        for i, p in enumerate(products, 1):
-            print(f"{i}/{total}")
-            yield self.fetch_single_product(p)
+        for index, product in enumerate(products, 1):
+            print(f"{index}/{total}")
+            yield self.fetch_single_product(product)
 
     def download_image(self, product_id, image_id):
         image_url = self._build_requests_parameters(f"images/products/{product_id}/{image_id}")

@@ -23,6 +23,17 @@ services:
       - "8080:80"
     restart: always
     hostname: prestashop
+    environment:
+      DB_USER: prestashop
+      DB_PASSWD: prestashop
+      DB_NAME: prestashop
+      DB_SERVER: db
+      PS_DOMAIN: 127.0.0.1:8080
+      PS_INSTALL_AUTO: 1
+      PS_FOLDER_ADMIN: admin-dev
+      PS_FOLDER_INSTALL: install-dev
+      ADMIN_MAIL: admin@admin.com
+      ADMIN_PASSWD: admin
 
 volumes:
   db_data:

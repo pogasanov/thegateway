@@ -1,3 +1,7 @@
+[MASTER]
+ignore=tests
+ignore-patterns=test_,_test.py
+
 [MESSAGES CONTROL]
 disable=missing-docstring,bad-continuation
 
