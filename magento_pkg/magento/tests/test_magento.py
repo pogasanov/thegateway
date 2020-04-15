@@ -5,8 +5,7 @@ from decimal import Decimal
 from unittest import TestCase
 
 import responses
-
-from magento_pkg.magento.importers import Magento
+from magento.importers import Magento
 
 CURRENT_DIRECTORY = pathlib.Path(__file__).parent.absolute()
 

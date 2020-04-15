@@ -4,6 +4,7 @@ from decimal import Decimal
 import requests
 from gateway import Product, download_image
 
+# pylint: disable=R0903
 LOGGER = logging.getLogger(__name__)
 
 
