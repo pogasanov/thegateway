@@ -5,11 +5,11 @@ install-importers:
 
 develop-importers:
 	pip install -e ./gateway_pkg
-	pip install -e ./prestashop_pkg -e ./sellingo_pkg -e ./idosell_pkg ./magento_pkg
+	pip install -e ./prestashop_pkg -e ./sellingo_pkg -e ./idosell_pkg -e ./magento_pkg
 
 install-lint-dep:
 	pip install -e ./gateway_pkg
-	pip install -e ./prestashop_pkg -e ./sellingo_pkg -e ./idosell_pkg ./magento_pkg
+	pip install -e ./prestashop_pkg -e ./sellingo_pkg -e ./idosell_pkg -e ./magento_pkg
 	pip install -r requirements.txt
 
 lint-test:
