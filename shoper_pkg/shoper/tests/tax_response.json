@@ -1,0 +1,43 @@
+{
+    "count": "6",
+    "pages": 1,
+    "page": 1,
+    "list": [
+        {
+            "tax_id": "1",
+            "value": "23",
+            "name": "23%",
+            "class": "23%"
+        },
+        {
+            "tax_id": "2",
+            "value": "8",
+            "name": "8%",
+            "class": "8%"
+        },
+        {
+            "tax_id": "3",
+            "value": "0",
+            "name": "0%",
+            "class": "0%"
+        },
+        {
+            "tax_id": "4",
+            "value": "0",
+            "name": "zw.",
+            "class": "zw."
+        },
+        {
+            "tax_id": "5",
+            "value": "0",
+            "name": "np.",
+            "class": "np."
+        },
+        {
+            "tax_id": "6",
+            "value": "5",
+            "name": "5%",
+            "class": "5%"
+        }
+    ]
+}

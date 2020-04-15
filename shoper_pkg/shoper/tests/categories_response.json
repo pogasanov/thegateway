@@ -1,0 +1,276 @@
+{
+    "count": "12",
+    "pages": 2,
+    "page": 1,
+    "list": [
+        {
+            "category_id": "1",
+            "order": "1",
+            "root": "1",
+            "in_loyalty": "0",
+            "translations": {
+                "pl_PL": {
+                    "trans_id": "1",
+                    "category_id": "1",
+                    "name": "Kobiety",
+                    "description": "",
+                    "active": "1",
+                    "pres_id": null,
+                    "isdefault": "1",
+                    "lang_id": "1",
+                    "seo_title": "",
+                    "seo_description": "",
+                    "seo_keywords": "",
+                    "seo_url": "",
+                    "permalink": "http://sklep266192.shoparena.pl/pl/c/Kobiety/1",
+                    "items": 0,
+                    "attribute_groups": [
+                        1,
+                        2
+                    ]
+                }
+            }
+        },
+        {
+            "category_id": "2",
+            "order": "4",
+            "root": "0",
+            "in_loyalty": "0",
+            "translations": {
+                "pl_PL": {
+                    "trans_id": "2",
+                    "category_id": "2",
+                    "name": "Spódnice",
+                    "description": "",
+                    "active": "1",
+                    "pres_id": null,
+                    "isdefault": "1",
+                    "lang_id": "1",
+                    "seo_title": "",
+                    "seo_description": "",
+                    "seo_keywords": "",
+                    "seo_url": "",
+                    "permalink": "http://sklep266192.shoparena.pl/pl/c/Spodnice/2",
+                    "items": 6,
+                    "attribute_groups": [
+                        2
+                    ]
+                }
+            }
+        },
+        {
+            "category_id": "3",
+            "order": "1",
+            "root": "0",
+            "in_loyalty": "0",
+            "translations": {
+                "pl_PL": {
+                    "trans_id": "3",
+                    "category_id": "3",
+                    "name": "Spodnie",
+                    "description": "",
+                    "active": "1",
+                    "pres_id": null,
+                    "isdefault": "1",
+                    "lang_id": "1",
+                    "seo_title": "",
+                    "seo_description": "",
+                    "seo_keywords": "",
+                    "seo_url": "",
+                    "permalink": "http://sklep266192.shoparena.pl/pl/c/Spodnie/3",
+                    "items": 6,
+                    "attribute_groups": [
+                        2
+                    ]
+                }
+            }
+        },
+        {
+            "category_id": "4",
+            "order": "2",
+            "root": "0",
+            "in_loyalty": "0",
+            "translations": {
+                "pl_PL": {
+                    "trans_id": "4",
+                    "category_id": "4",
+                    "name": "Bluzki i tuniki",
+                    "description": "",
+                    "active": "0",
+                    "pres_id": null,
+                    "isdefault": "1",
+                    "lang_id": "1",
+                    "seo_title": "",
+                    "seo_description": "",
+                    "seo_keywords": "",
+                    "seo_url": "",
+                    "permalink": "http://sklep266192.shoparena.pl/pl/c/Bluzki-i-tuniki/4",
+                    "items": 0,
+                    "attribute_groups": [
+                        2
+                    ]
+                }
+            }
+        },
+        {
+            "category_id": "5",
+            "order": "0",
+            "root": "0",
+            "in_loyalty": "0",
+            "translations": {
+                "pl_PL": {
+                    "trans_id": "5",
+                    "category_id": "5",
+                    "name": "Bluzki",
+                    "description": "",
+                    "active": "1",
+                    "pres_id": null,
+                    "isdefault": "1",
+                    "lang_id": "1",
+                    "seo_title": "",
+                    "seo_description": "",
+                    "seo_keywords": "",
+                    "seo_url": "",
+                    "permalink": "http://sklep266192.shoparena.pl/pl/c/Bluzki/5",
+                    "items": 0,
+                    "attribute_groups": [
+                        2
+                    ]
+                }
+            }
+        },
+        {
+            "category_id": "6",
+            "order": "0",
+            "root": "0",
+            "in_loyalty": "0",
+            "translations": {
+                "pl_PL": {
+                    "trans_id": "6",
+                    "category_id": "6",
+                    "name": "Tuniki",
+                    "description": "",
+                    "active": "1",
+                    "pres_id": null,
+                    "isdefault": "1",
+                    "lang_id": "1",
+                    "seo_title": "",
+                    "seo_description": "",
+                    "seo_keywords": "",
+                    "seo_url": "",
+                    "permalink": "http://sklep266192.shoparena.pl/pl/c/Tuniki/6",
+                    "items": 0,
+                    "attribute_groups": [
+                        2
+                    ]
+                }
+            }
+        },
+        {
+            "category_id": "7",
+            "order": "3",
+            "root": "1",
+            "in_loyalty": "0",
+            "translations": {
+                "pl_PL": {
+                    "trans_id": "7",
+                    "category_id": "7",
+                    "name": "Mężczyźni",
+                    "description": "",
+                    "active": "1",
+                    "pres_id": null,
+                    "isdefault": "1",
+                    "lang_id": "1",
+                    "seo_title": "",
+                    "seo_description": "",
+                    "seo_keywords": "",
+                    "seo_url": "",
+                    "permalink": "http://sklep266192.shoparena.pl/pl/c/Mezczyzni/7",
+                    "items": 0,
+                    "attribute_groups": [
+                        2
+                    ]
+                }
+            }
+        },
+        {
+            "category_id": "8",
+            "order": "1",
+            "root": "0",
+            "in_loyalty": "0",
+            "translations": {
+                "pl_PL": {
+                    "trans_id": "8",
+                    "category_id": "8",
+                    "name": "T-shirt",
+                    "description": "",
+                    "active": "1",
+                    "pres_id": null,
+                    "isdefault": "1",
+                    "lang_id": "1",
+                    "seo_title": "",
+                    "seo_description": "",
+                    "seo_keywords": "",
+                    "seo_url": "",
+                    "permalink": "http://sklep266192.shoparena.pl/pl/c/T-shirt/8",
+                    "items": 6,
+                    "attribute_groups": [
+                        2
+                    ]
+                }
+            }
+        },
+        {
+            "category_id": "9",
+            "order": "4",
+            "root": "0",
+            "in_loyalty": "0",
+            "translations": {
+                "pl_PL": {
+                    "trans_id": "9",
+                    "category_id": "9",
+                    "name": "Bluzy",
+                    "description": "",
+                    "active": "0",
+                    "pres_id": null,
+                    "isdefault": "1",
+                    "lang_id": "1",
+                    "seo_title": "",
+                    "seo_description": "",
+                    "seo_keywords": "",
+                    "seo_url": "",
+                    "permalink": "http://sklep266192.shoparena.pl/pl/c/Bluzy/9",
+                    "items": 0,
+                    "attribute_groups": [
+                        2
+                    ]
+                }
+            }
+        },
+        {
+            "category_id": "10",
+            "order": "5",
+            "root": "0",
+            "in_loyalty": "0",
+            "translations": {
+                "pl_PL": {
+                    "trans_id": "10",
+                    "category_id": "10",
+                    "name": "Buty",
+                    "description": "",
+                    "active": "1",
+                    "pres_id": null,
+                    "isdefault": "1",
+                    "lang_id": "1",
+                    "seo_title": "",
+                    "seo_description": "",
+                    "seo_keywords": "",
+                    "seo_url": "Nowa-kolekcja-obuwia",
+                    "permalink": "http://sklep266192.shoparena.pl/Nowa-kolekcja-obuwia",
+                    "items": 6,
+                    "attribute_groups": []
+                }
+            }
+        }
+    ]
+}

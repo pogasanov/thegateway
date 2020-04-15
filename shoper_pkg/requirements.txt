@@ -1,0 +1,9 @@
+requests==2.23.0
+jose
+simplejson
+click
+python-jose[cryptography]
+python-dotenv
+
+# For testing only
+responses
