@@ -47,8 +47,8 @@ class Shoper:
             logger.fatal(f"{response.status_code}: {response.text}")
             raise
 
-    def update(self, endpoint: str, output_format: str = "JSON") -> Dict:
-        response = self.invoke(endpoint, "put", output_format)
+    def update(self, endpoint: str, data: Dict, output_format: str = "JSON") -> Dict:
+        response = self.invoke(endpoint, "put", output_format, data=data)
         try:
             return response.json()
         except JSONDecodeError:
@@ -56,7 +56,9 @@ class Shoper:
             logger.fatal(f"{response.status_code}: {response.text}")
             raise
 
-    def invoke(self, endpoint: str, method: str, output_format: str = None, stream: bool = False) -> Response:
+    def invoke(
+        self, endpoint: str, method: str, output_format: str = None, stream: bool = False, data: Dict = None
+    ) -> Response:
         # pylint: disable=invalid-name
         fn = getattr(requests, method)
         if output_format:
@@ -68,6 +70,7 @@ class Shoper:
             headers={"Authorization": f"Bearer {self.auth_token}"},
             params=params,
             stream=stream,
+            data=data,
         )
 
     def get_image(self, data: Dict) -> Image:
@@ -158,11 +161,11 @@ class Shoper:
         """
         page_limit = 1
         sku = product.sku.split("_")[0]
-        code_filter = json.loads({"code": sku})
+        code_filter = json.dumps({"stock.code": sku})
         products_response = self.get(f"products?limit={page_limit}&filters={code_filter}")
-        if products_response.get("count") > 1:
+        if int(products_response.get("count")) > 1:
             # pylint: disable=logging-format-interpolation
             logger.error(f"error: Found {products_response.get('count')} products with code {sku}")
             raise
-        _id = products_response.get("list")[0].get("id")
-        self.update(f"product/{_id}")
+        product_to_update = products_response.get("list")[0]
+        self.update(f"products/{product_to_update.get('product_id')}", {"stock": {"stock": product.stock}})

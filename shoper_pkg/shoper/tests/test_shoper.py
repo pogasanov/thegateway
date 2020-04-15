@@ -47,7 +47,7 @@ class ShoperTest(TestCase):
         responses.add(
             responses.GET, f"{self.BASE_URL}/userdata/public/gfx/6bd4167ff45e02e5a97e0c79968f6ee9.jpg", status=200
         )
-        self.importer = Shoper(self.BASE_URL, self.USERNAME, self.PASSWORD)
+        self.importer = Shoper(self.BASE_URL, self.USERNAME, self.PASSWORD, stock_update=False)
 
     def tearDown(self) -> None:
         responses.stop()
