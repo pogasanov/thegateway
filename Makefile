@@ -1,15 +1,15 @@
 .PHONY: install-importers develop-importers install-lint-dep lint-test test docs
 
 install-importers:
-	pip install ./gateway_pkg ./prestashop_pkg ./sellingo_pkg ./idosell_pkg
+	pip install ./gateway_pkg ./prestashop_pkg ./sellingo_pkg ./idosell_pkg ./magento_pkg
 
 develop-importers:
 	pip install -e ./gateway_pkg
-	pip install -e ./prestashop_pkg -e ./sellingo_pkg -e ./idosell_pkg
+	pip install -e ./prestashop_pkg -e ./sellingo_pkg -e ./idosell_pkg ./magento_pkg
 
 install-lint-dep:
 	pip install -e ./gateway_pkg
-	pip install -e ./prestashop_pkg -e ./sellingo_pkg -e ./idosell_pkg
+	pip install -e ./prestashop_pkg -e ./sellingo_pkg -e ./idosell_pkg ./magento_pkg
 	pip install -r requirements.txt
 
 lint-test:
