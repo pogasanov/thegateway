@@ -1,4 +1,5 @@
 import decimal
+import json
 import logging
 
 from json import JSONDecodeError
@@ -17,13 +18,16 @@ logger = logging.getLogger(__name__)
 
 
 class Shoper:
-    def __init__(self, base_url: str, username: str, password: str, translation_prefix: str = "pl_PL"):
+    def __init__(
+        self, base_url: str, username: str, password: str, translation_prefix: str = "pl_PL", stock_update: bool = True
+    ):
         self.api_hostname = base_url
         self.username = username
         self.password = password
         self.translation_prefix = translation_prefix
         self.auth_token = self.authorize()
-        self.taxes = self.get_taxes()
+        if not stock_update:
+            self.taxes = self.get_taxes()
 
     def authorize(self) -> str:
         response = requests.post(
@@ -36,6 +40,15 @@ class Shoper:
 
     def get(self, endpoint: str, output_format: str = "JSON") -> Dict:
         response = self.invoke(endpoint, "get", output_format)
+        try:
+            return response.json()
+        except JSONDecodeError:
+            # pylint: disable=logging-format-interpolation
+            logger.fatal(f"{response.status_code}: {response.text}")
+            raise
+
+    def update(self, endpoint: str, output_format: str = "JSON") -> Dict:
+        response = self.invoke(endpoint, "put", output_format)
         try:
             return response.json()
         except JSONDecodeError:
@@ -136,3 +149,20 @@ class Shoper:
                 return self.load_one_page(products_response)
         else:
             return self.load_one_page(products_response)
+
+    def update_product_stock(self, product: Product):
+        """
+        Filtering by code is only possible on list endpoint.
+        Page limit set to 1 cause even if there are, somehow,
+        more products, there's no reason to show them.
+        """
+        page_limit = 1
+        sku = product.sku.split("_")[0]
+        code_filter = json.loads({"code": sku})
+        products_response = self.get(f"products?limit={page_limit}&filters={code_filter}")
+        if products_response.get("count") > 1:
+            # pylint: disable=logging-format-interpolation
+            logger.error(f"error: Found {products_response.get('count')} products with code {sku}")
+            raise
+        _id = products_response.get("list")[0].get("id")
+        self.update(f"product/{_id}")
