@@ -1,0 +1,39 @@
+{
+  "items": [
+    {
+      "id": 1,
+      "tax_country_id": "US",
+      "tax_region_id": 12,
+      "region_name": "CA",
+      "tax_postcode": "*",
+      "rate": 8.25,
+      "code": "US-CA-*-Rate 1",
+      "titles": []
+    },
+    {
+      "id": 2,
+      "tax_country_id": "US",
+      "tax_region_id": 43,
+      "region_name": "NY",
+      "tax_postcode": "*",
+      "rate": 8.375,
+      "code": "US-NY-*-Rate 1",
+      "titles": []
+    },
+    {
+      "id": 3,
+      "tax_country_id": "US",
+      "tax_region_id": 33,
+      "region_name": "MI",
+      "tax_postcode": "*",
+      "rate": 8.25,
+      "code": "US-MI-*-Rate 1",
+      "titles": []
+    }
+  ],
+  "search_criteria": {
+    "filter_groups": [],
+    "page_size": 9999
+  },
+  "total_count": 3
+}

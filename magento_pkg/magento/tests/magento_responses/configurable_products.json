@@ -1,0 +1,798 @@
+{
+  "items": [
+    {
+      "id": 68,
+      "sku": "MH01",
+      "name": "Chaz Kangeroo Hoodie",
+      "attribute_set_id": 9,
+      "price": 0,
+      "status": 1,
+      "visibility": 4,
+      "type_id": "configurable",
+      "created_at": "2020-04-10 03:05:04",
+      "updated_at": "2020-04-10 03:05:04",
+      "extension_attributes": {
+        "website_ids": [
+          1
+        ],
+        "category_links": [
+          {
+            "position": 0,
+            "category_id": "15"
+          },
+          {
+            "position": 0,
+            "category_id": "36"
+          },
+          {
+            "position": 0,
+            "category_id": "2"
+          }
+        ],
+        "configurable_product_options": [
+          {
+            "id": 3,
+            "attribute_id": "93",
+            "label": "Color",
+            "position": 1,
+            "values": [
+              {
+                "value_index": 5476
+              },
+              {
+                "value_index": 5479
+              },
+              {
+                "value_index": 5483
+              }
+            ],
+            "product_id": 68
+          },
+          {
+            "id": 2,
+            "attribute_id": "152",
+            "label": "Size",
+            "position": 0,
+            "values": [
+              {
+                "value_index": 5593
+              },
+              {
+                "value_index": 5594
+              },
+              {
+                "value_index": 5595
+              },
+              {
+                "value_index": 5596
+              },
+              {
+                "value_index": 5597
+              }
+            ],
+            "product_id": 68
+          }
+        ],
+        "configurable_product_links": [
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60
+        ]
+      },
+      "product_links": [
+        {
+          "sku": "MH01",
+          "link_type": "related",
+          "linked_product_sku": "MS12",
+          "linked_product_type": "configurable",
+          "position": 4
+        },
+        {
+          "sku": "MH01",
+          "link_type": "related",
+          "linked_product_sku": "MS06",
+          "linked_product_type": "configurable",
+          "position": 3
+        },
+        {
+          "sku": "MH01",
+          "link_type": "related",
+          "linked_product_sku": "MP06",
+          "linked_product_type": "configurable",
+          "position": 1
+        },
+        {
+          "sku": "MH01",
+          "link_type": "related",
+          "linked_product_sku": "MP11",
+          "linked_product_type": "configurable",
+          "position": 2
+        },
+        {
+          "sku": "MH01",
+          "link_type": "crosssell",
+          "linked_product_sku": "24-UG06",
+          "linked_product_type": "simple",
+          "position": 4
+        },
+        {
+          "sku": "MH01",
+          "link_type": "crosssell",
+          "linked_product_sku": "24-WG081-gray",
+          "linked_product_type": "simple",
+          "position": 1
+        },
+        {
+          "sku": "MH01",
+          "link_type": "crosssell",
+          "linked_product_sku": "24-WG085_Group",
+          "linked_product_type": "grouped",
+          "position": 2
+        },
+        {
+          "sku": "MH01",
+          "link_type": "crosssell",
+          "linked_product_sku": "24-WG080",
+          "linked_product_type": "bundle",
+          "position": 3
+        }
+      ],
+      "options": [],
+      "media_gallery_entries": [
+        {
+          "id": 84,
+          "media_type": "image",
+          "label": "",
+          "position": 1,
+          "disabled": false,
+          "types": [
+            "image",
+            "small_image",
+            "thumbnail"
+          ],
+          "file": "\/m\/h\/mh01-gray_main_1.jpg"
+        },
+        {
+          "id": 85,
+          "media_type": "image",
+          "label": "",
+          "position": 2,
+          "disabled": false,
+          "types": [],
+          "file": "\/m\/h\/mh01-gray_alt1_1.jpg"
+        },
+        {
+          "id": 86,
+          "media_type": "image",
+          "label": "",
+          "position": 3,
+          "disabled": false,
+          "types": [],
+          "file": "\/m\/h\/mh01-gray_back_1.jpg"
+        }
+      ],
+      "tier_prices": [],
+      "custom_attributes": [
+        {
+          "attribute_code": "image",
+          "value": "\/m\/h\/mh01-gray_main_1.jpg"
+        },
+        {
+          "attribute_code": "small_image",
+          "value": "\/m\/h\/mh01-gray_main_1.jpg"
+        },
+        {
+          "attribute_code": "thumbnail",
+          "value": "\/m\/h\/mh01-gray_main_1.jpg"
+        },
+        {
+          "attribute_code": "options_container",
+          "value": "container2"
+        },
+        {
+          "attribute_code": "msrp_display_actual_price_type",
+          "value": "0"
+        },
+        {
+          "attribute_code": "url_key",
+          "value": "chaz-kangeroo-hoodie"
+        },
+        {
+          "attribute_code": "required_options",
+          "value": "0"
+        },
+        {
+          "attribute_code": "has_options",
+          "value": "1"
+        },
+        {
+          "attribute_code": "tax_class_id",
+          "value": "2"
+        },
+        {
+          "attribute_code": "category_ids",
+          "value": [
+            "15",
+            "36",
+            "2"
+          ]
+        },
+        {
+          "attribute_code": "description",
+          "value": "<p>Ideal for cold-weather training or work outdoors, the Chaz Hoodie promises superior warmth with every wear. Thick material blocks out the wind as ribbed cuffs and bottom band seal in body heat.<\/p>\n<p>&bull; Two-tone gray heather hoodie.<br \/>&bull; Drawstring-adjustable hood. <br \/>&bull; Machine wash\/dry.<\/p>"
+        },
+        {
+          "attribute_code": "material",
+          "value": "5585"
+        },
+        {
+          "attribute_code": "pattern",
+          "value": "5621"
+        },
+        {
+          "attribute_code": "climate",
+          "value": "5628,5630,5631,5634,5636"
+        },
+        {
+          "attribute_code": "eco_collection",
+          "value": "1"
+        },
+        {
+          "attribute_code": "performance_fabric",
+          "value": "0"
+        },
+        {
+          "attribute_code": "erin_recommends",
+          "value": "0"
+        },
+        {
+          "attribute_code": "new",
+          "value": "0"
+        },
+        {
+          "attribute_code": "sale",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "id": 84,
+      "sku": "MH02",
+      "name": "Teton Pullover Hoodie",
+      "attribute_set_id": 9,
+      "price": 0,
+      "status": 1,
+      "visibility": 4,
+      "type_id": "configurable",
+      "created_at": "2020-04-10 03:05:04",
+      "updated_at": "2020-04-10 03:05:04",
+      "extension_attributes": {
+        "website_ids": [
+          1
+        ],
+        "category_links": [
+          {
+            "position": 0,
+            "category_id": "15"
+          }
+        ],
+        "configurable_product_options": [
+          {
+            "id": 5,
+            "attribute_id": "93",
+            "label": "Color",
+            "position": 1,
+            "values": [
+              {
+                "value_index": 5476
+              },
+              {
+                "value_index": 5484
+              },
+              {
+                "value_index": 5485
+              }
+            ],
+            "product_id": 84
+          },
+          {
+            "id": 4,
+            "attribute_id": "152",
+            "label": "Size",
+            "position": 0,
+            "values": [
+              {
+                "value_index": 5593
+              },
+              {
+                "value_index": 5594
+              },
+              {
+                "value_index": 5595
+              },
+              {
+                "value_index": 5596
+              },
+              {
+                "value_index": 5597
+              }
+            ],
+            "product_id": 84
+          }
+        ],
+        "configurable_product_links": [
+          69,
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83
+        ]
+      },
+      "product_links": [
+        {
+          "sku": "MH02",
+          "link_type": "related",
+          "linked_product_sku": "MS01",
+          "linked_product_type": "configurable",
+          "position": 4
+        },
+        {
+          "sku": "MH02",
+          "link_type": "related",
+          "linked_product_sku": "MS07",
+          "linked_product_type": "configurable",
+          "position": 2
+        },
+        {
+          "sku": "MH02",
+          "link_type": "related",
+          "linked_product_sku": "MP08",
+          "linked_product_type": "configurable",
+          "position": 3
+        },
+        {
+          "sku": "MH02",
+          "link_type": "related",
+          "linked_product_sku": "MP09",
+          "linked_product_type": "configurable",
+          "position": 1
+        },
+        {
+          "sku": "MH02",
+          "link_type": "crosssell",
+          "linked_product_sku": "24-WG084",
+          "linked_product_type": "simple",
+          "position": 4
+        },
+        {
+          "sku": "MH02",
+          "link_type": "crosssell",
+          "linked_product_sku": "24-WG083-blue",
+          "linked_product_type": "simple",
+          "position": 3
+        },
+        {
+          "sku": "MH02",
+          "link_type": "crosssell",
+          "linked_product_sku": "24-WG085_Group",
+          "linked_product_type": "grouped",
+          "position": 2
+        },
+        {
+          "sku": "MH02",
+          "link_type": "crosssell",
+          "linked_product_sku": "24-WG080",
+          "linked_product_type": "bundle",
+          "position": 1
+        }
+      ],
+      "options": [],
+      "media_gallery_entries": [
+        {
+          "id": 112,
+          "media_type": "image",
+          "label": "",
+          "position": 1,
+          "disabled": false,
+          "types": [
+            "image",
+            "small_image",
+            "thumbnail"
+          ],
+          "file": "\/m\/h\/mh02-black_main_1.jpg"
+        },
+        {
+          "id": 113,
+          "media_type": "image",
+          "label": "",
+          "position": 2,
+          "disabled": false,
+          "types": [],
+          "file": "\/m\/h\/mh02-black_alt1_1.jpg"
+        },
+        {
+          "id": 114,
+          "media_type": "image",
+          "label": "",
+          "position": 3,
+          "disabled": false,
+          "types": [],
+          "file": "\/m\/h\/mh02-black_back_1.jpg"
+        }
+      ],
+      "tier_prices": [],
+      "custom_attributes": [
+        {
+          "attribute_code": "image",
+          "value": "\/m\/h\/mh02-black_main_1.jpg"
+        },
+        {
+          "attribute_code": "small_image",
+          "value": "\/m\/h\/mh02-black_main_1.jpg"
+        },
+        {
+          "attribute_code": "thumbnail",
+          "value": "\/m\/h\/mh02-black_main_1.jpg"
+        },
+        {
+          "attribute_code": "options_container",
+          "value": "container2"
+        },
+        {
+          "attribute_code": "msrp_display_actual_price_type",
+          "value": "0"
+        },
+        {
+          "attribute_code": "url_key",
+          "value": "teton-pullover-hoodie"
+        },
+        {
+          "attribute_code": "required_options",
+          "value": "0"
+        },
+        {
+          "attribute_code": "has_options",
+          "value": "1"
+        },
+        {
+          "attribute_code": "tax_class_id",
+          "value": "2"
+        },
+        {
+          "attribute_code": "category_ids",
+          "value": [
+            "15"
+          ]
+        },
+        {
+          "attribute_code": "description",
+          "value": "<p>This Teton Pullover Hoodie gives you more than laid-back style. It's equipped with moisture-wicking fabric to keep light and dry inside, especially in chilly-weather workouts. An elasticized hem lets you move about freely.<\/p>\n<p>&bull; Black pullover hoodie.<br \/>&bull; Soft, brushed interior. <br \/>&bull; Front hand pockets. <br \/>&bull; Machine wash\/dry.<\/p>"
+        },
+        {
+          "attribute_code": "material",
+          "value": "5585,5571,5464"
+        },
+        {
+          "attribute_code": "pattern",
+          "value": "5623"
+        },
+        {
+          "attribute_code": "climate",
+          "value": "5628,5630,5631,5634,5636"
+        },
+        {
+          "attribute_code": "eco_collection",
+          "value": "0"
+        },
+        {
+          "attribute_code": "performance_fabric",
+          "value": "0"
+        },
+        {
+          "attribute_code": "erin_recommends",
+          "value": "0"
+        },
+        {
+          "attribute_code": "new",
+          "value": "1"
+        },
+        {
+          "attribute_code": "sale",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "id": 100,
+      "sku": "MH03",
+      "name": "Bruno Compete Hoodie",
+      "attribute_set_id": 9,
+      "price": 0,
+      "status": 1,
+      "visibility": 4,
+      "type_id": "configurable",
+      "created_at": "2020-04-10 03:05:04",
+      "updated_at": "2020-04-10 03:05:04",
+      "extension_attributes": {
+        "website_ids": [
+          1
+        ],
+        "category_links": [
+          {
+            "position": 0,
+            "category_id": "15"
+          },
+          {
+            "position": 0,
+            "category_id": "36"
+          },
+          {
+            "position": 0,
+            "category_id": "2"
+          }
+        ],
+        "configurable_product_options": [
+          {
+            "id": 7,
+            "attribute_id": "93",
+            "label": "Color",
+            "position": 1,
+            "values": [
+              {
+                "value_index": 5476
+              },
+              {
+                "value_index": 5477
+              },
+              {
+                "value_index": 5480
+              }
+            ],
+            "product_id": 100
+          },
+          {
+            "id": 6,
+            "attribute_id": "152",
+            "label": "Size",
+            "position": 0,
+            "values": [
+              {
+                "value_index": 5593
+              },
+              {
+                "value_index": 5594
+              },
+              {
+                "value_index": 5595
+              },
+              {
+                "value_index": 5596
+              },
+              {
+                "value_index": 5597
+              }
+            ],
+            "product_id": 100
+          }
+        ],
+        "configurable_product_links": [
+          85,
+          86,
+          87,
+          88,
+          89,
+          90,
+          91,
+          92,
+          93,
+          94
+        ]
+      },
+      "product_links": [
+        {
+          "sku": "MH03",
+          "link_type": "related",
+          "linked_product_sku": "MS04",
+          "linked_product_type": "configurable",
+          "position": 3
+        },
+        {
+          "sku": "MH03",
+          "link_type": "related",
+          "linked_product_sku": "MS08",
+          "linked_product_type": "configurable",
+          "position": 1
+        },
+        {
+          "sku": "MH03",
+          "link_type": "related",
+          "linked_product_sku": "MP05",
+          "linked_product_type": "configurable",
+          "position": 4
+        },
+        {
+          "sku": "MH03",
+          "link_type": "related",
+          "linked_product_sku": "MP07",
+          "linked_product_type": "configurable",
+          "position": 2
+        },
+        {
+          "sku": "MH03",
+          "link_type": "crosssell",
+          "linked_product_sku": "24-UG06",
+          "linked_product_type": "simple",
+          "position": 4
+        },
+        {
+          "sku": "MH03",
+          "link_type": "crosssell",
+          "linked_product_sku": "24-WG085",
+          "linked_product_type": "simple",
+          "position": 1
+        },
+        {
+          "sku": "MH03",
+          "link_type": "crosssell",
+          "linked_product_sku": "24-WG086",
+          "linked_product_type": "simple",
+          "position": 3
+        },
+        {
+          "sku": "MH03",
+          "link_type": "crosssell",
+          "linked_product_sku": "24-WG087",
+          "linked_product_type": "simple",
+          "position": 2
+        }
+      ],
+      "options": [],
+      "media_gallery_entries": [
+        {
+          "id": 140,
+          "media_type": "image",
+          "label": "",
+          "position": 1,
+          "disabled": false,
+          "types": [
+            "image",
+            "small_image",
+            "thumbnail"
+          ],
+          "file": "\/m\/h\/mh03-black_main_1.jpg"
+        },
+        {
+          "id": 141,
+          "media_type": "image",
+          "label": "",
+          "position": 2,
+          "disabled": false,
+          "types": [],
+          "file": "\/m\/h\/mh03-black_alt1_1.jpg"
+        },
+        {
+          "id": 142,
+          "media_type": "image",
+          "label": "",
+          "position": 3,
+          "disabled": false,
+          "types": [],
+          "file": "\/m\/h\/mh03-black_back_1.jpg"
+        }
+      ],
+      "tier_prices": [],
+      "custom_attributes": [
+        {
+          "attribute_code": "image",
+          "value": "\/m\/h\/mh03-black_main_1.jpg"
+        },
+        {
+          "attribute_code": "small_image",
+          "value": "\/m\/h\/mh03-black_main_1.jpg"
+        },
+        {
+          "attribute_code": "thumbnail",
+          "value": "\/m\/h\/mh03-black_main_1.jpg"
+        },
+        {
+          "attribute_code": "options_container",
+          "value": "container2"
+        },
+        {
+          "attribute_code": "msrp_display_actual_price_type",
+          "value": "0"
+        },
+        {
+          "attribute_code": "url_key",
+          "value": "bruno-compete-hoodie"
+        },
+        {
+          "attribute_code": "required_options",
+          "value": "0"
+        },
+        {
+          "attribute_code": "has_options",
+          "value": "1"
+        },
+        {
+          "attribute_code": "tax_class_id",
+          "value": "2"
+        },
+        {
+          "attribute_code": "category_ids",
+          "value": [
+            "15",
+            "36",
+            "2"
+          ]
+        },
+        {
+          "attribute_code": "description",
+          "value": "<p>Stay comfortable and stay in the race no matter what the weather's up to. The Bruno Compete Hoodie's water-repellent exterior shields you from the elements, while advanced fabric technology inside wicks moisture to keep you dry.<\/p>\n<p>&bull; Full zip black hoodie pullover. <br \/>&bull; Adjustable drawstring hood. <br \/>&bull; Ribbed cuffs\/waistband. <br \/>&bull; Kangaroo pocket. <br \/>&bull; Machine wash\/dry.<\/p>"
+        },
+        {
+          "attribute_code": "material",
+          "value": "5580"
+        },
+        {
+          "attribute_code": "pattern",
+          "value": "5623"
+        },
+        {
+          "attribute_code": "climate",
+          "value": "5628,5630,5631,5634,5636"
+        },
+        {
+          "attribute_code": "eco_collection",
+          "value": "1"
+        },
+        {
+          "attribute_code": "performance_fabric",
+          "value": "0"
+        },
+        {
+          "attribute_code": "erin_recommends",
+          "value": "1"
+        },
+        {
+          "attribute_code": "new",
+          "value": "1"
+        },
+        {
+          "attribute_code": "sale",
+          "value": "0"
+        }
+      ]
+    }
+  ],
+  "search_criteria": {
+    "filter_groups": [
+      {
+        "filters": [
+          {
+            "field": "type_id",
+            "value": "configurable",
+            "condition_type": "eq"
+          }
+        ]
+      }
+    ],
+    "page_size": 3
+  },
+  "total_count": 3
+}

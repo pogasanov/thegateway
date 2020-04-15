@@ -1,0 +1,43 @@
+{
+  "items": [
+    {
+      "id": 1,
+      "code": "Rule1",
+      "priority": 0,
+      "position": 0,
+      "customer_tax_class_ids": [
+        3
+      ],
+      "product_tax_class_ids": [
+        2
+      ],
+      "tax_rate_ids": [
+        3
+      ],
+      "calculate_subtotal": false
+    },
+    {
+      "id": 2,
+      "code": "Rule2",
+      "priority": 0,
+      "position": 0,
+      "customer_tax_class_ids": [
+        3
+      ],
+      "product_tax_class_ids": [
+        3,
+        4
+      ],
+      "tax_rate_ids": [
+        1,
+        2
+      ],
+      "calculate_subtotal": false
+    }
+  ],
+  "search_criteria": {
+    "filter_groups": [],
+    "page_size": 9999
+  },
+  "total_count": 1
+}
