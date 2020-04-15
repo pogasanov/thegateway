@@ -19,7 +19,7 @@ def run_import():
     gateway_shop_id = os.environ.get("GATEWAY_SHOP_ID", "f99424a4-d79b-4e37-aa86-f2ed84c27d7b")
     gateway_secret = os.environ.get("GATEWAY_SECRET", "/ew7hc6im+sQOHrQK8S0cZ9UXn35lka1SqCrLVRpJKM=")
     image_url_prefix = f"{os.environ.get('IMAGEBUCKET_URL')}{gateway_shop_id}/"
-    importer = Shoper(shoper_base_url, shoper_username, shoper_password)
+    importer = Shoper(shoper_base_url, shoper_username, shoper_password, stock_update=False)
     exporter = Gateway(gateway_base_url, gateway_shop_id, gateway_secret, image_url_prefix)
 
     for product_list in importer.fetch_products():
