@@ -8,7 +8,6 @@ test:
     key: "$CI_PROJECT_ID"
 
   script:
-    - make install-importers
     - make install-lint-dep
     - make lint-test
     - make test
