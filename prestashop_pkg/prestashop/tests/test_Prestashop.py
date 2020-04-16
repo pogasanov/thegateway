@@ -1,7 +1,8 @@
 from decimal import Decimal
-from unittest import TestCase
+from unittest import TestCase, mock
 
 import responses
+import xmltodict
 from prestashop.importers import Prestashop
 
 from .prestashop_responses import *
@@ -273,3 +274,19 @@ class PrestashopTest(TestCase):
             with self.subTest():
                 stock_level = self.importer.get_stock_level(sku)
                 self.assertEqual(stock_level, expected_stock_level)
+
+    def test_update_product_stock_level(self):
+        parameters = (
+            ("1:1", PRESTASHOP_STOCK_3["stock_available"]["quantity"]),
+            ("6:", PRESTASHOP_STOCK_6["stock_available"]["quantity"]),
+        )
+        for sku, starting_stock_level in parameters:
+            with self.subTest():
+                stock_diff = 10
+                with mock.patch("prestashop.importers.requests.put") as mocked_put:
+                    self.importer.update_product_stock_level(sku, stock_diff)
+                    called_data = xmltodict.parse(mocked_put.call_args.kwargs["data"])
+                self.assertEqual(
+                    int(called_data["root"]["stock_available"]["quantity"]["#text"]),
+                    int(starting_stock_level) + stock_diff,
+                )
