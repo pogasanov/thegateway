@@ -260,8 +260,9 @@ class PrestashopTest(TestCase):
     def test_get_stock_level_id(self):
         parameters = ((PRESTASHOP_PRODUCT_1["product"], 1, 3), (PRESTASHOP_PRODUCT_6["product"], None, 6))
         for product_data, combination_id, expected_id in parameters:
-            stock_level_id = self.importer._get_stock_level_id(product_data, combination_id)
-            self.assertEqual(stock_level_id, expected_id)
+            with self.subTest():
+                stock_level_id = self.importer._get_stock_level_id(product_data, combination_id)
+                self.assertEqual(stock_level_id, expected_id)
 
     def test_get_stock_level(self):
         parameters = (
@@ -269,5 +270,6 @@ class PrestashopTest(TestCase):
             ("6:", PRESTASHOP_STOCK_6["stock_available"]["quantity"]),
         )
         for sku, expected_stock_level in parameters:
-            stock_level = self.importer.get_stock_level(sku)
-            self.assertEqual(stock_level, expected_stock_level)
+            with self.subTest():
+                stock_level = self.importer.get_stock_level(sku)
+                self.assertEqual(stock_level, expected_stock_level)
