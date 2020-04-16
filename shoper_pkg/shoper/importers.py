@@ -166,6 +166,10 @@ class Shoper:
             raise
         return products_response.get("list")[0]
 
+    def get_stock_for_single_product(self, product: Product):
+        product_data = self.fetch_product(product)
+        return product_data.get("stock").get("stock")
+
     def update_product_stock(self, product: Product):
         """
         Filtering by code is only possible on list endpoint.

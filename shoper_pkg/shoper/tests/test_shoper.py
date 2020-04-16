@@ -18,6 +18,8 @@ class ShoperTest(TestCase):
         cls.PASSWORD = "PASSWORD"
 
     def setUp(self) -> None:
+        self.product = Product(sku="116", stock=99, name="Tshirt", price="259", vat_percent=23)
+
         responses.start()
         with open(f"{CURRENT_DIRECTORY}/authorization_response.json") as authorization_file:
             self.authorization_response = json.load(authorization_file)
@@ -108,25 +110,27 @@ class ShoperTest(TestCase):
         self.assertEqual(categories_dict.get(2), "Spodnie")
         self.assertEqual(categories_dict.get(3), "Inne")
 
+    def add_single_response(self, _responses):
+        page_limit = 1
+        with open(f"{CURRENT_DIRECTORY}/single_product_response_list.json") as single_product_list_file:
+            code_filters = json.dumps({"stock.code": self.product.sku})
+            single_product_response_list = json.load(single_product_list_file)
+            _responses.add(
+                _responses.GET,
+                f"{self.BASE_URL}/webapi/rest/products?limit={page_limit}&filters={code_filters}&output_format=JSON",
+                json=single_product_response_list,
+                status=200,
+            )
+
     def test_fetch_and_update_product_stock(self):
         """
         Test fetching and then updating in one test because update is
         tightly correlated to getting the product first.
         """
-        page_limit = 1
         with responses.RequestsMock() as rsp:
-            with open(f"{CURRENT_DIRECTORY}/single_product_response_list.json") as single_product_list_file:
-                product = Product(sku="116", stock=99, name="Tshirt", price="259", vat_percent=23)
-                code_filters = json.dumps({"stock.code": product.sku})
-                single_product_response_list = json.load(single_product_list_file)
-                rsp.add(
-                    rsp.GET,
-                    f"{self.BASE_URL}/webapi/rest/products?limit={page_limit}&filters={code_filters}&output_format=JSON",
-                    json=single_product_response_list,
-                    status=200,
-                )
-                fetched_product = self.importer.fetch_product(product)
-            self.assertEqual(fetched_product.get("code"), product.sku)
+            self.add_single_response(rsp)
+            fetched_product = self.importer.fetch_product(self.product)
+            self.assertEqual(fetched_product.get("code"), self.product.sku)
             with open(f"{CURRENT_DIRECTORY}/single_product_response.json") as single_product_file:
                 single_product_response = json.load(single_product_file)
                 rsp.add(
@@ -135,5 +139,11 @@ class ShoperTest(TestCase):
                     json=single_product_response,
                     status=200,
                 )
-                update_response = self.importer.update_product_stock(product)
-            self.assertEqual(update_response.get("code"), product.sku)
+                update_response = self.importer.update_product_stock(self.product)
+            self.assertEqual(update_response.get("code"), self.product.sku)
+
+    def test_get_stock_for_a_product(self):
+        with responses.RequestsMock() as rsp:
+            self.add_single_response(rsp)
+            stock = self.importer.get_stock_for_single_product(self.product)
+            self.assertEqual(self.product.stock, int(stock))
