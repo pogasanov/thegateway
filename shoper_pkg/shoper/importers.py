@@ -6,12 +6,12 @@ from typing import List, Dict, Generator
 
 import requests
 
+# pylint: disable=invalid-name
+from requests import Response
+
 from gateway.models import Product, Image
 from gateway.utils import download_image
 
-
-# pylint: disable=invalid-name
-from requests import Response
 
 logger = logging.getLogger(__name__)
 

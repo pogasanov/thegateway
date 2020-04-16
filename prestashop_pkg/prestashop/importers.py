@@ -101,7 +101,7 @@ class Prestashop:
         if combination:
             variant_price = Decimal(combination["price"])
             return Decimal(variant_price if variant_price and variant_price != 0 else data["price"])
-        return data["price"]
+        return Decimal(data["price"])
 
     def _get_variant_data(self, associations):
         variant_data = dict()

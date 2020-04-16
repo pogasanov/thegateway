@@ -1,4 +1,4 @@
-PRESTASHOP_PRODUCTS = [{"id": "1"}, {"id": "2"}]
+PRESTASHOP_PRODUCTS = [{"id": "1"}, {"id": "2"}, {"id": "6"}]
 PRESTASHOP_PRODUCT_1 = {
     "product": {
         "id": 1,
@@ -76,7 +76,7 @@ PRESTASHOP_PRODUCT_1 = {
             "combinations": [{"id": "1"},],
             "product_option_values": [{"id": "1"}, {"id": "2"},],
             "product_features": [{"id": "1", "id_feature_value": "4"}, {"id": "2", "id_feature_value": "8"},],
-            "stock_availables": [{"id": "1", "id_product_attribute": "0"},],
+            "stock_availables": [{"id": "1", "id_product_attribute": "0"}, {"id": "3", "id_product_attribute": "1"}],
         },
     }
 }
@@ -161,10 +161,104 @@ PRESTASHOP_PRODUCT_2 = {
         },
     }
 }
+PRESTASHOP_PRODUCT_6 = {
+    "product": {
+        "id": 6,
+        "id_manufacturer": "1",
+        "id_supplier": "0",
+        "id_category_default": "8",
+        "new": None,
+        "cache_default_attribute": "0",
+        "id_default_image": "6",
+        "id_default_combination": 0,
+        "id_tax_rules_group": "1",
+        "position_in_category": "1",
+        "manufacturer_name": "Studio Design",
+        "quantity": "0",
+        "type": "simple",
+        "id_shop_default": "1",
+        "reference": "demo_11",
+        "supplier_reference": "",
+        "location": "",
+        "width": "0.000000",
+        "height": "0.000000",
+        "depth": "0.000000",
+        "weight": "0.000000",
+        "quantity_discount": "0",
+        "ean13": "",
+        "isbn": "",
+        "upc": "",
+        "cache_is_pack": "0",
+        "cache_has_attachments": "0",
+        "is_virtual": "0",
+        "state": "1",
+        "additional_delivery_times": "1",
+        "delivery_in_stock": "",
+        "delivery_out_stock": "",
+        "on_sale": "0",
+        "online_only": "0",
+        "ecotax": "0.000000",
+        "minimal_quantity": "1",
+        "low_stock_threshold": None,
+        "low_stock_alert": "0",
+        "price": "11.900000",
+        "wholesale_price": "0.000000",
+        "unity": "",
+        "unit_price_ratio": "0.000000",
+        "additional_shipping_cost": "0.00",
+        "customizable": "0",
+        "text_fields": "0",
+        "uploadable_files": "0",
+        "active": "1",
+        "redirect_type": "301-category",
+        "id_type_redirected": "0",
+        "available_for_order": "1",
+        "available_date": "0000-00-00",
+        "show_condition": "0",
+        "condition": "new",
+        "show_price": "1",
+        "indexed": "1",
+        "visibility": "both",
+        "advanced_stock_management": "0",
+        "date_add": "2020-04-16 10:57:58",
+        "date_upd": "2020-04-16 10:57:58",
+        "pack_stock_type": "3",
+        "meta_description": "",
+        "meta_keywords": "",
+        "meta_title": "",
+        "link_rewrite": "mug-the-best-is-yet-to-come",
+        "name": "Mug The best is yet to come",
+        "description": '<p><span style="font-size:10pt;font-style:normal;">The best is yet to come! Start the day off right with a positive thought. 8,2cm diameter / 9,5cm height / 0.43kg. Dishwasher-proof.</span></p>',
+        "description_short": '<p><span style="font-size:10pt;font-style:normal;">White Ceramic Mug, 325ml.</span></p>',
+        "available_now": "",
+        "available_later": "",
+        "associations": {
+            "categories": [{"id": "2"}, {"id": "6"}, {"id": "8"}],
+            "images": [{"id": "6"}],
+            "product_features": [{"id": "1", "id_feature_value": "3"}],
+            "stock_availables": [{"id": "6", "id_product_attribute": "0"}],
+        },
+    }
+}
 PRESTASHOP_STOCK_1 = {"stock_available": {"quantity": 1}}
 PRESTASHOP_STOCK_2 = {"stock_available": {"quantity": 2}}
+PRESTASHOP_STOCK_3 = {"stock_available": {"quantity": 3}}
+PRESTASHOP_STOCK_6 = {
+    "stock_available": {
+        "id": 6,
+        "id_product": "6",
+        "id_product_attribute": "0",
+        "id_shop": "1",
+        "id_shop_group": "0",
+        "quantity": "300",
+        "depends_on_stock": "0",
+        "out_of_stock": "2",
+        "location": "",
+    }
+}
 PRESTASHOP_IMAGES_1 = b'<?xml version="1.0" encoding="UTF-8"?>\n<prestashop xmlns:xlink="http://www.w3.org/1999/xlink">\n<image id="1">\n<declination id="1" xlink:href="http://123.456.789.0/api/images/products/1/1"/>\n<declination id="2" xlink:href="http://123.456.789.0/api/images/products/1/2"/>\n</image>\n</prestashop>\n'
 PRESTASHOP_IMAGES_2 = b'<?xml version="1.0" encoding="UTF-8"?>\n<prestashop xmlns:xlink="http://www.w3.org/1999/xlink">\n<image id="2">\n</image>\n</prestashop>\n'
+PRESTASHOP_IMAGES_6 = b'<?xml version="1.0" encoding="UTF-8"?>\n<prestashop xmlns:xlink="http://www.w3.org/1999/xlink">\n<image id="6">\n</image>\n</prestashop>\n'
 PRESTASHOP_PRODUCT_OPTIONS = {"product_options": [{"id": 1}, {"id": 2}]}
 PRESTASHOP_PRODUCT_OPTIONS_1 = {
     "product_option": {
