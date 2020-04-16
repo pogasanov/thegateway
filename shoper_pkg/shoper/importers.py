@@ -155,7 +155,7 @@ class Shoper:
         else:
             return self.load_one_page(products_response)
 
-    def fetch_product(self, product: Product):
+    def fetch_product(self, product: Product) -> Dict:
         page_limit = 1
         sku = product.sku.split("_")[0]
         code_filter = json.dumps({"stock.code": sku})
@@ -166,11 +166,11 @@ class Shoper:
             raise
         return products_response.get("list")[0]
 
-    def get_stock_for_single_product(self, product: Product):
+    def get_stock_for_single_product(self, product: Product) -> int:
         product_data = self.fetch_product(product)
         return product_data.get("stock").get("stock")
 
-    def update_product_stock(self, product: Product):
+    def update_product_stock(self, product: Product) -> Dict:
         """
         Filtering by code is only possible on list endpoint.
         Page limit set to 1 cause even if there are, somehow,
