@@ -4,6 +4,7 @@ from decimal import Decimal
 from typing import List
 
 import requests
+from dicttoxml import dicttoxml
 from simplejson import JSONDecodeError
 
 from gateway.models import Product
@@ -40,22 +41,33 @@ class Prestashop:
             for value in product_option_values:
                 self.variants_reverse[value] = name
 
-    def invoke(self, endpoint, method):
+    def invoke(self, endpoint, method, data=None):
         """
         Just a wrapper to expose requests HTTP method calls without passing all the auth etc params every time.
         """
         function = getattr(requests, method)
-        return function(**self._build_requests_parameters(endpoint))
+        return function(**self._build_requests_parameters(endpoint, data))
 
-    def _build_requests_parameters(self, endpoint):
-        return {
+    def _build_requests_parameters(self, endpoint, data=None):
+        payload = {
             "url": f"{self.api_hostname}/api/{endpoint}",
             "auth": (self.api_key, ""),
             "params": {"output_format": "JSON"},
         }
+        if data:
+            payload.update({"data": dicttoxml(data)})
+        return payload
 
     def get(self, endpoint):
         response = self.invoke(endpoint, "get")
+        try:
+            return response.json()
+        except JSONDecodeError:
+            LOGGER.fatal("%s: %s", response.status_code, response.text)
+            raise
+
+    def put(self, endpoint, data):
+        response = self.invoke(endpoint, "put", data)
         try:
             return response.json()
         except JSONDecodeError:
@@ -223,6 +235,15 @@ class Prestashop:
         stock_level_id = self._get_stock_level_id(product_data, combination_id)
         stock_level_data = self._get_stock_level_data(stock_level_id)
         return stock_level_data["stock_available"]["quantity"]
+
+    def update_product_stock_level(self, sku, stock_difference: int):
+        product_id, combination_id = self._get_product_id_and_combination_id_from_sku(sku)
+        product_data = self._get_product_data(product_id)
+        stock_level_id = self._get_stock_level_id(product_data, combination_id)
+        stock_level_data = self._get_stock_level_data(stock_level_id)
+        new_stock_level = int(stock_level_data["stock_available"]["quantity"]) + stock_difference
+        stock_level_data["stock_available"]["quantity"] = new_stock_level
+        return self.put(f"stock_availables/{stock_level_id}", data=stock_level_data)
 
 
 def strip_tags(in_str):
