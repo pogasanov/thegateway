@@ -94,10 +94,7 @@ class Prestashop:
 
     @staticmethod
     def _get_variant_sku(data, combination):
-        if combination:
-            variant_sku = combination["reference"]
-            return variant_sku if variant_sku else data["reference"]
-        return data["reference"]
+        return f"{data['id']}:{combination['id'] if combination else ''}"
 
     @staticmethod
     def _get_variant_price(data, combination):
@@ -173,7 +170,7 @@ class Prestashop:
 
     def fetch_single_product(self, product_id) -> List[Product]:
         products = list()
-        data = self.get(f"products/{product_id}")["product"]
+        data = self._get_product_data(product_id)
         associations = data["associations"]
         try:
             variants_ids = self._ids_to_list(associations["combinations"])
@@ -201,6 +198,31 @@ class Prestashop:
     def download_image(self, product_id, image_id):
         image_url = self._build_requests_parameters(f"images/products/{product_id}/{image_id}")
         return download_image(**image_url)
+
+    @staticmethod
+    def _get_product_id_and_combination_id_from_sku(sku):
+        return sku.split(":")
+
+    @staticmethod
+    def _get_stock_level_id(product_data, combination_id):
+        stock_available_data = product_data["associations"]["stock_availables"]
+        stock_level_mapping = {int(d["id_product_attribute"]): int(d["id"]) for d in stock_available_data}
+        if combination_id:
+            return stock_level_mapping[int(combination_id)]
+        return stock_level_mapping[0]
+
+    def _get_product_data(self, product_id):
+        return self.get(f"products/{product_id}")["product"]
+
+    def _get_stock_level_data(self, stock_level_id):
+        return self.get(f"stock_availables/{stock_level_id}")
+
+    def get_stock_level(self, sku):
+        product_id, combination_id = self._get_product_id_and_combination_id_from_sku(sku)
+        product_data = self._get_product_data(product_id)
+        stock_level_id = self._get_stock_level_id(product_data, combination_id)
+        stock_level_data = self._get_stock_level_data(stock_level_id)
+        return stock_level_data["stock_available"]["quantity"]
 
 
 def strip_tags(in_str):
