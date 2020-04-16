@@ -170,4 +170,4 @@ class Shoper:
             logger.error(f"error: Found {products_response.get('count')} products with code {sku}")
             raise
         product_to_update = products_response.get("list")[0]
-        self.update(f"products/{product_to_update.get('product_id')}", {"stock": {"stock": product.stock}})
+        self.update(f"products/{product_to_update.get('product_id')}", json.dumps({"stock": {"stock": product.stock}}))
