@@ -1,16 +1,13 @@
-import logging
-from typing import List
+from typing import List, Iterator
 
 from gateway import Product
 from woocommerce import API
+import logging
 
-CONSUMER_KEY = "ck_7311e697cff297153143761909b9127188874571"
-CONSUMER_SECRET = "cs_26ffecf428f177897fa87afb5b758fd9cb10c8d2"
-BASE_URL = "http://1a163393.ngrok.io"
 logger = logging.getLogger(__name__)
 
 
-class WordPressWooCommerce:
+class WoocommerceWordPress:
     GW_PRODUCT_UNKNOWN_QUANTITY = 100001
     STOCK_AVAILABLE = "instock"
     STOCK_ON_BACKORDER = "onbackorder"
@@ -35,33 +32,57 @@ class WordPressWooCommerce:
 
         return response.json()
 
-    def _get_product_variations(self, product: dict):
-        # attributes = api_
-        pass
+    def _get_vat(self, api_product: dict) -> int:
+        return 23  # TODO
 
-    def _get_variants(self, api_product: dict) -> List[dict]:
+    def _convert_variable_api_product(self, api_product: dict) -> List[Product]:
+        # TODO check response?
+        api_product_variations = self.wcapi.get(f"products/{api_product['id']}/variations").json()
+        gw_products = []
+        product_stock = self._get_stock(api_product)
+        for api_product_variation in api_product_variations:
+            if not self._is_api_product_valid(api_product_variation):
+                continue
+
+            gw_product = Product("", 0, 0)
+            gw_product.name = api_product["name"]
+            gw_product.price = api_product_variation["price"]
+            gw_product.sku = api_product_variation["sku"]
+            gw_product.vat_percent = self._get_vat(api_product_variation)
+            variant_description = api_product_variation["description"]
+            variant_stock = self._get_stock(api_product_variation)
+            if variant_stock == self.GW_PRODUCT_UNKNOWN_QUANTITY:
+                variant_stock = product_stock
+
+            gw_product.stock = variant_stock
+            if not variant_description:
+                variant_description = api_product["description"]
+
+            gw_product.description = variant_description
+            gw_product.description_short = api_product["short_description"]
+            gw_product.images = self._get_images_urls(api_product)
+            gw_product.variant_data = self._get_variants(api_product_variation)
+
+            gw_products.append(gw_product)
+
+        return gw_products
+
+    def _get_variants(self, api_product: dict) -> dict:
         api_variants = api_product["attributes"]
-        product_variants = []
+        product_variants = dict()
         for api_variant in api_variants:
             v_name = api_variant["name"].lower()
-            v_val = [v.lower() for v in api_variant["options"]]
-            product_variants.append({v_name: v_val})
+            if "option" in api_variant:
+                variants = [api_variant["option"]]
+            else:  # options
+                variants = api_variant["options"]
+
+            v_val = [v.lower() for v in variants]
+            product_variants[v_name] = v_val
 
         return product_variants
 
     def _get_images_urls(self, api_product: dict) -> List[str]:
-        """    "images": [
-        {
-            "id": 43,
-            "date_created": "2020-04-15T10:54:42",
-            "date_created_gmt": "2020-04-15T10:54:42",
-            "date_modified": "2020-04-15T10:54:42",
-            "date_modified_gmt": "2020-04-15T10:54:42",
-            "src": "http://681ff8a5.ngrok.io/wp-content/uploads/2020/04/tshirt-2.jpg",
-            "name": "tshirt-2.jpg",
-            "alt": "",
-        }
-    ],"""
         return [image_record["src"] for image_record in api_product["images"]]
 
     def _get_categories(self, api_product: dict) -> List[str]:
@@ -80,25 +101,29 @@ class WordPressWooCommerce:
         # stock_status == outofstock
         return 0
 
-    def _convert_api_product_to_gw_products(self, api_product: dict) -> List[Product]:
-        # fetch_fields = ["name", "description", "short_description", "sku", "price", "categories", "attributes", "images"]
+    def _convert_simple_api_product(self, api_product: dict) -> List[Product]:
         gw_product = Product("", 0, 0)
+        gw_product.name = api_product["name"]
+        gw_product.description = api_product["description"]
+        gw_product.description_short = api_product["short_description"]
+        gw_product.vat_percent = self._get_vat(api_product)
+        gw_product.sku = api_product["sku"]
+        gw_product.price = api_product["price"]
+        gw_product.images = self._get_images_urls(api_product)
+        gw_product.variant_data = self._get_variants(api_product)
+        return [gw_product]
+
+    def _convert_api_product_to_gw_products(self, api_product: dict) -> List[Product]:
         if api_product["type"] == "simple":
-            gw_product.name = api_product["name"]
-            gw_product.description = api_product["description"]
-            gw_product.description_short = api_product["short_description"]
-            gw_product.sku = api_product["sku"]
-            gw_product.price = api_product["price"]
-            gw_product.images = self._get_images_urls(api_product)
-            return [gw_product]
+            return self._convert_simple_api_product(api_product)
 
         if api_product["type"] == "variable":
-            pass
+            return self._convert_variable_api_product(api_product)
 
     def _is_api_product_valid(self, api_product) -> bool:
-        return api_product["purchasable"]
+        return api_product["purchasable"] and api_product["status"] == "publish"
 
-    def get_products(self):
+    def get_products(self) -> Iterator[List[Product]]:
         api_products = self._fetch_products_from_api()
         if not api_products:
             return
