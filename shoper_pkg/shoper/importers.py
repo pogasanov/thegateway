@@ -50,6 +50,8 @@ class Shoper:
     def update(self, endpoint: str, data: Dict, output_format: str = "JSON") -> Dict:
         response = self.invoke(endpoint, "put", output_format, data=data)
         try:
+            if not response.status_code == 200:
+                logger.critical(response.json())
             return response.json()
         except JSONDecodeError:
             # pylint: disable=logging-format-interpolation
