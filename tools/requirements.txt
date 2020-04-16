@@ -1,3 +1,2 @@
 python-jose[cryptography]
 click
-xmltodict
