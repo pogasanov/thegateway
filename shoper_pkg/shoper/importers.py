@@ -47,7 +47,7 @@ class Shoper:
             logger.fatal(f"{response.status_code}: {response.text}")
             raise
 
-    def update(self, endpoint: str, data: Dict, output_format: str = "JSON") -> Dict:
+    def put(self, endpoint: str, data: Dict, output_format: str = "JSON") -> Dict:
         response = self.invoke(endpoint, "put", output_format, data=data)
         try:
             if not response.status_code == 200:
@@ -155,12 +155,7 @@ class Shoper:
         else:
             return self.load_one_page(products_response)
 
-    def update_product_stock(self, product: Product):
-        """
-        Filtering by code is only possible on list endpoint.
-        Page limit set to 1 cause even if there are, somehow,
-        more products, there's no reason to show them.
-        """
+    def fetch_product(self, product: Product):
         page_limit = 1
         sku = product.sku.split("_")[0]
         code_filter = json.dumps({"stock.code": sku})
@@ -169,5 +164,15 @@ class Shoper:
             # pylint: disable=logging-format-interpolation
             logger.error(f"error: Found {products_response.get('count')} products with code {sku}")
             raise
-        product_to_update = products_response.get("list")[0]
-        self.update(f"products/{product_to_update.get('product_id')}", json.dumps({"stock": {"stock": product.stock}}))
+        return products_response.get("list")[0]
+
+    def update_product_stock(self, product: Product):
+        """
+        Filtering by code is only possible on list endpoint.
+        Page limit set to 1 cause even if there are, somehow,
+        more products, there's no reason to show them.
+        """
+        product_to_update = self.fetch_product(product)
+        return self.put(
+            f"products/{product_to_update.get('product_id')}", json.dumps({"stock": {"stock": product.stock}})
+        )
