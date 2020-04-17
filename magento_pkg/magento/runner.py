@@ -7,7 +7,8 @@ from .importers import Magento
 
 
 @click.command()
-def run_import():
+@click.argument("action", type=click.Choice(["import", "sync"], case_sensitive=False), default="import")
+def run_import(action):
     magento_base_url = os.environ.get("MAGENTO_BASE_URL", "http://127.0.0.1")
     magento_access_token = os.environ.get("MAGENTO_API_ACCESS_TOKEN", "lrz7qqi7c3yp4rpfhxzn69dz9dyxwz3k")
 
@@ -19,5 +20,9 @@ def run_import():
     importer = Magento(magento_base_url, magento_access_token)
     exporter = Gateway(gateway_base_url, gateway_shop_id, gateway_secret, image_url_prefix)
 
-    for product in importer.build_products():
-        exporter.create_products(product)
+    if action == "import":
+        for product in importer.build_products():
+            exporter.create_products(product)
+    elif action == "sync":
+        for product in exporter.list_of_products():
+            importer.sync_products(product)
