@@ -21,16 +21,25 @@ class Magento:
         self.session = requests.Session()
         self.session.headers.update({"Authorization": f"Bearer {API_ACCESS_TOKEN}"})
 
-        self.base_media_url = self._get_base_media_url()
+        self.base_media_url = self._get_store_configs()["base_media_url"]
         self.attributes = self._get_possible_product_attributes()
         self.taxes = self._get_tax_rates()
 
-    def _get_base_media_url(self):
+    def _get_store_configs(self):
         """
-        Get base media url that will be used to download images.
+        Get store configuration
+        - base media url, that will be used to download images.
         """
         response = self.session.get(f"{self.api_hostname}/rest/V1/store/storeConfigs")
-        return response.json()[0]["base_media_url"]
+        response.raise_for_status()
+        stores = response.json()
+
+        if len(stores) > 1:
+            raise NotImplementedError(
+                "Magento has more than 1 store, which is not currently supported by this importer"
+            )
+
+        return {"base_media_url": stores[0]["base_media_url"]}
 
     def _get_possible_product_attributes(self):
         """
@@ -217,3 +226,20 @@ class Magento:
         response = self.session.get(f"{self.api_hostname}/rest/V1/stockItems/{product_sku}")
         response.raise_for_status()
         return Decimal(response.json()["qty"])
+
+    def _update_product_stock(self, product_sku, new_quantity):
+        """
+        Updates magento stock quantity using selected product sku
+        """
+        response = self.session.put(
+            f"{self.api_hostname}/rest/V1/products/{product_sku}/stockItems/1",
+            json={"stock_item": {"qty": new_quantity}},
+        )
+        response.raise_for_status()
+
+    def sync_products(self, products):
+        """
+        Updates stock quantity for each of the products
+        """
+        for product in products:
+            self._update_product_stock(product.sku, product.stock)
