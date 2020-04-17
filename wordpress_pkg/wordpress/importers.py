@@ -15,6 +15,18 @@ class WoocommerceWordPress:
 
     def __init__(self, consumer_key: str, consumer_secret: str, base_url: str):
         self.wcapi = API(url=base_url, consumer_key=consumer_key, consumer_secret=consumer_secret)
+        self.is_price_with_tax = None
+        self.taxes = None
+
+    def _set_price_options(self):
+        tax_options = wcapi.get("settings/tax").json()
+        if "woocommerce_prices_include_tax" in tax_options:
+            self.is_price_with_tax = tax_options["woocommerce_prices_include_tax"]["value"] == "yes"
+        else:
+            self.is_price_with_tax = True
+
+    def _setup_taxes(self):
+        pass
 
     def _fetch_products_from_api(self) -> List[dict]:
         response = self.wcapi.get("products")
