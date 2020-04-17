@@ -1,9 +1,13 @@
+import logging
+from collections import defaultdict
 from typing import List, Iterator
 
 from gateway import Product
 from woocommerce import API
-import logging
 
+CONSUMER_KEY = "ck_7311e697cff297153143761909b9127188874571"
+CONSUMER_SECRET = "cs_26ffecf428f177897fa87afb5b758fd9cb10c8d2"
+BASE_URL = "http://a41bcc60.ngrok.io"
 logger = logging.getLogger(__name__)
 
 
@@ -12,21 +16,48 @@ class WoocommerceWordPress:
     STOCK_AVAILABLE = "instock"
     STOCK_ON_BACKORDER = "onbackorder"
     STOCK_UNKNOWN_AVAILABLE_QUANTITY = None
+    DEFAULT_TAX = 23
+    TAX_COUNTRY_CODE = "PL"
+    DEFAULT_TAX_CLASS = ""
 
     def __init__(self, consumer_key: str, consumer_secret: str, base_url: str):
         self.wcapi = API(url=base_url, consumer_key=consumer_key, consumer_secret=consumer_secret)
         self.is_price_with_tax = None
-        self.taxes = None
+        self.taxes = defaultdict(lambda: self.DEFAULT_TAX)
 
     def _set_price_options(self):
-        tax_options = wcapi.get("settings/tax").json()
-        if "woocommerce_prices_include_tax" in tax_options:
-            self.is_price_with_tax = tax_options["woocommerce_prices_include_tax"]["value"] == "yes"
-        else:
-            self.is_price_with_tax = True
+        tax_options = self.wcapi.get("settings/tax").json()
+        for option_entry in tax_options:
+            if option_entry["id"] == "woocommerce_prices_include_tax":
+                self.is_price_with_tax = option_entry["value"] == "yes"
+                return
+
+        self.is_price_with_tax = True
 
     def _setup_taxes(self):
-        pass
+        tax_classes = self.wcapi.get("taxes/classes")
+        for tax_class_entry in tax_classes.json():
+            tax_class = tax_class_entry["slug"]
+            self.taxes[tax_class] = 0
+            class_taxes = self.wcapi.get("taxes", params={"class": tax_class, "orderby": "id"}).json()
+            tax_grouped_by_priority = defaultdict(lambda: list())
+            for tax_entry in class_taxes:
+                tax_grouped_by_priority[tax_entry["priority"]].append(tax_entry)
+
+            for priority in sorted(tax_grouped_by_priority.keys()):
+                group = tax_grouped_by_priority[priority]
+                tax_rate = 0
+                for tax_entry in group:
+                    if tax_entry["country"] == self.TAX_COUNTRY_CODE:
+                        tax_rate = tax_entry["rate"]
+                        break
+
+                    if tax_entry["country"] == "" and tax_rate == 0:
+                        tax_rate = tax_entry["rate"]
+
+                self.taxes[tax_class] += float(tax_rate)
+
+        self.taxes[self.DEFAULT_TAX_CLASS] = self.taxes["standard"]
 
     def _fetch_products_from_api(self) -> List[dict]:
         response = self.wcapi.get("products")
@@ -35,7 +66,7 @@ class WoocommerceWordPress:
             return []
 
         if response.status_code == 404:
-            logger.error("Invalid url or invalid permalinks (https://stackoverflow.com/a/46326542)")
+            logger.error("Invalid BASE_URL or permalinks (https://stackoverflow.com/a/46326542)")
             return []
 
         if response.status_code != 200:
@@ -45,10 +76,18 @@ class WoocommerceWordPress:
         return response.json()
 
     def _get_vat(self, api_product: dict) -> int:
-        return 23  # TODO
+        return self.taxes[api_product["tax_class"]]
+
+    def _set_price_and_vat(self, gw_product: Product, api_product: dict):
+        vat = self._get_vat(api_product)
+        price = float(api_product["price"])
+        if not self.is_price_with_tax:
+            price += price * (vat / 100)
+
+        gw_product.price = price
+        gw_product.vat_percent = vat
 
     def _convert_variable_api_product(self, api_product: dict) -> List[Product]:
-        # TODO check response?
         api_product_variations = self.wcapi.get(f"products/{api_product['id']}/variations").json()
         gw_products = []
         product_stock = self._get_stock(api_product)
@@ -58,9 +97,7 @@ class WoocommerceWordPress:
 
             gw_product = Product("", 0, 0)
             gw_product.name = api_product["name"]
-            gw_product.price = api_product_variation["price"]
             gw_product.sku = api_product_variation["sku"]
-            gw_product.vat_percent = self._get_vat(api_product_variation)
             variant_description = api_product_variation["description"]
             variant_stock = self._get_stock(api_product_variation)
             if variant_stock == self.GW_PRODUCT_UNKNOWN_QUANTITY:
@@ -74,6 +111,7 @@ class WoocommerceWordPress:
             gw_product.description_short = api_product["short_description"]
             gw_product.images = self._get_images_urls(api_product)
             gw_product.variant_data = self._get_variants(api_product_variation)
+            self._set_price_and_vat(gw_product, api_product_variation)
 
             gw_products.append(gw_product)
 
@@ -98,7 +136,6 @@ class WoocommerceWordPress:
         return [image_record["src"] for image_record in api_product["images"]]
 
     def _get_categories(self, api_product: dict) -> List[str]:
-        # "categories": [{"id": 17, "name": "Tshirts", "slug": "tshirts"}],
         return [cat_record["name"] for cat_record in api_product["categories"]]
 
     def _get_stock(self, api_product: dict) -> int:
@@ -118,11 +155,10 @@ class WoocommerceWordPress:
         gw_product.name = api_product["name"]
         gw_product.description = api_product["description"]
         gw_product.description_short = api_product["short_description"]
-        gw_product.vat_percent = self._get_vat(api_product)
         gw_product.sku = api_product["sku"]
-        gw_product.price = api_product["price"]
         gw_product.images = self._get_images_urls(api_product)
         gw_product.variant_data = self._get_variants(api_product)
+        self._set_price_and_vat(gw_product, api_product)
         return [gw_product]
 
     def _convert_api_product_to_gw_products(self, api_product: dict) -> List[Product]:
@@ -138,7 +174,10 @@ class WoocommerceWordPress:
     def get_products(self) -> Iterator[List[Product]]:
         api_products = self._fetch_products_from_api()
         if not api_products:
-            return
+            return []
+
+        self._setup_taxes()
+        self._set_price_options()
 
         for api_product in api_products:
             if not self._is_api_product_valid(api_product):
