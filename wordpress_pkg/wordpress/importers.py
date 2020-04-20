@@ -169,7 +169,13 @@ class WoocommerceWordPress:
             return self._convert_variable_api_product(api_product)
 
     def _is_api_product_valid(self, api_product) -> bool:
-        return api_product["purchasable"] and api_product["status"] == "publish"
+        return all(
+            [
+                api_product["purchasable"],
+                api_product["status"] == "publish",
+                api_product["type"] not in ("grouped", "external") if "type" in api_product else True,
+            ]
+        )
 
     def get_products(self) -> Iterator[List[Product]]:
         api_products = self._fetch_products_from_api()
