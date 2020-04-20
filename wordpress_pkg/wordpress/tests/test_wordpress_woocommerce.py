@@ -19,7 +19,6 @@ API_URLS = {
     "settings_tax": BASE_URL + "/wp-json/wc/v3/settings/tax",
     "tax_classes": BASE_URL + "/wp-json/wc/v3/taxes/classes",
     "taxes": BASE_URL + "/wp-json/wc/v3/taxes",
-    "aasdfsadfdsafdsafdsafsadfsadfsadf": "asfdsadfdsafdsafsafdsafdsaf",
 }
 
 
