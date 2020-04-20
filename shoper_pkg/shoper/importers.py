@@ -112,14 +112,13 @@ class Shoper:
 
         return product
 
-    def load_one_page(self, products_response: Dict) -> Generator[List, None, None]:
-        for product in products_response.get("list"):
-            if product.get("options"):
-                # creates variants based on options
-                options_number = len(product.get("options"))
-                yield [self.get_product_data(product, option, options_number) for option in product.get("options")]
-            else:
-                yield [self.get_product_data(product)]
+    def load_product_list(self, product: Dict) -> List[Product]:
+        if product.get("options"):
+            # creates variants based on options
+            options_number = len(product.get("options"))
+            return [self.get_product_data(product, option, options_number) for option in product.get("options")]
+        else:
+            return [self.get_product_data(product)]
 
     def fetch_products(self) -> Generator[List, None, None]:
         """
@@ -130,9 +129,12 @@ class Shoper:
         page_limit = 50
         products_response = self.get(f"products?limit={page_limit}")
 
+        # Load first page
+        for product in products_response.get("list"):
+            yield self.load_product_list(product)
+        # If there are more pages of data then load more products
         if products_response.get("pages") > 1:
             for i in range(2, products_response.get("pages")):
                 products_response = self.get(f"products?limit={page_limit}&page={i}")
-                return self.load_one_page(products_response)
-        else:
-            return self.load_one_page(products_response)
+                for product in products_response.get("list"):
+                    yield self.load_product_list(product)
