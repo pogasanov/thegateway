@@ -1,0 +1,310 @@
+[
+  {
+    "id": 69,
+    "date_created": "2020-04-15T13:28:28",
+    "date_created_gmt": "2020-04-15T13:28:28",
+    "date_modified": "2020-04-15T13:51:15",
+    "date_modified_gmt": "2020-04-15T13:51:15",
+    "description": "",
+    "permalink": "http://testurl.com/product/t-shirt-red/?attribute_pa_color=red",
+    "sku": "woo-tshirt-red",
+    "price": "12",
+    "regular_price": "12",
+    "sale_price": "",
+    "date_on_sale_from": null,
+    "date_on_sale_from_gmt": null,
+    "date_on_sale_to": null,
+    "date_on_sale_to_gmt": null,
+    "on_sale": false,
+    "status": "publish",
+    "purchasable": true,
+    "virtual": false,
+    "downloadable": false,
+    "downloads": [],
+    "download_limit": -1,
+    "download_expiry": -1,
+    "tax_status": "taxable",
+    "tax_class": "my-rate",
+    "manage_stock": "parent",
+    "stock_quantity": 11,
+    "stock_status": "instock",
+    "backorders": "no",
+    "backorders_allowed": false,
+    "backordered": false,
+    "weight": "",
+    "dimensions": {
+      "length": "",
+      "width": "",
+      "height": ""
+    },
+    "shipping_class": "",
+    "shipping_class_id": 0,
+    "image": {
+      "id": 43,
+      "date_created": "2020-04-15T10:54:42",
+      "date_created_gmt": "2020-04-15T10:54:42",
+      "date_modified": "2020-04-15T10:54:42",
+      "date_modified_gmt": "2020-04-15T10:54:42",
+      "src": "http://testurl.com/wp-content/uploads/2020/04/tshirt-2.jpg",
+      "name": "tshirt-2.jpg",
+      "alt": ""
+    },
+    "attributes": [
+      {
+        "id": 1,
+        "name": "Color",
+        "option": "Red"
+      }
+    ],
+    "menu_order": 3,
+    "meta_data": [],
+    "_links": {
+      "self": [
+        {
+          "href": "http://testurl.com/wp-json/wc/v3/products/65/variations/69"
+        }
+      ],
+      "collection": [
+        {
+          "href": "http://testurl.com/wp-json/wc/v3/products/65/variations"
+        }
+      ],
+      "up": [
+        {
+          "href": "http://testurl.com/wp-json/wc/v3/products/65"
+        }
+      ]
+    }
+  },
+  {
+    "id": 68,
+    "date_created": "2020-04-15T13:28:24",
+    "date_created_gmt": "2020-04-15T13:28:24",
+    "date_modified": "2020-04-16T09:02:10",
+    "date_modified_gmt": "2020-04-16T09:02:10",
+    "description": "",
+    "permalink": "http://testurl.com/product/t-shirt-red/?attribute_pa_color=yellow",
+    "sku": "woo-tshirt-red",
+    "price": "13",
+    "regular_price": "13",
+    "sale_price": "",
+    "date_on_sale_from": null,
+    "date_on_sale_from_gmt": null,
+    "date_on_sale_to": null,
+    "date_on_sale_to_gmt": null,
+    "on_sale": false,
+    "status": "publish",
+    "purchasable": true,
+    "virtual": false,
+    "downloadable": false,
+    "downloads": [],
+    "download_limit": -1,
+    "download_expiry": -1,
+    "tax_status": "taxable",
+    "tax_class": "my-rate",
+    "manage_stock": true,
+    "stock_quantity": 4,
+    "stock_status": "instock",
+    "backorders": "no",
+    "backorders_allowed": false,
+    "backordered": false,
+    "weight": "",
+    "dimensions": {
+      "length": "",
+      "width": "",
+      "height": ""
+    },
+    "shipping_class": "",
+    "shipping_class_id": 0,
+    "image": {
+      "id": 43,
+      "date_created": "2020-04-15T10:54:42",
+      "date_created_gmt": "2020-04-15T10:54:42",
+      "date_modified": "2020-04-15T10:54:42",
+      "date_modified_gmt": "2020-04-15T10:54:42",
+      "src": "http://testurl.com/wp-content/uploads/2020/04/tshirt-2.jpg",
+      "name": "tshirt-2.jpg",
+      "alt": ""
+    },
+    "attributes": [
+      {
+        "id": 1,
+        "name": "Color",
+        "option": "Yellow"
+      }
+    ],
+    "menu_order": 1,
+    "meta_data": [],
+    "_links": {
+      "self": [
+        {
+          "href": "http://testurl.com/wp-json/wc/v3/products/65/variations/68"
+        }
+      ],
+      "collection": [
+        {
+          "href": "http://testurl.com/wp-json/wc/v3/products/65/variations"
+        }
+      ],
+      "up": [
+        {
+          "href": "http://testurl.com/wp-json/wc/v3/products/65"
+        }
+      ]
+    }
+  },
+  {
+    "id": 67,
+    "date_created": "2020-04-15T13:28:21",
+    "date_created_gmt": "2020-04-15T13:28:21",
+    "date_modified": "2020-04-15T13:51:15",
+    "date_modified_gmt": "2020-04-15T13:51:15",
+    "description": "",
+    "permalink": "http://testurl.com/product/t-shirt-red/?attribute_pa_color=blue",
+    "sku": "woo-tshirt-red",
+    "price": "13",
+    "regular_price": "13",
+    "sale_price": "",
+    "date_on_sale_from": null,
+    "date_on_sale_from_gmt": null,
+    "date_on_sale_to": null,
+    "date_on_sale_to_gmt": null,
+    "on_sale": false,
+    "status": "publish",
+    "purchasable": true,
+    "virtual": false,
+    "downloadable": false,
+    "downloads": [],
+    "download_limit": -1,
+    "download_expiry": -1,
+    "tax_status": "taxable",
+    "tax_class": "my-rate",
+    "manage_stock": "parent",
+    "stock_quantity": 11,
+    "stock_status": "instock",
+    "backorders": "no",
+    "backorders_allowed": false,
+    "backordered": false,
+    "weight": "",
+    "dimensions": {
+      "length": "",
+      "width": "",
+      "height": ""
+    },
+    "shipping_class": "",
+    "shipping_class_id": 0,
+    "image": {
+      "id": 43,
+      "date_created": "2020-04-15T10:54:42",
+      "date_created_gmt": "2020-04-15T10:54:42",
+      "date_modified": "2020-04-15T10:54:42",
+      "date_modified_gmt": "2020-04-15T10:54:42",
+      "src": "http://testurl.com/wp-content/uploads/2020/04/tshirt-2.jpg",
+      "name": "tshirt-2.jpg",
+      "alt": ""
+    },
+    "attributes": [
+      {
+        "id": 1,
+        "name": "Color",
+        "option": "Blue"
+      }
+    ],
+    "menu_order": 2,
+    "meta_data": [],
+    "_links": {
+      "self": [
+        {
+          "href": "http://testurl.com/wp-json/wc/v3/products/65/variations/67"
+        }
+      ],
+      "collection": [
+        {
+          "href": "http://testurl.com/wp-json/wc/v3/products/65/variations"
+        }
+      ],
+      "up": [
+        {
+          "href": "http://testurl.com/wp-json/wc/v3/products/65"
+        }
+      ]
+    }
+  },
+  {
+    "id": 66,
+    "date_created": "2020-04-15T12:54:25",
+    "date_created_gmt": "2020-04-15T12:54:25",
+    "date_modified": "2020-04-15T13:51:15",
+    "date_modified_gmt": "2020-04-15T13:51:15",
+    "description": "",
+    "permalink": "http://testurl.com/product/t-shirt-red/?attribute_pa_color=green",
+    "sku": "woo-tshirt-red",
+    "price": "14",
+    "regular_price": "14",
+    "sale_price": "",
+    "date_on_sale_from": null,
+    "date_on_sale_from_gmt": null,
+    "date_on_sale_to": null,
+    "date_on_sale_to_gmt": null,
+    "on_sale": false,
+    "status": "publish",
+    "purchasable": true,
+    "virtual": false,
+    "downloadable": false,
+    "downloads": [],
+    "download_limit": -1,
+    "download_expiry": -1,
+    "tax_status": "taxable",
+    "tax_class": "my-rate",
+    "manage_stock": "parent",
+    "stock_quantity": 11,
+    "stock_status": "instock",
+    "backorders": "no",
+    "backorders_allowed": false,
+    "backordered": false,
+    "weight": "",
+    "dimensions": {
+      "length": "",
+      "width": "",
+      "height": ""
+    },
+    "shipping_class": "",
+    "shipping_class_id": 0,
+    "image": {
+      "id": 43,
+      "date_created": "2020-04-15T10:54:42",
+      "date_created_gmt": "2020-04-15T10:54:42",
+      "date_modified": "2020-04-15T10:54:42",
+      "date_modified_gmt": "2020-04-15T10:54:42",
+      "src": "http://testurl.com/wp-content/uploads/2020/04/tshirt-2.jpg",
+      "name": "tshirt-2.jpg",
+      "alt": ""
+    },
+    "attributes": [
+      {
+        "id": 1,
+        "name": "Color",
+        "option": "Green"
+      }
+    ],
+    "menu_order": 4,
+    "meta_data": [],
+    "_links": {
+      "self": [
+        {
+          "href": "http://testurl.com/wp-json/wc/v3/products/65/variations/66"
+        }
+      ],
+      "collection": [
+        {
+          "href": "http://testurl.com/wp-json/wc/v3/products/65/variations"
+        }
+      ],
+      "up": [
+        {
+          "href": "http://testurl.com/wp-json/wc/v3/products/65"
+        }
+      ]
+    }
+  }
+]
