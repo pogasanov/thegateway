@@ -163,8 +163,13 @@ class Prestashop:
         else:
             combination = None
 
+        if "images" in associations:
+            images = associations["images"]
+        else:
+            images = data["associations"]["images"]
+
         try:
-            image_ids = self._ids_to_list(associations["images"])
+            image_ids = self._ids_to_list(images)
         except KeyError:
             image_ids = tuple()
         images = [self.download_image(product_id, image_id) for image_id in image_ids]

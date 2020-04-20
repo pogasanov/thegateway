@@ -250,6 +250,17 @@ class PrestashopTest(TestCase):
         product_variants = self.importer.fetch_single_product(1)
         self.assertTrue(all(map(lambda x: x.vat_percent == 23, product_variants)))
 
+    def test_get_images_in_variant_base_product(self):
+        responses.replace(
+            responses.GET,
+            f"{self.BASE_URL}/api/combinations/1",
+            json=PRESTASHOP_COMBINATION_1_WITHOUT_IMAGES,
+            status=200,
+            match_querystring=False,
+        )
+        products = list(self.importer.build_products())
+        self.assertEqual(len(products[0][0].images), 2)
+
     def test_get_product_id_and_combination_id_from_sku(self):
         parameters = (("1:1", "1", "1"), ("1:", "1", ""))
         for sku, expected_product_id, expected_combination_id in parameters:
