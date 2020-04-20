@@ -84,7 +84,7 @@ class Shoper:
         return categories
 
     def get_product_data(self, data: Dict, option: str = "", options_count: int = 1) -> Product:
-        images = [self.get_image(data)]
+        images = [self.get_image(data)] if data.get("main_image") else []
 
         # get values for variants
         stock = decimal.Decimal(data.get("stock").get("stock"))
@@ -105,7 +105,7 @@ class Shoper:
             description=translation.get("description"),
             sku=sku,
             description_short=translation.get("short_description"),
-            variant_data={"size": option} if option else dict(),
+            variant_data={"size": str(option)} if option else dict(),
             images=images,
             vat_percent=self.taxes.get(data.get("tax_id")),
         )
