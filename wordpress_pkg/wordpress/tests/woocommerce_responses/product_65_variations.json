@@ -306,5 +306,82 @@
         }
       ]
     }
+  },
+  {
+    "id": 67,
+    "date_created": "2020-04-15T12:54:25",
+    "date_created_gmt": "2020-04-15T12:54:25",
+    "date_modified": "2020-04-15T13:51:15",
+    "date_modified_gmt": "2020-04-15T13:51:15",
+    "description": "",
+    "permalink": "http://testurl.com/product/t-shirt-red/?attribute_pa_color=green",
+    "sku": "woo-test-red",
+    "price": "14",
+    "regular_price": "14",
+    "sale_price": "",
+    "date_on_sale_from": null,
+    "date_on_sale_from_gmt": null,
+    "date_on_sale_to": null,
+    "date_on_sale_to_gmt": null,
+    "on_sale": false,
+    "status": "draft",
+    "purchasable": true,
+    "virtual": false,
+    "downloadable": false,
+    "downloads": [],
+    "download_limit": -1,
+    "download_expiry": -1,
+    "tax_status": "taxable",
+    "tax_class": "my-rate",
+    "manage_stock": "parent",
+    "stock_quantity": 11,
+    "stock_status": "instock",
+    "backorders": "no",
+    "backorders_allowed": false,
+    "backordered": false,
+    "weight": "",
+    "dimensions": {
+      "length": "",
+      "width": "",
+      "height": ""
+    },
+    "shipping_class": "",
+    "shipping_class_id": 0,
+    "image": {
+      "id": 43,
+      "date_created": "2020-04-15T10:54:42",
+      "date_created_gmt": "2020-04-15T10:54:42",
+      "date_modified": "2020-04-15T10:54:42",
+      "date_modified_gmt": "2020-04-15T10:54:42",
+      "src": "http://testurl.com/wp-content/uploads/2020/04/tshirt-2.jpg",
+      "name": "tshirt-2.jpg",
+      "alt": ""
+    },
+    "attributes": [
+      {
+        "id": 1,
+        "name": "Color",
+        "option": "Green"
+      }
+    ],
+    "menu_order": 4,
+    "meta_data": [],
+    "_links": {
+      "self": [
+        {
+          "href": "http://testurl.com/wp-json/wc/v3/products/65/variations/66"
+        }
+      ],
+      "collection": [
+        {
+          "href": "http://testurl.com/wp-json/wc/v3/products/65/variations"
+        }
+      ],
+      "up": [
+        {
+          "href": "http://testurl.com/wp-json/wc/v3/products/65"
+        }
+      ]
+    }
   }
 ]

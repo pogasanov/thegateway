@@ -22,19 +22,24 @@ class WoocommerceWordPress:
 
     def __init__(self, consumer_key: str, consumer_secret: str, base_url: str):
         self.wcapi = API(url=base_url, consumer_key=consumer_key, consumer_secret=consumer_secret)
-        self.is_price_with_tax = None
+        self.is_price_with_tax = True
         self.taxes = defaultdict(lambda: self.DEFAULT_TAX)
 
     def _set_price_options(self):
+        """
+        Fetches settings from API and checks if prices include taxes
+        assume by default that prices includes them
+        """
         tax_options = self.wcapi.get("settings/tax").json()
         for option_entry in tax_options:
             if option_entry["id"] == "woocommerce_prices_include_tax":
                 self.is_price_with_tax = option_entry["value"] == "yes"
                 return
 
-        self.is_price_with_tax = True
-
     def _setup_taxes(self):
+        """
+        Fetch and save tax classes used in shop
+        """
         tax_classes = self.wcapi.get("taxes/classes")
         for tax_class_entry in tax_classes.json():
             tax_class = tax_class_entry["slug"]
@@ -48,10 +53,11 @@ class WoocommerceWordPress:
                 group = tax_grouped_by_priority[priority]
                 tax_rate = 0
                 for tax_entry in group:
+                    # if tax is set for PL, we stop searching in this priority group
                     if tax_entry["country"] == self.TAX_COUNTRY_CODE:
                         tax_rate = tax_entry["rate"]
                         break
-
+                    # otherwise we take first in the group that is not set for any country
                     if tax_entry["country"] == "" and tax_rate == 0:
                         tax_rate = tax_entry["rate"]
 
@@ -66,7 +72,10 @@ class WoocommerceWordPress:
         response = self.wcapi.get("products", params={"page": page})
         return response.json()
 
-    def _get_vat(self, api_product: dict) -> int:
+    def _get_tax(self, api_product: dict) -> float:
+        """
+        Get tax based on "tax class"
+        """
         return self.taxes[api_product["tax_class"]]
 
     def _set_price_and_vat(self, gw_product: Product, api_product: dict):
@@ -154,6 +163,9 @@ class WoocommerceWordPress:
         return 0
 
     def _convert_simple_api_product(self, api_product: dict) -> List[Product]:
+        """
+        Convert API product of type "simple" to GW product
+        """
         gw_product = Product("", 0, 0)
         gw_product.name = api_product["name"]
         gw_product.description = api_product["description"]
@@ -185,6 +197,9 @@ class WoocommerceWordPress:
         return True
 
     def _convert_api_product_to_gw_products(self, api_product: dict) -> List[Product]:
+        """
+        Convert API products to gateway products model
+        """
         if api_product["type"] == "simple":
             return self._convert_simple_api_product(api_product)
 

@@ -22,13 +22,17 @@ API_URLS = {
 }
 
 
-def get_json_data_from_file(file_name):
-    with open(os.path.join(CURRENT_DIRECTORY, "woocommerce_responses", file_name)) as json_file:
-        return json_file.read()
+def get_json_data_from_file(file_name: str) -> str:
+    try:
+        with open(os.path.join(CURRENT_DIRECTORY, "woocommerce_responses", file_name)) as json_file:
+            return json_file.read()
+    except FileNotFoundError:
+        return ""
 
 
 def check_credentials(request):
     consumer_key = None
+    page = request.params.get("page", 1)
     for p_key, p_val in request.params.items():
         if "consumer_key" in p_key:
             consumer_key = p_val
@@ -36,7 +40,10 @@ def check_credentials(request):
     headers = {"content-type": "application/json"}
 
     if consumer_key == CONSUMER_KEY:
-        return 200, headers, get_json_data_from_file("products.json")
+        json_data = get_json_data_from_file(f"products_page_{page}.json")
+        if not json_data:
+            json_data = "[]"
+        return 200, headers, json_data
 
     return 401, headers, get_json_data_from_file("invalid_credentials.json")
 
@@ -106,8 +113,7 @@ class WordpressWoocommerceTest(TestCase):
         importer = WoocommerceWordPress(
             base_url=BASE_URL, consumer_key="invalid consumer key", consumer_secret="invalid consumer secret"
         )
-        products = list(importer.get_products())
-        self.assertEqual(0, len(products))
+        self.assertFalse(importer._is_connection_established())
 
     def test_set_price_options(self):
         self.importer._set_price_options()
@@ -124,7 +130,7 @@ class WordpressWoocommerceTest(TestCase):
         """
         Test fetching products (included price is read from json response)
         """
-        product_json = json.loads(get_json_data_from_file("products.json"))
+        product_json = json.loads(get_json_data_from_file("products_page_1.json"))
         products = list(self.importer.get_products())
 
         products_names = []

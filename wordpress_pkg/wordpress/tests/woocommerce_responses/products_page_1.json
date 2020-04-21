@@ -37,7 +37,7 @@
     "tax_class": "",
     "manage_stock": false,
     "stock_quantity": null,
-    "stock_status": "instock",
+    "stock_status": "onbackorder",
     "backorders": "no",
     "backorders_allowed": false,
     "backordered": false,
