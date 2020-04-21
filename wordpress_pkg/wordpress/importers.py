@@ -177,6 +177,7 @@ class WoocommerceWordPress:
         gw_product.sku = api_product["sku"]
         gw_product.images_urls = self._get_images_urls(api_product)
         gw_product.variant_data = self._get_variants(api_product)
+        gw_product.stock = self._get_stock(api_product)
         self._set_price_and_vat(gw_product, api_product)
         return [gw_product]
 
