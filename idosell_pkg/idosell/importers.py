@@ -2,6 +2,7 @@ import json
 import logging
 import xml.etree.ElementTree as ET
 from datetime import date
+from decimal import Decimal
 from hashlib import sha1
 from typing import List, Iterator
 
@@ -25,7 +26,7 @@ class IdoSell:
     it not always contains size of product as the name suggests
     """
     GUARANTEED_VARIANT_TAG = "size"
-    GW_PRODUCT_UNKNOWN_QUANTITY = 100001
+    GW_PRODUCT_UNKNOWN_QUANTITY = Decimal("100001")
 
     def __init__(self, login: str, password: str, base_url: str):
         self.login = login
@@ -116,8 +117,8 @@ class IdoSell:
         """
         Get variants from sizes tag
         name: str
-        price: float
-        stock: str
+        price: Decimal
+        stock: Decimal
         """
         sizes = []
         xml_sizes = xml_product.findall("./sizes/size")
@@ -128,20 +129,20 @@ class IdoSell:
             else:
                 size["name"] = xml_variant.attrib["panel_name"]
 
-            size["price"] = float(xml_variant.find("./price").attrib["gross"])
+            size["price"] = Decimal(xml_variant.find("./price").attrib["gross"])
             stock_availability = xml_variant.attrib["available"]
             if stock_availability == "unavailable":
-                stock = 0
+                stock = Decimal("0")
             else:
                 xml_stocks = xml_variant.findall("./stock")
-                stock = 0
+                stock = Decimal("0")
                 for xml_stock in xml_stocks:
                     if xml_stock.attrib["available_stock_quantity"] == self.STOCK_UNKNOWN_AVAILABLE_QUANTITY:
                         # special case, not given information how many products available
                         # needs to be handled in the future
                         stock = self.GW_PRODUCT_UNKNOWN_QUANTITY
                         break
-                    stock += int(xml_stock.attrib["available_stock_quantity"])
+                    stock += Decimal(xml_stock.attrib["available_stock_quantity"])
 
             size["stock"] = stock
             sizes.append(size)
