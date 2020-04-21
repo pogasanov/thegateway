@@ -10,3 +10,5 @@ max-line-length=120
 
 [SIMILARITIES]
 ignore-imports=yes
+min-similarity-lines=6
+# because of gateway creation in all runners

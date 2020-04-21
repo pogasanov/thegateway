@@ -32,3 +32,4 @@ class Product:
     images: List[Image] = field(default_factory=list)
     images_urls: List[str] = field(default_factory=list)
     variant_data: dict = field(default_factory=dict)
+    for_sale: bool = True
