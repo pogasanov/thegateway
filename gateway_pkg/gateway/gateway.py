@@ -25,6 +25,7 @@ class Gateway:
         self.image_prefix = image_url_prefix
         self.endpoints = self._generate_endpoints(self.base_url, self.shop_id)
         self.session = requests.Session()
+        self.session.mount("https://", HTTPAdapter(max_retries=Retry(total=5, backoff_factor=0.5)))
         self.session.headers.update({"Authorization": f"Bearer {self._build_token(secret)}"})
         self.tags_in_db = None
 
@@ -111,7 +112,7 @@ class Gateway:
 
         payloads = list()
         for product in product_variants:
-            payload = {"archived": False, "for_sale": True}
+            payload = {"archived": False, "for_sale": product.for_sale}
             if product.images_urls:
                 images = [self.upload_public_image(image_url) for image_url in product.images_urls]
             else:
