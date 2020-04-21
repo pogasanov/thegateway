@@ -1,16 +1,15 @@
 import logging
 from collections import defaultdict
 from typing import List, Iterator
-
-from gateway import Product
 from woocommerce import API
 
-CONSUMER_KEY = "ck_7311e697cff297153143761909b9127188874571"
-CONSUMER_SECRET = "cs_26ffecf428f177897fa87afb5b758fd9cb10c8d2"
-BASE_URL = "http://a41bcc60.ngrok.io"
+from gateway import Product
+
+# pylint: disable=C0103
 logger = logging.getLogger(__name__)
 
 
+# pylint: disable=R0903
 class WoocommerceWordPress:
     GW_PRODUCT_UNKNOWN_QUANTITY = 100001
     STOCK_AVAILABLE = "instock"
@@ -45,7 +44,7 @@ class WoocommerceWordPress:
             tax_class = tax_class_entry["slug"]
             self.taxes[tax_class] = 0
             class_taxes = self.wcapi.get("taxes", params={"class": tax_class, "orderby": "id"}).json()
-            tax_grouped_by_priority = defaultdict(lambda: list())
+            tax_grouped_by_priority = defaultdict(list)
             for tax_entry in class_taxes:
                 tax_grouped_by_priority[tax_entry["priority"]].append(tax_entry)
 
@@ -129,6 +128,7 @@ class WoocommerceWordPress:
 
         return gw_products
 
+    # pylint: disable=R0201
     def _get_variants(self, api_product: dict) -> dict:
         api_variants = api_product["attributes"]
         product_variants = dict()
@@ -144,23 +144,27 @@ class WoocommerceWordPress:
 
         return product_variants
 
+    # pylint: disable=R0201
     def _get_images_urls(self, api_product: dict) -> List[str]:
         return [image_record["src"] for image_record in api_product["images"]]
 
+    # pylint: disable=R0201
     def _get_categories(self, api_product: dict) -> List[str]:
         return [cat_record["name"] for cat_record in api_product["categories"]]
 
     def _get_stock(self, api_product: dict) -> int:
         stock_status = api_product["stock_status"]
+        stock = 0
         if stock_status == self.STOCK_AVAILABLE:
             if api_product["stock_quantity"] is self.STOCK_UNKNOWN_AVAILABLE_QUANTITY:
-                return self.GW_PRODUCT_UNKNOWN_QUANTITY
-            return api_product["stock_quantity"]
+                stock = self.GW_PRODUCT_UNKNOWN_QUANTITY
+            else:
+                stock = api_product["stock_quantity"]
         elif stock_status == self.STOCK_ON_BACKORDER:
-            return self.GW_PRODUCT_UNKNOWN_QUANTITY
+            stock = self.GW_PRODUCT_UNKNOWN_QUANTITY
 
         # stock_status == outofstock
-        return 0
+        return stock
 
     def _convert_simple_api_product(self, api_product: dict) -> List[Product]:
         """
@@ -206,6 +210,8 @@ class WoocommerceWordPress:
         if api_product["type"] == "variable":
             return self._convert_variable_api_product(api_product)
 
+        return []
+
     def _is_api_product_valid(self, api_product) -> bool:
         return all(
             [
@@ -231,3 +237,5 @@ class WoocommerceWordPress:
                     continue
 
                 yield self._convert_api_product_to_gw_products(api_product)
+
+        return []
