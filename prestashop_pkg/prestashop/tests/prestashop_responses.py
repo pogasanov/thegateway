@@ -222,6 +222,30 @@ PRESTASHOP_COMBINATION_1 = {
         "associations": {"product_option_values": [{"id": "1"}, {"id": "2"}], "images": [{"id": "2"}],},
     }
 }
+PRESTASHOP_COMBINATION_1_WITHOUT_IMAGES = {
+    "combination": {
+        "id": 1,
+        "id_product": "1",
+        "location": "",
+        "ean13": "",
+        "isbn": "",
+        "upc": "",
+        "quantity": "300",
+        "reference": "demo_1",
+        "supplier_reference": "",
+        "wholesale_price": "0.000000",
+        "price": "0.000000",
+        "ecotax": "0.000000",
+        "weight": "0.000000",
+        "unit_price_impact": "0.000000",
+        "minimal_quantity": "1",
+        "low_stock_threshold": None,
+        "low_stock_alert": "0",
+        "default_on": "1",
+        "available_date": "0000-00-00",
+        "associations": {"product_option_values": [{"id": "1"}, {"id": "2"}],},
+    }
+}
 PRESTASHOP_PRODUCT_OPTION_VALUE_1 = {
     "product_option_value": {"id": 1, "id_attribute_group": "1", "color": "", "position": "0", "name": "S",}
 }

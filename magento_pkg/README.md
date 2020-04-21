@@ -32,7 +32,7 @@ pip install ./gateway_pkg ./magento_pkg
 
 ### Magento
 
-On ubuntu 19.10, elasticshop docker container was throwing error `Invalid kernel settings. Elasticsearch requires at least: vm.max_map_count = 262144`.  
+On ubuntu 19.10, elasticsearch docker container was throwing error `Invalid kernel settings. Elasticsearch requires at least: vm.max_map_count = 262144`.  
 To fix this, run `sudo sysctl -w vm.max_map_count=262144`
 
 Register on magento marketplace - https://marketplace.magento.com/ It will be required to install sample data. Follow with https://devdocs.magento.com/guides/v2.3/install-gde/prereq/connect-auth.html
@@ -52,6 +52,14 @@ Admin username:
     ```
 4. Make sure http://127.0.0.1 opens with dummy data
 5. Generate ACCESS_TOKEN, following https://devdocs.magento.com/guides/v2.3/get-started/authentication/gs-authentication-token.html#integration-tokens Follow **integration token** generation and store **ACCESS TOKEN** as `MAGENTO_API_ACCESS_TOKEN` environment variable.
+
+#### Elasticsearch
+
+On ubuntu 19.10, elasticsearch was not allowing to update stock (or product data) for internal reasons. Solution is to turn it off in magento settings.
+
+Disable elasticsearch using following guide - https://devdocs.magento.com/guides/v2.3/config-guide/elasticsearch/configure-magento.html
+
+**Search engine**: **mysql**
 
 ## Running
 
