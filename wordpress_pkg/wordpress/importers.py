@@ -59,27 +59,22 @@ class WoocommerceWordPress:
 
         self.taxes[self.DEFAULT_TAX_CLASS] = self.taxes["standard"]
 
-    def _fetch_products_from_api(self) -> List[dict]:
-        response = self.wcapi.get("products")
-        if response.status_code == 401:
-            logger.error("Invalid credentials (code 401)")
-            return []
-
-        if response.status_code == 404:
-            logger.error("Invalid BASE_URL or permalinks (https://stackoverflow.com/a/46326542)")
-            return []
-
-        if response.status_code != 200:
-            logger.error("Error occurred (code %s)", response.status_code)
-            return []
-
+    def _fetch_products_from_api(self, page=1) -> List[dict]:
+        """
+        Fetch products from API
+        """
+        response = self.wcapi.get("products", params={"page": page})
         return response.json()
 
     def _get_vat(self, api_product: dict) -> int:
         return self.taxes[api_product["tax_class"]]
 
     def _set_price_and_vat(self, gw_product: Product, api_product: dict):
-        vat = self._get_vat(api_product)
+        """
+        Set tax and price for product
+        If the price does not include tax, add it
+        """
+        vat = self._get_tax(api_product)
         price = float(api_product["price"])
         if not self.is_price_with_tax:
             price += price * (vat / 100)
@@ -88,6 +83,9 @@ class WoocommerceWordPress:
         gw_product.vat_percent = vat
 
     def _convert_variable_api_product(self, api_product: dict) -> List[Product]:
+        """
+        Convert API product of type "variable" to set of GW products
+        """
         api_product_variations = self.wcapi.get(f"products/{api_product['id']}/variations").json()
         gw_products = []
         product_stock = self._get_stock(api_product)
@@ -98,18 +96,23 @@ class WoocommerceWordPress:
             gw_product = Product("", 0, 0)
             gw_product.name = api_product["name"]
             gw_product.sku = api_product_variation["sku"]
+
             variant_description = api_product_variation["description"]
+            if not variant_description:
+                variant_description = api_product["description"]
+            gw_product.description = variant_description
+
             variant_stock = self._get_stock(api_product_variation)
             if variant_stock == self.GW_PRODUCT_UNKNOWN_QUANTITY:
                 variant_stock = product_stock
-
             gw_product.stock = variant_stock
-            if not variant_description:
-                variant_description = api_product["description"]
 
-            gw_product.description = variant_description
             gw_product.description_short = api_product["short_description"]
-            gw_product.images = self._get_images_urls(api_product)
+            if api_product_variation["image"]:
+                gw_product.images_urls = [api_product_variation["image"]["src"]]
+            else:
+                gw_product.images_urls = self._get_images_urls(api_product)
+
             gw_product.variant_data = self._get_variants(api_product_variation)
             self._set_price_and_vat(gw_product, api_product_variation)
 
@@ -156,10 +159,30 @@ class WoocommerceWordPress:
         gw_product.description = api_product["description"]
         gw_product.description_short = api_product["short_description"]
         gw_product.sku = api_product["sku"]
-        gw_product.images = self._get_images_urls(api_product)
+        gw_product.images_urls = self._get_images_urls(api_product)
         gw_product.variant_data = self._get_variants(api_product)
         self._set_price_and_vat(gw_product, api_product)
         return [gw_product]
+
+    def _is_connection_established(self) -> bool:
+        """
+        Make a request to API in order to check if credentials are valid
+        """
+        response = self.wcapi.get("products", params={"per_page": 1, "page": 1})
+
+        if response.status_code == 401:
+            logger.error("Invalid credentials (code 401)")
+            return False
+
+        if response.status_code == 404:
+            logger.error("Invalid BASE_URL or permalinks (https://stackoverflow.com/a/46326542)")
+            return False
+
+        if response.status_code != 200:
+            logger.error("Error occurred (code %s)", response.status_code)
+            return False
+
+        return True
 
     def _convert_api_product_to_gw_products(self, api_product: dict) -> List[Product]:
         if api_product["type"] == "simple":
@@ -178,15 +201,18 @@ class WoocommerceWordPress:
         )
 
     def get_products(self) -> Iterator[List[Product]]:
-        api_products = self._fetch_products_from_api()
-        if not api_products:
+        if not self._is_connection_established():
             return []
 
         self._setup_taxes()
         self._set_price_options()
 
-        for api_product in api_products:
-            if not self._is_api_product_valid(api_product):
-                continue
+        for page in range(1, 1000):
+            api_products = self._fetch_products_from_api(page=page)
+            if not api_products:
+                return []
+            for api_product in api_products:
+                if not self._is_api_product_valid(api_product):
+                    continue
 
-            yield self._convert_api_product_to_gw_products(api_product)
+                yield self._convert_api_product_to_gw_products(api_product)
