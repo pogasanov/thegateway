@@ -1,0 +1,24 @@
+[
+  {
+    "slug": "standard",
+    "name": "Standard rate",
+    "_links": {
+      "collection": [
+        {
+          "href": "http://testurl.com/wp-json/wc/v3/taxes/classes"
+        }
+      ]
+    }
+  },
+  {
+    "slug": "my-rate",
+    "name": "my-rate",
+    "_links": {
+      "collection": [
+        {
+          "href": "http://testurl.com/wp-json/wc/v3/taxes/classes"
+        }
+      ]
+    }
+  }
+]
