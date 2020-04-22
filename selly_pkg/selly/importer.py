@@ -147,10 +147,11 @@ class SellyImporter:
         images = self.images[product_id]
         product_images = [self._get_image_url(details, image) for image in images]
         if not variants:
+            price = Decimal(product["price"]) / (Decimal(1) + (Decimal(details["stawka_vat"] / 100)))
             return [
                 Product(
                     name=product["product_name"],
-                    price=product["price"],
+                    price=price,
                     vat_percent=details["stawka_vat"],
                     stock=Decimal(details["liczba_egzemplarzy"] if details["liczba_egzemplarzy"] else 0),
                     description=md(details["opis"]),
@@ -169,10 +170,11 @@ class SellyImporter:
             else:
                 variants_images = group_by(images, "zdjecie_nr", False)
                 variant_images = [self._get_image_url(details, variants_images[variant["zdjecie_nr"]])]
+            price = Decimal(variant["wariant_cena"]) / (Decimal(1) + (Decimal(variant["stawka_vat"] / 100)))
             output_variants.append(
                 Product(
                     name=product["product_name"],
-                    price=variant["wariant_cena"],
+                    price=price,
                     vat_percent=variant["stawka_vat"],
                     stock=Decimal(variant["ilosc"] if variant["ilosc"] else 0),
                     description=md(details["opis"]),
