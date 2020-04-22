@@ -8,7 +8,6 @@ from typing import List, Iterator
 
 import requests
 from gateway.models import Product
-from gateway.utils import download_image
 
 # pylint: disable=C0103
 logger = logging.getLogger(__name__)
@@ -159,7 +158,7 @@ class IdoSell:
         product_template["vat_percent"] = fetched_product["vat"]
         product_template["description_short"] = fetched_product["brief"]
         product_template["sku"] = fetched_product["sku"]
-        product_template["images"] = [download_image(image_url) for image_url in fetched_product["image_urls"]]
+        product_template["images_urls"] = fetched_product["image_urls"]
         return self._create_gateway_products_from_variants(product_template, fetched_product["variant_data"])
 
     def _create_gateway_products_from_variants(self, product_template: dict, variants: dict) -> List[Product]:
@@ -174,7 +173,7 @@ class IdoSell:
             )
             gw_prod.description_short = product_template["description_short"]
             gw_prod.sku = product_template["sku"]
-            gw_prod.images = product_template["images"]
+            gw_prod.images_urls = product_template["images_urls"]
             gw_prod.stock = size["stock"]
             gw_prod.variant_data = dict()
             gw_prod.variant_data["size"] = size["name"]
