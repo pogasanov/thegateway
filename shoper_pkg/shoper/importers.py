@@ -5,15 +5,13 @@ from json import JSONDecodeError
 from typing import List, Dict, Generator
 
 import requests
+from requests import Response
 
 from gateway.models import Product, Image
 from gateway.utils import download_image
 
 
-# pylint: disable=invalid-name
-from requests import Response
-
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 
 class Shoper:
@@ -40,7 +38,7 @@ class Shoper:
             return response.json()
         except JSONDecodeError:
             # pylint: disable=logging-format-interpolation
-            logger.fatal(f"{response.status_code}: {response.text}")
+            LOGGER.fatal(f"{response.status_code}: {response.text}")
             raise
 
     def invoke(self, endpoint: str, method: str, output_format: str = None, stream: bool = False) -> Response:
