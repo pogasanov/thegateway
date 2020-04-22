@@ -57,11 +57,10 @@ class Shoper:
             stream=stream,
         )
 
-    def get_image(self, data: Dict) -> Image:
+    def get_image_url(self, data: Dict) -> Image:
         filename = data.get("main_image").get("unic_name")
         image_url = f"{self.api_hostname}/userdata/public/gfx/{filename}.jpg"
-        image = download_image(image_url)
-        return image
+        return image_url
 
     @staticmethod
     def _tax_dict(taxes: List[Dict]) -> Dict:
@@ -84,7 +83,7 @@ class Shoper:
         return categories
 
     def get_product_data(self, data: Dict, option: str = "", options_count: int = 1) -> Product:
-        images = [self.get_image(data)] if data.get("main_image") else []
+        images = [self.get_image_url(data)] if data.get("main_image") else None
 
         # get values for variants
         stock = decimal.Decimal(data.get("stock").get("stock"))
@@ -106,7 +105,7 @@ class Shoper:
             sku=sku,
             description_short=translation.get("short_description"),
             variant_data={"size": str(option)} if option else dict(),
-            images=images,
+            images_urls=images,
             vat_percent=self.taxes.get(data.get("tax_id")),
         )
 
