@@ -15,6 +15,7 @@ class WoocommerceWordPress:
     STOCK_AVAILABLE = "instock"
     STOCK_ON_BACKORDER = "onbackorder"
     STOCK_UNKNOWN_AVAILABLE_QUANTITY = None
+    PRODUCTS_PER_PAGE = 20
     DEFAULT_TAX = 23
     TAX_COUNTRY_CODE = "PL"
     DEFAULT_TAX_CLASS = ""
@@ -64,12 +65,16 @@ class WoocommerceWordPress:
 
         self.taxes[self.DEFAULT_TAX_CLASS] = self.taxes["standard"]
 
-    def _fetch_products_from_api(self, page=1) -> List[dict]:
+    def _fetch_products_from_api(self) -> Iterator[dict]:
         """
         Fetch products from API
         """
-        response = self.wcapi.get("products", params={"page": page})
-        return response.json()
+        for page in range(1, 1000):
+            response = self.wcapi.get("products", params={"page": page, "per_page": self.PRODUCTS_PER_PAGE})
+            api_products = response.json()
+            if not api_products:
+                break
+            yield from api_products
 
     def _get_tax(self, api_product: dict) -> float:
         """
@@ -94,10 +99,9 @@ class WoocommerceWordPress:
         """
         Convert API product of type "variable" to set of GW products
         """
-        api_product_variations = self.wcapi.get(f"products/{api_product['id']}/variations").json()
         gw_products = []
         product_stock = self._get_stock(api_product)
-        for api_product_variation in api_product_variations:
+        for api_product_variation in self._fetch_product_variations(api_product["id"]):
             if not self._is_api_product_valid(api_product_variation):
                 continue
 
@@ -127,6 +131,16 @@ class WoocommerceWordPress:
             gw_products.append(gw_product)
 
         return gw_products
+
+    def _fetch_product_variations(self, product_id: int) -> Iterator[dict]:
+        for page in range(1, 1000):
+            api_product_variations = self.wcapi.get(
+                f"products/{product_id}/variations", params={"page": page, "per_page": self.PRODUCTS_PER_PAGE}
+            ).json()
+            if not api_product_variations:
+                break
+
+            yield from api_product_variations
 
     # pylint: disable=R0201
     def _get_variants(self, api_product: dict) -> dict:
@@ -229,14 +243,10 @@ class WoocommerceWordPress:
         self._setup_taxes()
         self._set_price_options()
 
-        for page in range(1, 1000):
-            api_products = self._fetch_products_from_api(page=page)
-            if not api_products:
-                return []
-            for api_product in api_products:
-                if not self._is_api_product_valid(api_product):
-                    continue
+        for api_product in self._fetch_products_from_api():
+            if not self._is_api_product_valid(api_product):
+                continue
 
-                yield self._convert_api_product_to_gw_products(api_product)
+            yield self._convert_api_product_to_gw_products(api_product)
 
         return []

@@ -66,7 +66,11 @@ def get_product_variations(request):
         return 400, headers, ""
 
     product_id = matched[0]
-    return 200, headers, get_json_data_from_file(f"product_{product_id}_variations.json")
+    page = request.params.get("page", 999)
+    json_products = get_json_data_from_file(f"product_{product_id}_variations_page_{page}.json")
+    if not json_products:
+        json_products = "[]"
+    return 200, headers, json_products
 
 
 class WordpressWoocommerceTest(TestCase):
