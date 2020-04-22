@@ -198,7 +198,9 @@ class IdoSell:
             return []
         xml_root = ET.fromstring(xml_content)
         xml_products = xml_root.findall("./products/product")
-        for xml_product in xml_products:
+        total = len(xml_products)
+        for index, xml_product in enumerate(xml_products, 1):
+            print(f"{index}/{total}")
             product_variants = self._get_product(xml_product)
             yield self._convert_fetched_product_to_gateway_products(product_variants)
 
