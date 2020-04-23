@@ -147,3 +147,22 @@ class ShoperTest(TestCase):
             self.add_single_response(rsp)
             stock = self.importer.get_stock_for_single_product(self.product)
             self.assertEqual(self.product.stock, int(stock))
+
+    def test_get_categories_list(self):
+
+        categories_list = self.importer.get_categories_list()
+        self.assertEqual(
+            set(categories_list),
+            {
+                "Kobiety",
+                "Spódnice",
+                "Spodnie",
+                "Bluzki i tuniki",
+                "Bluzki",
+                "Tuniki",
+                "Mężczyźni",
+                "T-shirt",
+                "Bluzy",
+                "Buty",
+            },
+        )

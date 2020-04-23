@@ -94,10 +94,15 @@ class Shoper:
             for category in categories
         }
 
-    def get_categories(self) -> Dict:
+    def _get_categories(self) -> Dict:
         categories_response = self.get("categories")
         categories = self._categories_dict(categories_response.get("list"))
         return categories
+
+    def get_categories_list(self):
+        categories_response = self.get("categories")
+        categories = categories_response.get("list")
+        return [category.get("translations").get(self.translation_prefix).get("name") for category in categories]
 
     def get_product_data(self, data: Dict, option: str = "", options_count: int = 1) -> Product:
         images = [self.get_image_url(data)] if data.get("main_image") else None
