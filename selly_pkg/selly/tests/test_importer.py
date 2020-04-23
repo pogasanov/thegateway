@@ -41,7 +41,9 @@ class ImporterTests(TestCase):
 
     def assertIsProduct0(self, product: Product):
         self.assertEqual(product.name, PRODUCTS[0]["product_name"])
-        self.assertEqual(product.price, PRODUCTS[0]["price"])
+        self.assertAlmostEqual(
+            product.price * (Decimal(1) + product.vat_percent / Decimal(100)), Decimal(PRODUCTS[0]["price"])
+        )
         self.assertEqual(product.vat_percent, DETAILS[0]["stawka_vat"])
         self.assertEqual(product.stock, Decimal(DETAILS[0]["liczba_egzemplarzy"]))
         self.assertEqual(product.description, md(DETAILS[0]["opis"]))
