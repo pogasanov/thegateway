@@ -1,0 +1,80 @@
+[
+  {
+    "id": 7,
+    "country": "",
+    "state": "",
+    "postcode": "",
+    "city": "",
+    "rate": "15.0000",
+    "name": "Tax",
+    "priority": 1,
+    "compound": false,
+    "shipping": true,
+    "order": 0,
+    "class": "standard",
+    "_links": {
+      "self": [
+        {
+          "href": "http://testurl.com/wp-json/wc/v3/taxes/7"
+        }
+      ],
+      "collection": [
+        {
+          "href": "http://testurl.com/wp-json/wc/v3/taxes"
+        }
+      ]
+    }
+  },
+  {
+    "id": 8,
+    "country": "",
+    "state": "",
+    "postcode": "",
+    "city": "",
+    "rate": "16.0000",
+    "name": "Tax",
+    "priority": 1,
+    "compound": false,
+    "shipping": true,
+    "order": 2,
+    "class": "standard",
+    "_links": {
+      "self": [
+        {
+          "href": "http://testurl.com/wp-json/wc/v3/taxes/8"
+        }
+      ],
+      "collection": [
+        {
+          "href": "http://testurl.com/wp-json/wc/v3/taxes"
+        }
+      ]
+    }
+  },
+  {
+    "id": 12,
+    "country": "PL",
+    "state": "",
+    "postcode": "",
+    "city": "",
+    "rate": "26.0000",
+    "name": "Tax",
+    "priority": 1,
+    "compound": false,
+    "shipping": true,
+    "order": 1,
+    "class": "standard",
+    "_links": {
+      "self": [
+        {
+          "href": "http://testurl.com/wp-json/wc/v3/taxes/12"
+        }
+      ],
+      "collection": [
+        {
+          "href": "http://testurl.com/wp-json/wc/v3/taxes"
+        }
+      ]
+    }
+  }
+]
