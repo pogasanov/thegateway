@@ -4,7 +4,7 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 from gateway.gateway import Gateway
-from importers import Shoper
+from .importers import Shoper
 
 
 def run_import():
