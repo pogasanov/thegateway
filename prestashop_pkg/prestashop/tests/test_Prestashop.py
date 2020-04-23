@@ -30,7 +30,7 @@ class PrestashopTest(TestCase):
             product.description_short,
             "Regular fit, round neckline, short sleeves. Made of extra long staple pima cotton. \r\n",
         )
-        self.assertEqual(product.sku, "1:1")
+        self.assertEqual(product.sku, "1;1;demo_1")
         self.assertEqual(len(product.images), 1)
         for image in product.images:
             content = image.data.read()
@@ -48,7 +48,7 @@ class PrestashopTest(TestCase):
             product.description_short,
             "Regular fit, round neckline, short sleeves. Made of extra long staple pima cotton. \r\n",
         )
-        self.assertEqual(product.sku, "2:1")
+        self.assertEqual(product.sku, "2;1;demo_1")
         self.assertEqual(len(product.images), 1)
 
     def assertIsProduct6(self, product):
@@ -60,7 +60,7 @@ class PrestashopTest(TestCase):
             "The best is yet to come! Start the day off right with a positive thought. 8,2cm diameter / 9,5cm height / 0.43kg. Dishwasher-proof.",
         )
         self.assertEqual(product.description_short, "White Ceramic Mug, 325ml.")
-        self.assertEqual(product.sku, "6:")
+        self.assertEqual(product.sku, "6;demo_11")
 
     def setUp(self):
         responses.start()
@@ -262,7 +262,7 @@ class PrestashopTest(TestCase):
         self.assertEqual(len(products[0][0].images), 2)
 
     def test_get_product_id_and_combination_id_from_sku(self):
-        parameters = (("1:1", "1", "1"), ("1:", "1", ""))
+        parameters = (("1;1;", "1", "1"), ("1;", "1", ""))
         for sku, expected_product_id, expected_combination_id in parameters:
             with self.subTest():
                 product_id, combination_id = self.importer._get_product_id_and_combination_id_from_sku(sku)
@@ -278,8 +278,8 @@ class PrestashopTest(TestCase):
 
     def test_get_stock_level(self):
         parameters = (
-            ("1:1", PRESTASHOP_STOCK_3["stock_available"]["quantity"]),
-            ("6:", PRESTASHOP_STOCK_6["stock_available"]["quantity"]),
+            ("1;1;", PRESTASHOP_STOCK_3["stock_available"]["quantity"]),
+            ("6;", PRESTASHOP_STOCK_6["stock_available"]["quantity"]),
         )
         for sku, expected_stock_level in parameters:
             with self.subTest():
@@ -288,8 +288,8 @@ class PrestashopTest(TestCase):
 
     def test_update_product_stock_level(self):
         parameters = (
-            ("1:1", PRESTASHOP_STOCK_3["stock_available"]["quantity"]),
-            ("6:", PRESTASHOP_STOCK_6["stock_available"]["quantity"]),
+            ("1;1;", PRESTASHOP_STOCK_3["stock_available"]["quantity"]),
+            ("6;", PRESTASHOP_STOCK_6["stock_available"]["quantity"]),
         )
         for sku, starting_stock_level in parameters:
             with self.subTest():

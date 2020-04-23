@@ -106,7 +106,13 @@ class Prestashop:
 
     @staticmethod
     def _get_variant_sku(data, combination):
-        return f"{data['id']}:{combination['id'] if combination else ''}"
+        if combination:
+            variant_sku = combination["reference"]
+            sku = variant_sku if variant_sku else data["reference"]
+        else:
+            sku = data["reference"]
+        variant_id = f"{combination['id']};" if combination else ""
+        return f"{data['id']};{variant_id}{sku}"
 
     @staticmethod
     def _get_variant_price(data, combination):
@@ -218,7 +224,7 @@ class Prestashop:
 
     @staticmethod
     def _get_product_id_and_combination_id_from_sku(sku):
-        return sku.split(":")
+        return sku.split(";")[:2]
 
     @staticmethod
     def _get_stock_level_id(product_data, combination_id):
