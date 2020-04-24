@@ -131,7 +131,7 @@ class IdoSell:
             else:
                 size["name"] = xml_variant.attrib["panel_name"]
 
-            size["price"] = Decimal(xml_variant.find("./price").attrib["gross"])
+            size["price"] = Decimal(xml_variant.find("./price").attrib["net"])
             stock_availability = xml_variant.attrib["available"]
             if stock_availability == "unavailable":
                 stock = Decimal("0")
