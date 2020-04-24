@@ -21,10 +21,11 @@ class WoocommerceWordPress:
     TAX_COUNTRY_CODE = "PL"
     DEFAULT_TAX_CLASS = ""
 
-    def __init__(self, consumer_key: str, consumer_secret: str, base_url: str):
+    def __init__(self, consumer_key: str, consumer_secret: str, base_url: str, category_map: dict):
         self.wcapi = API(url=base_url, consumer_key=consumer_key, consumer_secret=consumer_secret)
         self.is_price_with_tax = True
         self.taxes = defaultdict(lambda: self.DEFAULT_TAX)
+        self.category_map = category_map
 
     def _set_price_options(self):
         """
@@ -36,6 +37,23 @@ class WoocommerceWordPress:
             if option_entry["id"] == "woocommerce_prices_include_tax":
                 self.is_price_with_tax = option_entry["value"] == "yes"
                 return
+
+    def get_categories(self) -> List[str]:
+        """
+        Get list of all categories in the shop
+        """
+        if not self._is_connection_established():
+            return []
+
+        categories = list()
+        for page in range(1, 100):
+            api_categories = self.wcapi.get("products/categories", params={"page": page}).json()
+            if not api_categories:
+                break
+
+            categories.extend(map(lambda c: c["name"], api_categories))
+
+        return categories
 
     def _setup_taxes(self):
         """
@@ -171,7 +189,10 @@ class WoocommerceWordPress:
 
     # pylint: disable=R0201
     def _get_categories(self, api_product: dict) -> List[str]:
-        return [cat_record["name"] for cat_record in api_product["categories"]]
+        """
+        Get categories of api product and convert them to gateway categories
+        """
+        return [self.category_map[cat_record["name"]] for cat_record in api_product["categories"]]
 
     def _get_stock(self, api_product: dict) -> int:
         stock_status = api_product["stock_status"]
