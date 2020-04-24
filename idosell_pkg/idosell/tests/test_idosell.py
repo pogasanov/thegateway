@@ -13,6 +13,7 @@ from .idosell_responses import (
     PRODUCT_XML,
     SUCCESSFUL_AUTHORIZATION_RESPONSE,
     INVALID_AUTHORIZATION_RESPONSE,
+    PRODUCT_XML_WITHOUT_DESCRIPTION,
 )
 
 
@@ -141,3 +142,12 @@ class IdoSellTest(TestCase):
         self.assertEqual(product["variant_data"]["size"][0]["price"], 1518)
         self.assertEqual(product["variant_data"]["size"][0]["name"], "XS")
         self.assertIn("beżowy", product["variant_data"]["kolor"])
+
+    def test_get_product_from_xml_without_short_description(self):
+        importer = IdoSell(**self.IDOSELL_INIT_ARGS)
+        xml_product = ET.fromstring(PRODUCT_XML_WITHOUT_DESCRIPTION)
+        # pylint: disable=W0212
+        product = importer._get_product(xml_product=xml_product)
+
+        self.assertEqual(product["name"], "Triaction Sportowe Etui")
+        self.assertEqual(product["brief"], "")
