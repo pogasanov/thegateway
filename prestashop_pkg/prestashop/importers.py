@@ -4,9 +4,11 @@ from decimal import Decimal
 from typing import List
 
 import requests
+from dicttoxml import dicttoxml
+from simplejson import JSONDecodeError
+
 from gateway.models import Product
 from gateway.utils import download_image
-from simplejson import JSONDecodeError
 
 LOGGER = logging.getLogger(__name__)
 
@@ -39,22 +41,33 @@ class Prestashop:
             for value in product_option_values:
                 self.variants_reverse[value] = name
 
-    def invoke(self, endpoint, method):
+    def invoke(self, endpoint, method, data=None):
         """
         Just a wrapper to expose requests HTTP method calls without passing all the auth etc params every time.
         """
         function = getattr(requests, method)
-        return function(**self._build_requests_parameters(endpoint))
+        return function(**self._build_requests_parameters(endpoint, data))
 
-    def _build_requests_parameters(self, endpoint):
-        return {
+    def _build_requests_parameters(self, endpoint, data=None):
+        payload = {
             "url": f"{self.api_hostname}/api/{endpoint}",
             "auth": (self.api_key, ""),
             "params": {"output_format": "JSON"},
         }
+        if data:
+            payload.update({"data": dicttoxml(data)})
+        return payload
 
     def get(self, endpoint):
         response = self.invoke(endpoint, "get")
+        try:
+            return response.json()
+        except JSONDecodeError:
+            LOGGER.fatal("%s: %s", response.status_code, response.text)
+            raise
+
+    def put(self, endpoint, data):
+        response = self.invoke(endpoint, "put", data)
         try:
             return response.json()
         except JSONDecodeError:
@@ -95,15 +108,18 @@ class Prestashop:
     def _get_variant_sku(data, combination):
         if combination:
             variant_sku = combination["reference"]
-            return variant_sku if variant_sku else data["reference"]
-        return data["reference"]
+            sku = variant_sku if variant_sku else data["reference"]
+        else:
+            sku = data["reference"]
+        variant_id = f"{combination['id']};" if combination else ""
+        return f"{data['id']};{variant_id}{sku}"
 
     @staticmethod
     def _get_variant_price(data, combination):
         if combination:
             variant_price = Decimal(combination["price"])
             return Decimal(variant_price if variant_price and variant_price != 0 else data["price"])
-        return data["price"]
+        return Decimal(data["price"])
 
     def _get_variant_data(self, associations):
         variant_data = dict()
@@ -177,7 +193,7 @@ class Prestashop:
 
     def fetch_single_product(self, product_id) -> List[Product]:
         products = list()
-        data = self.get(f"products/{product_id}")["product"]
+        data = self._get_product_data(product_id)
         associations = data["associations"]
         try:
             variants_ids = self._ids_to_list(associations["combinations"])
@@ -205,6 +221,40 @@ class Prestashop:
     def download_image(self, product_id, image_id):
         image_url = self._build_requests_parameters(f"images/products/{product_id}/{image_id}")
         return download_image(**image_url)
+
+    @staticmethod
+    def _get_product_id_and_combination_id_from_sku(sku):
+        return sku.split(";")[:2]
+
+    @staticmethod
+    def _get_stock_level_id(product_data, combination_id):
+        stock_available_data = product_data["associations"]["stock_availables"]
+        stock_level_mapping = {int(d["id_product_attribute"]): int(d["id"]) for d in stock_available_data}
+        if combination_id:
+            return stock_level_mapping[int(combination_id)]
+        return stock_level_mapping[0]
+
+    def _get_product_data(self, product_id):
+        return self.get(f"products/{product_id}")["product"]
+
+    def _get_stock_level_data(self, stock_level_id):
+        return self.get(f"stock_availables/{stock_level_id}")
+
+    def get_stock_level(self, sku):
+        product_id, combination_id = self._get_product_id_and_combination_id_from_sku(sku)
+        product_data = self._get_product_data(product_id)
+        stock_level_id = self._get_stock_level_id(product_data, combination_id)
+        stock_level_data = self._get_stock_level_data(stock_level_id)
+        return stock_level_data["stock_available"]["quantity"]
+
+    def update_product_stock_level(self, sku, stock_difference: int):
+        product_id, combination_id = self._get_product_id_and_combination_id_from_sku(sku)
+        product_data = self._get_product_data(product_id)
+        stock_level_id = self._get_stock_level_id(product_data, combination_id)
+        stock_level_data = self._get_stock_level_data(stock_level_id)
+        new_stock_level = int(stock_level_data["stock_available"]["quantity"]) + stock_difference
+        stock_level_data["stock_available"]["quantity"] = new_stock_level
+        return self.put(f"stock_availables/{stock_level_id}", data=stock_level_data)
 
 
 def strip_tags(in_str):

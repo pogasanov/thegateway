@@ -74,7 +74,7 @@ class Shoper:
             data=data,
         )
 
-    def get_image_url(self, data: Dict) -> Image:
+    def get_image_url(self, data: Dict) -> str:
         filename = data.get("main_image").get("unic_name")
         image_url = f"{self.api_hostname}/userdata/public/gfx/{filename}.jpg"
         return image_url

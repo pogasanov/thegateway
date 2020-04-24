@@ -5,7 +5,7 @@ services:
     image: mysql:5.7
     volumes:
       - db_data:/var/lib/mysql
-    restart: always
+    restart: on-failure
     ports:
       - "3307:3306"
     hostname: db
@@ -21,7 +21,7 @@ services:
     image: prestashop/prestashop:1.7
     ports:
       - "8080:80"
-    restart: always
+    restart: on-failure
     hostname: prestashop
     environment:
       DB_USER: prestashop

@@ -1,7 +1,8 @@
 from decimal import Decimal
-from unittest import TestCase
+from unittest import TestCase, mock
 
 import responses
+import xmltodict
 from prestashop.importers import Prestashop
 
 from .prestashop_responses import *
@@ -18,9 +19,9 @@ class PrestashopTest(TestCase):
         cls.DUMMY_IMAGE = b"abc"
 
     def assertIsCombination1(self, product):
-        self.assertEqual(product.name, "Hummingbird printed t-shirt")
-        self.assertEqual(product.price, Decimal("23.9"))
-        self.assertEqual(product.stock, 1.0)
+        self.assertEqual(product.name, PRESTASHOP_PRODUCT_1["product"]["name"])
+        self.assertEqual(product.price, Decimal(PRESTASHOP_PRODUCT_1["product"]["price"]))
+        self.assertEqual(product.stock, Decimal(PRESTASHOP_STOCK_3["stock_available"]["quantity"]))
         self.assertEqual(
             product.description,
             "Symbol of lightness and delicacy, the hummingbird evokes curiosity and joy. Studio Design' PolyFaune collection features classic products with colorful patterns, inspired by the traditional japanese origamis. To wear with a chino or jeans. The sublimation textile printing process provides an exceptional color rendering and a color, guaranteed overtime.",
@@ -29,7 +30,7 @@ class PrestashopTest(TestCase):
             product.description_short,
             "Regular fit, round neckline, short sleeves. Made of extra long staple pima cotton. \r\n",
         )
-        self.assertEqual(product.sku, "demo_1")
+        self.assertEqual(product.sku, "1;1;demo_1")
         self.assertEqual(len(product.images), 1)
         for image in product.images:
             content = image.data.read()
@@ -47,8 +48,19 @@ class PrestashopTest(TestCase):
             product.description_short,
             "Regular fit, round neckline, short sleeves. Made of extra long staple pima cotton. \r\n",
         )
-        self.assertEqual(product.sku, "demo_1")
+        self.assertEqual(product.sku, "2;1;demo_1")
         self.assertEqual(len(product.images), 1)
+
+    def assertIsProduct6(self, product):
+        self.assertEqual(product.name, PRESTASHOP_PRODUCT_6["product"]["name"])
+        self.assertEqual(product.price, Decimal(PRESTASHOP_PRODUCT_6["product"]["price"]))
+        self.assertEqual(product.stock, float(PRESTASHOP_STOCK_6["stock_available"]["quantity"]))
+        self.assertEqual(
+            product.description,
+            "The best is yet to come! Start the day off right with a positive thought. 8,2cm diameter / 9,5cm height / 0.43kg. Dishwasher-proof.",
+        )
+        self.assertEqual(product.description_short, "White Ceramic Mug, 325ml.")
+        self.assertEqual(product.sku, "6;demo_11")
 
     def setUp(self):
         responses.start()
@@ -62,13 +74,28 @@ class PrestashopTest(TestCase):
             responses.GET, f"{self.BASE_URL}/api/products/2", json=PRESTASHOP_PRODUCT_2, status=200,
         )
         responses.add(
+            responses.GET, f"{self.BASE_URL}/api/products/6", json=PRESTASHOP_PRODUCT_6, status=200,
+        )
+        responses.add(
             responses.GET, f"{self.BASE_URL}/api/stock_availables/1", json=PRESTASHOP_STOCK_1, status=200,
         )
         responses.add(
             responses.GET, f"{self.BASE_URL}/api/stock_availables/2", json=PRESTASHOP_STOCK_2, status=200,
         )
         responses.add(
+            responses.GET, f"{self.BASE_URL}/api/stock_availables/3", json=PRESTASHOP_STOCK_3, status=200,
+        )
+        responses.add(
+            responses.GET, f"{self.BASE_URL}/api/stock_availables/6", json=PRESTASHOP_STOCK_6, status=200,
+        )
+        responses.add(
             responses.GET, f"{self.BASE_URL}/api/images/products/1", body=PRESTASHOP_IMAGES_1, status=200,
+        )
+        responses.add(
+            responses.GET, f"{self.BASE_URL}/api/images/products/2", body=PRESTASHOP_IMAGES_2, status=200,
+        )
+        responses.add(
+            responses.GET, f"{self.BASE_URL}/api/images/products/6", body=PRESTASHOP_IMAGES_6, status=200,
         )
         responses.add(
             responses.GET, f"{self.BASE_URL}/api/images/products/1/1", body=self.DUMMY_IMAGE, status=200,
@@ -81,6 +108,9 @@ class PrestashopTest(TestCase):
         )
         responses.add(
             responses.GET, f"{self.BASE_URL}/api/images/products/2/2", body=self.DUMMY_IMAGE, status=200,
+        )
+        responses.add(
+            responses.GET, f"{self.BASE_URL}/api/images/products/6/6", body=self.DUMMY_IMAGE, status=200,
         )
         responses.add(
             responses.Response(
@@ -115,7 +145,12 @@ class PrestashopTest(TestCase):
             )
         )
         responses.add(
-            responses.GET, f"{self.BASE_URL}/api/images/products/2", body=PRESTASHOP_IMAGES_2, status=200,
+            responses.Response(
+                method=responses.HEAD,
+                url=f"{self.BASE_URL}/api/images/products/6/6",
+                headers={"Content-Sha1": "19da3ddfdabd2160f136efaff6201f209a5eb304"},
+                content_type="image/jpeg",
+            )
         )
         responses.add(
             responses.GET,
@@ -175,7 +210,7 @@ class PrestashopTest(TestCase):
 
     def test_can_fetch_prestashop_products_ids(self):
         products = self.importer.fetch_products_ids()
-        self.assertEqual(products, [1, 2])
+        self.assertEqual(products, [1, 2, 6])
 
     def test_can_fetch_prestashop_single_product(self):
         ID = 1
@@ -188,9 +223,10 @@ class PrestashopTest(TestCase):
 
     def test_can_build_products_list(self):
         products = list(self.importer.build_products())
-        self.assertEqual(len(products), 2)
+        self.assertEqual(len(products), 3)
         self.assertIsCombination1(products[0][0])
         self.assertIsCombination2(products[1][0])
+        self.assertIsProduct6(products[2][0])
 
     def test_can_download_image(self):
         image_file = self.importer.download_image(1, 1)
@@ -224,3 +260,44 @@ class PrestashopTest(TestCase):
         )
         products = list(self.importer.build_products())
         self.assertEqual(len(products[0][0].images), 2)
+
+    def test_get_product_id_and_combination_id_from_sku(self):
+        parameters = (("1;1;", "1", "1"), ("1;", "1", ""))
+        for sku, expected_product_id, expected_combination_id in parameters:
+            with self.subTest():
+                product_id, combination_id = self.importer._get_product_id_and_combination_id_from_sku(sku)
+                self.assertEqual(product_id, expected_product_id)
+                self.assertEqual(combination_id, expected_combination_id)
+
+    def test_get_stock_level_id(self):
+        parameters = ((PRESTASHOP_PRODUCT_1["product"], 1, 3), (PRESTASHOP_PRODUCT_6["product"], None, 6))
+        for product_data, combination_id, expected_id in parameters:
+            with self.subTest():
+                stock_level_id = self.importer._get_stock_level_id(product_data, combination_id)
+                self.assertEqual(stock_level_id, expected_id)
+
+    def test_get_stock_level(self):
+        parameters = (
+            ("1;1;", PRESTASHOP_STOCK_3["stock_available"]["quantity"]),
+            ("6;", PRESTASHOP_STOCK_6["stock_available"]["quantity"]),
+        )
+        for sku, expected_stock_level in parameters:
+            with self.subTest():
+                stock_level = self.importer.get_stock_level(sku)
+                self.assertEqual(stock_level, expected_stock_level)
+
+    def test_update_product_stock_level(self):
+        parameters = (
+            ("1;1;", PRESTASHOP_STOCK_3["stock_available"]["quantity"]),
+            ("6;", PRESTASHOP_STOCK_6["stock_available"]["quantity"]),
+        )
+        for sku, starting_stock_level in parameters:
+            with self.subTest():
+                stock_diff = 10
+                with mock.patch("prestashop.importers.requests.put") as mocked_put:
+                    self.importer.update_product_stock_level(sku, stock_diff)
+                    called_data = xmltodict.parse(mocked_put.call_args.kwargs["data"])
+                self.assertEqual(
+                    int(called_data["root"]["stock_available"]["quantity"]["#text"]),
+                    int(starting_stock_level) + stock_diff,
+                )
