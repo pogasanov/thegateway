@@ -4,6 +4,7 @@ import re
 import uuid
 from decimal import Decimal
 from itertools import groupby
+from urllib import parse
 
 import requests
 import simplejson as json
@@ -210,6 +211,17 @@ class Gateway:
 
         return url + fields["key"]
 
-    def upload_public_image(self, image_url):
+    @staticmethod
+    def _escape_non_ascii_characters_in_url(url: str) -> str:
+        """
+        For example convert "http://example.com/Zdjęcie-1.jpg" to "http://example.com/Zdj%C4%99cie-1.jpg"
+        """
+        parsed_url = list(parse.urlsplit(url))
+        parsed_url[2] = parse.quote(parsed_url[2])
+        return parse.urlunsplit(parsed_url)
+
+    def upload_public_image(self, image_url: str):
+        if not image_url.isascii():
+            image_url = self._escape_non_ascii_characters_in_url(image_url)
         response = self.session.post(self.endpoints["image"]["public_upload"], json={"url": image_url})
         return response.json()["url"]

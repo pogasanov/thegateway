@@ -90,3 +90,9 @@ class GatewayTest(TestCase):
             assert responses_mock.calls[1].request.url == f"{self.BASE_URL}/webshops/{self.SHOP_ID}/tags/"
             assert responses_mock.calls[1].response.status_code == 409
             assert tag == expected_tag_guid
+
+    def test_escape_non_ascii_characters_in_url(self):
+        non_ascii_url = "http://example.com/image/skąplikowana_nazwa_zdjęcia.jpg"
+        fixed_path = gateway.Gateway._escape_non_ascii_characters_in_url(non_ascii_url)
+        self.assertEqual("http://example.com/image/sk%C4%85plikowana_nazwa_zdj%C4%99cia.jpg", fixed_path)
+        self.assertTrue(fixed_path.isascii())
