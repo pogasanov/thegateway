@@ -25,6 +25,7 @@ class Prestashop:
         self.variants_reverse = dict()
         self.product_options = dict()
         self.language_id = language_id
+        self.categories = dict()
 
     def get_variants(self):
         """
@@ -265,6 +266,32 @@ class Prestashop:
         new_stock_level = int(stock_level_data["stock_available"]["quantity"]) + stock_difference
         stock_level_data["stock_available"]["quantity"] = new_stock_level
         return self.put(f"stock_availables/{stock_level_id}", data=stock_level_data)
+
+    def list_of_categories(self):
+        categories = self.get("categories")
+        categories_ids = self._ids_to_list(categories["categories"])
+        for category_id in categories_ids:
+            self._add_to_category_by_id(category_id)
+
+    def _add_to_category_by_id(self, id):
+        """
+        Fetch category by id and add it to `self.categories`
+        Will fetch parent categories if required
+        """
+        if id in self.categories:
+            return
+
+        response = self.get(f"categories/{id}")["category"]
+        parent_id = response["id_parent"]
+
+        if parent_id != "0":
+            if parent_id not in self.categories:
+                self._add_to_category_by_id(parent_id)
+            category_name = f"{self.categories[parent_id]} - {response['name']}"
+        else:
+            category_name = response["name"]
+
+        self.categories[str(response["id"])] = category_name
 
 
 def strip_tags(in_str):

@@ -358,3 +358,67 @@ PRESTASHOP_CONFIGURATIONS_27 = {
         "date_upd": "2020-04-23 14:11:21",
     }
 }
+PRESTASHOP_CATEGORIES = {"categories": [{"id": 1}, {"id": 2}, {"id": 3}]}
+PRESTASHOP_CATEGORY_1 = {
+    "category": {
+        "id": 1,
+        "id_parent": "0",
+        "level_depth": "0",
+        "nb_products_recursive": "19",
+        "active": "1",
+        "id_shop_default": "1",
+        "is_root_category": "0",
+        "position": "0",
+        "date_add": "2020-04-20 05:24:54",
+        "date_upd": "2020-04-20 05:24:54",
+        "name": "Root",
+        "link_rewrite": "root",
+        "description": "",
+        "meta_title": "",
+        "meta_description": "",
+        "meta_keywords": "",
+        "associations": {"categories": [{"id": "2"}]},
+    }
+}
+PRESTASHOP_CATEGORY_2 = {
+    "category": {
+        "id": 2,
+        "id_parent": "1",
+        "level_depth": "0",
+        "nb_products_recursive": "19",
+        "active": "1",
+        "id_shop_default": "1",
+        "is_root_category": "0",
+        "position": "0",
+        "date_add": "2020-04-20 05:24:54",
+        "date_upd": "2020-04-20 05:24:54",
+        "name": "Man",
+        "link_rewrite": "root",
+        "description": "",
+        "meta_title": "",
+        "meta_description": "",
+        "meta_keywords": "",
+        "associations": {"categories": [{"id": "3"}]},
+    }
+}
+PRESTASHOP_CATEGORY_3 = {
+    "category": {
+        "id": 3,
+        "id_parent": "2",
+        "level_depth": "0",
+        "nb_products_recursive": "19",
+        "active": "1",
+        "id_shop_default": "1",
+        "is_root_category": "0",
+        "position": "0",
+        "date_add": "2020-04-20 05:24:54",
+        "date_upd": "2020-04-20 05:24:54",
+        "name": "Pants",
+        "link_rewrite": "root",
+        "description": "",
+        "meta_title": "",
+        "meta_description": "",
+        "meta_keywords": "",
+        "associations": {},
+    }
+}
