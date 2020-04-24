@@ -5,7 +5,6 @@ from unittest import TestCase
 from unittest.mock import patch
 
 import responses
-from gateway.models import Image
 from idosell.importers import IdoSell
 
 from .idosell_responses import (
@@ -88,11 +87,8 @@ class IdoSellTest(TestCase):
         return None
 
     def test_get_products(self):
-        with patch("idosell.importers.date") as mock_datetime, patch(
-            "idosell.importers.download_image"
-        ) as mock_download_image:
+        with patch("idosell.importers.date") as mock_datetime:
             mock_datetime.today.return_value = datetime(2020, 4, 6)
-            mock_download_image.return_value = Image("temp_file", "", None)
             importer = IdoSell(**self.IDOSELL_INIT_ARGS)
             gw_product_variants = list(importer.get_products())
             # flat list
