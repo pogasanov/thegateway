@@ -8,7 +8,6 @@ from typing import List, Dict, Generator
 import requests
 
 from gateway.models import Product, Image
-from gateway.utils import download_image
 
 
 # pylint: disable=invalid-name
@@ -75,11 +74,10 @@ class Shoper:
             data=data,
         )
 
-    def get_image(self, data: Dict) -> Image:
+    def get_image_url(self, data: Dict) -> Image:
         filename = data.get("main_image").get("unic_name")
         image_url = f"{self.api_hostname}/userdata/public/gfx/{filename}.jpg"
-        image = download_image(image_url)
-        return image
+        return image_url
 
     @staticmethod
     def _tax_dict(taxes: List[Dict]) -> Dict:
@@ -102,7 +100,7 @@ class Shoper:
         return categories
 
     def get_product_data(self, data: Dict, option: str = "", options_count: int = 1) -> Product:
-        images = [self.get_image(data)]
+        images = [self.get_image_url(data)] if data.get("main_image") else None
 
         # get values for variants
         stock = decimal.Decimal(data.get("stock").get("stock"))
@@ -123,21 +121,20 @@ class Shoper:
             description=translation.get("description"),
             sku=sku,
             description_short=translation.get("short_description"),
-            variant_data={"size": option} if option else dict(),
-            images=images,
+            variant_data={"size": str(option)} if option else dict(),
+            images_urls=images,
             vat_percent=self.taxes.get(data.get("tax_id")),
         )
 
         return product
 
-    def load_one_page(self, products_response: Dict) -> Generator[List, None, None]:
-        for product in products_response.get("list"):
-            if product.get("options"):
-                # creates variants based on options
-                options_number = len(product.get("options"))
-                yield [self.get_product_data(product, option, options_number) for option in product.get("options")]
-            else:
-                yield [self.get_product_data(product)]
+    def load_product_list(self, product: Dict) -> List[Product]:
+        if product.get("options"):
+            # creates variants based on options
+            options_number = len(product.get("options"))
+            return [self.get_product_data(product, option, options_number) for option in product.get("options")]
+        else:
+            return [self.get_product_data(product)]
 
     def fetch_products(self) -> Generator[List, None, None]:
         """
@@ -148,12 +145,15 @@ class Shoper:
         page_limit = 50
         products_response = self.get(f"products?limit={page_limit}")
 
+        # Load first page
+        for product in products_response.get("list"):
+            yield self.load_product_list(product)
+        # If there are more pages of data then load more products
         if products_response.get("pages") > 1:
             for i in range(2, products_response.get("pages")):
                 products_response = self.get(f"products?limit={page_limit}&page={i}")
-                return self.load_one_page(products_response)
-        else:
-            return self.load_one_page(products_response)
+                for product in products_response.get("list"):
+                    yield self.load_product_list(product)
 
     def fetch_product(self, product: Product) -> Dict:
         page_limit = 1

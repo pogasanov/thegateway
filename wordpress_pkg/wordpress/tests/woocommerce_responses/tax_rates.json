@@ -1,0 +1,158 @@
+[
+    {
+        "id": 1,
+        "country": "GB",
+        "state": "",
+        "postcode": "",
+        "city": "",
+        "rate": "20.0000",
+        "name": "VAT",
+        "priority": 1,
+        "compound": true,
+        "shipping": true,
+        "order": 0,
+        "class": "standard",
+        "_links": {
+            "self": [
+                {
+                    "href": "http://1a163393.ngrok.io/wp-json/wc/v3/taxes/1"
+                }
+            ],
+            "collection": [
+                {
+                    "href": "http://1a163393.ngrok.io/wp-json/wc/v3/taxes"
+                }
+            ]
+        }
+    },
+    {
+        "id": 2,
+        "country": "GB",
+        "state": "",
+        "postcode": "",
+        "city": "",
+        "rate": "5.0000",
+        "name": "VAT",
+        "priority": 1,
+        "compound": true,
+        "shipping": true,
+        "order": 1,
+        "class": "reduced-rate",
+        "_links": {
+            "self": [
+                {
+                    "href": "http://1a163393.ngrok.io/wp-json/wc/v3/taxes/2"
+                }
+            ],
+            "collection": [
+                {
+                    "href": "http://1a163393.ngrok.io/wp-json/wc/v3/taxes"
+                }
+            ]
+        }
+    },
+    {
+        "id": 3,
+        "country": "GB",
+        "state": "",
+        "postcode": "",
+        "city": "",
+        "rate": "0.0000",
+        "name": "VAT",
+        "priority": 1,
+        "compound": true,
+        "shipping": true,
+        "order": 2,
+        "class": "zero-rate",
+        "_links": {
+            "self": [
+                {
+                    "href": "http://1a163393.ngrok.io/wp-json/wc/v3/taxes/3"
+                }
+            ],
+            "collection": [
+                {
+                    "href": "http://1a163393.ngrok.io/wp-json/wc/v3/taxes"
+                }
+            ]
+        }
+    },
+    {
+        "id": 4,
+        "country": "US",
+        "state": "",
+        "postcode": "",
+        "city": "",
+        "rate": "10.0000",
+        "name": "US",
+        "priority": 1,
+        "compound": true,
+        "shipping": true,
+        "order": 3,
+        "class": "standard",
+        "_links": {
+            "self": [
+                {
+                    "href": "http://1a163393.ngrok.io/wp-json/wc/v3/taxes/4"
+                }
+            ],
+            "collection": [
+                {
+                    "href": "http://1a163393.ngrok.io/wp-json/wc/v3/taxes"
+                }
+            ]
+        }
+    },
+    {
+        "id": 6,
+        "country": "PL",
+        "state": "",
+        "postcode": "",
+        "city": "",
+        "rate": "23.0000",
+        "name": "PL",
+        "priority": 1,
+        "compound": true,
+        "shipping": true,
+        "order": 3,
+        "class": "standard",
+        "_links": {
+            "self": [
+                {
+                    "href": "http://1a163393.ngrok.io/wp-json/wc/v3/taxes/6"
+                }
+            ],
+            "collection": [
+                {
+                    "href": "http://1a163393.ngrok.io/wp-json/wc/v3/taxes"
+                }
+            ]
+        }
+    },
+    {
+        "id": 5,
+        "country": "US",
+        "state": "AL",
+        "postcode": "123456",
+        "city": "",
+        "rate": "2.0000",
+        "name": "US AL",
+        "priority": 2,
+        "compound": true,
+        "shipping": true,
+        "order": 4,
+        "class": "standard",
+        "_links": {
+            "self": [
+                {
+                    "href": "http://1a163393.ngrok.io/wp-json/wc/v3/taxes/5"
+                }
+            ],
+            "collection": [
+                {
+                    "href": "http://1a163393.ngrok.io/wp-json/wc/v3/taxes"
+                }
+            ]
+        }
+    }
+]

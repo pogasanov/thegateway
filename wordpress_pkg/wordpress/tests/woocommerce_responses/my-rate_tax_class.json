@@ -1,0 +1,80 @@
+[
+  {
+    "id": 11,
+    "country": "",
+    "state": "",
+    "postcode": "",
+    "city": "",
+    "rate": "23.0000",
+    "name": "Tax",
+    "priority": 1,
+    "compound": false,
+    "shipping": true,
+    "order": 0,
+    "class": "my-rate",
+    "_links": {
+      "self": [
+        {
+          "href": "http://testurl.com/wp-json/wc/v3/taxes/11"
+        }
+      ],
+      "collection": [
+        {
+          "href": "http://testurl.com/wp-json/wc/v3/taxes"
+        }
+      ]
+    }
+  },
+  {
+    "id": 13,
+    "country": "",
+    "state": "",
+    "postcode": "",
+    "city": "",
+    "rate": "12.0000",
+    "name": "Other tax",
+    "priority": 2,
+    "compound": false,
+    "shipping": true,
+    "order": 1,
+    "class": "my-rate",
+    "_links": {
+      "self": [
+        {
+          "href": "http://testurl.com/wp-json/wc/v3/taxes/13"
+        }
+      ],
+      "collection": [
+        {
+          "href": "http://testurl.com/wp-json/wc/v3/taxes"
+        }
+      ]
+    }
+  },
+  {
+    "id": 14,
+    "country": "GB",
+    "state": "",
+    "postcode": "",
+    "city": "",
+    "rate": "1.0000",
+    "name": "Needless tax",
+    "priority": 1,
+    "compound": false,
+    "shipping": true,
+    "order": 2,
+    "class": "my-rate",
+    "_links": {
+      "self": [
+        {
+          "href": "http://testurl.com/wp-json/wc/v3/taxes/14"
+        }
+      ],
+      "collection": [
+        {
+          "href": "http://testurl.com/wp-json/wc/v3/taxes"
+        }
+      ]
+    }
+  }
+]

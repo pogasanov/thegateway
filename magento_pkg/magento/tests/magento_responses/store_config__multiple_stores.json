@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "code": "default",
+    "website_id": 1,
+    "locale": "en_US",
+    "base_currency_code": "USD",
+    "default_display_currency_code": "USD",
+    "timezone": "America\/Los_Angeles",
+    "weight_unit": "lbs",
+    "base_url": "http:\/\/123.456.789.0\/",
+    "base_link_url": "http:\/\/123.456.789.0\/index.php\/",
+    "base_static_url": "http:\/\/123.456.789.0\/pub\/static\/version1586488729\/",
+    "base_media_url": "http:\/\/123.456.789.0\/pub\/media\/",
+    "secure_base_url": "https:\/\/123.456.789.0\/",
+    "secure_base_link_url": "https:\/\/123.456.789.0\/index.php\/",
+    "secure_base_static_url": "https:\/\/123.456.789.0\/pub\/static\/version1586488729\/",
+    "secure_base_media_url": "https:\/\/123.456.789.0\/pub\/media\/"
+  },
+  {
+    "id": 2,
+    "code": "default",
+    "website_id": 1,
+    "locale": "en_US",
+    "base_currency_code": "USD",
+    "default_display_currency_code": "USD",
+    "timezone": "America\/Los_Angeles",
+    "weight_unit": "lbs",
+    "base_url": "http:\/\/113.456.789.0\/",
+    "base_link_url": "http:\/\/113.456.789.0\/index.php\/",
+    "base_static_url": "http:\/\/113.456.789.0\/pub\/static\/version1586488729\/",
+    "base_media_url": "http:\/\/113.456.789.0\/pub\/media\/",
+    "secure_base_url": "https:\/\/113.456.789.0\/",
+    "secure_base_link_url": "https:\/\/113.456.789.0\/index.php\/",
+    "secure_base_static_url": "https:\/\/113.456.789.0\/pub\/static\/version1586488729\/",
+    "secure_base_media_url": "https:\/\/113.456.789.0\/pub\/media\/"
+  }
+]

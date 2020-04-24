@@ -1,0 +1,968 @@
+[
+  {
+    "id": 71,
+    "name": "grouped product",
+    "slug": "single-copy-copy",
+    "permalink": "http://testurl.com/product/single-copy-copy/",
+    "date_created": "2020-04-16T09:12:51",
+    "date_created_gmt": "2020-04-16T09:12:51",
+    "date_modified": "2020-04-16T09:13:33",
+    "date_modified_gmt": "2020-04-16T09:13:33",
+    "type": "grouped",
+    "status": "publish",
+    "featured": false,
+    "catalog_visibility": "visible",
+    "description": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum sagittis orci ac odio dictum tincidunt. Donec ut metus leo. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed luctus, dui eu sagittis sodales, nulla nibh sagittis augue, vel porttitor diam enim non metus. Vestibulum aliquam augue neque. Phasellus tincidunt odio eget ullamcorper efficitur. Cras placerat ut turpis pellentesque vulputate. Nam sed consequat tortor. Curabitur finibus sapien dolor. Ut eleifend tellus nec erat pulvinar dignissim. Nam non arcu purus. Vivamus et massa massa.</p>\n",
+    "short_description": "<p>This is a simple, virtual product.</p>\n",
+    "sku": "woo-single-1-1",
+    "price": "2",
+    "regular_price": "",
+    "sale_price": "",
+    "date_on_sale_from": null,
+    "date_on_sale_from_gmt": null,
+    "date_on_sale_to": null,
+    "date_on_sale_to_gmt": null,
+    "price_html": "<span class=\"woocommerce-Price-amount amount\">10,00&nbsp;<span class=\"woocommerce-Price-currencySymbol\">&#122;&#322;</span></span> &ndash; <span class=\"woocommerce-Price-amount amount\">100,00&nbsp;<span class=\"woocommerce-Price-currencySymbol\">&#122;&#322;</span></span>",
+    "on_sale": false,
+    "purchasable": false,
+    "total_sales": 0,
+    "virtual": false,
+    "downloadable": false,
+    "downloads": [],
+    "download_limit": 1,
+    "download_expiry": 1,
+    "external_url": "",
+    "button_text": "",
+    "tax_status": "taxable",
+    "tax_class": "",
+    "manage_stock": false,
+    "stock_quantity": null,
+    "stock_status": "onbackorder",
+    "backorders": "no",
+    "backorders_allowed": false,
+    "backordered": false,
+    "sold_individually": false,
+    "weight": "",
+    "dimensions": {
+      "length": "",
+      "width": "",
+      "height": ""
+    },
+    "shipping_required": true,
+    "shipping_taxable": true,
+    "shipping_class": "",
+    "shipping_class_id": 0,
+    "reviews_allowed": true,
+    "average_rating": "0.00",
+    "rating_count": 0,
+    "related_ids": [
+      24,
+      70
+    ],
+    "upsell_ids": [],
+    "cross_sell_ids": [],
+    "parent_id": 0,
+    "purchase_note": "",
+    "categories": [
+      {
+        "id": 20,
+        "name": "Music",
+        "slug": "music"
+      }
+    ],
+    "tags": [],
+    "images": [
+      {
+        "id": 53,
+        "date_created": "2020-04-15T10:54:52",
+        "date_created_gmt": "2020-04-15T10:54:52",
+        "date_modified": "2020-04-15T10:54:52",
+        "date_modified_gmt": "2020-04-15T10:54:52",
+        "src": "http://testurl.com/wp-content/uploads/2020/04/single-1.jpg",
+        "name": "single-1.jpg",
+        "alt": ""
+      }
+    ],
+    "attributes": [],
+    "default_attributes": [],
+    "variations": [],
+    "grouped_products": [
+      24,
+      70
+    ],
+    "menu_order": 0,
+    "meta_data": [
+      {
+        "id": 863,
+        "key": "_wpcom_is_markdown",
+        "value": "1"
+      }
+    ],
+    "_links": {
+      "self": [
+        {
+          "href": "http://testurl.com/wp-json/wc/v3/products/71"
+        }
+      ],
+      "collection": [
+        {
+          "href": "http://testurl.com/wp-json/wc/v3/products"
+        }
+      ]
+    }
+  },
+  {
+    "id": 70,
+    "name": "Single (Copy)",
+    "slug": "single-copy",
+    "permalink": "http://testurl.com/product/single-copy/",
+    "date_created": "2020-04-16T09:12:42",
+    "date_created_gmt": "2020-04-16T09:12:42",
+    "date_modified": "2020-04-17T12:17:15",
+    "date_modified_gmt": "2020-04-17T12:17:15",
+    "type": "simple",
+    "status": "publish",
+    "featured": false,
+    "catalog_visibility": "visible",
+    "description": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum sagittis orci ac odio dictum tincidunt. Donec ut metus leo. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed luctus, dui eu sagittis sodales, nulla nibh sagittis augue, vel porttitor diam enim non metus. Vestibulum aliquam augue neque. Phasellus tincidunt odio eget ullamcorper efficitur. Cras placerat ut turpis pellentesque vulputate. Nam sed consequat tortor. Curabitur finibus sapien dolor. Ut eleifend tellus nec erat pulvinar dignissim. Nam non arcu purus. Vivamus et massa massa.</p>\n",
+    "short_description": "<p>This is a simple, virtual product.</p>\n",
+    "sku": "woo-single-1",
+    "price": "10",
+    "regular_price": "10",
+    "sale_price": "",
+    "date_on_sale_from": null,
+    "date_on_sale_from_gmt": null,
+    "date_on_sale_to": null,
+    "date_on_sale_to_gmt": null,
+    "price_html": "<span class=\"woocommerce-Price-amount amount\">10,00&nbsp;<span class=\"woocommerce-Price-currencySymbol\">&#122;&#322;</span></span>",
+    "on_sale": false,
+    "purchasable": true,
+    "total_sales": 0,
+    "virtual": true,
+    "downloadable": true,
+    "downloads": [
+      {
+        "id": "599dc8de-0d5d-44b3-9068-828fb7bd16df",
+        "name": "Single",
+        "file": "https://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2017/08/single.jpg"
+      }
+    ],
+    "download_limit": 1,
+    "download_expiry": 1,
+    "external_url": "",
+    "button_text": "",
+    "tax_status": "taxable",
+    "tax_class": "my-rate",
+    "manage_stock": false,
+    "stock_quantity": null,
+    "stock_status": "instock",
+    "backorders": "no",
+    "backorders_allowed": false,
+    "backordered": false,
+    "sold_individually": false,
+    "weight": "",
+    "dimensions": {
+      "length": "",
+      "width": "",
+      "height": ""
+    },
+    "shipping_required": false,
+    "shipping_taxable": false,
+    "shipping_class": "",
+    "shipping_class_id": 0,
+    "reviews_allowed": true,
+    "average_rating": "0.00",
+    "rating_count": 0,
+    "related_ids": [
+      71,
+      24
+    ],
+    "upsell_ids": [],
+    "cross_sell_ids": [],
+    "parent_id": 0,
+    "purchase_note": "",
+    "categories": [
+      {
+        "id": 20,
+        "name": "Music",
+        "slug": "music"
+      }
+    ],
+    "tags": [],
+    "images": [
+      {
+        "id": 53,
+        "date_created": "2020-04-15T10:54:52",
+        "date_created_gmt": "2020-04-15T10:54:52",
+        "date_modified": "2020-04-15T10:54:52",
+        "date_modified_gmt": "2020-04-15T10:54:52",
+        "src": "http://testurl.com/wp-content/uploads/2020/04/single-1.jpg",
+        "name": "single-1.jpg",
+        "alt": ""
+      }
+    ],
+    "attributes": [],
+    "default_attributes": [],
+    "variations": [],
+    "grouped_products": [],
+    "menu_order": 0,
+    "meta_data": [
+      {
+        "id": 839,
+        "key": "_wpcom_is_markdown",
+        "value": "1"
+      }
+    ],
+    "_links": {
+      "self": [
+        {
+          "href": "http://testurl.com/wp-json/wc/v3/products/70"
+        }
+      ],
+      "collection": [
+        {
+          "href": "http://testurl.com/wp-json/wc/v3/products"
+        }
+      ]
+    }
+  },
+  {
+    "id": 65,
+    "name": "T-Shirt Red",
+    "slug": "t-shirt-red",
+    "permalink": "http://testurl.com/product/t-shirt-red/",
+    "date_created": "2020-04-15T12:42:04",
+    "date_created_gmt": "2020-04-15T12:42:04",
+    "date_modified": "2020-04-20T07:09:25",
+    "date_modified_gmt": "2020-04-20T07:09:25",
+    "type": "variable",
+    "status": "publish",
+    "featured": false,
+    "catalog_visibility": "visible",
+    "description": "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>\n",
+    "short_description": "<p>This is a simple product.</p>\n",
+    "sku": "woo-tshirt-red",
+    "price": "12",
+    "regular_price": "",
+    "sale_price": "",
+    "date_on_sale_from": null,
+    "date_on_sale_from_gmt": null,
+    "date_on_sale_to": null,
+    "date_on_sale_to_gmt": null,
+    "price_html": "<span class=\"woocommerce-Price-amount amount\">12,00&nbsp;<span class=\"woocommerce-Price-currencySymbol\">&#122;&#322;</span></span> &ndash; <span class=\"woocommerce-Price-amount amount\">14,00&nbsp;<span class=\"woocommerce-Price-currencySymbol\">&#122;&#322;</span></span>",
+    "on_sale": false,
+    "purchasable": true,
+    "total_sales": 1,
+    "virtual": false,
+    "downloadable": false,
+    "downloads": [],
+    "download_limit": 0,
+    "download_expiry": 0,
+    "external_url": "",
+    "button_text": "",
+    "tax_status": "taxable",
+    "tax_class": "my-rate",
+    "manage_stock": true,
+    "stock_quantity": 11,
+    "stock_status": "instock",
+    "backorders": "no",
+    "backorders_allowed": false,
+    "backordered": false,
+    "sold_individually": false,
+    "weight": "",
+    "dimensions": {
+      "length": "",
+      "width": "",
+      "height": ""
+    },
+    "shipping_required": true,
+    "shipping_taxable": true,
+    "shipping_class": "",
+    "shipping_class_id": 0,
+    "reviews_allowed": true,
+    "average_rating": "0.00",
+    "rating_count": 0,
+    "related_ids": [
+      22,
+      14,
+      11,
+      21,
+      15
+    ],
+    "upsell_ids": [],
+    "cross_sell_ids": [],
+    "parent_id": 0,
+    "purchase_note": "",
+    "categories": [
+      {
+        "id": 19,
+        "name": "Accessories",
+        "slug": "accessories"
+      },
+      {
+        "id": 17,
+        "name": "Tshirts",
+        "slug": "tshirts"
+      }
+    ],
+    "tags": [],
+    "images": [
+      {
+        "id": 43,
+        "date_created": "2020-04-15T10:54:42",
+        "date_created_gmt": "2020-04-15T10:54:42",
+        "date_modified": "2020-04-15T10:54:42",
+        "date_modified_gmt": "2020-04-15T10:54:42",
+        "src": "http://testurl.com/wp-content/uploads/2020/04/tshirt-2.jpg",
+        "name": "tshirt-2.jpg",
+        "alt": ""
+      }
+    ],
+    "attributes": [
+      {
+        "id": 1,
+        "name": "Color",
+        "position": 0,
+        "visible": true,
+        "variation": true,
+        "options": [
+          "Blue",
+          "Gray",
+          "Green",
+          "Red",
+          "Yellow"
+        ]
+      }
+    ],
+    "default_attributes": [
+      {
+        "id": 1,
+        "name": "Color",
+        "option": "blue"
+      }
+    ],
+    "variations": [
+      68,
+      67,
+      69,
+      66
+    ],
+    "grouped_products": [],
+    "menu_order": 0,
+    "meta_data": [
+      {
+        "id": 709,
+        "key": "_wpcom_is_markdown",
+        "value": "1"
+      }
+    ],
+    "_links": {
+      "self": [
+        {
+          "href": "http://testurl.com/wp-json/wc/v3/products/65"
+        }
+      ],
+      "collection": [
+        {
+          "href": "http://testurl.com/wp-json/wc/v3/products"
+        }
+      ]
+    }
+  },
+  {
+    "id": 34,
+    "name": "external product",
+    "slug": "wordpress-pennant",
+    "permalink": "http://testurl.com/product/wordpress-pennant/",
+    "date_created": "2020-04-15T10:54:34",
+    "date_created_gmt": "2020-04-15T10:54:34",
+    "date_modified": "2020-04-17T07:40:38",
+    "date_modified_gmt": "2020-04-17T07:40:38",
+    "type": "external",
+    "status": "publish",
+    "featured": false,
+    "catalog_visibility": "visible",
+    "description": "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>\n",
+    "short_description": "<p>This is an external product.</p>\n",
+    "sku": "wp-pennant",
+    "price": "10",
+    "regular_price": "10",
+    "sale_price": "",
+    "date_on_sale_from": null,
+    "date_on_sale_from_gmt": null,
+    "date_on_sale_to": null,
+    "date_on_sale_to_gmt": null,
+    "price_html": "<span class=\"woocommerce-Price-amount amount\">10,00&nbsp;<span class=\"woocommerce-Price-currencySymbol\">&#122;&#322;</span></span>",
+    "on_sale": false,
+    "purchasable": false,
+    "total_sales": 0,
+    "virtual": false,
+    "downloadable": false,
+    "downloads": [],
+    "download_limit": 0,
+    "download_expiry": 0,
+    "external_url": "https://mercantile.wordpress.org/product/wordpress-pennant/",
+    "button_text": "Buy on the WordPress swag store!",
+    "tax_status": "taxable",
+    "tax_class": "",
+    "manage_stock": false,
+    "stock_quantity": null,
+    "stock_status": "instock",
+    "backorders": "no",
+    "backorders_allowed": false,
+    "backordered": false,
+    "sold_individually": false,
+    "weight": "",
+    "dimensions": {
+      "length": "",
+      "width": "",
+      "height": ""
+    },
+    "shipping_required": true,
+    "shipping_taxable": true,
+    "shipping_class": "",
+    "shipping_class_id": 0,
+    "reviews_allowed": true,
+    "average_rating": "0.00",
+    "rating_count": 0,
+    "related_ids": [],
+    "upsell_ids": [],
+    "cross_sell_ids": [],
+    "parent_id": 0,
+    "purchase_note": "",
+    "categories": [
+      {
+        "id": 21,
+        "name": "Decor",
+        "slug": "decor"
+      }
+    ],
+    "tags": [],
+    "images": [
+      {
+        "id": 57,
+        "date_created": "2020-04-15T10:54:58",
+        "date_created_gmt": "2020-04-15T10:54:58",
+        "date_modified": "2020-04-15T10:54:58",
+        "date_modified_gmt": "2020-04-15T10:54:58",
+        "src": "http://testurl.com/wp-content/uploads/2020/04/pennant-1.jpg",
+        "name": "pennant-1.jpg",
+        "alt": ""
+      }
+    ],
+    "attributes": [],
+    "default_attributes": [],
+    "variations": [],
+    "grouped_products": [],
+    "menu_order": 0,
+    "meta_data": [
+      {
+        "id": 655,
+        "key": "_wpcom_is_markdown",
+        "value": "1"
+      }
+    ],
+    "_links": {
+      "self": [
+        {
+          "href": "http://testurl.com/wp-json/wc/v3/products/34"
+        }
+      ],
+      "collection": [
+        {
+          "href": "http://testurl.com/wp-json/wc/v3/products"
+        }
+      ]
+    }
+  },
+  {
+    "id": 24,
+    "name": "Single prod",
+    "slug": "single",
+    "permalink": "http://testurl.com/product/single/",
+    "date_created": "2020-04-15T10:54:33",
+    "date_created_gmt": "2020-04-15T10:54:33",
+    "date_modified": "2020-04-17T08:57:10",
+    "date_modified_gmt": "2020-04-17T08:57:10",
+    "type": "simple",
+    "status": "publish",
+    "featured": false,
+    "catalog_visibility": "visible",
+    "description": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum sagittis orci ac odio dictum tincidunt. Donec ut metus leo. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed luctus, dui eu sagittis sodales, nulla nibh sagittis augue, vel porttitor diam enim non metus. Vestibulum aliquam augue neque. Phasellus tincidunt odio eget ullamcorper efficitur. Cras placerat ut turpis pellentesque vulputate. Nam sed consequat tortor. Curabitur finibus sapien dolor. Ut eleifend tellus nec erat pulvinar dignissim. Nam non arcu purus. Vivamus et massa massa.</p>\n",
+    "short_description": "<p>This is a simple, virtual product.</p>\n",
+    "sku": "woo-single",
+    "price": "100",
+    "regular_price": "100",
+    "sale_price": "",
+    "date_on_sale_from": null,
+    "date_on_sale_from_gmt": null,
+    "date_on_sale_to": null,
+    "date_on_sale_to_gmt": null,
+    "price_html": "<span class=\"woocommerce-Price-amount amount\">100,00&nbsp;<span class=\"woocommerce-Price-currencySymbol\">&#122;&#322;</span></span>",
+    "on_sale": false,
+    "purchasable": true,
+    "total_sales": 0,
+    "virtual": true,
+    "downloadable": true,
+    "downloads": [
+      {
+        "id": "599dc8de-0d5d-44b3-9068-828fb7bd16df",
+        "name": "Single",
+        "file": "https://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2017/08/single.jpg"
+      }
+    ],
+    "download_limit": 1,
+    "download_expiry": 1,
+    "external_url": "",
+    "button_text": "",
+    "tax_status": "taxable",
+    "tax_class": "",
+    "manage_stock": false,
+    "stock_quantity": null,
+    "stock_status": "instock",
+    "backorders": "no",
+    "backorders_allowed": false,
+    "backordered": false,
+    "sold_individually": false,
+    "weight": "",
+    "dimensions": {
+      "length": "",
+      "width": "",
+      "height": ""
+    },
+    "shipping_required": false,
+    "shipping_taxable": false,
+    "shipping_class": "",
+    "shipping_class_id": 0,
+    "reviews_allowed": true,
+    "average_rating": "0.00",
+    "rating_count": 0,
+    "related_ids": [
+      71,
+      70
+    ],
+    "upsell_ids": [],
+    "cross_sell_ids": [],
+    "parent_id": 0,
+    "purchase_note": "",
+    "categories": [
+      {
+        "id": 20,
+        "name": "Music",
+        "slug": "music"
+      }
+    ],
+    "tags": [],
+    "images": [
+      {
+        "id": 53,
+        "date_created": "2020-04-15T10:54:52",
+        "date_created_gmt": "2020-04-15T10:54:52",
+        "date_modified": "2020-04-15T10:54:52",
+        "date_modified_gmt": "2020-04-15T10:54:52",
+        "src": "http://testurl.com/wp-content/uploads/2020/04/single-1.jpg",
+        "name": "single-1.jpg",
+        "alt": ""
+      }
+    ],
+    "attributes": [
+      {
+        "id": 1,
+        "name": "Color",
+        "position": 0,
+        "visible": true,
+        "variation": false,
+        "options": [
+          "Gray",
+          "Green"
+        ]
+      },
+      {
+        "id": 2,
+        "name": "Size",
+        "position": 1,
+        "visible": true,
+        "variation": false,
+        "options": [
+          "Medium",
+          "Small"
+        ]
+      }
+    ],
+    "default_attributes": [],
+    "variations": [],
+    "grouped_products": [],
+    "menu_order": 0,
+    "meta_data": [
+      {
+        "id": 563,
+        "key": "_wpcom_is_markdown",
+        "value": "1"
+      }
+    ],
+    "_links": {
+      "self": [
+        {
+          "href": "http://testurl.com/wp-json/wc/v3/products/24"
+        }
+      ],
+      "collection": [
+        {
+          "href": "http://testurl.com/wp-json/wc/v3/products"
+        }
+      ]
+    }
+  },
+  {
+    "id": 22,
+    "name": "Polo",
+    "slug": "polo",
+    "permalink": "http://testurl.com/product/polo/",
+    "date_created": "2020-04-15T10:54:33",
+    "date_created_gmt": "2020-04-15T10:54:33",
+    "date_modified": "2020-04-16T08:04:14",
+    "date_modified_gmt": "2020-04-16T08:04:14",
+    "type": "simple",
+    "status": "publish",
+    "featured": false,
+    "catalog_visibility": "visible",
+    "description": "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>\n",
+    "short_description": "<p>This is a simple product.</p>\n",
+    "sku": "woo-polo",
+    "price": "20",
+    "regular_price": "20",
+    "sale_price": "",
+    "date_on_sale_from": null,
+    "date_on_sale_from_gmt": null,
+    "date_on_sale_to": null,
+    "date_on_sale_to_gmt": null,
+    "price_html": "<span class=\"woocommerce-Price-amount amount\">20,00&nbsp;<span class=\"woocommerce-Price-currencySymbol\">&#122;&#322;</span></span>",
+    "on_sale": false,
+    "purchasable": true,
+    "total_sales": 0,
+    "virtual": false,
+    "downloadable": false,
+    "downloads": [],
+    "download_limit": 0,
+    "download_expiry": 0,
+    "external_url": "",
+    "button_text": "",
+    "tax_status": "taxable",
+    "tax_class": "",
+    "manage_stock": true,
+    "stock_quantity": 0,
+    "stock_status": "onbackorder",
+    "backorders": "notify",
+    "backorders_allowed": true,
+    "backordered": true,
+    "sold_individually": false,
+    "weight": "",
+    "dimensions": {
+      "length": "",
+      "width": "",
+      "height": ""
+    },
+    "shipping_required": true,
+    "shipping_taxable": true,
+    "shipping_class": "",
+    "shipping_class_id": 0,
+    "reviews_allowed": true,
+    "average_rating": "0.00",
+    "rating_count": 0,
+    "related_ids": [
+      31,
+      65,
+      11,
+      14,
+      21
+    ],
+    "upsell_ids": [],
+    "cross_sell_ids": [],
+    "parent_id": 0,
+    "purchase_note": "",
+    "categories": [
+      {
+        "id": 17,
+        "name": "Tshirts",
+        "slug": "tshirts"
+      }
+    ],
+    "tags": [],
+    "images": [
+      {
+        "id": 51,
+        "date_created": "2020-04-15T10:54:50",
+        "date_created_gmt": "2020-04-15T10:54:50",
+        "date_modified": "2020-04-15T10:54:50",
+        "date_modified_gmt": "2020-04-15T10:54:50",
+        "src": "http://testurl.com/wp-content/uploads/2020/04/polo-2.jpg",
+        "name": "polo-2.jpg",
+        "alt": ""
+      }
+    ],
+    "attributes": [
+      {
+        "id": 1,
+        "name": "Color",
+        "position": 0,
+        "visible": true,
+        "variation": false,
+        "options": [
+          "Blue"
+        ]
+      }
+    ],
+    "default_attributes": [],
+    "variations": [],
+    "grouped_products": [],
+    "menu_order": 0,
+    "meta_data": [
+      {
+        "id": 545,
+        "key": "_wpcom_is_markdown",
+        "value": "1"
+      }
+    ],
+    "_links": {
+      "self": [
+        {
+          "href": "http://testurl.com/wp-json/wc/v3/products/22"
+        }
+      ],
+      "collection": [
+        {
+          "href": "http://testurl.com/wp-json/wc/v3/products"
+        }
+      ]
+    }
+  },
+  {
+    "id": 18,
+    "name": "Sunglasses",
+    "slug": "sunglasses",
+    "permalink": "http://testurl.com/product/sunglasses/",
+    "date_created": "2020-04-15T10:54:32",
+    "date_created_gmt": "2020-04-15T10:54:32",
+    "date_modified": "2020-04-15T10:54:46",
+    "date_modified_gmt": "2020-04-15T10:54:46",
+    "type": "simple",
+    "status": "publish",
+    "featured": true,
+    "catalog_visibility": "visible",
+    "description": "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>\n",
+    "short_description": "<p>This is a simple product.</p>\n",
+    "sku": "woo-sunglasses",
+    "price": "90",
+    "regular_price": "90",
+    "sale_price": "",
+    "date_on_sale_from": null,
+    "date_on_sale_from_gmt": null,
+    "date_on_sale_to": null,
+    "date_on_sale_to_gmt": null,
+    "price_html": "<span class=\"woocommerce-Price-amount amount\">90,00&nbsp;<span class=\"woocommerce-Price-currencySymbol\">&#122;&#322;</span></span>",
+    "on_sale": false,
+    "purchasable": true,
+    "total_sales": 0,
+    "virtual": false,
+    "downloadable": false,
+    "downloads": [],
+    "download_limit": 0,
+    "download_expiry": 0,
+    "external_url": "",
+    "button_text": "",
+    "tax_status": "taxable",
+    "tax_class": "",
+    "manage_stock": false,
+    "stock_quantity": null,
+    "stock_status": "instock",
+    "backorders": "no",
+    "backorders_allowed": false,
+    "backordered": false,
+    "sold_individually": false,
+    "weight": "",
+    "dimensions": {
+      "length": "",
+      "width": "",
+      "height": ""
+    },
+    "shipping_required": true,
+    "shipping_taxable": true,
+    "shipping_class": "",
+    "shipping_class_id": 0,
+    "reviews_allowed": true,
+    "average_rating": "0.00",
+    "rating_count": 0,
+    "related_ids": [
+      65,
+      15
+    ],
+    "upsell_ids": [],
+    "cross_sell_ids": [],
+    "parent_id": 0,
+    "purchase_note": "",
+    "categories": [
+      {
+        "id": 19,
+        "name": "Accessories",
+        "slug": "accessories"
+      }
+    ],
+    "tags": [],
+    "images": [
+      {
+        "id": 47,
+        "date_created": "2020-04-15T10:54:46",
+        "date_created_gmt": "2020-04-15T10:54:46",
+        "date_modified": "2020-04-15T10:54:46",
+        "date_modified_gmt": "2020-04-15T10:54:46",
+        "src": "http://testurl.com/wp-content/uploads/2020/04/sunglasses-2.jpg",
+        "name": "sunglasses-2.jpg",
+        "alt": ""
+      }
+    ],
+    "attributes": [],
+    "default_attributes": [],
+    "variations": [],
+    "grouped_products": [],
+    "menu_order": 0,
+    "meta_data": [
+      {
+        "id": 510,
+        "key": "_wpcom_is_markdown",
+        "value": "1"
+      }
+    ],
+    "_links": {
+      "self": [
+        {
+          "href": "http://testurl.com/wp-json/wc/v3/products/18"
+        }
+      ],
+      "collection": [
+        {
+          "href": "http://testurl.com/wp-json/wc/v3/products"
+        }
+      ]
+    }
+  },
+  {
+    "id": 15,
+    "name": "draft product",
+    "slug": "beanie",
+    "permalink": "http://testurl.com/product/beanie/",
+    "date_created": "2020-04-15T10:54:31",
+    "date_created_gmt": "2020-04-15T10:54:31",
+    "date_modified": "2020-04-15T10:54:43",
+    "date_modified_gmt": "2020-04-15T10:54:43",
+    "type": "simple",
+    "status": "draft",
+    "featured": false,
+    "catalog_visibility": "visible",
+    "description": "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>\n",
+    "short_description": "<p>This is a simple product.</p>\n",
+    "sku": "woo-beanie",
+    "price": "18",
+    "regular_price": "20",
+    "sale_price": "18",
+    "date_on_sale_from": null,
+    "date_on_sale_from_gmt": null,
+    "date_on_sale_to": null,
+    "date_on_sale_to_gmt": null,
+    "price_html": "<del><span class=\"woocommerce-Price-amount amount\">20,00&nbsp;<span class=\"woocommerce-Price-currencySymbol\">&#122;&#322;</span></span></del> <ins><span class=\"woocommerce-Price-amount amount\">18,00&nbsp;<span class=\"woocommerce-Price-currencySymbol\">&#122;&#322;</span></span></ins>",
+    "on_sale": true,
+    "purchasable": false,
+    "total_sales": 0,
+    "virtual": false,
+    "downloadable": false,
+    "downloads": [],
+    "download_limit": 0,
+    "download_expiry": 0,
+    "external_url": "",
+    "button_text": "",
+    "tax_status": "taxable",
+    "tax_class": "",
+    "manage_stock": false,
+    "stock_quantity": null,
+    "stock_status": "instock",
+    "backorders": "no",
+    "backorders_allowed": false,
+    "backordered": false,
+    "sold_individually": false,
+    "weight": "",
+    "dimensions": {
+      "length": "",
+      "width": "",
+      "height": ""
+    },
+    "shipping_required": true,
+    "shipping_taxable": true,
+    "shipping_class": "",
+    "shipping_class_id": 0,
+    "reviews_allowed": true,
+    "average_rating": "0.00",
+    "rating_count": 0,
+    "related_ids": [
+      18,
+      65
+    ],
+    "upsell_ids": [],
+    "cross_sell_ids": [],
+    "parent_id": 0,
+    "purchase_note": "",
+    "categories": [
+      {
+        "id": 19,
+        "name": "Accessories",
+        "slug": "accessories"
+      }
+    ],
+    "tags": [],
+    "images": [
+      {
+        "id": 44,
+        "date_created": "2020-04-15T10:54:43",
+        "date_created_gmt": "2020-04-15T10:54:43",
+        "date_modified": "2020-04-15T10:54:43",
+        "date_modified_gmt": "2020-04-15T10:54:43",
+        "src": "http://testurl.com/wp-content/uploads/2020/04/beanie-2.jpg",
+        "name": "beanie-2.jpg",
+        "alt": ""
+      }
+    ],
+    "attributes": [
+      {
+        "id": 1,
+        "name": "Color",
+        "position": 0,
+        "visible": true,
+        "variation": false,
+        "options": [
+          "Red"
+        ]
+      }
+    ],
+    "default_attributes": [],
+    "variations": [],
+    "grouped_products": [],
+    "menu_order": 0,
+    "meta_data": [
+      {
+        "id": 481,
+        "key": "_wpcom_is_markdown",
+        "value": "1"
+      }
+    ],
+    "_links": {
+      "self": [
+        {
+          "href": "http://testurl.com/wp-json/wc/v3/products/15"
+        }
+      ],
+      "collection": [
+        {
+          "href": "http://testurl.com/wp-json/wc/v3/products"
+        }
+      ]
+    }
+  }
+]

@@ -5,6 +5,7 @@ from decimal import Decimal
 from unittest import TestCase
 
 import responses
+from gateway import Product
 from magento.importers import Magento
 
 CURRENT_DIRECTORY = pathlib.Path(__file__).parent.absolute()
@@ -88,6 +89,7 @@ class MagentoTest(TestCase):
                 json=json.load(json_file),
                 status=200,
             )
+
         responses.add(
             responses.HEAD,
             re.compile(f"{self.BASE_URL}/pub/media/catalog/product/././.+"),
@@ -106,11 +108,27 @@ class MagentoTest(TestCase):
             callback=product_response,
             content_type="application/json",
         )
+        responses.add(
+            responses.PUT,
+            re.compile(f"{self.BASE_URL}/rest/V1/products/(.+)/stockItems/1"),
+            json='{"1"}',
+            content_type="application/json",
+        )
         self.importer = Magento(self.BASE_URL, self.API_KEY)
 
     def tearDown(self) -> None:
         responses.stop()
         responses.reset()
+
+    def test_throw_exception_if_more_than_1_store(self):
+        with open(f"{CURRENT_DIRECTORY}/magento_responses/store_config__multiple_stores.json") as json_file:
+            responses.replace(
+                responses.GET, f"{self.BASE_URL}/rest/V1/store/storeConfigs", json=json.load(json_file), status=200,
+            )
+        with self.assertRaisesRegex(
+            NotImplementedError, "Magento has more than 1 store, which is not currently supported by this importer"
+        ):
+            Magento(self.BASE_URL, self.API_KEY)
 
     def test_get_base_media_url(self):
         self.assertEqual(self.importer.base_media_url, "http://123.456.789.0/pub/media/")
@@ -145,3 +163,17 @@ class MagentoTest(TestCase):
         self.assertEqual(len(configurable_products[1]), 15)
         self.assertEqual(len(configurable_products[2]), 10)
         self.assertEqual(configurable_products[0][0].variant_data, {"color": "Black", "size": "XS"})
+
+    def test_can_update_product_stock_quantity(self):
+        products = [
+            Product(name="abc", sku="abc", price=Decimal(5), stock=Decimal(10)),
+            Product(name="aaa", sku="aaa", price=Decimal(5), stock=Decimal(20)),
+        ]
+        self.importer.sync_products(products)
+        # First 4 calls are on Magento instance initialization
+        # but we still checks total calls count so there are no *extra* calls
+        self.assertEqual(len(responses.calls), 6)
+        self.assertEqual(responses.calls[4].request.url, f"{self.BASE_URL}/rest/V1/products/abc/stockItems/1")
+        self.assertEqual(responses.calls[4].request.body, b'{"stock_item": {"qty": 10}}')
+        self.assertEqual(responses.calls[5].request.url, f"{self.BASE_URL}/rest/V1/products/aaa/stockItems/1")
+        self.assertEqual(responses.calls[5].request.body, b'{"stock_item": {"qty": 20}}')

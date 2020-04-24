@@ -1,7 +1,8 @@
 import logging
 
-from magento_pkg.magento.runner import run_import
+from magento.runner import run_import
 
+# pylint: disable=E1120
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
     run_import()

@@ -4,6 +4,7 @@ import re
 import uuid
 from decimal import Decimal
 from itertools import groupby
+from urllib import parse
 
 import requests
 import simplejson as json
@@ -25,6 +26,7 @@ class Gateway:
         self.image_prefix = image_url_prefix
         self.endpoints = self._generate_endpoints(self.base_url, self.shop_id)
         self.session = requests.Session()
+        self.session.mount("https://", HTTPAdapter(max_retries=Retry(total=5, backoff_factor=0.5)))
         self.session.headers.update({"Authorization": f"Bearer {self._build_token(secret)}"})
         self.tags_in_db = None
 
@@ -111,7 +113,7 @@ class Gateway:
 
         payloads = list()
         for product in product_variants:
-            payload = {"archived": False, "for_sale": True}
+            payload = {"archived": False, "for_sale": product.for_sale}
             if product.images_urls:
                 images = [self.upload_public_image(image_url) for image_url in product.images_urls]
             else:
@@ -119,7 +121,7 @@ class Gateway:
             product_data = {
                 "base_price_type": "retail",
                 "cost_price": {"currency": "zł", "vat_percent": 0, "amount": 0},
-                "base_price": {"currency": "zł", "vat_percent": product.vat_percent, "amount": product.price},
+                "base_price": {"currency": "zł", "vat_percent": 0, "amount": product.price},
                 "name": product.name,
                 "vat": f"VAT{product.vat_percent}",
                 "images": images,
@@ -209,6 +211,17 @@ class Gateway:
 
         return url + fields["key"]
 
-    def upload_public_image(self, image_url):
+    @staticmethod
+    def _escape_non_ascii_characters_in_url(url: str) -> str:
+        """
+        For example convert "http://example.com/Zdjęcie-1.jpg" to "http://example.com/Zdj%C4%99cie-1.jpg"
+        """
+        parsed_url = list(parse.urlsplit(url))
+        parsed_url[2] = parse.quote(parsed_url[2])
+        return parse.urlunsplit(parsed_url)
+
+    def upload_public_image(self, image_url: str):
+        if not image_url.isascii():
+            image_url = self._escape_non_ascii_characters_in_url(image_url)
         response = self.session.post(self.endpoints["image"]["public_upload"], json={"url": image_url})
         return response.json()["url"]
