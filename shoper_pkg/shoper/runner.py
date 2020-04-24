@@ -80,11 +80,11 @@ def sync_categories(path):
                 category = importer_categories.get(importer_product.get("category_id"))
                 mapped_category = categories.get(category)
                 if mapped_category:
-                    product.category = [mapped_category]
+                    product.categories = [mapped_category]
                 # if mapped category is None then the category is covered by gateway categories
                 # or there was no matching category
                 else:
-                    product.category = [category]
+                    product.categories = [category]
                 # TODO gateway.update(product)
 
 
