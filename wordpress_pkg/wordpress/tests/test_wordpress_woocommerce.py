@@ -153,8 +153,10 @@ class WordpressWoocommerceTest(TestCase):
         self.assertNotIn("grouped product", products_names)
         self.assertNotIn("external product", products_names)
         self.assertNotIn("draft product", products_names)
-        self.assertEqual(12, variable_product[0].price)
-        self.assertEqual(13, variable_product[1].price)
+
+        # exclude vat
+        self.assertNotEqual(12, variable_product[0].price)
+        self.assertNotEqual(13, variable_product[1].price)
 
     def test_get_products_with_excluded_taxes(self):
         # should include vat to prices
@@ -168,5 +170,6 @@ class WordpressWoocommerceTest(TestCase):
             if product.name == "T-Shirt Red":
                 variable_product = product_variants
 
-        self.assertLess(12, variable_product[0].price)
-        self.assertLess(13, variable_product[1].price)
+        # price is without vat
+        self.assertEqual(12, variable_product[0].price)
+        self.assertEqual(13, variable_product[1].price)

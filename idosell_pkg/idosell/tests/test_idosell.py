@@ -5,7 +5,6 @@ from unittest import TestCase
 from unittest.mock import patch
 
 import responses
-from gateway.models import Image
 from idosell.importers import IdoSell
 
 from .idosell_responses import (
@@ -14,6 +13,7 @@ from .idosell_responses import (
     PRODUCT_XML,
     SUCCESSFUL_AUTHORIZATION_RESPONSE,
     INVALID_AUTHORIZATION_RESPONSE,
+    PRODUCT_XML_WITHOUT_DESCRIPTION,
 )
 
 
@@ -88,11 +88,8 @@ class IdoSellTest(TestCase):
         return None
 
     def test_get_products(self):
-        with patch("idosell.importers.date") as mock_datetime, patch(
-            "idosell.importers.download_image"
-        ) as mock_download_image:
+        with patch("idosell.importers.date") as mock_datetime:
             mock_datetime.today.return_value = datetime(2020, 4, 6)
-            mock_download_image.return_value = Image("temp_file", "", None)
             importer = IdoSell(**self.IDOSELL_INIT_ARGS)
             gw_product_variants = list(importer.get_products())
             # flat list
@@ -145,3 +142,12 @@ class IdoSellTest(TestCase):
         self.assertEqual(product["variant_data"]["size"][0]["price"], 1518)
         self.assertEqual(product["variant_data"]["size"][0]["name"], "XS")
         self.assertIn("beżowy", product["variant_data"]["kolor"])
+
+    def test_get_product_from_xml_without_short_description(self):
+        importer = IdoSell(**self.IDOSELL_INIT_ARGS)
+        xml_product = ET.fromstring(PRODUCT_XML_WITHOUT_DESCRIPTION)
+        # pylint: disable=W0212
+        product = importer._get_product(xml_product=xml_product)
+
+        self.assertEqual(product["name"], "Triaction Sportowe Etui")
+        self.assertEqual(product["brief"], "")

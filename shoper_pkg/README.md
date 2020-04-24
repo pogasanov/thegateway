@@ -34,3 +34,18 @@ SHOPER_BASE_URL=http://shop.url
 SHOPER_USERNAME
 
 SHOPER_PASSWORD
+
+
+### Stock update errors ###
+
+##### Object is locked #####
+
+```json
+{
+    "error": "temporarily_unavailable", 
+    "error_description": "Object is locked"
+}
+```
+
+This error may appear when product editor window is open or was not saved properly.
+In that case try saving the product or log out from an administrator account.

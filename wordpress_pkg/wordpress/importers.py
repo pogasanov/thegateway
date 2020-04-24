@@ -1,5 +1,6 @@
 import logging
 from collections import defaultdict
+from decimal import Decimal
 from typing import List, Iterator
 from woocommerce import API
 
@@ -85,15 +86,21 @@ class WoocommerceWordPress:
     def _set_price_and_vat(self, gw_product: Product, api_product: dict):
         """
         Set tax and price for product
-        If the price does not include tax, add it
+        If the price includes tax, change to net
         """
         vat = self._get_tax(api_product)
         price = float(api_product["price"])
-        if not self.is_price_with_tax:
-            price += price * (vat / 100)
 
-        gw_product.price = price
+        # if the owner of the shop didn't set vat,
+        # the price is probably gross
+        if vat == 0 or self.is_price_with_tax:
+            if vat == 0:
+                vat = self.DEFAULT_TAX
+
+            price = Decimal(price) / (Decimal(1) + (Decimal(vat / 100)))
+
         gw_product.vat_percent = vat
+        gw_product.price = price
 
     def _convert_variable_api_product(self, api_product: dict) -> List[Product]:
         """

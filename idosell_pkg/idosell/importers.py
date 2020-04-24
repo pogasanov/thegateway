@@ -2,12 +2,12 @@ import json
 import logging
 import xml.etree.ElementTree as ET
 from datetime import date
+from decimal import Decimal
 from hashlib import sha1
 from typing import List, Iterator
 
 import requests
 from gateway.models import Product
-from gateway.utils import download_image
 
 # pylint: disable=C0103
 logger = logging.getLogger(__name__)
@@ -25,7 +25,7 @@ class IdoSell:
     it not always contains size of product as the name suggests
     """
     GUARANTEED_VARIANT_TAG = "size"
-    GW_PRODUCT_UNKNOWN_QUANTITY = 100001
+    GW_PRODUCT_UNKNOWN_QUANTITY = Decimal("100001")
 
     def __init__(self, login: str, password: str, base_url: str):
         self.login = login
@@ -67,7 +67,10 @@ class IdoSell:
 
         product["name"] = self._find(xml_product, "./description/name[{lang}]", lang=True).text
         product["vat"] = float(xml_product.attrib["vat"])
-        product["brief"] = self._find(xml_product, "./description/short_desc[{lang}]", lang=True).text.strip()
+
+        brief_description = self._find(xml_product, "./description/short_desc[{lang}]", lang=True)
+        product["brief"] = brief_description.text.strip() if brief_description is not None else ""
+
         product["image_urls"] = self._get_image_urls(xml_product)
         product["category"] = self._find(xml_product, "./category").attrib["name"]
         product["variant_data"] = dict()
@@ -116,8 +119,8 @@ class IdoSell:
         """
         Get variants from sizes tag
         name: str
-        price: float
-        stock: str
+        price: Decimal
+        stock: Decimal
         """
         sizes = []
         xml_sizes = xml_product.findall("./sizes/size")
@@ -128,20 +131,20 @@ class IdoSell:
             else:
                 size["name"] = xml_variant.attrib["panel_name"]
 
-            size["price"] = float(xml_variant.find("./price").attrib["gross"])
+            size["price"] = Decimal(xml_variant.find("./price").attrib["gross"])
             stock_availability = xml_variant.attrib["available"]
             if stock_availability == "unavailable":
-                stock = 0
+                stock = Decimal("0")
             else:
                 xml_stocks = xml_variant.findall("./stock")
-                stock = 0
+                stock = Decimal("0")
                 for xml_stock in xml_stocks:
                     if xml_stock.attrib["available_stock_quantity"] == self.STOCK_UNKNOWN_AVAILABLE_QUANTITY:
                         # special case, not given information how many products available
                         # needs to be handled in the future
                         stock = self.GW_PRODUCT_UNKNOWN_QUANTITY
                         break
-                    stock += int(xml_stock.attrib["available_stock_quantity"])
+                    stock += Decimal(xml_stock.attrib["available_stock_quantity"])
 
             size["stock"] = stock
             sizes.append(size)
@@ -155,7 +158,7 @@ class IdoSell:
         product_template["vat_percent"] = fetched_product["vat"]
         product_template["description_short"] = fetched_product["brief"]
         product_template["sku"] = fetched_product["sku"]
-        product_template["images"] = [download_image(image_url) for image_url in fetched_product["image_urls"]]
+        product_template["images_urls"] = fetched_product["image_urls"]
         return self._create_gateway_products_from_variants(product_template, fetched_product["variant_data"])
 
     def _create_gateway_products_from_variants(self, product_template: dict, variants: dict) -> List[Product]:
@@ -170,7 +173,7 @@ class IdoSell:
             )
             gw_prod.description_short = product_template["description_short"]
             gw_prod.sku = product_template["sku"]
-            gw_prod.images = product_template["images"]
+            gw_prod.images_urls = product_template["images_urls"]
             gw_prod.stock = size["stock"]
             gw_prod.variant_data = dict()
             gw_prod.variant_data["size"] = size["name"]
@@ -194,7 +197,9 @@ class IdoSell:
             return []
         xml_root = ET.fromstring(xml_content)
         xml_products = xml_root.findall("./products/product")
-        for xml_product in xml_products:
+        total = len(xml_products)
+        for index, xml_product in enumerate(xml_products, 1):
+            print(f"{index}/{total}")
             product_variants = self._get_product(xml_product)
             yield self._convert_fetched_product_to_gateway_products(product_variants)
 
