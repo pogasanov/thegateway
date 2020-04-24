@@ -69,7 +69,7 @@ class IdoSell:
         product["vat"] = float(xml_product.attrib["vat"])
 
         brief_description = self._find(xml_product, "./description/short_desc[{lang}]", lang=True)
-        product["brief"] = brief_description.text.strip() if brief_description else ""
+        product["brief"] = brief_description.text.strip() if brief_description is not None else ""
 
         product["image_urls"] = self._get_image_urls(xml_product)
         product["category"] = self._find(xml_product, "./category").attrib["name"]
