@@ -1,6 +1,7 @@
 import json
 import xml.etree.ElementTree as ET
 from datetime import datetime
+from decimal import Decimal
 from unittest import TestCase
 from unittest.mock import patch
 
@@ -125,7 +126,7 @@ class IdoSellTest(TestCase):
                 beige_xs_product.description_short,
                 "Bluzka damska  H&M z długim rękawem, ciekawymi rozcięciami na ramionach",
             )
-            self.assertEqual(beige_xs_product.price, 1518)
+            self.assertEqual(beige_xs_product.price, Decimal("1234"))
 
     def test_get_product_from_xml(self):
         importer = IdoSell(**self.IDOSELL_INIT_ARGS)
@@ -139,7 +140,7 @@ class IdoSellTest(TestCase):
         self.assertEqual(len(product["image_urls"]), 2)
         self.assertEqual(len(product["variant_data"]), 3)
         self.assertEqual(len(product["variant_data"]["size"]), 5)
-        self.assertEqual(product["variant_data"]["size"][0]["price"], 1518)
+        self.assertEqual(product["variant_data"]["size"][0]["price"], Decimal("1234"))
         self.assertEqual(product["variant_data"]["size"][0]["name"], "XS")
         self.assertIn("beżowy", product["variant_data"]["kolor"])
 
@@ -150,4 +151,5 @@ class IdoSellTest(TestCase):
         product = importer._get_product(xml_product=xml_product)
 
         self.assertEqual(product["name"], "Triaction Sportowe Etui")
+        self.assertEqual(product["variant_data"]["size"][0]["price"], Decimal("63.41"))
         self.assertEqual(product["brief"], "")
