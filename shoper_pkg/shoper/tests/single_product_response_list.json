@@ -1,0 +1,116 @@
+{
+    "count": "1",
+    "pages": 1,
+    "page": 1,
+    "list": [
+        {
+            "product_id": "28",
+            "producer_id": "16",
+            "group_id": "2",
+            "tax_id": "1",
+            "add_date": "2014-09-30 18:08:17",
+            "edit_date": "2020-04-16 09:59:11",
+            "other_price": "0.00",
+            "pkwiu": "",
+            "unit_id": "1",
+            "in_loyalty": "0",
+            "loyalty_score": null,
+            "loyalty_price": null,
+            "bestseller": "0",
+            "newproduct": "0",
+            "dimension_w": "0.0000",
+            "dimension_h": "0.0000",
+            "dimension_l": "0.0000",
+            "vol_weight": "0.0000",
+            "currency_id": null,
+            "gauge_id": null,
+            "unit_price_calculation": "0",
+            "type": "0",
+            "category_id": "8",
+            "categories": [
+                8
+            ],
+            "promo_price": null,
+            "code": "116",
+            "ean": "",
+            "stock": {
+                "stock_id": "28",
+                "extended": "0",
+                "price": "259.00",
+                "price_type": "1",
+                "price_buying": "0.00",
+                "stock": "99",
+                "package": "0",
+                "warn_level": "80",
+                "sold": "0",
+                "weight": "4",
+                "weight_type": "1",
+                "active": "1",
+                "default": "1",
+                "product_id": "28",
+                "availability_id": null,
+                "delivery_id": "4",
+                "gfx_id": null,
+                "code": "116",
+                "ean": "",
+                "comp_weight": "4",
+                "comp_price": "259.00",
+                "comp_promo_price": "259.00",
+                "price_wholesale": "259.00",
+                "comp_price_wholesale": "259.00",
+                "comp_promo_price_wholesale": "259.00",
+                "price_special": "259.00",
+                "comp_price_special": "259.00",
+                "comp_promo_price_special": "259.00",
+                "price_type_wholesale": "0",
+                "price_type_special": "0",
+                "calculation_unit_id": null,
+                "calculation_unit_ratio": "0"
+            },
+            "translations": {
+                "pl_PL": {
+                    "translation_id": "28",
+                    "product_id": "28",
+                    "name": "T-shirt kremowy Freedom",
+                    "short_description": "<p>Tutaj wstaw krótki opis produktu.</p>",
+                    "description": "<p><span style=\"font-size: 12pt;\"><strong>Najlepszy opis produktu jaki możesz sobie wymarzyć</strong></span></p>  <p>W tym miejscu należy wstawić opis produktu,  prezentujący jego cechy,  właściwości oraz zastosowanie.<br />Klient czytając opis musi dowiedzieć się o nim jak najwięcej. Pamiętaj,  że to internet,  a nie sklepowa półka.<br />Produktu nie da się wziąć do ręki,  dlatego opisz każdy szczegół najdokładniej jak potrafisz. Unikniesz w ten sposób<br />nieporozumień i zwrotów towaru.<br /><br /><strong><span style=\"font-size: 12pt;\">Specyfika produktu: czyli to co bardzo ważne<br /><br /></span></strong><span style=\"font-size: 12pt;\"><span style=\"font-size: 10pt;\">- Rodzaj materiału<br /></span></span><span style=\"font-size: 10pt;\">- Długość,  grubość<br />- Kraj pochodzenia<br />- Dodatkowe właściwości</span></p>  <p><br />Forma przedstawienia asortymentu w sklepie internetowym ma znaczący wpływ na to,  czy przekonamy klienta do zakupów w naszym sklepie. Posiadając unikalne oraz wyczerpujące informacje na temat towaru,  zwiększamy liczbę indeksowanych stron naszego sklepu przez wyszukiwarki internetowe np. Google. To właśnie wyszukiwarki zwiększają ruch w naszym sklepie,  dlatego zadbajmy o to,  aby każdy produkt posiadał wyczerpujący opis. Sklep internetowy,  w odróżnieniu od tradycyjnego,  nie posiada ekspedienta,  który nas wysłucha oraz pomoże w wyborze przedmiotu spełniającego nasze oczekiwania. Nie wychodźmy z założenia,  że skoro prowadzimy sprzedaż internetową i uważamy się za specjalistów od oferowanego asortymentu,  to klient w razie wątpliwości zapyta nas o poradę. Istnieje duże prawdopodobieństwo,  że klient,  który nie znajdzie interesujących go informacji o produkcie,  poszuka innego sklepu,  a do nas już nie wróci. Opis zastępuje sprzedawcę. Zróbmy więc z naszego sklepu miejsce,  w którym doradzamy.</p>",
+                    "active": "1",
+                    "lang_id": "1",
+                    "isdefault": "1",
+                    "seo_title": "",
+                    "seo_description": "",
+                    "seo_keywords": "",
+                    "order": "8",
+                    "main_page": "0",
+                    "main_page_order": "0",
+                    "booster": "",
+                    "seo_url": "",
+                    "permalink": "http://sklep266192.shoparena.pl/pl/p/T-shirt-kremowy-Freedom/28"
+                }
+            },
+            "options": [],
+            "attributes": {
+                "2": []
+            },
+            "related": [],
+            "main_image": {
+                "gfx_id": "3",
+                "name": "T-shirt kremowy Freedom",
+                "unic_name": "03e05e8fc3a39912eda4cc790cc22824",
+                "order": "1",
+                "hidden": "0",
+                "translations": {
+                    "pl_PL": {
+                        "translation_id": "3",
+                        "gfx_id": "3",
+                        "name": "T-shirt kremowy Freedom",
+                        "lang_id": "1"
+                    }
+                }
+            },
+            "is_product_of_day": false,
+            "feeds_excludes": [],
+            "tags": []
+        }
+    ]
+}

@@ -1,27 +1,32 @@
 import decimal
+import json
 import logging
 
 from json import JSONDecodeError
 from typing import List, Dict, Generator
 
 import requests
-from requests import Response
 
 from gateway.models import Product, Image
-from gateway.utils import download_image
 
 
-LOGGER = logging.getLogger(__name__)
+# pylint: disable=invalid-name
+from requests import Response
+
+logger = logging.getLogger(__name__)
 
 
 class Shoper:
-    def __init__(self, base_url: str, username: str, password: str, translation_prefix: str = "pl_PL"):
+    def __init__(
+        self, base_url: str, username: str, password: str, translation_prefix: str = "pl_PL", stock_update: bool = True
+    ):
         self.api_hostname = base_url
         self.username = username
         self.password = password
         self.translation_prefix = translation_prefix
         self.auth_token = self.authorize()
-        self.taxes = self.get_taxes()
+        if not stock_update:
+            self.taxes = self.get_taxes()
 
     def authorize(self) -> str:
         response = requests.post(
@@ -38,10 +43,23 @@ class Shoper:
             return response.json()
         except JSONDecodeError:
             # pylint: disable=logging-format-interpolation
-            LOGGER.fatal(f"{response.status_code}: {response.text}")
+            logger.fatal(f"{response.status_code}: {response.text}")
             raise
 
-    def invoke(self, endpoint: str, method: str, output_format: str = None, stream: bool = False) -> Response:
+    def put(self, endpoint: str, data: Dict, output_format: str = "JSON") -> Dict:
+        response = self.invoke(endpoint, "put", output_format, data=data)
+        try:
+            if not response.status_code == 200:
+                logger.critical(response.json())
+            return response.json()
+        except JSONDecodeError:
+            # pylint: disable=logging-format-interpolation
+            logger.fatal(f"{response.status_code}: {response.text}")
+            raise
+
+    def invoke(
+        self, endpoint: str, method: str, output_format: str = None, stream: bool = False, data: Dict = None
+    ) -> Response:
         # pylint: disable=invalid-name
         fn = getattr(requests, method)
         if output_format:
@@ -53,6 +71,7 @@ class Shoper:
             headers={"Authorization": f"Bearer {self.auth_token}"},
             params=params,
             stream=stream,
+            data=data,
         )
 
     def get_image_url(self, data: Dict) -> Image:
@@ -135,3 +154,29 @@ class Shoper:
                 products_response = self.get(f"products?limit={page_limit}&page={i}")
                 for product in products_response.get("list"):
                     yield self.load_product_list(product)
+
+    def fetch_product(self, product: Product) -> Dict:
+        page_limit = 1
+        sku = product.sku.split("_")[0]
+        code_filter = json.dumps({"stock.code": sku})
+        products_response = self.get(f"products?limit={page_limit}&filters={code_filter}")
+        if int(products_response.get("count")) > 1:
+            # pylint: disable=logging-format-interpolation
+            logger.error(f"error: Found {products_response.get('count')} products with code {sku}")
+            raise
+        return products_response.get("list")[0]
+
+    def get_stock_for_single_product(self, product: Product) -> int:
+        product_data = self.fetch_product(product)
+        return product_data.get("stock").get("stock")
+
+    def update_product_stock(self, product: Product) -> Dict:
+        """
+        Filtering by code is only possible on list endpoint.
+        Page limit set to 1 cause even if there are, somehow,
+        more products, there's no reason to show them.
+        """
+        product_to_update = self.fetch_product(product)
+        return self.put(
+            f"products/{product_to_update.get('product_id')}", json.dumps({"stock": {"stock": product.stock}})
+        )
