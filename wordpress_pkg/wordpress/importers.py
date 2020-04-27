@@ -38,7 +38,7 @@ class WoocommerceWordPress:
                 self.is_price_with_tax = option_entry["value"] == "yes"
                 return
 
-    def get_categories(self) -> List[str]:
+    def get_category_list(self) -> List[str]:
         """
         Get list of all categories in the shop
         """
@@ -263,6 +263,19 @@ class WoocommerceWordPress:
                 api_product["type"] not in ("grouped", "external") if "type" in api_product else True,
             ]
         )
+
+    def sync_categories(self, gw_product: Product) -> Product:
+        api_products = self.find_products_by_sku(gw_product.sku)
+        if not api_products:
+            logger.warning("Categories not found for product name=%s, sku=%s", gw_product.name, gw_product.sku)
+            return None
+
+        gw_categories_of_product = self._get_categories(api_products[0])
+        gw_product.categories = gw_categories_of_product
+        return gw_product
+
+    def find_products_by_sku(self, sku: str) -> List[dict]:
+        return self.wcapi.get("products", params={"sku": sku, "per_page": 100}).json()
 
     def get_products(self) -> Iterator[List[Product]]:
         if not self._is_connection_established():

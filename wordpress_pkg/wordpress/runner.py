@@ -46,14 +46,13 @@ def _get_category_map(category_map_path: str) -> dict:
 
 
 @click.command()
-@click.option("--prepare-mapping-file", is_flag=True, help="Some help message")
 def prepare_mapping_file():
     current_directory = pathlib.Path(__file__).parent.absolute()
     parsed_url = urllib.parse.urlparse(WOOCOMMERCE_BASE_URL)
     category_mapper_filename = "{domain}_category_map.json".format(domain=parsed_url.netloc)
     importer = WoocommerceWordPress(WOOCOMMERCE_CONSUMER_KEY, WOOCOMMERCE_CONSUMER_SECRET, WOOCOMMERCE_BASE_URL, None)
     exporter = Gateway(GATEWAY_BASE_URL, GATEWAY_SHOP_ID, GATEWAY_SECRET, IMAGE_URL_PREFIX)
-    api_categories = importer.get_categories()
+    api_categories = importer.get_category_list()
     gw_categories = exporter._get_categories()
 
     mapped_categories = _map_categories(api_categories, gw_categories)
@@ -64,7 +63,32 @@ def prepare_mapping_file():
 
 
 @click.command()
-@click.option("--filename", help="Some help text")
+@click.option("--path", "-p", help="Path to mapped categories (json file)")
+def sync_categories(category_map_path: str):
+    """
+    Pass path to a file with mapped categories.
+    """
+    print("category_map_path")
+    category_map = _get_category_map(category_map_path)
+    if not category_map:
+        return
+    importer = WoocommerceWordPress(
+        WOOCOMMERCE_CONSUMER_KEY, WOOCOMMERCE_CONSUMER_SECRET, WOOCOMMERCE_BASE_URL, category_map
+    )
+    exporter = Gateway(GATEWAY_BASE_URL, GATEWAY_SHOP_ID, GATEWAY_SECRET, IMAGE_URL_PREFIX)
+
+    gw_products = exporter.list_of_products()
+
+    for gw_product in gw_products:
+        updated_product = importer.sync_categories(gw_product)
+        if not updated_product:
+            continue
+
+        # TODO method not available
+        # exporter.update_product(updated_product)
+
+
+@click.command()
 def run_import(filename):
     print(filename)
     category_map = _get_category_map(filename)
