@@ -31,6 +31,7 @@ def get_missing_categories(gateway_categories: Dict, importer_categories: List) 
             categories.append(category)
     return categories
 
+
 @click.command()
 def prepare_mapping_file():
     """
