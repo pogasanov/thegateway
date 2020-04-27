@@ -15,6 +15,7 @@ def run_imports():
     gateway_secret = os.environ.get("GATEWAY_SECRET", "OyB2YbwTVtRXuJv+VE4oJLVyGo8pf1XVibCk08lt4ys=")
     image_url_prefix = f"{os.environ.get('IMAGEBUCKET_URL')}{gateway_shop_id}/"
     exporter = Gateway(gateway_base_url, gateway_shop_id, gateway_secret, image_url_prefix)
+
     print("Importing products...")
     products = importer.build_products()
     products_count = next(products)

@@ -104,6 +104,10 @@ class SellyClient:
         images = self._get_table("produkty_zdjecia")
         return group_by(images, "produkt_id")
 
+    def get_categories(self):
+        categories = self._get_table("kategorie")
+        return categories
+
 
 # pylint: disable=too-many-instance-attributes
 class SellyImporter:
@@ -192,3 +196,7 @@ class SellyImporter:
         yield len(self.products)
         for product in self.products:
             yield self._get_single_product_variants(product)
+
+    def get_categories(self):
+        categories = self.client.get_categories()
+        return [category["nazwa"] for category in categories]
