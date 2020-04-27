@@ -63,3 +63,7 @@ class ImporterTests(TestCase):
         expected_len_of_variants = len([x for x in VARIANTS if x["produkt_id"] == PRODUCTS[1]["product_id"]])
         variants = self.importer._get_single_product_variants(PRODUCTS[1])
         self.assertEqual(len(variants), expected_len_of_variants)
+
+    def test_get_categories(self):
+        categories = self.importer.get_categories()
+        self.assertEqual(categories, [category["nazwa"] for category in CATEGORIES])

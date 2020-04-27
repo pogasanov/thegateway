@@ -45,3 +45,7 @@ class ClientTests(TestCase):
     def test_get_products_images(self):
         images = self.client.get_products_images()
         self.assertEqual(chain_list_of_lists(list(images.values())), IMAGES)
+
+    def test_get_categories(self):
+        categories = self.client.get_categories()
+        self.assertEqual(categories, CATEGORIES)

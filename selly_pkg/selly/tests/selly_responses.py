@@ -299,3 +299,53 @@ IMAGES = [
 ]
 COIN = {"coin": 2137}
 TOKEN = {"success": {"token": "c0acbe5d0cdda577b1bf21379cdad6a5", "expire_at": "2020-04-21T09:51:32.128Z"}}
+CATEGORIES = [
+    {
+        "kategoria_id": 1,
+        "parent_id": 0,
+        "nazwa": "Portfele damskie",
+        "kategoria_htaccess": "portfele-damskie",
+        "produkt_waga": 1.0,
+        "produkt_gabaryt": 0,
+        "html_title": "Portfele damskie skórzane na zamek, suwak i karty, na bigiel, markowe | Zagatto",
+        "html_description": "Szukasz skórzanego damskiego, zarazem markowego portfela? ✅ Sprawdź nasze propozycje na zamek jak i portfeli do kart Zagatto. Atrakcyjne ceny i szybka wysyłka!",
+        "html_keywords": "",
+        "opis": "<h1>Damskie portfele skórzane - na zamek, bigiel czy suwak. Markowe od Zagatto</h1>\r\n<p>Portfele damski dostępne w sklepie Zagatto tworzone są z wysokogatunkowej skóry naturalnej. Wytrzymałe, odporne na ścieranie, trwałe - wytrzymają lata użytkowania. Wybraliśmy dwa kolory\xa0 uwielbiane przez kobiety - portfel czerwony idealny dla kobiety lubiącej podkreślać swój styl dodatkami, a portfel czarny dla tych, które cenią sobie ponadczasową klasykę. Odporna na uszkodzenia oraz zmianę koloru idealnie sprawdza się przy wieloletnim użytkowaniu. Wewnątrz naszych portfeli - wiele kieszonek i przegródek pozwalających na zachowanie porządku i zmieszczenie wszystkich niezbędnych rzeczy: gotówki, dokumentów, kart lojalnościowych.</p>\r\n<h2>Wysokiej jakości damskie portfele ze skóry</h2>\r\n<p>Wszystkie skórzane portfele damskie dostępne w sklepie Zagatto tworzone są z wysokogatunkowej skóry naturalnej. Wytrzymałe, odporne na ścieranie, trwałe - wytrzymają lata użytkowania. Wybraliśmy dwa kolory uwielbiane przez kobiety – czerwony, który będzie idealny dla kobiety lubiącej podkreślać swój styl dodatkami oraz czarny dla Pań, które cenią sobie ponadczasową klasykę. Skóra, którą wykorzystujemy przy tworzeniu produktów to starannie wyselekcjonowany\xa0i zabezpieczony materiał. Dzięki temu każdy z naszych markowych, damskich skórzanych portfeli odporny jest na uszkodzenia oraz zmianę koloru, a zatem idealnie sprawdza się przy wieloletnim użytkowaniu. Wewnątrz oferowanych modeli – zarówno tych na zamek, jak i tych na solidny zatrzask, umieściliśmy wiele kieszonek i przegródek pozwalających na zachowanie porządku i zmieszczenie wszystkich niezbędnych rzeczy: gotówki, dokumentów, kart lojalnościowych. Osobne przegródki na karty rozmieściliśmy tak, aby ułatwić znajdowanie poszukiwanego przedmiotu. Markowe produkty z tej kolekcji łączą najwyższą jakość surowców i wykonania.</p>",
+    },
+    {
+        "kategoria_id": 2,
+        "parent_id": 0,
+        "nazwa": "Portfele męskie z ochroną RFID",
+        "kategoria_htaccess": "portfele-meskie",
+        "produkt_waga": 1.0,
+        "produkt_gabaryt": 0,
+        "html_title": "Portfele skórzane męskie markowe, na karty | Zagatto",
+        "html_description": "Szukasz męskiego skórzanego, markowego portfela nie tylko na karty? ✅ Sprawdź naszą propozycję od renomowanego producenta Zagatto. Atrakcyjne ceny i szybka wysyłka!",
+        "html_keywords": "",
+        "opis": "<h1>Skórzane portfele męskie. Markowe od Zagatto</h1>\r\n<p>Największym hitem wśród pomysłów na prezent dla panów są markowe portfele męskie. Taki czarny lub brązowy,\xa0skórzany i\xa0elegancki dodatek przyda się każdemu mężczyźnie, bez względu na okazję. W zagatto.pl oferujemy wysokiej jakości galanterię\xa0w bardzo szerokim wyborze wzorów i modeli. Zostały one wykonane z wysokogatunkowych materiałów, z dbałością\xa0o szczegóły. Są trwałe i będą się\xa0pięknie prezentować przez długi czas. Wybrane egzemplarze posiadają także użyteczne zabezpieczenia RFID, które chronią zawartość przed skanowaniem lub rozmagnesowaniem.</p>\r\n<p>\xa0</p>\r\n<h2>Męski skórzany portfel, który musisz mieć!</h2>\r\n<p>Praktyczny\xa0i funkcjonalny\xa0portfel\xa0męski\xa0powinien być poręczny\xa0i niewielkich rozmiarów, aby łatwo w razie potrzeby schować go w kieszeni. Musi także\xa0mieć dużo miejsca na karty. Obecnie portmonetka często\xa0służy bardziej jako pokrowiec na środki płatnicze i dokumenty niż do przechowywania pieniędzy. Dlatego przeglądając ofertę markowych\xa0etui\xa0męskich, warto postawić na\xa0ponadczasowe wzory z dużą ilością przegródek. Zapraszamy do zapoznania się z naszą\xa0ofertą.</p>",
+    },
+    {
+        "kategoria_id": 14,
+        "parent_id": 2,
+        "nazwa": "Always Wild",
+        "kategoria_htaccess": "portfele-meskie-always-wild",
+        "produkt_waga": 1.0,
+        "produkt_gabaryt": 0,
+        "html_title": "Portfele Always Wild - męskie skórzane | Zagatto",
+        "html_description": "Portfele męskie ze skóry naturalnej Always Wild",
+        "html_keywords": "",
+        "opis": '<p><img src="/img/bannery/always_wild-min.jpg" alt="Portfele Always Wild" /></p>\r\n<h1 style="text-align: center;">Portfel skórzany dla mężczyzny pewnego siebie</h1>\r\n<p style="text-align: center;">Portfel dzisiaj dopełnia ubiór. W każdym portfelu skórzanym marki Always Wild znajdziesz miejsce na dokumenty, karty kredytowe i płatnicze, wizytówki, paragony i zdjęcia najbliższych. Portfele Always Wild to połączenie ponadczasowego klasycznego wzornictwa z nutą ekstrawagancji, z bogatym wnętrzem i wysoką jakością materiału.</p>\r\n<p style="text-align: center;">Portfel męski wykonany został z miękkiej skóry naturalnej, niejednorodnej, co jest charakterystyczną cechą na materiału naturalnego.Każdy portfel jest minimalnie inny i wyjątkowy. Do wyboru brązy i czernie. Marka Always Wild to portfele skórzane dla osób praktycznych lubiących niestandardowy design.</p>',
+    },
+    {
+        "kategoria_id": 15,
+        "parent_id": 2,
+        "nazwa": "Loren",
+        "kategoria_htaccess": "loren",
+        "produkt_waga": 1.0,
+        "produkt_gabaryt": 0,
+        "html_title": "Portfele męskie Loren",
+        "html_description": "",
+        "html_keywords": "",
+        "opis": "<h1>Portfele męskie - kolekcja Loren</h1>",
+    },
+]
