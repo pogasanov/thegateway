@@ -278,3 +278,29 @@ class Gateway:
             image_url = self._escape_non_ascii_characters_in_url(image_url)
         response = self.session.post(self.endpoints["image"]["public_upload"], json={"url": image_url})
         return response.json()["url"]
+
+    def _get_categories(self):
+        """
+        Get categories from production
+        """
+        url = "https://sma.dev.gwapi.eu/bootstrap"
+        response = self.session.get(url)
+        data = response.json()["tag_hierarchy"]
+        categories = dict()
+
+        categories = self._find_categories(categories, data)
+        return categories
+
+    def _find_categories(self, categories: dict, data: list) -> dict:
+        """
+        Find categories in request data
+        """
+        for item in data:
+            name = item["name"].lower().strip()
+            guid = item["guid"]
+            categories.update({name: guid})
+
+            if item["children"]:
+                self._find_categories(categories, item["children"])
+
+        return categories

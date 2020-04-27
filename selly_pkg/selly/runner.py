@@ -43,24 +43,33 @@ def map_categories(ctx, name):
     not_mapped_categories = filter(lambda category: category not in exporter_categories, importer_categories)
     output_dict = {category: None for category in not_mapped_categories}
     click.echo(f"{len(output_dict)} / {len(importer_categories)} could not be mapped")
-
-    parent_path = pathlib.Path(__file__).parent.parent.absolute()
-    file_name = f"{name}-categories-mapping.json"
-    file_path = os.path.join(parent_path, "category_mappings", file_name)
-    with open(file_path, "w") as outfile:
-        json.dump(output_dict, outfile, ensure_ascii=False, indent=4)
-    click.echo(f"Generated category map file: {file_path}")
+    if output_dict:
+        parent_path = pathlib.Path(__file__).parent.parent.absolute()
+        file_name = f"{name}-categories-mapping.json"
+        file_path = os.path.join(parent_path, "category_mappings", file_name)
+        with open(file_path, "w") as outfile:
+            json.dump(output_dict, outfile, ensure_ascii=False, indent=4)
+        click.echo(f"Generated category map file: {file_path}")
+    else:
+        click.echo("All categories are covered with categories from the gateway.")
 
 
 @cli.command()
+@click.argument("filepath", type=click.Path(exists=True))
 @click.pass_context
-def run_imports(ctx):
+def run_imports(ctx, filepath):
     importer = ctx.obj["importer"]
     exporter = ctx.obj["exporter"]
 
-    print("Importing products...")
-    products = importer.build_products()
+    category_mapping = None
+    if filepath:
+        with open(filepath, "r") as fin:
+            category_mapping = json.load(fin)
+        click.echo("Category mapping file loaded")
+
+    click.echo("Importing products...")
+    products = importer.build_products(category_mapping)
     products_count = next(products)
     for index, product in enumerate(products):
-        print(f"Exporting: {index + 1} / {products_count}")
+        click.echo(f"Exporting: {index + 1} / {products_count}")
         exporter.create_products(product)
