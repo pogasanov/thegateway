@@ -18,7 +18,13 @@ logger = logging.getLogger(__name__)
 
 class Shoper:
     def __init__(
-        self, base_url: str, username: str, password: str, translation_prefix: str = "pl_PL", stock_update: bool = True
+        self,
+        base_url: str,
+        username: str,
+        password: str,
+        categories_path: str,
+        translation_prefix: str = "pl_PL",
+        stock_update: bool = True,
     ):
         self.api_hostname = base_url
         self.username = username
@@ -27,6 +33,9 @@ class Shoper:
         self.auth_token = self.authorize()
         if not stock_update:
             self.taxes = self.get_taxes()
+        with open(categories_path) as categories_file:
+            self.mapped_categories = json.load(categories_file)
+        self.categories_dict = dict()
 
     def authorize(self) -> str:
         response = requests.post(
@@ -94,6 +103,15 @@ class Shoper:
             for category in categories
         }
 
+    def _get_category(self, product: Dict) -> str:
+        # check if there is category mapped
+        product_category = self.mapped_categories.get(product.get("category_id"))
+        # if not then get the category from the list of all categories
+        # the category is probably covered already
+        if not product_category:
+            product_category = self.categories_dict.get(product.get("category_id"))
+        return product_category
+
     def _get_categories(self) -> Dict:
         categories_response = self.get("categories")
         categories = self._categories_dict(categories_response.get("list"))
@@ -119,6 +137,8 @@ class Shoper:
 
         translation = data.get("translations").get(self.translation_prefix)
 
+        category = self._get_category(product=data)
+
         product = Product(
             name=translation.get("name"),
             price=data.get("stock").get("price"),
@@ -129,6 +149,7 @@ class Shoper:
             variant_data={"size": str(option)} if option else dict(),
             images_urls=images,
             vat_percent=self.taxes.get(data.get("tax_id")),
+            category=[category],
         )
 
         return product
@@ -148,6 +169,7 @@ class Shoper:
         """
         page_limit = 50
         products_response = self.get(f"products?limit={page_limit}")
+        self.categories_dict = self._get_categories()
 
         # Load first page
         for product in products_response.get("list"):
