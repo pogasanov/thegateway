@@ -66,4 +66,4 @@ class ImporterTests(TestCase):
 
     def test_get_categories(self):
         categories = self.importer.get_categories()
-        self.assertEqual(categories, [category["nazwa"] for category in CATEGORIES])
+        self.assertEqual(categories, [category["nazwa"].lower().strip() for category in CATEGORIES])

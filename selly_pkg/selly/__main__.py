@@ -1,4 +1,4 @@
-from selly_pkg.selly.runner import run_imports
+from selly.runner import cli
 
 if __name__ == "__main__":
-    run_imports()
+    cli()  # pylint: disable=no-value-for-parameter

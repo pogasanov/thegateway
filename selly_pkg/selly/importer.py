@@ -199,4 +199,4 @@ class SellyImporter:
 
     def get_categories(self):
         categories = self.client.get_categories()
-        return [category["nazwa"] for category in categories]
+        return [category["nazwa"].lower().strip() for category in categories]
