@@ -32,6 +32,14 @@ class IdoSell:
         self.password = password
         self.url = base_url + "/marketplace-api/?gate=Products/getProductsFeed/5/json"
 
+        self.__products_xml = None
+
+    @property
+    def products_xml(self):
+        if self.__products_xml is None:
+            self.__products_xml = self._get_xml_with_products()
+        return self.__products_xml
+
     @staticmethod
     def _set_xml_lang(xpath: str):
         """
@@ -192,7 +200,7 @@ class IdoSell:
         """
         Get product variants from IdoSell API as gateway product model
         """
-        xml_content = self._get_xml_with_products()
+        xml_content = self.products_xml
         if not xml_content:
             return []
         xml_root = ET.fromstring(xml_content)
@@ -253,3 +261,17 @@ class IdoSell:
             "(probably the file already has been downloaded within 60 minutes)"
         )
         return None
+
+    def build_categories(self):
+        xml_content = self.products_xml
+        if not xml_content:
+            return []
+
+        xml_root = ET.fromstring(xml_content)
+        xml_categories = xml_root.findall("./products/product/category")
+        total = len(xml_categories)
+        categories = {}
+        for index, xml_category in enumerate(xml_categories, 1):
+            print(f"{index}/{total}")
+            categories[xml_category.attrib["id"]] = xml_category.attrib["name"]
+        return categories

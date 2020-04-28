@@ -153,3 +153,10 @@ class IdoSellTest(TestCase):
         self.assertEqual(product["name"], "Triaction Sportowe Etui")
         self.assertEqual(product["variant_data"]["size"][0]["price"], Decimal("63.41"))
         self.assertEqual(product["brief"], "")
+
+    def test_get_categories(self):
+        importer = IdoSell(**self.IDOSELL_INIT_ARGS)
+        categories = importer.build_categories()
+        self.assertEqual(len(categories.items()), 2)
+        self.assertEqual(categories["0"], "*Kategoria tymczasowa")
+        self.assertEqual(categories["1"], "Test category")
