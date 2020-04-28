@@ -1,0 +1,103 @@
+PRODUCTS = [{"id": "476", "name": "produkt2"}, {"id": "477", "name": "product1"}]
+PRODUCT_476 = {
+    "id": "476",
+    "title": "produkt2",
+    "category_id": "12",
+    "price": "2137.00",
+    "price_promo": "0.00",
+    "promotion": "0",
+    "vat": "23",
+    "quantity": "0.000",
+    "catalog_number": "catalog-nr2",
+    "variants_group_id": None,
+    "attributes_group_id": None,
+    "ean": "ean-2",
+    "symbol": "symbol-2",
+    "weight": "0.000",
+    "status": "1",
+    "manufacturer_id": "10",
+    "images": [
+        {
+            "key": 1,
+            "original": "https://imge.pl/p/268736/n/714715fa1516c5edd0da0b808e1b02b0.jpg",
+            "thumb": "https://imge.pl/p/268736/t/714715fa1516c5edd0da0b808e1b02b0.jpg",
+        }
+    ],
+    "categories": [{"id": "12", "title": "bluzy", "parent": None}, {"id": "21", "title": "spódnice", "parent": None}],
+    "description": [
+        {
+            "datacell_id": "13",
+            "datacell_name": "Długi opis",
+            "content": "<ol>\n<li>bbbbbbbbbbbbbbbb</li>\n<li>bbbbbbb</li>\n<li>bbbb</li>\n<li>b</li>\n</ol>",
+        },
+        {"datacell_id": "14", "datacell_name": "Uniwersalny opis", "content": None},
+        {"datacell_id": "15", "datacell_name": "Krótki opis", "content": "bbbbbbbbbbbbbbbbbb"},
+    ],
+}
+PRODUCT_477 = {
+    "id": "477",
+    "title": "product1",
+    "category_id": "14",
+    "price": "2137.00",
+    "price_promo": "0.00",
+    "promotion": "0",
+    "vat": "23",
+    "quantity": "58.000",
+    "catalog_number": "catalog-nr1",
+    "variants_group_id": "2",
+    "attributes_group_id": None,
+    "ean": "ean-1",
+    "symbol": "symbol-1",
+    "weight": "0.000",
+    "status": "1",
+    "manufacturer_id": "5",
+    "images": [
+        {
+            "key": 1,
+            "original": "https://imge.pl/p/268736/n/1dccf064026072b06a0a2d4b6a854c96.jpg",
+            "thumb": "https://imge.pl/p/268736/t/1dccf064026072b06a0a2d4b6a854c96.jpg",
+        },
+        {
+            "key": 2,
+            "original": "https://imge.pl/p/268736/n/42d34e5b7e89211e52de531b3cc40c87.jpg",
+            "thumb": "https://imge.pl/p/268736/t/42d34e5b7e89211e52de531b3cc40c87.jpg",
+        },
+    ],
+    "categories": [{"id": "14", "title": "dodatki", "parent": None}],
+    "description": [
+        {
+            "datacell_id": "13",
+            "datacell_name": "Długi opis",
+            "content": "<ul>\n<li>aaaaaaaaaaaaaaaaaa</li>\n<li>aaaaaaaaaaaa</li>\n<li>aaaaaaaaa</li>\n<li>aaaa</li>\n<li>a</li>\n</ul>",
+        },
+        {"datacell_id": "14", "datacell_name": "Uniwersalny opis", "content": None},
+        {"datacell_id": "15", "datacell_name": "Krótki opis", "content": "aaaaaaaaaaaaaaaaa"},
+    ],
+    "variants": [
+        {
+            "id": "4",
+            "quantity": "21.000",
+            "price": "0.00",
+            "price_promo": "0.00",
+            "promotion": "0",
+            "ean": "",
+            "catalog": "prudukt1-1",
+            "status": "1",
+            "price_buy": "0.00",
+            "properties": [{"property_id": "3", "name": "blue"}],
+        },
+        {
+            "id": "5",
+            "quantity": "37.000",
+            "price": "213769.00",
+            "price_promo": "0.00",
+            "promotion": "0",
+            "ean": "",
+            "catalog": "prudukt1-2",
+            "status": "1",
+            "price_buy": "0.00",
+            "properties": [{"property_id": "4", "name": "red"}],
+        },
+    ],
+}
+VARIANT_GROUP_2 = {"id": "2", "name": "Kolor", "variants": [{"id": "3", "name": "Kolor"}]}
