@@ -13,7 +13,10 @@ from gateway.utils import download_image
 LOGGER = logging.getLogger(__name__)
 
 
+# pylint: disable=too-many-instance-attributes
 class Prestashop:
+    PRICES_TAX_EXCLUDED_PARAMETER = "price[price][use_tax]=0&price[price][use_reduction]=0"
+
     def __init__(self, base_url, api_key, image_url_prefix, language_id=None):
         self.api_hostname = base_url
         self.api_key = api_key
@@ -118,8 +121,10 @@ class Prestashop:
     def _get_variant_price(data, combination):
         if combination:
             variant_price = Decimal(combination["price"])
-            return Decimal(variant_price if variant_price and variant_price != 0 else data["price"])
-        return Decimal(data["price"])
+            price = Decimal(variant_price if variant_price and variant_price != 0 else data["price"])
+        else:
+            price = Decimal(data["price"])
+        return price
 
     def _get_variant_data(self, associations):
         variant_data = dict()
@@ -163,7 +168,8 @@ class Prestashop:
         associations = data["associations"]
 
         if data["associations"].get("combinations"):
-            combination = self.get(f"combinations/{variant_id}")["combination"]
+            # PRICES_TAX_EXCLUDED_PARAMETER is needed for prices be with tax excluded and with no reduction
+            combination = self.get(f"combinations/{variant_id}?{self.PRICES_TAX_EXCLUDED_PARAMETER}")["combination"]
             LOGGER.info(combination)
             associations = combination["associations"]
         else:
@@ -171,6 +177,9 @@ class Prestashop:
 
         if "images" in associations:
             images = associations["images"]
+            # If variants images is [{"id": '0'}] then it means that variants don't have an image
+            if images == [{"id": "0"}]:
+                images = data["associations"]["images"]
         else:
             images = data["associations"]["images"]
 
@@ -235,7 +244,8 @@ class Prestashop:
         return stock_level_mapping[0]
 
     def _get_product_data(self, product_id):
-        return self.get(f"products/{product_id}")["product"]
+        # PRICES_TAX_EXCLUDED_PARAMETER is needed for prices be with tax excluded and with no reduction
+        return self.get(f"products/{product_id}?{self.PRICES_TAX_EXCLUDED_PARAMETER}")["product"]
 
     def _get_stock_level_data(self, stock_level_id):
         return self.get(f"stock_availables/{stock_level_id}")
