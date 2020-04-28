@@ -346,3 +346,15 @@ PRESTASHOP_PRODUCT_OPTION_VALUE_1 = {
 PRESTASHOP_PRODUCT_OPTION_VALUE_2 = {
     "product_option_value": {"id": 2, "id_attribute_group": "2", "color": "#AAB2BD", "position": "0", "name": "Grey",}
 }
+PRESTASHOP_CONFIGURATIONS_PS_TAX = {"configurations": [{"id": 27}]}
+PRESTASHOP_CONFIGURATIONS_27 = {
+    "configuration": {
+        "id": 27,
+        "value": 1,
+        "name": "PS_TAX",
+        "id_shop_group": "",
+        "id_shop": "",
+        "date_add": "0000-00-00 00:00:00",
+        "date_upd": "2020-04-23 14:11:21",
+    }
+}

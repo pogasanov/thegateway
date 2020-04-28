@@ -133,8 +133,7 @@ class Shoper:
             # creates variants based on options
             options_number = len(product.get("options"))
             return [self.get_product_data(product, option, options_number) for option in product.get("options")]
-        else:
-            return [self.get_product_data(product)]
+        return [self.get_product_data(product)]
 
     def fetch_products(self) -> Generator[List, None, None]:
         """

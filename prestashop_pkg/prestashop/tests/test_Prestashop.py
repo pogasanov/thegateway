@@ -14,8 +14,6 @@ class PrestashopTest(TestCase):
         cls.BASE_URL = "http://123.456.789.0"
         cls.API_KEY = "NOTREALAPIKEY"
         cls.IMAGE_URL_PREFIX = "test_"
-        cls.importer = Prestashop(cls.BASE_URL, cls.API_KEY, cls.IMAGE_URL_PREFIX)
-
         cls.DUMMY_IMAGE = b"abc"
 
     def assertIsCombination1(self, product):
@@ -63,6 +61,7 @@ class PrestashopTest(TestCase):
         self.assertEqual(product.sku, "6;demo_11")
 
     def setUp(self):
+        self.importer = Prestashop(self.BASE_URL, self.API_KEY, self.IMAGE_URL_PREFIX)
         responses.start()
         responses.add(
             responses.GET, f"{self.BASE_URL}/api/products", json={"products": PRESTASHOP_PRODUCTS}, status=200,
@@ -197,6 +196,18 @@ class PrestashopTest(TestCase):
             responses.GET,
             f"{self.BASE_URL}/api/product_option_values/2",
             json=PRESTASHOP_PRODUCT_OPTION_VALUE_2,
+            match_querystring=False,
+        )
+        responses.add(
+            responses.GET,
+            f"{self.BASE_URL}/api/configurations?filter[name]=PS_TAX",
+            json=PRESTASHOP_CONFIGURATIONS_PS_TAX,
+            match_querystring=False,
+        )
+        responses.add(
+            responses.GET,
+            f"{self.BASE_URL}/api/configurations/27",
+            json=PRESTASHOP_CONFIGURATIONS_27,
             match_querystring=False,
         )
 
