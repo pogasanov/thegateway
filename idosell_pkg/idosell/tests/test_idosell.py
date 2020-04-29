@@ -66,6 +66,10 @@ class IdoSellTest(TestCase):
             )
         )
 
+    def tearDown(self) -> None:
+        responses.stop()
+        responses.reset()
+
     def test_get_file(self):
         importer = IdoSell(**self.IDOSELL_INIT_ARGS)
         # pylint: disable=W0212
