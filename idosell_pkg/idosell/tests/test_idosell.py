@@ -160,3 +160,11 @@ class IdoSellTest(TestCase):
         self.assertEqual(len(categories.items()), 2)
         self.assertEqual(categories["0"], "*Kategoria tymczasowa")
         self.assertEqual(categories["1"], "Test category")
+
+    def test_get_xml_products_only_once(self):
+        importer = IdoSell(**self.IDOSELL_INIT_ARGS)
+        list(importer.get_products())
+        list(importer.build_categories())
+
+        xml_product_calls = list(filter(lambda x: x.request.path_url == "/export_successful_xml_full", responses.calls))
+        self.assertEqual(len(xml_product_calls), 1)
