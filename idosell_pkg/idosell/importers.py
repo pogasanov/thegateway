@@ -262,7 +262,7 @@ class IdoSell:
         )
         return None
 
-    def build_categories(self):
+    def get_categories(self):
         xml_content = self.products_xml
         if not xml_content:
             return []
