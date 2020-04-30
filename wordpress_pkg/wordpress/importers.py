@@ -1,7 +1,7 @@
 import logging
 from collections import defaultdict
 from decimal import Decimal
-from typing import List, Iterator
+from typing import List, Iterator, Dict
 from woocommerce import API
 
 from gateway import Product
@@ -20,12 +20,14 @@ class WoocommerceWordPress:
     DEFAULT_TAX = 23
     TAX_COUNTRY_CODE = "PL"
     DEFAULT_TAX_CLASS = ""
+    CATEGORY_DELIMITER = " > "
 
-    def __init__(self, consumer_key: str, consumer_secret: str, base_url: str, category_map: dict):
+    def __init__(self, consumer_key: str, consumer_secret: str, base_url: str, category_map: dict = None):
         self.wcapi = API(url=base_url, consumer_key=consumer_key, consumer_secret=consumer_secret)
         self.is_price_with_tax = True
         self.taxes = defaultdict(lambda: self.DEFAULT_TAX)
-        self.category_map = category_map
+        self.gw_category_map = category_map
+        self.api_category_map = dict()
 
     def _set_price_options(self):
         """
@@ -38,6 +40,19 @@ class WoocommerceWordPress:
                 self.is_price_with_tax = option_entry["value"] == "yes"
                 return
 
+    def _get_map_with_ids_and_category_hierarchy(self) -> Dict[int, str]:
+        category_tree = defaultdict(list)
+        for page in range(1, 100):
+            api_categories = self.wcapi.get("products/categories", params={"page": page}).json()
+            if not api_categories:
+                break
+
+            for api_cat in api_categories:
+                category_tree[api_cat["parent"]].append(api_cat)
+
+        root = category_tree[0]
+        return WoocommerceWordPress._category_traversal(category_tree, root, "")
+
     def get_category_list(self) -> List[str]:
         """
         Get list of all categories in the shop
@@ -45,15 +60,29 @@ class WoocommerceWordPress:
         if not self._is_connection_established():
             return []
 
-        categories = list()
-        for page in range(1, 100):
-            api_categories = self.wcapi.get("products/categories", params={"page": page}).json()
-            if not api_categories:
-                break
+        api_category_map = self._get_map_with_ids_and_category_hierarchy()
 
-            categories.extend(map(lambda c: c["name"], api_categories))
+        return list(api_category_map.values())
 
+    @staticmethod
+    def _category_traversal(category_tree: dict, api_categories: list, cat_hierarchy: str) -> Dict[int, str]:
+        categories = dict()
+        for api_category in api_categories:
+            current_cat_hierarchy = WoocommerceWordPress._concat_categories(cat_hierarchy, api_category["name"])
+            categories[api_category["id"]] = current_cat_hierarchy
+            categories.update(
+                WoocommerceWordPress._category_traversal(
+                    category_tree, category_tree[api_category["id"]], current_cat_hierarchy
+                )
+            )
         return categories
+
+    @staticmethod
+    def _concat_categories(*cats: str) -> str:
+        if cats[0] == "":
+            return WoocommerceWordPress.CATEGORY_DELIMITER.join(cats[1:])
+
+        return WoocommerceWordPress.CATEGORY_DELIMITER.join(cats)
 
     def _setup_taxes(self):
         """
@@ -133,6 +162,7 @@ class WoocommerceWordPress:
             gw_product = Product("", 0, 0)
             gw_product.name = api_product["name"]
             gw_product.sku = api_product_variation["sku"]
+            gw_product.categories = self._get_categories(api_product)
 
             variant_description = api_product_variation["description"]
             if not variant_description:
@@ -192,7 +222,14 @@ class WoocommerceWordPress:
         """
         Get categories of api product and convert them to gateway categories
         """
-        return [self.category_map[cat_record["name"]] for cat_record in api_product["categories"]]
+        categories = list()
+        for cat_record in api_product["categories"]:
+            api_cat = self.api_category_map[cat_record["id"]]
+            categories.append(api_cat)
+            # TODO mapping to gw category
+            # categories.append(self.gw_category_map[api_cat])
+
+        return categories
 
     def _get_stock(self, api_product: dict) -> int:
         stock_status = api_product["stock_status"]
@@ -220,6 +257,7 @@ class WoocommerceWordPress:
         gw_product.images_urls = self._get_images_urls(api_product)
         gw_product.variant_data = self._get_variants(api_product)
         gw_product.stock = self._get_stock(api_product)
+        gw_product.categories = self._get_categories(api_product)
         self._set_price_and_vat(gw_product, api_product)
         return [gw_product]
 
@@ -283,6 +321,7 @@ class WoocommerceWordPress:
 
         self._setup_taxes()
         self._set_price_options()
+        self.api_category_map = self._get_map_with_ids_and_category_hierarchy()
 
         for api_product in self._fetch_products_from_api():
             if not self._is_api_product_valid(api_product):
