@@ -1,0 +1,453 @@
+[
+    {
+        "id": 19,
+        "name": "Accessories",
+        "slug": "accessories",
+        "parent": 16,
+        "description": "",
+        "display": "default",
+        "image": null,
+        "menu_order": 0,
+        "count": 5,
+        "_links": {
+            "self": [
+                {
+                    "href": "http://5ccc437d.ngrok.io/wp-json/wc/v3/products/categories/19"
+                }
+            ],
+            "collection": [
+                {
+                    "href": "http://5ccc437d.ngrok.io/wp-json/wc/v3/products/categories"
+                }
+            ],
+            "up": [
+                {
+                    "href": "http://5ccc437d.ngrok.io/wp-json/wc/v3/products/categories/16"
+                }
+            ]
+        }
+    },
+    {
+        "id": 15,
+        "name": "Bez kategorii",
+        "slug": "bez-kategorii",
+        "parent": 0,
+        "description": "",
+        "display": "default",
+        "image": null,
+        "menu_order": 0,
+        "count": 0,
+        "_links": {
+            "self": [
+                {
+                    "href": "http://5ccc437d.ngrok.io/wp-json/wc/v3/products/categories/15"
+                }
+            ],
+            "collection": [
+                {
+                    "href": "http://5ccc437d.ngrok.io/wp-json/wc/v3/products/categories"
+                }
+            ]
+        }
+    },
+    {
+        "id": 30,
+        "name": "Cat 1",
+        "slug": "cat-1",
+        "parent": 0,
+        "description": "",
+        "display": "default",
+        "image": null,
+        "menu_order": 0,
+        "count": 1,
+        "_links": {
+            "self": [
+                {
+                    "href": "http://5ccc437d.ngrok.io/wp-json/wc/v3/products/categories/30"
+                }
+            ],
+            "collection": [
+                {
+                    "href": "http://5ccc437d.ngrok.io/wp-json/wc/v3/products/categories"
+                }
+            ]
+        }
+    },
+    {
+        "id": 31,
+        "name": "Cat 1-1",
+        "slug": "cat-1-1",
+        "parent": 30,
+        "description": "",
+        "display": "default",
+        "image": null,
+        "menu_order": 0,
+        "count": 1,
+        "_links": {
+            "self": [
+                {
+                    "href": "http://5ccc437d.ngrok.io/wp-json/wc/v3/products/categories/31"
+                }
+            ],
+            "collection": [
+                {
+                    "href": "http://5ccc437d.ngrok.io/wp-json/wc/v3/products/categories"
+                }
+            ],
+            "up": [
+                {
+                    "href": "http://5ccc437d.ngrok.io/wp-json/wc/v3/products/categories/30"
+                }
+            ]
+        }
+    },
+    {
+        "id": 32,
+        "name": "Cat 1-1-1",
+        "slug": "cat-1-1-1",
+        "parent": 31,
+        "description": "",
+        "display": "default",
+        "image": null,
+        "menu_order": 0,
+        "count": 1,
+        "_links": {
+            "self": [
+                {
+                    "href": "http://5ccc437d.ngrok.io/wp-json/wc/v3/products/categories/32"
+                }
+            ],
+            "collection": [
+                {
+                    "href": "http://5ccc437d.ngrok.io/wp-json/wc/v3/products/categories"
+                }
+            ],
+            "up": [
+                {
+                    "href": "http://5ccc437d.ngrok.io/wp-json/wc/v3/products/categories/31"
+                }
+            ]
+        }
+    },
+    {
+        "id": 33,
+        "name": "Cat 1-1-1-1",
+        "slug": "cat-1-1-1-1",
+        "parent": 32,
+        "description": "",
+        "display": "default",
+        "image": null,
+        "menu_order": 0,
+        "count": 0,
+        "_links": {
+            "self": [
+                {
+                    "href": "http://5ccc437d.ngrok.io/wp-json/wc/v3/products/categories/33"
+                }
+            ],
+            "collection": [
+                {
+                    "href": "http://5ccc437d.ngrok.io/wp-json/wc/v3/products/categories"
+                }
+            ],
+            "up": [
+                {
+                    "href": "http://5ccc437d.ngrok.io/wp-json/wc/v3/products/categories/32"
+                }
+            ]
+        }
+    },
+    {
+        "id": 38,
+        "name": "Cat 1-1-1-2",
+        "slug": "cat-1-1-1-2",
+        "parent": 32,
+        "description": "",
+        "display": "default",
+        "image": null,
+        "menu_order": 0,
+        "count": 1,
+        "_links": {
+            "self": [
+                {
+                    "href": "http://5ccc437d.ngrok.io/wp-json/wc/v3/products/categories/38"
+                }
+            ],
+            "collection": [
+                {
+                    "href": "http://5ccc437d.ngrok.io/wp-json/wc/v3/products/categories"
+                }
+            ],
+            "up": [
+                {
+                    "href": "http://5ccc437d.ngrok.io/wp-json/wc/v3/products/categories/32"
+                }
+            ]
+        }
+    },
+    {
+        "id": 36,
+        "name": "Cat 1-1-2",
+        "slug": "cat-1-1-2",
+        "parent": 31,
+        "description": "",
+        "display": "default",
+        "image": null,
+        "menu_order": 0,
+        "count": 1,
+        "_links": {
+            "self": [
+                {
+                    "href": "http://5ccc437d.ngrok.io/wp-json/wc/v3/products/categories/36"
+                }
+            ],
+            "collection": [
+                {
+                    "href": "http://5ccc437d.ngrok.io/wp-json/wc/v3/products/categories"
+                }
+            ],
+            "up": [
+                {
+                    "href": "http://5ccc437d.ngrok.io/wp-json/wc/v3/products/categories/31"
+                }
+            ]
+        }
+    },
+    {
+        "id": 39,
+        "name": "Cat 1-1-2-1",
+        "slug": "cat-1-1-2-1",
+        "parent": 36,
+        "description": "",
+        "display": "default",
+        "image": null,
+        "menu_order": 0,
+        "count": 1,
+        "_links": {
+            "self": [
+                {
+                    "href": "http://5ccc437d.ngrok.io/wp-json/wc/v3/products/categories/39"
+                }
+            ],
+            "collection": [
+                {
+                    "href": "http://5ccc437d.ngrok.io/wp-json/wc/v3/products/categories"
+                }
+            ],
+            "up": [
+                {
+                    "href": "http://5ccc437d.ngrok.io/wp-json/wc/v3/products/categories/36"
+                }
+            ]
+        }
+    },
+    {
+        "id": 37,
+        "name": "Cat 1-1-3",
+        "slug": "cat-1-1-3",
+        "parent": 31,
+        "description": "",
+        "display": "default",
+        "image": null,
+        "menu_order": 0,
+        "count": 0,
+        "_links": {
+            "self": [
+                {
+                    "href": "http://5ccc437d.ngrok.io/wp-json/wc/v3/products/categories/37"
+                }
+            ],
+            "collection": [
+                {
+                    "href": "http://5ccc437d.ngrok.io/wp-json/wc/v3/products/categories"
+                }
+            ],
+            "up": [
+                {
+                    "href": "http://5ccc437d.ngrok.io/wp-json/wc/v3/products/categories/31"
+                }
+            ]
+        }
+    },
+    {
+        "id": 34,
+        "name": "Cat 1-2",
+        "slug": "cat-1-2",
+        "parent": 30,
+        "description": "",
+        "display": "default",
+        "image": null,
+        "menu_order": 0,
+        "count": 0,
+        "_links": {
+            "self": [
+                {
+                    "href": "http://5ccc437d.ngrok.io/wp-json/wc/v3/products/categories/34"
+                }
+            ],
+            "collection": [
+                {
+                    "href": "http://5ccc437d.ngrok.io/wp-json/wc/v3/products/categories"
+                }
+            ],
+            "up": [
+                {
+                    "href": "http://5ccc437d.ngrok.io/wp-json/wc/v3/products/categories/30"
+                }
+            ]
+        }
+    },
+    {
+        "id": 35,
+        "name": "Cat 1-3",
+        "slug": "cat-1-3",
+        "parent": 30,
+        "description": "",
+        "display": "default",
+        "image": null,
+        "menu_order": 0,
+        "count": 0,
+        "_links": {
+            "self": [
+                {
+                    "href": "http://5ccc437d.ngrok.io/wp-json/wc/v3/products/categories/35"
+                }
+            ],
+            "collection": [
+                {
+                    "href": "http://5ccc437d.ngrok.io/wp-json/wc/v3/products/categories"
+                }
+            ],
+            "up": [
+                {
+                    "href": "http://5ccc437d.ngrok.io/wp-json/wc/v3/products/categories/30"
+                }
+            ]
+        }
+    },
+    {
+        "id": 16,
+        "name": "Clothing",
+        "slug": "clothing",
+        "parent": 0,
+        "description": "",
+        "display": "default",
+        "image": null,
+        "menu_order": 0,
+        "count": 13,
+        "_links": {
+            "self": [
+                {
+                    "href": "http://5ccc437d.ngrok.io/wp-json/wc/v3/products/categories/16"
+                }
+            ],
+            "collection": [
+                {
+                    "href": "http://5ccc437d.ngrok.io/wp-json/wc/v3/products/categories"
+                }
+            ]
+        }
+    },
+    {
+        "id": 21,
+        "name": "Decor",
+        "slug": "decor",
+        "parent": 0,
+        "description": "",
+        "display": "default",
+        "image": null,
+        "menu_order": 0,
+        "count": 1,
+        "_links": {
+            "self": [
+                {
+                    "href": "http://5ccc437d.ngrok.io/wp-json/wc/v3/products/categories/21"
+                }
+            ],
+            "collection": [
+                {
+                    "href": "http://5ccc437d.ngrok.io/wp-json/wc/v3/products/categories"
+                }
+            ]
+        }
+    },
+    {
+        "id": 18,
+        "name": "Hoodies",
+        "slug": "hoodies",
+        "parent": 16,
+        "description": "",
+        "display": "default",
+        "image": null,
+        "menu_order": 0,
+        "count": 3,
+        "_links": {
+            "self": [
+                {
+                    "href": "http://5ccc437d.ngrok.io/wp-json/wc/v3/products/categories/18"
+                }
+            ],
+            "collection": [
+                {
+                    "href": "http://5ccc437d.ngrok.io/wp-json/wc/v3/products/categories"
+                }
+            ],
+            "up": [
+                {
+                    "href": "http://5ccc437d.ngrok.io/wp-json/wc/v3/products/categories/16"
+                }
+            ]
+        }
+    },
+    {
+        "id": 20,
+        "name": "Music",
+        "slug": "music",
+        "parent": 0,
+        "description": "",
+        "display": "default",
+        "image": null,
+        "menu_order": 0,
+        "count": 2,
+        "_links": {
+            "self": [
+                {
+                    "href": "http://5ccc437d.ngrok.io/wp-json/wc/v3/products/categories/20"
+                }
+            ],
+            "collection": [
+                {
+                    "href": "http://5ccc437d.ngrok.io/wp-json/wc/v3/products/categories"
+                }
+            ]
+        }
+    },
+    {
+        "id": 17,
+        "name": "Tshirts",
+        "slug": "tshirts",
+        "parent": 16,
+        "description": "",
+        "display": "default",
+        "image": null,
+        "menu_order": 0,
+        "count": 4,
+        "_links": {
+            "self": [
+                {
+                    "href": "http://5ccc437d.ngrok.io/wp-json/wc/v3/products/categories/17"
+                }
+            ],
+            "collection": [
+                {
+                    "href": "http://5ccc437d.ngrok.io/wp-json/wc/v3/products/categories"
+                }
+            ],
+            "up": [
+                {
+                    "href": "http://5ccc437d.ngrok.io/wp-json/wc/v3/products/categories/16"
+                }
+            ]
+        }
+    }
+]
