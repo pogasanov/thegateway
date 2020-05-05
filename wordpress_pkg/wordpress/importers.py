@@ -53,16 +53,14 @@ class WoocommerceWordPress:
         root = category_tree[0]
         return WoocommerceWordPress._category_traversal(category_tree, root, "")
 
-    def get_category_list(self) -> List[str]:
+    def get_categories(self) -> Dict:
         """
-        Get list of all categories in the shop
+        Get all categories in the shop
         """
         if not self._is_connection_established():
-            return []
+            return dict()
 
-        api_category_map = self._get_map_with_ids_and_category_hierarchy()
-
-        return list(api_category_map.values())
+        return self._get_map_with_ids_and_category_hierarchy()
 
     @staticmethod
     def _category_traversal(category_tree: dict, api_categories: list, cat_hierarchy: str) -> Dict[int, str]:

@@ -15,6 +15,8 @@ WOOCOMMERCE_CONSUMER_KEY = os.environ.get("WOOCOMMERCE_CONSUMER_KEY")
 WOOCOMMERCE_CONSUMER_SECRET = os.environ.get("WOOCOMMERCE_CONSUMER_SECRET")
 WOOCOMMERCE_BASE_URL = os.environ.get("WOOCOMMERCE_BASE_URL")
 
+importer = WoocommerceWordPress(WOOCOMMERCE_CONSUMER_KEY, WOOCOMMERCE_CONSUMER_SECRET, WOOCOMMERCE_BASE_URL, None)
+
 GATEWAY_BASE_URL = os.environ.get("GATEWAY_BASE_URL")
 GATEWAY_SHOP_ID = os.environ.get("GATEWAY_SHOP_ID")
 GATEWAY_SECRET = os.environ.get("GATEWAY_SECRET")
@@ -50,7 +52,6 @@ def prepare_mapping_file():
     current_directory = pathlib.Path(__file__).parent.absolute()
     parsed_url = urllib.parse.urlparse(WOOCOMMERCE_BASE_URL)
     category_mapper_filename = "{domain}_category_map.json".format(domain=parsed_url.netloc)
-    importer = WoocommerceWordPress(WOOCOMMERCE_CONSUMER_KEY, WOOCOMMERCE_CONSUMER_SECRET, WOOCOMMERCE_BASE_URL, None)
     exporter = Gateway(GATEWAY_BASE_URL, GATEWAY_SHOP_ID, GATEWAY_SECRET, IMAGE_URL_PREFIX)
     api_categories = importer.get_category_list()
     gw_categories = exporter._get_categories()
