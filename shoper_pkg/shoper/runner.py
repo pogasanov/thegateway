@@ -18,6 +18,7 @@ IMAGE_URL_PREFIX = f"{os.environ.get('IMAGEBUCKET_URL')}{GATEWAY_SHOP_ID}/"
 SHOPER_BASE_URL = os.environ.get("SHOPER_BASE_URL", "http://sklep266192.shoparena.pl")
 SHOPER_USERNAME = os.environ.get("SHOPER_USERNAME", "karol.ziolkowski@profil-software.com")
 SHOPER_PASSWORD = os.environ.get("SHOPER_PASSWORD", "Magik123")
+importer = Shoper(SHOPER_BASE_URL, SHOPER_USERNAME, SHOPER_PASSWORD, categories_path=None)
 
 
 def get_missing_categories(gateway_categories: Dict, importer_categories: List) -> List:
@@ -41,7 +42,6 @@ def prepare_mapping_file():
     by passing the id.
     Based on that the file is generated.
     """
-    importer = Shoper(SHOPER_BASE_URL, SHOPER_USERNAME, SHOPER_PASSWORD)
     gateway = Gateway(GATEWAY_BASE_URL, GATEWAY_SHOP_ID, GATEWAY_SECRET, IMAGE_URL_PREFIX)
     gateway_categories = gateway._get_categories()
     importer_categories = importer.get_categories_list()
@@ -70,7 +70,6 @@ def sync_categories(path):
     Pass path to a file with mapped categories.
     """
     with open(path) as file:
-        importer = Shoper(SHOPER_BASE_URL, SHOPER_USERNAME, SHOPER_PASSWORD)
         gateway = Gateway(GATEWAY_BASE_URL, GATEWAY_SHOP_ID, GATEWAY_SECRET, IMAGE_URL_PREFIX)
         products = gateway.list_of_products()
         importer_categories = importer._get_categories()
@@ -91,7 +90,6 @@ def sync_categories(path):
 
 @click.command
 def run_import():
-    importer = Shoper(SHOPER_BASE_URL, SHOPER_USERNAME, SHOPER_PASSWORD)
     gateway = Gateway(GATEWAY_BASE_URL, GATEWAY_SHOP_ID, GATEWAY_SECRET, IMAGE_URL_PREFIX)
 
     for product_list in importer.fetch_products():

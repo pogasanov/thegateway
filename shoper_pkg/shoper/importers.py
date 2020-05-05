@@ -1,15 +1,16 @@
 import decimal
 import json
 import logging
-
 from json import JSONDecodeError
-from typing import List, Dict, Generator
+from typing import (
+    List,
+    Dict,
+    Generator,
+    Optional,
+)
 
 import requests
-
-from gateway.models import Product, Image
-
-
+from gateway.models import Product
 # pylint: disable=invalid-name
 from requests import Response
 
@@ -18,13 +19,13 @@ logger = logging.getLogger(__name__)
 
 class Shoper:
     def __init__(
-        self,
-        base_url: str,
-        username: str,
-        password: str,
-        categories_path: str,
-        translation_prefix: str = "pl_PL",
-        stock_update: bool = True,
+            self,
+            base_url: str,
+            username: str,
+            password: str,
+            categories_path: Optional[str],
+            translation_prefix: str = "pl_PL",
+            stock_update: bool = True,
     ):
         self.api_hostname = base_url
         self.username = username
@@ -33,8 +34,10 @@ class Shoper:
         self.auth_token = self.authorize()
         if not stock_update:
             self.taxes = self.get_taxes()
-        with open(categories_path) as categories_file:
-            self.mapped_categories = json.load(categories_file)
+        self.mapped_categories = {}
+        if categories_path:
+            with open(categories_path) as categories_file:
+                self.mapped_categories = json.load(categories_file)
         self.categories_dict = dict()
 
     def authorize(self) -> str:
@@ -67,7 +70,7 @@ class Shoper:
             raise
 
     def invoke(
-        self, endpoint: str, method: str, output_format: str = None, stream: bool = False, data: Dict = None
+            self, endpoint: str, method: str, output_format: str = None, stream: bool = False, data: Dict = None
     ) -> Response:
         # pylint: disable=invalid-name
         fn = getattr(requests, method)
@@ -119,8 +122,15 @@ class Shoper:
 
     def get_categories_list(self):
         categories_response = self.get("categories")
-        categories = categories_response.get("list")
-        return [category.get("translations").get(self.translation_prefix).get("name") for category in categories]
+        category_objects = categories_response.get("list")
+        categories = {category.get("category_id"): category.get("translations").get(self.translation_prefix).get("name") for category in category_objects}
+        while categories_response['page'] < categories_response['pages']:
+            categories_response = self.get(f"categories?page={categories_response['page'] + 1}")
+            category_objects = categories_response.get("list")
+            categories.update(
+                {category.get("category_id"): category.get("translations").get(self.translation_prefix).get("name") for category in category_objects}
+            )
+        return categories
 
     def get_product_data(self, data: Dict, option: str = "", options_count: int = 1) -> Product:
         images = [self.get_image_url(data)] if data.get("main_image") else None
