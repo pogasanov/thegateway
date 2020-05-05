@@ -3,7 +3,6 @@ import os
 import pathlib
 
 import click
-
 from gateway import Gateway
 from selly.importer import SellyImporter
 
@@ -15,11 +14,12 @@ GATEWAY_SHOP_ID = os.environ.get("GATEWAY_SHOP_ID", "a547de18-7a1d-450b-a57b-bbf
 GATEWAY_SECRET = os.environ.get("GATEWAY_SECRET", "OyB2YbwTVtRXuJv+VE4oJLVyGo8pf1XVibCk08lt4ys=")
 IMAGE_URL_PREFIX = f"{os.environ.get('IMAGEBUCKET_URL')}{GATEWAY_SHOP_ID}/"
 
+importer = SellyImporter(SELLY_API_ID, SELLY_APP_KEY, SELLY_SHOP_URL)
+
 
 @click.group(invoke_without_command=True)
 @click.pass_context
 def cli(ctx):
-    importer = SellyImporter(SELLY_API_ID, SELLY_APP_KEY, SELLY_SHOP_URL)
     exporter = Gateway(GATEWAY_BASE_URL, GATEWAY_SHOP_ID, GATEWAY_SECRET, IMAGE_URL_PREFIX)
     ctx.obj = {"importer": importer, "exporter": exporter}
 

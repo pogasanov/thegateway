@@ -4,14 +4,24 @@ import hashlib
 import json
 import urllib.parse
 from decimal import Decimal
-from typing import List, Optional, Generator
+from typing import (
+    Dict,
+    Generator,
+    List,
+    Optional,
+)
 
 import requests
-from requests.adapters import HTTPAdapter, Retry
-from markdownify import markdownify as md
-
 from gateway import Product
-from selly.utils import group_by, retry
+from markdownify import markdownify as md
+from requests.adapters import (
+    HTTPAdapter,
+    Retry,
+)
+from selly.utils import (
+    group_by,
+    retry,
+)
 
 SELLY_API_URL = "http://api.selly.pl"
 
@@ -179,7 +189,7 @@ class SellyImporter:
                     sku=details["kod_producenta"],
                     images_urls=product_images,
                     for_sale=bool(product["visible"]),
-                    categories=[] if not category_name else [category_name,],
+                    categories=[] if not category_name else [category_name, ],
                 )
             ]
         output_variants = []
@@ -204,7 +214,7 @@ class SellyImporter:
                     variant_data=variant_data,
                     images_urls=variant_images,
                     for_sale=bool(product["visible"]),
-                    categories=[] if not category_name else [category_name,],
+                    categories=[] if not category_name else [category_name, ],
                 )
             )
         return output_variants
@@ -215,6 +225,23 @@ class SellyImporter:
         for product in self.products:
             yield self._get_single_product_variants(product, category_mapping)
 
-    def get_categories(self) -> List[str]:
-        categories = self.client.get_categories()
-        return [category["nazwa"].lower().strip() for category in categories]
+    def get_categories(self) -> Dict:
+        categories = dict()
+
+        def _handle(input):
+            no_parent_yet = list()
+            for category in input:
+                if category['parent_id']:
+                    try:
+                        categories[category['kategoria_id']] = f"{categories[category['parent_id']]} - {category['nazwa']}"
+                    except KeyError:
+                        no_parent_yet.append(category)
+                        continue
+                else:
+                    categories[category['kategoria_id']] = category['nazwa']
+            if no_parent_yet:
+                _handle(no_parent_yet)
+
+        _handle(self.client.get_categories())
+
+        return categories
