@@ -287,9 +287,9 @@ class Prestashop:
         if parent_id != "0":
             if parent_id not in self.categories:
                 self._add_to_category_by_id(parent_id)
-            category_name = f"{self.categories[parent_id]} - {response['name']}"
+            category_name = f"{self.categories[parent_id]} - {self._get_by_id(self.language_id, response['name'])}"
         else:
-            category_name = response["name"]
+            category_name = self._get_by_id(self.language_id, response['name'])
 
         self.categories[str(response["id"])] = category_name
 
