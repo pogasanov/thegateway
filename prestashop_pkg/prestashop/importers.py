@@ -1,14 +1,16 @@
+import csv
 import logging
 import re
 from decimal import Decimal
+from importlib import import_module
 from typing import List
+from urllib.parse import urlparse
 
 import requests
 from dicttoxml import dicttoxml
-from simplejson import JSONDecodeError
-
 from gateway.models import Product
 from gateway.utils import download_image
+from simplejson import JSONDecodeError
 
 LOGGER = logging.getLogger(__name__)
 
@@ -26,6 +28,11 @@ class Prestashop:
         self.product_options = dict()
         self.language_id = language_id
         self.categories = dict()
+        self.exporter = None
+
+    @property
+    def category_mapping_filename(self):
+        return f'category_mappings_{urlparse(self.api_hostname).netloc.replace(".", "_")}'
 
     def get_variants(self):
         """
@@ -37,10 +44,7 @@ class Prestashop:
             data = self.get(f"product_options/{product_option_id}")["product_option"]
             product_option_values = self._ids_to_list(data["associations"]["product_option_values"])
 
-            if self.language_id:
-                name = self._get_by_id(self.language_id, data["public_name"])
-            else:
-                name = data["public_name"]
+            name = self._get_localised(data["public_name"])
 
             for value in product_option_values:
                 self.variants_reverse[value] = name
@@ -78,15 +82,16 @@ class Prestashop:
             LOGGER.fatal("%s: %s", response.status_code, response.text)
             raise
 
-    @staticmethod
-    def _get_by_id(_id, data):
+    def _get_localised(self, data):
         """
         Needed for PrestaShop translation support.
         """
+        if isinstance(data, str):
+            return data
         for element in data:
-            if int(element["id"]) == int(_id):
+            if int(element["id"]) == int(self.language_id):
                 return element["value"]
-        raise KeyError(_id)
+        raise KeyError(self.language_id)
 
     @staticmethod
     def _ids_to_list(ids):
@@ -107,6 +112,26 @@ class Prestashop:
         tax_rule_group = self.get(f"tax_rule_groups/{tax_rule_group_id}")["tax_rule_group"]
         tax_percent = self._get_percent_value_from_tax_rule_group_name(tax_rule_group["name"])
         return int(tax_percent)
+
+    def _get_tag_guids(self, categories):
+        mappings = dict()
+        with open(f'{self.category_mapping_filename}.csv', newline='') as f:
+            reader = csv.reader(f)
+            for row in reader:
+                mappings[row[0]] = dict(
+                    src_name=row[1],
+                    categories=[x.strip() for x in row[2].split('>')] if row[2].strip() else [],
+                )
+        tag_guids = set()
+        gateway_categories = self.exporter.list_of_tags(type='category')
+        for integration_category in categories:
+            for mapped_name in mappings[integration_category['id']]['categories']:
+                try:
+                    tag_guids.add(next(x['guid'] for x in gateway_categories if x['name'].lower() == mapped_name.lower()))
+                except StopIteration:
+                    raise ValueError(f'Invalid mapped category `{mapped_name}` for `{integration_category["id"]}`')
+
+        return tag_guids
 
     @staticmethod
     def _get_variant_sku(data, combination):
@@ -142,18 +167,13 @@ class Prestashop:
                 variant = self.get(f"product_option_values/{option_value}")["product_option_value"]
                 self.product_options[option_value] = variant
 
-            if self.language_id:
-                value = self._get_by_id(self.language_id, variant["name"])
-            else:
-                value = variant["name"]
+            value = self._get_localised(variant["name"])
             key = self.variants_reverse[option_value]
             variant_data[key] = value
         return variant_data
 
     def _get_variant_name(self, data):
-        if self.language_id:
-            return self._get_by_id(self.language_id, data["name"])
-        return data["name"]
+        return self._get_localised(data["name"])
 
     def _get_variant_description(self, data):
         if self.language_id:
@@ -199,6 +219,7 @@ class Prestashop:
             stock=Decimal(stock_level),
             vat_percent=self._get_tax_percent(data["id_tax_rules_group"]),
             images=images,
+            tag_guids=self._get_tag_guids(data["associations"].get("categories"))
         )
 
     def fetch_single_product(self, product_id) -> List[Product]:
@@ -287,9 +308,9 @@ class Prestashop:
         if parent_id != "0":
             if parent_id not in self.categories:
                 self._add_to_category_by_id(parent_id)
-            category_name = f"{self.categories[parent_id]} - {self._get_by_id(self.language_id, response['name'])}"
+            category_name = f"{self.categories[parent_id]} - {self._get_localised(response['name'])}"
         else:
-            category_name = self._get_by_id(self.language_id, response['name'])
+            category_name = self._get_localised(response['name'])
 
         self.categories[str(response["id"])] = category_name
 

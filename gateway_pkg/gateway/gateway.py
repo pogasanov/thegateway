@@ -40,6 +40,9 @@ class Gateway:
             },
             "organization": {"product": {"delete": f"{base_url}/organizations/{shop_id}/products/{{}}/"}},
             "tag": {
+                "list": f"{base_url}/tags/",
+            },
+            "webshop_tag": {
                 "list": f"{base_url}/webshops/{shop_id}/tags/",
                 "create": f"{base_url}/webshops/{shop_id}/tags/",
                 "delete": f"{base_url}/webshops/{shop_id}/tags/{{}}/",
@@ -157,8 +160,11 @@ class Gateway:
         self.session.delete(self.endpoints["product"]["delete"].format(product_id))
         self.session.delete(self.endpoints["organization"]["product"]["delete"].format(product_id))
 
-    def list_of_tags(self):
-        response = self.session.get(self.endpoints["tag"]["list"])
+    def list_of_tags(self, type=None):
+        if type:
+            response = self.session.get(f'{self.endpoints["tag"]["list"]}?type={type}')
+        else:
+            response = self.session.get(self.endpoints["tag"]["list"])
         return response.json()
 
     def create_tag(self, name: str):
@@ -166,7 +172,7 @@ class Gateway:
         if tag:
             return tag["guid"]
         data = {"name": name, "type": "variant"}
-        response = self.session.post(self.endpoints["tag"]["create"], json=data)
+        response = self.session.post(self.endpoints["webshop_tag"]["create"], json=data)
         if response.status_code == 409:
             return self._get_tag_guid_from_conflict_message(response.json()["message"])
         if response.status_code >= 400:
@@ -192,7 +198,7 @@ class Gateway:
             self.delete_tag_by_id(tag["guid"])
 
     def delete_tag_by_id(self, tag_id):
-        self.session.delete(self.endpoints["tag"]["delete"].format(tag_id))
+        self.session.delete(self.endpoints["webshop_tag"]["delete"].format(tag_id))
 
     def upload_image(self, image_content):
         response = self.session.post(
