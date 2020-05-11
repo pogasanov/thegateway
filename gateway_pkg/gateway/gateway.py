@@ -30,6 +30,7 @@ class Gateway:
         self.session.mount("https://", HTTPAdapter(max_retries=Retry(total=5, backoff_factor=0.5)))
         self.session.headers.update({"Authorization": f"Bearer {self._build_token(secret)}"})
         self.tags_in_db = None
+        self._categories = None
 
     @property
     def categories(self):
