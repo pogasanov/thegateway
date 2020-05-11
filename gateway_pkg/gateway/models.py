@@ -1,6 +1,9 @@
 from dataclasses import dataclass, field
 from decimal import Decimal
-from typing import List
+from typing import (
+    List,
+    Set,
+)
 
 from gateway.io import ResponseStream
 
@@ -33,3 +36,4 @@ class Product:
     images_urls: List[str] = field(default_factory=list)
     variant_data: dict = field(default_factory=dict)
     for_sale: bool = True
+    tag_guids: set = field(default_factory=set)

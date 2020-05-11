@@ -1,4 +1,5 @@
 import base64
+import csv
 import logging
 import re
 import uuid
@@ -40,6 +41,9 @@ class Gateway:
             },
             "organization": {"product": {"delete": f"{base_url}/organizations/{shop_id}/products/{{}}/"}},
             "tag": {
+                "list": f"{base_url}/tags/",
+            },
+            "webshop_tag": {
                 "list": f"{base_url}/webshops/{shop_id}/tags/",
                 "create": f"{base_url}/webshops/{shop_id}/tags/",
                 "delete": f"{base_url}/webshops/{shop_id}/tags/{{}}/",
@@ -51,7 +55,7 @@ class Gateway:
         shop_guid = uuid.UUID(self.shop_id)
         key = base64.b64decode(secret)
         return jwt.encode(
-            dict(iss=f"shop:{shop_guid}", organization_guid=str(shop_guid), groups=["shopkeeper"],),
+            dict(iss=f"shop:{shop_guid}", organization_guid=str(shop_guid), groups=["shopkeeper"], ),
             key,
             algorithm="HS256",
         )
@@ -157,8 +161,22 @@ class Gateway:
         self.session.delete(self.endpoints["product"]["delete"].format(product_id))
         self.session.delete(self.endpoints["organization"]["product"]["delete"].format(product_id))
 
-    def list_of_tags(self):
-        response = self.session.get(self.endpoints["tag"]["list"])
+    def get_category_mapping(self, category_mapping_filename):
+        mappings = dict()
+        with open(f'{category_mapping_filename}.csv', newline='') as f:
+            reader = csv.reader(f)
+            for row in reader:
+                mappings[row[0]] = dict(
+                    src_name=row[1],
+                    categories=[x.strip() for x in row[2].split('>')] if row[2].strip() else [],
+                )
+        return mappings
+
+    def list_of_tags(self, type=None):
+        if type:
+            response = self.session.get(f'{self.endpoints["tag"]["list"]}?type={type}')
+        else:
+            response = self.session.get(self.endpoints["tag"]["list"])
         return response.json()
 
     def create_tag(self, name: str):
@@ -166,7 +184,7 @@ class Gateway:
         if tag:
             return tag["guid"]
         data = {"name": name, "type": "variant"}
-        response = self.session.post(self.endpoints["tag"]["create"], json=data)
+        response = self.session.post(self.endpoints["webshop_tag"]["create"], json=data)
         if response.status_code == 409:
             return self._get_tag_guid_from_conflict_message(response.json()["message"])
         if response.status_code >= 400:
@@ -192,7 +210,7 @@ class Gateway:
             self.delete_tag_by_id(tag["guid"])
 
     def delete_tag_by_id(self, tag_id):
-        self.session.delete(self.endpoints["tag"]["delete"].format(tag_id))
+        self.session.delete(self.endpoints["webshop_tag"]["delete"].format(tag_id))
 
     def upload_image(self, image_content):
         response = self.session.post(

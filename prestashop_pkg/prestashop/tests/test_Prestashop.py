@@ -112,6 +112,18 @@ class PrestashopTest(TestCase):
             responses.GET, f"{self.BASE_URL}/api/images/products/6/6", body=self.DUMMY_IMAGE, status=200,
         )
         responses.add(
+            responses.GET, f"{self.BASE_URL}/api/categories", json=PRESTASHOP_CATEGORIES, status=200,
+        )
+        responses.add(
+            responses.GET, f"{self.BASE_URL}/api/categories/1", json=PRESTASHOP_CATEGORY_1, status=200,
+        )
+        responses.add(
+            responses.GET, f"{self.BASE_URL}/api/categories/2", json=PRESTASHOP_CATEGORY_2, status=200,
+        )
+        responses.add(
+            responses.GET, f"{self.BASE_URL}/api/categories/3", json=PRESTASHOP_CATEGORY_3, status=200,
+        )
+        responses.add(
             responses.Response(
                 method=responses.HEAD,
                 url=f"{self.BASE_URL}/api/images/products/1/1",
@@ -312,3 +324,9 @@ class PrestashopTest(TestCase):
                     int(called_data["root"]["stock_available"]["quantity"]["#text"]),
                     int(starting_stock_level) + stock_diff,
                 )
+    def test_get_categories(self):
+        self.importer.list_of_categories()
+        self.assertEqual(len(self.importer.categories), 3)
+        self.assertEqual(self.importer.categories["1"], "Root")
+        self.assertEqual(self.importer.categories["2"], "Root - Man")
+        self.assertEqual(self.importer.categories["3"], "Root - Man - Pants")
