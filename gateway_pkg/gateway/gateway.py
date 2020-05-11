@@ -31,6 +31,12 @@ class Gateway:
         self.session.headers.update({"Authorization": f"Bearer {self._build_token(secret)}"})
         self.tags_in_db = None
 
+    @property
+    def categories(self):
+        if self._categories is None:
+            self._categories = self.list_of_tags(type='category')
+        return self._categories
+
     @staticmethod
     def _generate_endpoints(base_url, shop_id):
         return {
@@ -161,7 +167,7 @@ class Gateway:
         self.session.delete(self.endpoints["product"]["delete"].format(product_id))
         self.session.delete(self.endpoints["organization"]["product"]["delete"].format(product_id))
 
-    def get_category_mapping(self, category_mapping_filename):
+    def get_category_mappings(self, category_mapping_filename):
         mappings = dict()
         with open(f'{category_mapping_filename}.csv', newline='') as f:
             reader = csv.reader(f)

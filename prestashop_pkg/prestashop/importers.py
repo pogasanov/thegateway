@@ -113,13 +113,12 @@ class Prestashop:
 
     def _get_tag_guids(self, categories):
         mappings = self.exporter.get_category_mappings(self.category_mapping_filename)
-        gateway_categories = self.exporter.list_of_tags(type='category')
 
         tag_guids = set()
         for integration_category in categories:
             for mapped_name in mappings[integration_category['id']]['categories']:
                 try:
-                    tag_guids.add(next(x['guid'] for x in gateway_categories if x['name'].lower() == mapped_name.lower()))
+                    tag_guids.add(next(x['guid'] for x in self.exporter.categories if x['name'].lower() == mapped_name.lower()))
                 except StopIteration:
                     raise ValueError(f'Invalid mapped category `{mapped_name}` for `{integration_category["id"]}`')
 
