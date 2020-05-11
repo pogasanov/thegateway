@@ -31,6 +31,12 @@ class Gateway:
         self.session.headers.update({"Authorization": f"Bearer {self._build_token(secret)}"})
         self.tags_in_db = None
 
+    @property
+    def categories(self):
+        if self._categories is None:
+            self._categories = self.list_of_tags(type='category')
+        return self._categories
+
     @staticmethod
     def _generate_endpoints(base_url, shop_id):
         return {
