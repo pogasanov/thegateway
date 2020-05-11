@@ -1,4 +1,5 @@
 import base64
+import csv
 import logging
 import re
 import uuid
@@ -54,7 +55,7 @@ class Gateway:
         shop_guid = uuid.UUID(self.shop_id)
         key = base64.b64decode(secret)
         return jwt.encode(
-            dict(iss=f"shop:{shop_guid}", organization_guid=str(shop_guid), groups=["shopkeeper"],),
+            dict(iss=f"shop:{shop_guid}", organization_guid=str(shop_guid), groups=["shopkeeper"], ),
             key,
             algorithm="HS256",
         )
@@ -159,6 +160,17 @@ class Gateway:
     def delete_product_by_id(self, product_id):
         self.session.delete(self.endpoints["product"]["delete"].format(product_id))
         self.session.delete(self.endpoints["organization"]["product"]["delete"].format(product_id))
+
+    def get_category_mapping(self, category_mapping_filename):
+        mappings = dict()
+        with open(f'{category_mapping_filename}.csv', newline='') as f:
+            reader = csv.reader(f)
+            for row in reader:
+                mappings[row[0]] = dict(
+                    src_name=row[1],
+                    categories=[x.strip() for x in row[2].split('>')] if row[2].strip() else [],
+                )
+        return mappings
 
     def list_of_tags(self, type=None):
         if type:

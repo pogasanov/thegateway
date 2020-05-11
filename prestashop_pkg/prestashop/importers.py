@@ -1,8 +1,6 @@
-import csv
 import logging
 import re
 from decimal import Decimal
-from importlib import import_module
 from typing import List
 from urllib.parse import urlparse
 
@@ -114,16 +112,10 @@ class Prestashop:
         return int(tax_percent)
 
     def _get_tag_guids(self, categories):
-        mappings = dict()
-        with open(f'{self.category_mapping_filename}.csv', newline='') as f:
-            reader = csv.reader(f)
-            for row in reader:
-                mappings[row[0]] = dict(
-                    src_name=row[1],
-                    categories=[x.strip() for x in row[2].split('>')] if row[2].strip() else [],
-                )
-        tag_guids = set()
+        mappings = self.exporter.get_category_mappings(self.category_mapping_filename)
         gateway_categories = self.exporter.list_of_tags(type='category')
+
+        tag_guids = set()
         for integration_category in categories:
             for mapped_name in mappings[integration_category['id']]['categories']:
                 try:
