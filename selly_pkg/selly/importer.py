@@ -173,10 +173,7 @@ class SellyImporter:
             mappings = self.exporter.get_category_mappings(self.category_mapping_filename)
 
             for mapped_name in mappings[str(category_id)]['categories']:
-                try:
-                    tag_guids.add(next(x['guid'] for x in self.exporter.categories if x['name'].lower() == mapped_name.lower()))
-                except StopIteration:
-                    raise ValueError(f'Invalid mapped category `{mapped_name}` for `{category_id}`')
+                tag_guids.add(self.exporter.get_category_id_by_name(mapped_name, category_id))
 
         return tag_guids
 
@@ -230,6 +227,7 @@ class SellyImporter:
         return output_variants
 
     def build_products(self) -> Generator[List[Product], None, None]:
+        self.exporter.check_mapped_categories(self.category_mapping_filename)
         self._download_data()
         yield len(self.products)
         for product in self.products:
