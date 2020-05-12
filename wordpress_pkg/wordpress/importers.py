@@ -1,10 +1,16 @@
 import logging
 from collections import defaultdict
 from decimal import Decimal
-from typing import List, Iterator, Dict
-from woocommerce import API
+from typing import (
+    Dict,
+    Iterator,
+    List,
+    Set,
+)
+from urllib.parse import urlparse
 
 from gateway import Product
+from woocommerce import API
 
 # pylint: disable=C0103
 logger = logging.getLogger(__name__)
@@ -22,12 +28,18 @@ class WoocommerceWordPress:
     DEFAULT_TAX_CLASS = ""
     CATEGORY_DELIMITER = " > "
 
-    def __init__(self, consumer_key: str, consumer_secret: str, base_url: str, category_map: dict = None):
+    def __init__(self, consumer_key: str, consumer_secret: str, base_url: str):
+        self.base_url = base_url
         self.wcapi = API(url=base_url, consumer_key=consumer_key, consumer_secret=consumer_secret)
         self.is_price_with_tax = True
         self.taxes = defaultdict(lambda: self.DEFAULT_TAX)
-        self.gw_category_map = category_map
         self.api_category_map = dict()
+
+        self.exporter = None
+
+    @property
+    def category_mapping_filename(self):
+        return f'category_mappings_{urlparse(self.base_url).netloc.replace(".", "_")}'
 
     def _set_price_options(self):
         """
@@ -160,7 +172,7 @@ class WoocommerceWordPress:
             gw_product = Product("", 0, 0)
             gw_product.name = api_product["name"]
             gw_product.sku = api_product_variation["sku"]
-            gw_product.categories = self._get_categories(api_product)
+            gw_product.tag_guids = self._get_tag_guids(api_product)
 
             variant_description = api_product_variation["description"]
             if not variant_description:
@@ -216,18 +228,18 @@ class WoocommerceWordPress:
         return [image_record["src"] for image_record in api_product["images"]]
 
     # pylint: disable=R0201
-    def _get_categories(self, api_product: dict) -> List[str]:
+    def _get_tag_guids(self, api_product: dict) -> Set[str]:
         """
         Get categories of api product and convert them to gateway categories
         """
-        categories = list()
-        for cat_record in api_product["categories"]:
-            api_cat = self.api_category_map[cat_record["id"]]
-            categories.append(api_cat)
-            # TODO mapping to gw category
-            # categories.append(self.gw_category_map[api_cat])
+        mappings = self.exporter.get_category_mappings(self.category_mapping_filename)
 
-        return categories
+        tag_guids = set()
+        for integration_category in api_product["categories"]:
+            for mapped_name in mappings[str(integration_category['id'])]['categories']:
+                tag_guids.add(self.exporter.get_category_id_by_name(mapped_name, integration_category["id"]))
+
+        return tag_guids
 
     def _get_stock(self, api_product: dict) -> int:
         stock_status = api_product["stock_status"]
@@ -255,7 +267,7 @@ class WoocommerceWordPress:
         gw_product.images_urls = self._get_images_urls(api_product)
         gw_product.variant_data = self._get_variants(api_product)
         gw_product.stock = self._get_stock(api_product)
-        gw_product.categories = self._get_categories(api_product)
+        gw_product.tag_guids = self._get_tag_guids(api_product)
         self._set_price_and_vat(gw_product, api_product)
         return [gw_product]
 
@@ -306,14 +318,15 @@ class WoocommerceWordPress:
             logger.warning("Categories not found for product name=%s, sku=%s", gw_product.name, gw_product.sku)
             return None
 
-        gw_categories_of_product = self._get_categories(api_products[0])
-        gw_product.categories = gw_categories_of_product
+        gw_product.tag_guids = self._get_tag_guids(api_products[0])
         return gw_product
 
     def find_products_by_sku(self, sku: str) -> List[dict]:
         return self.wcapi.get("products", params={"sku": sku, "per_page": 100}).json()
 
     def get_products(self) -> Iterator[List[Product]]:
+        self.exporter.check_mapped_categories(self.category_mapping_filename)
+
         if not self._is_connection_established():
             return []
 
