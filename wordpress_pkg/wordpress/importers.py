@@ -325,6 +325,7 @@ class WoocommerceWordPress:
         return self.wcapi.get("products", params={"sku": sku, "per_page": 100}).json()
 
     def get_products(self) -> Iterator[List[Product]]:
+        self.check_categories_are_mapped()
         self.exporter.check_mapped_categories(self.category_mapping_filename)
 
         if not self._is_connection_established():
@@ -341,3 +342,10 @@ class WoocommerceWordPress:
             yield self._convert_api_product_to_gw_products(api_product)
 
         return []
+
+    def check_categories_are_mapped(self):
+        mappings = self.exporter.get_category_mappings(self.category_mapping_filename)
+        for category_id, category_name in self.get_categories().items():
+            if str(category_id) not in mappings.keys():
+                raise NotImplementedError(f'Missing mapping for category `{category_id}` ({category_name})')
+
