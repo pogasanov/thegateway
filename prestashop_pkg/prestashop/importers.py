@@ -117,10 +117,7 @@ class Prestashop:
         tag_guids = set()
         for integration_category in categories:
             for mapped_name in mappings[integration_category['id']]['categories']:
-                try:
-                    tag_guids.add(next(x['guid'] for x in self.exporter.categories if x['name'].lower() == mapped_name.lower()))
-                except StopIteration:
-                    raise ValueError(f'Invalid mapped category `{mapped_name}` for `{integration_category["id"]}`')
+                tag_guids.add(self.exporter.get_category_id_by_name(mapped_name, integration_category["id"]))
 
         return tag_guids
 
@@ -233,6 +230,7 @@ class Prestashop:
         return products
 
     def build_products(self):
+        self.exporter.check_mapped_categories(self.category_mapping_filename)
         self.get_variants()
         products = self.fetch_products_ids()
         total = len(products)
