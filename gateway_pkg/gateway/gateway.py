@@ -187,6 +187,19 @@ class Gateway:
             response = self.session.get(self.endpoints["tag"]["list"])
         return response.json()
 
+    def get_category_id_by_name(self, name, identifier=None):
+        try:
+            return next(x['guid'] for x in self.categories if x['name'].lower() == name.lower())
+        except StopIteration:
+            raise ValueError(f'Invalid mapped category `{name}` for `{identifier}`')
+
+    def check_mapped_categories(self, filename):
+        mappings = self.get_category_mappings(filename)
+
+        for integration_id, integration_category in mappings.items():
+            for mapped_name in integration_category['categories']:
+                self.get_category_id_by_name(mapped_name, integration_id)
+
     def create_tag(self, name: str):
         tag = self._get_tag(name)
         if tag:
