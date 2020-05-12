@@ -6,5 +6,6 @@ dist
 build
 
 site/
+failed_*.json
 
 .env
