@@ -136,6 +136,7 @@ class Gateway:
                 "name": product.name,
                 "vat": f"VAT{product.vat_percent}",
                 "images": images,
+                "tag_guids": list(product.tag_guids),
             }
 
             if product.description:
@@ -145,7 +146,7 @@ class Gateway:
             if product.sku:
                 product_data["sku"] = product.sku
             if variant_tag:
-                product_data["tag_guids"] = [variant_tag]
+                product_data["tag_guids"].append(variant_tag)
                 product_data["data"] = dict(variants=product.variant_data)
 
             payload["product"] = product_data
