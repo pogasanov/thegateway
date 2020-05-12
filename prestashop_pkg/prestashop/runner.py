@@ -20,6 +20,7 @@ importer = Prestashop(prestashop_base_url, prestashop_api_key, image_url_prefix,
 @click.command()
 def run_import():
     exporter = Gateway(gateway_base_url, gateway_shop_id, gateway_secret, image_url_prefix)
+    importer.exporter = exporter
 
     for product in importer.build_products():
         exporter.create_products(product)
