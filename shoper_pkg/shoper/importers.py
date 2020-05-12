@@ -6,10 +6,10 @@ from typing import (
     List,
     Dict,
     Generator,
-    Optional,
 )
 
 import requests
+from gateway import Gateway
 from gateway.models import Product
 # pylint: disable=invalid-name
 from requests import Response
@@ -23,7 +23,8 @@ class Shoper:
             base_url: str,
             username: str,
             password: str,
-            categories_path: Optional[str],
+            category_tags: dict,
+            exporter: Gateway,
             translation_prefix: str = "pl_PL",
             stock_update: bool = True,
     ):
@@ -34,11 +35,11 @@ class Shoper:
         self.auth_token = self.authorize()
         if not stock_update:
             self.taxes = self.get_taxes()
+        self.category_tags = category_tags
+        self.exporter = exporter
         self.mapped_categories = {}
-        if categories_path:
-            with open(categories_path) as categories_file:
-                self.mapped_categories = json.load(categories_file)
         self.categories_dict = dict()
+        self._gw_categories = None
 
     def authorize(self) -> str:
         response = requests.post(
@@ -100,37 +101,22 @@ class Shoper:
         taxes = self._tax_dict(taxes_response.get("list"))
         return taxes
 
-    def _categories_dict(self, categories: List[Dict]) -> Dict:
-        return {
-            category.get("category_id"): category.get("translations").get(self.translation_prefix).get("name")
-            for category in categories
-        }
+    def _get_categories(self, product):
+        try:
+            orig_categories = [self.category_tags[str(category)] for category in product['categories']]
+        except KeyError as e:
+            raise ValueError(f'Missing category mapping for category: {e}') from e
+        if self._gw_categories is None:
+            self._gw_categories = {t['name'].lower(): t['guid'] for t in self.exporter.list_of_tags(type='category')}
 
-    def _get_category(self, product: Dict) -> str:
-        # check if there is category mapped
-        product_category = self.mapped_categories.get(product.get("category_id"))
-        # if not then get the category from the list of all categories
-        # the category is probably covered already
-        if not product_category:
-            product_category = self.categories_dict.get(product.get("category_id"))
-        return product_category
-
-    def _get_categories(self) -> Dict:
-        categories_response = self.get("categories")
-        categories = self._categories_dict(categories_response.get("list"))
-        return categories
-
-    def get_categories_list(self):
-        categories_response = self.get("categories")
-        category_objects = categories_response.get("list")
-        categories = {category.get("category_id"): category.get("translations").get(self.translation_prefix).get("name") for category in category_objects}
-        while categories_response['page'] < categories_response['pages']:
-            categories_response = self.get(f"categories?page={categories_response['page'] + 1}")
-            category_objects = categories_response.get("list")
-            categories.update(
-                {category.get("category_id"): category.get("translations").get(self.translation_prefix).get("name") for category in category_objects}
-            )
-        return categories
+        category_guids = []
+        for oc in orig_categories:
+            for gwc in oc['categories']:
+                try:
+                    category_guids.append(self._gw_categories[gwc.lower()])
+                except KeyError:
+                    raise ValueError(f'No category tag with name `{gwc}`')
+        return category_guids
 
     def get_product_data(self, data: Dict, option: str = "", options_count: int = 1) -> Product:
         images = [self.get_image_url(data)] if data.get("main_image") else None
@@ -147,7 +133,7 @@ class Shoper:
 
         translation = data.get("translations").get(self.translation_prefix)
 
-        category = self._get_category(product=data)
+        category_guids = self._get_categories(product=data)
 
         product = Product(
             name=translation.get("name"),
@@ -159,7 +145,7 @@ class Shoper:
             variant_data={"size": str(option)} if option else dict(),
             images_urls=images,
             vat_percent=self.taxes.get(data.get("tax_id")),
-            category=[category],
+            tag_guids=set(category_guids),
         )
 
         return product
@@ -179,7 +165,6 @@ class Shoper:
         """
         page_limit = 50
         products_response = self.get(f"products?limit={page_limit}")
-        self.categories_dict = self._get_categories()
 
         # Load first page
         for product in products_response.get("list"):

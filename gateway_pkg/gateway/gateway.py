@@ -41,6 +41,9 @@ class Gateway:
     @staticmethod
     def _generate_endpoints(base_url, shop_id):
         return {
+            "categories": {
+                "list": f"{base_url}/tags?type=category",
+            },
             "product": {
                 "list": f"{base_url}/dashboard/webshop_products/_query",
                 "create": f"{base_url}/dashboard/webshops/{shop_id}/products",
