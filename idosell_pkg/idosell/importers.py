@@ -174,10 +174,7 @@ class IdoSell:
 
         tag_guids = set()
         for mapped_name in mappings[category['id']]['categories']:
-            try:
-                tag_guids.add(next(x['guid'] for x in self.exporter.categories if x['name'].lower() == mapped_name.lower()))
-            except StopIteration:
-                raise ValueError(f'Invalid mapped category `{mapped_name}` for `{category["id"]}`')
+            tag_guids.add(self.exporter.get_category_id_by_name(mapped_name, category["id"]))
 
         return tag_guids
 
@@ -225,6 +222,7 @@ class IdoSell:
         """
         Get product variants from IdoSell API as gateway product model
         """
+        self.exporter.check_mapped_categories(self.category_mapping_filename)
         xml_content = self.products_xml
         if not xml_content:
             return []
