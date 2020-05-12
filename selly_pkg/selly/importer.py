@@ -136,6 +136,12 @@ class SellyImporter:
         self.images = None
         self.categories = None
 
+        self.exporter = None
+
+    @property
+    def category_mapping_filename(self):
+        return f'category_mappings_{urllib.parse.urlparse(self.shop_url).netloc.replace(".", "_")}'
+
     def _download_data(self):
         self.products = self.client.get_products()
         self.details = self.client.get_products_details()
@@ -160,21 +166,25 @@ class SellyImporter:
     def _get_image_url(self, details: dict, image: dict) -> str:
         return f"{self.shop_url}/{details['zdjecia_katalog']}{image['zdjecie_nr']}.jpg"
 
-    def _get_category_name(self, category_id: int, category_mapping: dict = None) -> Optional[str]:
+    def _get_tag_guids(self, category_id: int) -> Optional[set]:
         category = self.categories.get(category_id, None)
-        if not category:
-            return None
-        category_name = category["nazwa"].lower().strip()
-        if category_mapping and category_name in category_mapping:
-            category_name = category_mapping[category_name]
-        return category_name
+        tag_guids = set()
+        if category:
+            mappings = self.exporter.get_category_mappings(self.category_mapping_filename)
 
-    def _get_single_product_variants(self, product: dict, category_mapping: dict = None) -> List[Product]:
+            for mapped_name in mappings[str(category_id)]['categories']:
+                try:
+                    tag_guids.add(next(x['guid'] for x in self.exporter.categories if x['name'].lower() == mapped_name.lower()))
+                except StopIteration:
+                    raise ValueError(f'Invalid mapped category `{mapped_name}` for `{category_id}`')
+
+        return tag_guids
+
+    def _get_single_product_variants(self, product: dict) -> List[Product]:
         product_id = product["product_id"]
         variants = self.variants[product_id]
         details = self.details[product_id]
         images = self.images[product_id]
-        category_name = self._get_category_name(product["category_id"], category_mapping)
         product_images = [self._get_image_url(details, image) for image in images]
         if not variants:
             price = Decimal(product["price"]) / (Decimal(1) + (Decimal(details["stawka_vat"] / 100)))
@@ -189,7 +199,7 @@ class SellyImporter:
                     sku=details["kod_producenta"],
                     images_urls=product_images,
                     for_sale=bool(product["visible"]),
-                    categories=[] if not category_name else [category_name, ],
+                    tag_guids=self._get_tag_guids(product["category_id"]),
                 )
             ]
         output_variants = []
@@ -214,16 +224,16 @@ class SellyImporter:
                     variant_data=variant_data,
                     images_urls=variant_images,
                     for_sale=bool(product["visible"]),
-                    categories=[] if not category_name else [category_name, ],
+                    tag_guids=self._get_tag_guids(product["category_id"]),
                 )
             )
         return output_variants
 
-    def build_products(self, category_mapping: dict = None) -> Generator[List[Product], None, None]:
+    def build_products(self) -> Generator[List[Product], None, None]:
         self._download_data()
         yield len(self.products)
         for product in self.products:
-            yield self._get_single_product_variants(product, category_mapping)
+            yield self._get_single_product_variants(product)
 
     def get_categories(self) -> Dict:
         categories = dict()

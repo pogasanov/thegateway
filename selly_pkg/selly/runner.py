@@ -1,6 +1,4 @@
-import json
 import os
-import pathlib
 
 import click
 from gateway import Gateway
@@ -31,44 +29,15 @@ def cli(ctx):
 
 
 @cli.command()
-@click.option("--name", prompt="Retailer name", help="Name of the retailer for which categories will be mapped")
 @click.pass_context
-def map_categories(ctx, name):
+def run_imports(ctx):
     importer = ctx.obj["importer"]
     exporter = ctx.obj["exporter"]
 
-    importer_categories = importer.get_categories()
-    exporter_categories = exporter._get_categories()
-
-    not_mapped_categories = filter(lambda category: category not in exporter_categories, importer_categories)
-    output_dict = {category: None for category in not_mapped_categories}
-    click.echo(f"{len(output_dict)} / {len(importer_categories)} could not be mapped")
-    if output_dict:
-        parent_path = pathlib.Path(__file__).parent.parent.absolute()
-        file_name = f"{name}-categories-mapping.json"
-        file_path = os.path.join(parent_path, "category_mappings", file_name)
-        with open(file_path, "w") as outfile:
-            json.dump(output_dict, outfile, ensure_ascii=False, indent=4)
-        click.echo(f"Generated category map file: {file_path}")
-    else:
-        click.echo("All categories are covered with categories from the gateway.")
-
-
-@cli.command()
-@click.argument("filepath", type=click.Path(exists=True))
-@click.pass_context
-def run_imports(ctx, filepath):
-    importer = ctx.obj["importer"]
-    exporter = ctx.obj["exporter"]
-
-    category_mapping = None
-    if filepath:
-        with open(filepath, "r") as fin:
-            category_mapping = json.load(fin)
-        click.echo("Category mapping file loaded")
+    importer.exporter = exporter
 
     click.echo("Importing products...")
-    products = importer.build_products(category_mapping)
+    products = importer.build_products()
     products_count = next(products)
     for index, product in enumerate(products):
         click.echo(f"Exporting: {index + 1} / {products_count}")
