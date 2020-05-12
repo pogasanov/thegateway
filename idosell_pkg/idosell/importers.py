@@ -4,7 +4,11 @@ import xml.etree.ElementTree as ET
 from datetime import date
 from decimal import Decimal
 from hashlib import sha1
-from typing import List, Iterator
+from typing import (
+    Iterator,
+    List,
+)
+from urllib.parse import urlparse
 
 import requests
 from gateway.models import Product
@@ -32,7 +36,13 @@ class IdoSell:
         self.password = password
         self.url = base_url + "/marketplace-api/?gate=Products/getProductsFeed/5/json"
 
+        self.exporter = None
+
         self.__products_xml = None
+
+    @property
+    def category_mapping_filename(self):
+        return f'category_mappings_{urlparse(self.url).netloc.replace(".", "_")}'
 
     @property
     def products_xml(self):
@@ -80,7 +90,7 @@ class IdoSell:
         product["brief"] = brief_description.text.strip() if brief_description is not None else ""
 
         product["image_urls"] = self._get_image_urls(xml_product)
-        product["category"] = self._find(xml_product, "./category").attrib["name"]
+        product["category"] = self._find(xml_product, "./category").attrib
         product["variant_data"] = dict()
         product["sku"] = xml_product.attrib["id"]
 
@@ -159,6 +169,18 @@ class IdoSell:
 
         return sizes
 
+    def _get_tag_guids(self, category):
+        mappings = self.exporter.get_category_mappings(self.category_mapping_filename)
+
+        tag_guids = set()
+        for mapped_name in mappings[category['id']]['categories']:
+            try:
+                tag_guids.add(next(x['guid'] for x in self.exporter.categories if x['name'].lower() == mapped_name.lower()))
+            except StopIteration:
+                raise ValueError(f'Invalid mapped category `{mapped_name}` for `{category["id"]}`')
+
+        return tag_guids
+
     def _convert_fetched_product_to_gateway_products(self, fetched_product: dict) -> List[Product]:
         product_template = dict()
         product_template["name"] = fetched_product["name"]
@@ -177,7 +199,10 @@ class IdoSell:
         created_gw_products = []
         for size in sizes:
             gw_prod = Product(
-                name=product_template["name"], price=size["price"], vat_percent=product_template["vat_percent"],
+                name=product_template["name"],
+                price=size["price"],
+                vat_percent=product_template["vat_percent"],
+                tag_guids=self._get_tag_guids(product_template.get("category")),
             )
             gw_prod.description_short = product_template["description_short"]
             gw_prod.sku = product_template["sku"]

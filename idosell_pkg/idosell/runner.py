@@ -20,6 +20,7 @@ importer = IdoSell(idosell_login, idosell_password, idosell_base_url)
 @click.command()
 def run_import():
     exporter = Gateway(gateway_base_url, gateway_shop_id, gateway_secret, image_url_prefix)
+    importer.exporter = exporter
 
     for product_variants in importer.get_products():
         exporter.create_products(product_variants)
