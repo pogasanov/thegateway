@@ -227,7 +227,9 @@ class SellyImporter:
         return output_variants
 
     def build_products(self) -> Generator[List[Product], None, None]:
+        self.check_categories_are_mapped()
         self.exporter.check_mapped_categories(self.category_mapping_filename)
+
         self._download_data()
         yield len(self.products)
         for product in self.products:
@@ -253,3 +255,9 @@ class SellyImporter:
         _handle(self.client.get_categories())
 
         return categories
+
+    def check_categories_are_mapped(self):
+        mappings = self.exporter.get_category_mappings(self.category_mapping_filename)
+        for category_id, category_name in self.get_categories().items():
+            if str(category_id) not in mappings.keys():
+                raise NotImplementedError(f'Missing mapping for category `{category_id}` ({category_name})')
