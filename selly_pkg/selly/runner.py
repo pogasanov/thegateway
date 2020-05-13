@@ -38,7 +38,8 @@ def run_imports(ctx):
 
     click.echo("Importing products...")
     products = importer.build_products()
+
     products_count = next(products)
     for index, product in enumerate(products):
-        click.echo(f"Exporting: {index + 1} / {products_count}")
+        click.echo(f"\rExporting: {index + 1} / {products_count}", nl=False)
         exporter.create_products(product)
