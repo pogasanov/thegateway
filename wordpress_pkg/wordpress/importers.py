@@ -335,7 +335,9 @@ class WoocommerceWordPress:
         self._set_price_options()
         self.api_category_map = self._get_map_with_ids_and_category_hierarchy()
 
-        for api_product in self._fetch_products_from_api():
+        for index, api_product in enumerate(self._fetch_products_from_api()):
+            print(f"\r{index}/???", end='')
+
             if not self._is_api_product_valid(api_product):
                 continue
 
