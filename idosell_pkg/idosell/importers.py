@@ -231,7 +231,7 @@ class IdoSell:
         xml_products = xml_root.findall("./products/product")
         total = len(xml_products)
         for index, xml_product in enumerate(xml_products, 1):
-            print(f"{index}/{total}")
+            print(f"\rProcessing products {index}/{total}", end='')
             product_variants = self._get_product(xml_product)
             yield self._convert_fetched_product_to_gateway_products(product_variants)
 
@@ -296,7 +296,7 @@ class IdoSell:
         total = len(xml_categories)
         categories = {}
         for index, xml_category in enumerate(xml_categories, 1):
-            print(f"{index}/{total}")
+            print(f"\rProcessing categories {index}/{total}", end='')
             categories[xml_category.attrib["id"]] = xml_category.attrib["name"]
         return categories
 
