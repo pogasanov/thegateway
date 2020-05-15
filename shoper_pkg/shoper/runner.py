@@ -16,14 +16,12 @@ IMAGE_URL_PREFIX = f"{os.environ.get('IMAGEBUCKET_URL')}{GATEWAY_SHOP_ID}/"
 SHOPER_BASE_URL = os.environ.get("SHOPER_BASE_URL", "http://sklep266192.shoparena.pl")
 SHOPER_USERNAME = os.environ.get("SHOPER_USERNAME", "karol.ziolkowski@profil-software.com")
 SHOPER_PASSWORD = os.environ.get("SHOPER_PASSWORD", "Magik123")
-SHOPER_CATEGORIES_FILE = os.environ.get("SHOPER_CATEGORIES_FILE")
 gateway = Gateway(GATEWAY_BASE_URL, GATEWAY_SHOP_ID, GATEWAY_SECRET, IMAGE_URL_PREFIX)
 importer = Shoper(
     SHOPER_BASE_URL,
     SHOPER_USERNAME,
     SHOPER_PASSWORD,
     exporter=gateway,
-    category_tags=gateway.get_category_mappings(SHOPER_CATEGORIES_FILE),
     stock_update=False,
 )
 

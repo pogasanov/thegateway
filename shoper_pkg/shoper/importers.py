@@ -1,11 +1,12 @@
 import decimal
 import json
 import logging
+import urllib
 from json import JSONDecodeError
 from typing import (
-    List,
     Dict,
     Generator,
+    List,
 )
 
 import requests
@@ -23,7 +24,6 @@ class Shoper:
             base_url: str,
             username: str,
             password: str,
-            category_tags: dict,
             exporter: Gateway,
             translation_prefix: str = "pl_PL",
             stock_update: bool = True,
@@ -35,11 +35,14 @@ class Shoper:
         self.auth_token = self.authorize()
         if not stock_update:
             self.taxes = self.get_taxes()
-        self.category_tags = category_tags
         self.exporter = exporter
         self.mapped_categories = {}
         self.categories_dict = dict()
         self._gw_categories = None
+
+    @property
+    def category_mapping_filename(self):
+        return f'category_mappings_{urllib.parse.urlparse(self.api_hostname).netloc.replace(".", "_")}'
 
     def authorize(self) -> str:
         response = requests.post(
@@ -102,8 +105,10 @@ class Shoper:
         return taxes
 
     def _get_categories(self, product):
+        mappings = self.exporter.get_category_mappings('..', self.category_mapping_filename)
+
         try:
-            orig_categories = [self.category_tags[str(category)] for category in product['categories']]
+            orig_categories = [mappings[str(category)] for category in product['categories']]
         except KeyError as e:
             raise ValueError(f'Missing category mapping for category: {e}') from e
         if self._gw_categories is None:
@@ -163,6 +168,9 @@ class Shoper:
         There's a limit on a number of products on a page and it's maximum is 50 (default 10).
         Set it to 50 to make less API calls.
         """
+        self.check_categories_are_mapped()
+        self.exporter.check_mapped_categories(self.category_mapping_filename)
+
         page_limit = 50
         products_response = self.get(f"products?limit={page_limit}")
 
@@ -201,3 +209,24 @@ class Shoper:
         return self.put(
             f"products/{product_to_update.get('product_id')}", json.dumps({"stock": {"stock": product.stock}})
         )
+
+    def get_categories(self):
+        categories_response = self.get("categories")
+        category_objects = categories_response.get("list")
+        categories = {category.get("category_id"): category.get("translations").get(self.translation_prefix).get("name") for category in category_objects}
+        while categories_response['page'] < categories_response['pages']:
+            categories_response = self.get(f"categories?page={categories_response['page'] + 1}")
+            category_objects = categories_response.get("list")
+            categories.update(
+                {category.get("category_id"): category.get("translations").get(self.translation_prefix).get("name") for category in category_objects}
+            )
+        return categories
+
+    def check_categories_are_mapped(self):
+        mappings = self.exporter.get_category_mappings('..', self.category_mapping_filename)
+        errors = dict()
+        for category_id, category_name in self.get_categories().items():
+            if str(category_id) not in mappings.keys():
+                errors[category_id] = category_name
+        if errors:
+            raise NotImplementedError(f'Missing mapping for categories: {errors}')
