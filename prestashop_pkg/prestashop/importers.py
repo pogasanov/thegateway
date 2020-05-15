@@ -230,7 +230,9 @@ class Prestashop:
         return products
 
     def build_products(self):
+        self.check_categories_are_mapped()
         self.exporter.check_mapped_categories(self.category_mapping_filename)
+
         self.get_variants()
         products = self.fetch_products_ids()
         total = len(products)
@@ -302,6 +304,16 @@ class Prestashop:
             category_name = self._get_localised(response['name'])
 
         self.categories[str(response["id"])] = category_name
+
+    def check_categories_are_mapped(self):
+        self.list_of_categories()
+        mappings = self.exporter.get_category_mappings(self.category_mapping_filename)
+        errors = dict()
+        for category_id, category_name in self.categories.items():
+            if str(category_id) not in mappings.keys():
+                errors[category_id] = category_name
+        if errors:
+            raise NotImplementedError(f'Missing mapping for categories: {errors}')
 
 
 def strip_tags(in_str):
