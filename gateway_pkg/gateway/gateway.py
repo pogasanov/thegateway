@@ -188,10 +188,14 @@ class Gateway:
         return response.json()
 
     def get_category_id_by_name(self, name, identifier=None):
+        errors = dict()
         try:
             return next(x['guid'] for x in self.categories if x['name'].lower() == name.lower())
         except StopIteration:
-            raise ValueError(f'Invalid mapped category `{name}` for `{identifier}`')
+            errors[name] = identifier
+
+        if errors:
+            raise ValueError(f'Invalid mapped categories: {errors}')
 
     def check_mapped_categories(self, filename):
         mappings = self.get_category_mappings(filename)
