@@ -302,6 +302,9 @@ class IdoSell:
 
     def check_categories_are_mapped(self):
         mappings = self.exporter.get_category_mappings(self.category_mapping_filename)
+        errors = dict()
         for category_id, category_name in self.get_categories().items():
             if str(category_id) not in mappings.keys():
-                raise NotImplementedError(f'Missing mapping for category `{category_id}` ({category_name})')
+                errors[category_id] = category_name
+        if errors:
+            raise NotImplementedError(f'Missing mapping for categories: {errors}')
