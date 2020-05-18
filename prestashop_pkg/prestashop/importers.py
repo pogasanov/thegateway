@@ -237,7 +237,7 @@ class Prestashop:
         products = self.fetch_products_ids()
         total = len(products)
         for index, product in enumerate(products, 1):
-            print(f"{index}/{total}")
+            print(f"\r{index}/{total}", end='')
             yield self.fetch_single_product(product)
 
     def download_image(self, product_id, image_id):
