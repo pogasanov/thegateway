@@ -18,6 +18,7 @@ importer = IdoSell(idosell_login, idosell_password, idosell_base_url)
 
 @click.command()
 def run_import():
+    print(idosell_base_url)
     exporter = Gateway(gateway_base_url, gateway_shop_id, gateway_secret)
     importer.exporter = exporter
 
