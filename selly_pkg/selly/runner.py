@@ -10,7 +10,6 @@ SELLY_SHOP_URL = os.environ.get("SELLY_SHOP_URL")
 GATEWAY_BASE_URL = os.environ.get("GATEWAY_BASE_URL", "https://sma.dev.gwapi.eu")
 GATEWAY_SHOP_ID = os.environ.get("GATEWAY_SHOP_ID", "a547de18-7a1d-450b-a57b-bbf7f177db84")
 GATEWAY_SECRET = os.environ.get("GATEWAY_SECRET", "OyB2YbwTVtRXuJv+VE4oJLVyGo8pf1XVibCk08lt4ys=")
-IMAGE_URL_PREFIX = f"{os.environ.get('IMAGEBUCKET_URL')}{GATEWAY_SHOP_ID}/"
 
 importer = SellyImporter(SELLY_API_ID, SELLY_APP_KEY, SELLY_SHOP_URL)
 
@@ -18,7 +17,7 @@ importer = SellyImporter(SELLY_API_ID, SELLY_APP_KEY, SELLY_SHOP_URL)
 @click.group(invoke_without_command=True)
 @click.pass_context
 def cli(ctx):
-    exporter = Gateway(GATEWAY_BASE_URL, GATEWAY_SHOP_ID, GATEWAY_SECRET, IMAGE_URL_PREFIX)
+    exporter = Gateway(GATEWAY_BASE_URL, GATEWAY_SHOP_ID, GATEWAY_SECRET)
     ctx.obj = {"importer": importer, "exporter": exporter}
 
     if ctx.invoked_subcommand is None:
