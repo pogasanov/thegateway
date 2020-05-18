@@ -30,6 +30,7 @@ def cli(ctx):
 @cli.command()
 @click.pass_context
 def run_imports(ctx):
+    print(SELLY_SHOP_URL)
     importer = ctx.obj["importer"]
     exporter = ctx.obj["exporter"]
 
