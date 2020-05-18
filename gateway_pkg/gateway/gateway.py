@@ -20,11 +20,10 @@ LOGGER = logging.getLogger(__name__)
 
 
 class Gateway:
-    def __init__(self, base_url, shop_id, secret, image_url_prefix):
+    def __init__(self, base_url, shop_id, secret):
         self.base_url = base_url
         self.shop_id = shop_id
         self.shop_guid = uuid.UUID(shop_id)
-        self.image_prefix = image_url_prefix
         self.endpoints = self._generate_endpoints(self.base_url, self.shop_id)
         self.session = requests.Session()
         self.session.mount("https://", HTTPAdapter(max_retries=Retry(total=5, backoff_factor=0.5)))

@@ -17,10 +17,9 @@ LOGGER = logging.getLogger(__name__)
 class Prestashop:
     PRICES_TAX_EXCLUDED_PARAMETER = "price[price][use_tax]=0&price[price][use_reduction]=0"
 
-    def __init__(self, base_url, api_key, image_url_prefix, language_id=None):
+    def __init__(self, base_url, api_key, language_id=None):
         self.api_hostname = base_url
         self.api_key = api_key
-        self.image_url_prefix = image_url_prefix
         self.products = dict()
         self.variants_reverse = dict()
         self.product_options = dict()
