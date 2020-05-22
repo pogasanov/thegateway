@@ -25,11 +25,8 @@ importer = Shoper(
 )
 
 
-# @click.command
+@click.command
 def run_import():
     print(SHOPER_BASE_URL)
     for product_list in importer.fetch_products():
         gateway.create_products(product_list)
-
-
-run_import()

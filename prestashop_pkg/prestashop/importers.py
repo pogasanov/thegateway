@@ -317,14 +317,3 @@ class Prestashop:
 
 def strip_tags(in_str):
     return re.sub("<[^<]+?>", "", in_str)
-
-
-#prestashop_base_url = os.environ.get("PRESTASHOP_BASE_URL", "http://127.0.0.1:8080")
-#prestashop_api_key = os.environ.get("PRESTASHOP_API_KEY", "RZY9E7L8AP5EPSMDZSXQ2SDJXZCEXBU4")
-#language_id = os.environ.get("PRESTASHOP_LANGUAGE_ID", None)
-#gateway_shop_id = os.environ.get("GATEWAY_SHOP_ID", "a547de18-7a1d-450b-a57b-bbf7f177db84")
-#image_url_prefix = f"{os.environ.get('IMAGEBUCKET_URL')}{gateway_shop_id}/"
-#
-#importer = Prestashop(prestashop_base_url, prestashop_api_key, image_url_prefix, language_id=language_id, )
-#categories = importer.list_of_categories()
-#print(categories)
