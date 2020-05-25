@@ -37,7 +37,7 @@ def run_imports(ctx):
     importer.exporter = exporter
 
     click.echo("Importing products...")
-    products = importer.build_products()
+    products = importer.build_products(ignores=['23'])
 
     products_count = next(products)
     for index, product in enumerate(products):

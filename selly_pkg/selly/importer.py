@@ -226,13 +226,16 @@ class SellyImporter:
             )
         return output_variants
 
-    def build_products(self) -> Generator[List[Product], None, None]:
+    def build_products(self, ignores: List[str]) -> Generator[List[Product], None, None]:
         self.check_categories_are_mapped()
         self.exporter.check_mapped_categories(self.category_mapping_filename)
 
         self._download_data()
         yield len(self.products)
         for product in self.products:
+            if product['category_id'] in ignores:
+                print(f'Ignored product {product["product_name"]}')
+                continue
             yield self._get_single_product_variants(product)
 
     def get_categories(self) -> Dict:
