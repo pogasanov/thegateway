@@ -6,6 +6,7 @@ import re
 import uuid
 from decimal import Decimal
 from itertools import groupby
+from typing import List
 from urllib import parse
 
 import requests
