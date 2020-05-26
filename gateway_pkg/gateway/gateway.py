@@ -30,6 +30,7 @@ class Gateway:
         self.session.headers.update({"Authorization": f"Bearer {self._build_token(secret)}"})
         self.tags_in_db = None
         self._categories = None
+        self.category_mappings = dict()
 
     @property
     def categories(self):
@@ -169,15 +170,24 @@ class Gateway:
         self.session.delete(self.endpoints["organization"]["product"]["delete"].format(product_id))
 
     def get_category_mappings(self, category_mapping_filename):
-        mappings = dict()
-        with open(f'{category_mapping_filename}.csv', newline='') as f:
-            reader = csv.reader(f)
-            for row in reader:
-                mappings[row[0]] = dict(
-                    src_name=row[1],
-                    categories=[x.strip() for x in row[2].split('>')] if row[2].strip() else [],
-                )
-        return mappings
+        try:
+            return self.category_mappings[category_mapping_filename]
+        except KeyError:
+            mappings = dict()
+            with open(f'{category_mapping_filename}.csv', newline='') as f:
+                reader = csv.reader(f)
+                for row in reader:
+                    categories = set()
+                    for i in range(2, len(row)):
+                        if row[i].strip():
+                            categories.update(x.strip() for x in row[i].split('>'))
+                    mappings[row[0]] = dict(
+                        src_name=row[1],
+                        categories=list(categories)
+                    )
+
+            self.category_mappings[category_mapping_filename] = mappings
+            return self.category_mappings[category_mapping_filename]
 
     def list_of_tags(self, type=None):
         if type:

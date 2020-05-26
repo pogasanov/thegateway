@@ -4,8 +4,7 @@
 179,Bazowa - Sklep - PORCELANA,Dom i ogród > Kuchnia i jadalnia
 180,Bazowa - Sklep - DODATKI,Dom i ogród > Kuchnia i jadalnia
 181,Bazowa - Sklep - AKCESORIA,Dom i ogród > Kuchnia i jadalnia
-182,Bazowa - Sklep - PREZENTY,
-183,Bazowa - Sklep - PROMOCJE %,
+182,Bazowa - Sklep - PREZENTY,Inne artykuły>Upominki
 184,Bazowa - Sklep - PORCELANA - Ritzenhoff - Tee,Dom i ogród > Kuchnia i jadalnia
 185,Bazowa - Sklep - PORCELANA - Ritzenhoff - T-amo,Dom i ogród > Kuchnia i jadalnia
 186,Bazowa - Sklep - PORCELANA - Ritzenhoff - My Tea,Dom i ogród > Kuchnia i jadalnia
@@ -22,8 +21,7 @@
 197,Bazowa - Sklep - HERBATA - Zioła,Art. Spożywcze > Spożywcze
 198,Bazowa - Sklep - HERBATA - Fit na odchudzanie,Art. Spożywcze > Spożywcze
 199,Bazowa - Sklep - HERBATA - Specjały,Art. Spożywcze > Spożywcze
-2,Bazowa - Sklep,
-200,Bazowa - Sklep - ŚWIĘTA W TEA CLUB,
+200,Bazowa - Sklep - ŚWIĘTA W TEA CLUB,Art. Spożywcze > Spożywcze
 201,Bazowa - Sklep - HERBATA - Konfekcja,Art. Spożywcze > Spożywcze
 202,Bazowa - Sklep - PORCELANA - Maxwell & Williams - Cashmere Round,Dom i ogród > Kuchnia i jadalnia
 203,Bazowa - Sklep - PORCELANA - Maxwell & Williams - Cashmere Square,Dom i ogród > Kuchnia i jadalnia
@@ -55,7 +53,7 @@
 229,Bazowa - Sklep - HERBATA - Zioła - Dodatki,Art. Spożywcze > Spożywcze
 230,Bazowa - Sklep - DODATKI - Konfitury i Owoce w Syropie,Art. Spożywcze > Spożywcze
 231,Bazowa - Sklep - DODATKI - Kandyzy,Art. Spożywcze > Spożywcze
-232,Bazowa - Sklep - DODATKI - Inne,
+232,Bazowa - Sklep - DODATKI - Inne,Art. Spożywcze > Spożywcze
 233,Bazowa - Sklep - PORCELANA - Filiżanki,Dom i ogród > Kuchnia i jadalnia
 234,Bazowa - Sklep - PORCELANA - Kubki,Dom i ogród > Kuchnia i jadalnia
 235,Bazowa - Sklep - PORCELANA - Pozostałe - Dzbanki,Dom i ogród > Kuchnia i jadalnia
@@ -65,19 +63,19 @@
 239,Bazowa - Sklep - AKCESORIA - Akcesoria do Yerba Mate - Naczynia do yerby,Dom i ogród > Kuchnia i jadalnia
 240,Bazowa - Sklep - AKCESORIA - Akcesoria do Yerba Mate - Bombille,Dom i ogród > Kuchnia i jadalnia
 241,Bazowa - Sklep - AKCESORIA - Inne,Dom i ogród > Kuchnia i jadalnia
-242,Bazowa - Sklep - DLA ZDROWIA,
-243,Bazowa - Sklep - DLA RELAKSU,
-244,Bazowa - Sklep - DLA ENERGII,
-245,Bazowa - Sklep - DLA DZIECI,
+242,Bazowa - Sklep - DLA ZDROWIA,Ogólne
+243,Bazowa - Sklep - DLA RELAKSU,Ogólne
+244,Bazowa - Sklep - DLA ENERGII,Ogólne
+245,Bazowa - Sklep - DLA DZIECI,Ogólne
 246,Bazowa - Sklep - PRODUKTY ORGANICZNE,Art. Spożywcze > Spożywcze
 247,Bazowa - Sklep - PORCELANA - Maxwell & Williams - Pets,Dom i ogród > Kuchnia i jadalnia
 248,Bazowa - Sklep - PORCELANA - Emma,Dom i ogród > Kuchnia i jadalnia
 249,Bazowa - Sklep - PORCELANA - Cherry Blossom,Dom i ogród > Kuchnia i jadalnia
 250,Bazowa - Sklep - PORCELANA - Dzbanki,Dom i ogród > Kuchnia i jadalnia
 251,Bazowa - Sklep - CZEKOLADA,Art. Spożywcze > Spożywcze
-252,Bazowa - Sklep - NOWOŚCI,
-253,Bazowa - Sklep - WIELKANOC,
-254,Bazowa - Sklep - AKCESORIA - Akcesoria do Matchy,
+252,Bazowa - Sklep - NOWOŚCI,Art. Spożywcze > Spożywcze
+253,Bazowa - Sklep - WIELKANOC,Art. Spożywcze > Spożywcze
+254,Bazowa - Sklep - AKCESORIA - Akcesoria do Matchy,Dom i ogród > Kuchnia i jadalnia
 255,Bazowa - Sklep - PORCELANA - Maxwell & Williams - Animals of the World,Dom i ogród > Kuchnia i jadalnia
 256,Bazowa - Sklep - PORCELANA - Anlux,Dom i ogród > Kuchnia i jadalnia
 257,Bazowa - Sklep - PORCELANA - Maxwell & Williams - KILBURN,Dom i ogród > Kuchnia i jadalnia
@@ -102,8 +100,8 @@
 277,Bazowa - Sklep - CZEKOLADA - Owoce i Orzechy w Czekoladzie,Art. Spożywcze > Spożywcze
 278,Bazowa - Sklep - PORCELANA - Kubki z Zaparzaczami,Dom i ogród > Kuchnia i jadalnia
 279,Bazowa - Sklep - PORCELANA - Maxwell & Williams - Pete Cromer,Dom i ogród > Kuchnia i jadalnia
-280,Bazowa - Sklep - WYPRZEDAŻ,
+280,Bazowa - Sklep - WYPRZEDAŻ,Ogólne
 281,Bazowa - Sklep - DODATKI - Miody,Art. Spożywcze > Spożywcze
-282,Bazowa - Sklep - PORCELANA - Zestawy,Dom i ogród > Kuchnia i jadalnia
+282,art. dzieciecie,Ogólne
 283,Bazowa - Sklep - DODATKI - Soki i Syropy,Art. Spożywcze > Spożywcze
-284,Bazowa - Sklep - BESTSELLERY,
+284,Bazowa - Sklep - BESTSELLERY,Ogólne
