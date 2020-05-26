@@ -66,6 +66,10 @@ class IdoSellTest(TestCase):
             )
         )
 
+    def tearDown(self) -> None:
+        responses.stop()
+        responses.reset()
+
     def test_get_file(self):
         importer = IdoSell(**self.IDOSELL_INIT_ARGS)
         # pylint: disable=W0212
@@ -153,3 +157,18 @@ class IdoSellTest(TestCase):
         self.assertEqual(product["name"], "Triaction Sportowe Etui")
         self.assertEqual(product["variant_data"]["size"][0]["price"], Decimal("63.41"))
         self.assertEqual(product["brief"], "")
+
+    def test_get_categories(self):
+        importer = IdoSell(**self.IDOSELL_INIT_ARGS)
+        categories = importer.get_categories()
+        self.assertEqual(len(categories.items()), 2)
+        self.assertEqual(categories["0"], "*Kategoria tymczasowa")
+        self.assertEqual(categories["1"], "Test category")
+
+    def test_get_xml_products_only_once(self):
+        importer = IdoSell(**self.IDOSELL_INIT_ARGS)
+        list(importer.get_products())
+        list(importer.get_categories())
+
+        xml_product_calls = list(filter(lambda x: x.request.path_url == "/export_successful_xml_full", responses.calls))
+        self.assertEqual(len(xml_product_calls), 1)

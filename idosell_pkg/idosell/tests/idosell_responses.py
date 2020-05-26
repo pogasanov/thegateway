@@ -171,7 +171,7 @@ PRODUCTS_XML = """<?xml version="1.0" encoding="utf-8"?>
         </product>
         <product type="regular" id="16" vat="23.0" site="3" currency="PLN">
             <producer id="1513170626" name="H&amp;M"/>
-            <category id="0" name="*Kategoria tymczasowa"/>
+            <category id="1" name="Test category"/>
             <unit id="0" name="szt."/>
             <card xmlns:iaiext="http://www.iai-shop.com/developers/iof/extensions.phtml"
                   url="https://demo46-pl-shop3.yourtechnicaldomain.com/product-pol-16-Bluzka-damska-H-M.feed10005.html"/>

@@ -4,7 +4,11 @@ import xml.etree.ElementTree as ET
 from datetime import date
 from decimal import Decimal
 from hashlib import sha1
-from typing import List, Iterator
+from typing import (
+    Iterator,
+    List,
+)
+from urllib.parse import urlparse
 
 import requests
 from gateway.models import Product
@@ -31,6 +35,20 @@ class IdoSell:
         self.login = login
         self.password = password
         self.url = base_url + "/marketplace-api/?gate=Products/getProductsFeed/5/json"
+
+        self.exporter = None
+
+        self.__products_xml = None
+
+    @property
+    def category_mapping_filename(self):
+        return f'category_mappings_{urlparse(self.url).netloc.replace(".", "_")}'
+
+    @property
+    def products_xml(self):
+        if self.__products_xml is None:
+            self.__products_xml = self._get_xml_with_products()
+        return self.__products_xml
 
     @staticmethod
     def _set_xml_lang(xpath: str):
@@ -72,7 +90,7 @@ class IdoSell:
         product["brief"] = brief_description.text.strip() if brief_description is not None else ""
 
         product["image_urls"] = self._get_image_urls(xml_product)
-        product["category"] = self._find(xml_product, "./category").attrib["name"]
+        product["category"] = self._find(xml_product, "./category").attrib
         product["variant_data"] = dict()
         product["sku"] = xml_product.attrib["id"]
 
@@ -151,6 +169,15 @@ class IdoSell:
 
         return sizes
 
+    def _get_tag_guids(self, category):
+        mappings = self.exporter.get_category_mappings(self.category_mapping_filename)
+
+        tag_guids = set()
+        for mapped_name in mappings[category['id']]['categories']:
+            tag_guids.add(self.exporter.get_category_id_by_name(mapped_name, category["id"]))
+
+        return tag_guids
+
     def _convert_fetched_product_to_gateway_products(self, fetched_product: dict) -> List[Product]:
         product_template = dict()
         product_template["name"] = fetched_product["name"]
@@ -169,7 +196,10 @@ class IdoSell:
         created_gw_products = []
         for size in sizes:
             gw_prod = Product(
-                name=product_template["name"], price=size["price"], vat_percent=product_template["vat_percent"],
+                name=product_template["name"],
+                price=size["price"],
+                vat_percent=product_template["vat_percent"],
+                tag_guids=self._get_tag_guids(product_template.get("category")),
             )
             gw_prod.description_short = product_template["description_short"]
             gw_prod.sku = product_template["sku"]
@@ -192,14 +222,16 @@ class IdoSell:
         """
         Get product variants from IdoSell API as gateway product model
         """
-        xml_content = self._get_xml_with_products()
+        self.check_categories_are_mapped()
+        self.exporter.check_mapped_categories(self.category_mapping_filename)
+        xml_content = self.products_xml
         if not xml_content:
             return []
         xml_root = ET.fromstring(xml_content)
         xml_products = xml_root.findall("./products/product")
         total = len(xml_products)
         for index, xml_product in enumerate(xml_products, 1):
-            print(f"{index}/{total}")
+            print(f"\rProcessing products {index}/{total}", end='')
             product_variants = self._get_product(xml_product)
             yield self._convert_fetched_product_to_gateway_products(product_variants)
 
@@ -253,3 +285,26 @@ class IdoSell:
             "(probably the file already has been downloaded within 60 minutes)"
         )
         return None
+
+    def get_categories(self):
+        xml_content = self.products_xml
+        if not xml_content:
+            return []
+
+        xml_root = ET.fromstring(xml_content)
+        xml_categories = xml_root.findall("./products/product/category")
+        total = len(xml_categories)
+        categories = {}
+        for index, xml_category in enumerate(xml_categories, 1):
+            print(f"\rProcessing categories {index}/{total}", end='')
+            categories[xml_category.attrib["id"]] = xml_category.attrib["name"]
+        return categories
+
+    def check_categories_are_mapped(self):
+        mappings = self.exporter.get_category_mappings(self.category_mapping_filename)
+        errors = dict()
+        for category_id, category_name in self.get_categories().items():
+            if str(category_id) not in mappings.keys():
+                errors[category_id] = category_name
+        if errors:
+            raise NotImplementedError(f'Missing mapping for categories: {errors}')
