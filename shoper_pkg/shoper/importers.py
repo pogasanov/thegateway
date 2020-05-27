@@ -1,15 +1,17 @@
 import decimal
 import json
 import logging
-
+import urllib
 from json import JSONDecodeError
-from typing import List, Dict, Generator
+from typing import (
+    Dict,
+    Generator,
+    List,
+)
 
 import requests
-
-from gateway.models import Product, Image
-
-
+from gateway import Gateway
+from gateway.models import Product
 # pylint: disable=invalid-name
 from requests import Response
 
@@ -18,7 +20,13 @@ logger = logging.getLogger(__name__)
 
 class Shoper:
     def __init__(
-        self, base_url: str, username: str, password: str, translation_prefix: str = "pl_PL", stock_update: bool = True
+            self,
+            base_url: str,
+            username: str,
+            password: str,
+            exporter: Gateway,
+            translation_prefix: str = "pl_PL",
+            stock_update: bool = True,
     ):
         self.api_hostname = base_url
         self.username = username
@@ -27,6 +35,14 @@ class Shoper:
         self.auth_token = self.authorize()
         if not stock_update:
             self.taxes = self.get_taxes()
+        self.exporter = exporter
+        self.mapped_categories = {}
+        self.categories_dict = dict()
+        self._gw_categories = None
+
+    @property
+    def category_mapping_filename(self):
+        return f'category_mappings_{urllib.parse.urlparse(self.api_hostname).netloc.replace(".", "_")}'
 
     def authorize(self) -> str:
         response = requests.post(
@@ -58,7 +74,7 @@ class Shoper:
             raise
 
     def invoke(
-        self, endpoint: str, method: str, output_format: str = None, stream: bool = False, data: Dict = None
+            self, endpoint: str, method: str, output_format: str = None, stream: bool = False, data: Dict = None
     ) -> Response:
         # pylint: disable=invalid-name
         fn = getattr(requests, method)
@@ -88,16 +104,24 @@ class Shoper:
         taxes = self._tax_dict(taxes_response.get("list"))
         return taxes
 
-    def _categories_dict(self, categories: List[Dict]) -> Dict:
-        return {
-            category.get("category_id"): category.get("translations").get(self.translation_prefix).get("name")
-            for category in categories
-        }
+    def _get_categories(self, product):
+        mappings = self.exporter.get_category_mappings('..', self.category_mapping_filename)
 
-    def get_categories(self) -> Dict:
-        categories_response = self.get("categories")
-        categories = self._categories_dict(categories_response.get("list"))
-        return categories
+        try:
+            orig_categories = [mappings[str(category)] for category in product['categories']]
+        except KeyError as e:
+            raise ValueError(f'Missing category mapping for category: {e}') from e
+        if self._gw_categories is None:
+            self._gw_categories = {t['name'].lower(): t['guid'] for t in self.exporter.list_of_tags(type='category')}
+
+        category_guids = []
+        for oc in orig_categories:
+            for gwc in oc['categories']:
+                try:
+                    category_guids.append(self._gw_categories[gwc.lower()])
+                except KeyError:
+                    raise ValueError(f'No category tag with name `{gwc}`')
+        return category_guids
 
     def get_product_data(self, data: Dict, option: str = "", options_count: int = 1) -> Product:
         images = [self.get_image_url(data)] if data.get("main_image") else None
@@ -114,6 +138,8 @@ class Shoper:
 
         translation = data.get("translations").get(self.translation_prefix)
 
+        category_guids = self._get_categories(product=data)
+
         product = Product(
             name=translation.get("name"),
             price=data.get("stock").get("price"),
@@ -124,6 +150,7 @@ class Shoper:
             variant_data={"size": str(option)} if option else dict(),
             images_urls=images,
             vat_percent=self.taxes.get(data.get("tax_id")),
+            tag_guids=set(category_guids),
         )
 
         return product
@@ -141,6 +168,9 @@ class Shoper:
         There's a limit on a number of products on a page and it's maximum is 50 (default 10).
         Set it to 50 to make less API calls.
         """
+        self.check_categories_are_mapped()
+        self.exporter.check_mapped_categories(self.category_mapping_filename)
+
         page_limit = 50
         products_response = self.get(f"products?limit={page_limit}")
 
@@ -179,3 +209,24 @@ class Shoper:
         return self.put(
             f"products/{product_to_update.get('product_id')}", json.dumps({"stock": {"stock": product.stock}})
         )
+
+    def get_categories(self):
+        categories_response = self.get("categories")
+        category_objects = categories_response.get("list")
+        categories = {category.get("category_id"): category.get("translations").get(self.translation_prefix).get("name") for category in category_objects}
+        while categories_response['page'] < categories_response['pages']:
+            categories_response = self.get(f"categories?page={categories_response['page'] + 1}")
+            category_objects = categories_response.get("list")
+            categories.update(
+                {category.get("category_id"): category.get("translations").get(self.translation_prefix).get("name") for category in category_objects}
+            )
+        return categories
+
+    def check_categories_are_mapped(self):
+        mappings = self.exporter.get_category_mappings('..', self.category_mapping_filename)
+        errors = dict()
+        for category_id, category_name in self.get_categories().items():
+            if str(category_id) not in mappings.keys():
+                errors[category_id] = category_name
+        if errors:
+            raise NotImplementedError(f'Missing mapping for categories: {errors}')
