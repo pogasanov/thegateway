@@ -31,3 +31,4 @@ def add_responses():
     responses.add(**prepare_response("table=produkty_atrybuty_grupy", ATTRIBUTES_GROUPS))
     responses.add(**prepare_response("table=produkty_warianty_atrybuty", VARIANTS_ATTRIBUTES))
     responses.add(**prepare_response("table=produkty_zdjecia", IMAGES))
+    responses.add(**prepare_response("table=kategorie", CATEGORIES))

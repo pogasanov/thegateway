@@ -50,6 +50,7 @@ class ImporterTests(TestCase):
         self.assertEqual(product.description_short, md(DETAILS[0]["opis_skrocony"]))
         self.assertEqual(product.sku, DETAILS[0]["kod_producenta"])
         self.assertEqual(product.variant_data, {})
+        self.assertEqual(product.categories, ["always wild",])
         expected_images_urls_len = len([x for x in IMAGES if x["produkt_id"] == PRODUCTS[0]["product_id"]])
         self.assertEqual(len(product.images_urls), expected_images_urls_len)
 
@@ -63,3 +64,15 @@ class ImporterTests(TestCase):
         expected_len_of_variants = len([x for x in VARIANTS if x["produkt_id"] == PRODUCTS[1]["product_id"]])
         variants = self.importer._get_single_product_variants(PRODUCTS[1])
         self.assertEqual(len(variants), expected_len_of_variants)
+
+    def test_get_categories(self):
+        categories = self.importer.get_categories()
+        self.assertEqual(categories, [category["nazwa"].lower().strip() for category in CATEGORIES])
+
+    def test_get_category_name(self):
+        self.importer._download_data()
+        parameters = ((15, None, "loren"), (15, {"loren": "test"}, "test"), (0, None, None))
+        for category_id, category_mapping, expected_name in parameters:
+            with self.subTest():
+                category_name = self.importer._get_category_name(category_id, category_mapping)
+                self.assertEqual(category_name, expected_name)
