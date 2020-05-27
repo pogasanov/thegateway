@@ -19,6 +19,7 @@ API_URLS = {
     "settings_tax": BASE_URL + "/wp-json/wc/v3/settings/tax",
     "tax_classes": BASE_URL + "/wp-json/wc/v3/taxes/classes",
     "taxes": BASE_URL + "/wp-json/wc/v3/taxes",
+    "categories": BASE_URL + "/wp-json/wc/v3/products/categories",
 }
 
 
@@ -73,6 +74,17 @@ def get_product_variations(request):
     return 200, headers, json_products
 
 
+def get_categories(request):
+    page = request.params.get("page", 1)
+    headers = {"content-type": "application/json"}
+
+    response_json = get_json_data_from_file(f"product_categories_page_{page}.json")
+    if not response_json:
+        response_json = "[]"
+
+    return 200, headers, response_json
+
+
 class WordpressWoocommerceTest(TestCase):
     @classmethod
     def setUpClass(cls) -> None:
@@ -94,6 +106,9 @@ class WordpressWoocommerceTest(TestCase):
             url=API_URLS["product_variations"],
             callback=get_product_variations,
             content_type="application/json",
+        )
+        responses.add_callback(
+            method=responses.GET, url=API_URLS["categories"], callback=get_categories, content_type="application/json",
         )
 
         responses.add(
@@ -157,6 +172,14 @@ class WordpressWoocommerceTest(TestCase):
         # exclude vat
         self.assertNotEqual(12, variable_product[0].price)
         self.assertNotEqual(13, variable_product[1].price)
+
+    def test_get_category_list(self):
+        categories = self.importer.get_category_list()
+        self.assertIn("Clothing", categories)
+        self.assertIn(self.importer.CATEGORY_DELIMITER.join(["Clothing", "Hoodies"]), categories)
+        self.assertIn(
+            self.importer.CATEGORY_DELIMITER.join(["Cat 1", "Cat 1-1", "Cat 1-1-2", "Cat 1-1-2-1"]), categories
+        )
 
     def test_get_products_with_excluded_taxes(self):
         # should include vat to prices

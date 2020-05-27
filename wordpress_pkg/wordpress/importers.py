@@ -1,10 +1,16 @@
 import logging
 from collections import defaultdict
 from decimal import Decimal
-from typing import List, Iterator
-from woocommerce import API
+from typing import (
+    Dict,
+    Iterator,
+    List,
+    Set,
+)
+from urllib.parse import urlparse
 
 from gateway import Product
+from woocommerce import API
 
 # pylint: disable=C0103
 logger = logging.getLogger(__name__)
@@ -20,11 +26,20 @@ class WoocommerceWordPress:
     DEFAULT_TAX = 23
     TAX_COUNTRY_CODE = "PL"
     DEFAULT_TAX_CLASS = ""
+    CATEGORY_DELIMITER = " > "
 
     def __init__(self, consumer_key: str, consumer_secret: str, base_url: str):
+        self.base_url = base_url
         self.wcapi = API(url=base_url, consumer_key=consumer_key, consumer_secret=consumer_secret)
         self.is_price_with_tax = True
         self.taxes = defaultdict(lambda: self.DEFAULT_TAX)
+        self.api_category_map = dict()
+
+        self.exporter = None
+
+    @property
+    def category_mapping_filename(self):
+        return f'category_mappings_{urlparse(self.base_url).netloc.replace(".", "_")}'
 
     def _set_price_options(self):
         """
@@ -36,6 +51,48 @@ class WoocommerceWordPress:
             if option_entry["id"] == "woocommerce_prices_include_tax":
                 self.is_price_with_tax = option_entry["value"] == "yes"
                 return
+
+    def _get_map_with_ids_and_category_hierarchy(self) -> Dict[int, str]:
+        category_tree = defaultdict(list)
+        for page in range(1, 100):
+            api_categories = self.wcapi.get("products/categories", params={"page": page}).json()
+            if not api_categories:
+                break
+
+            for api_cat in api_categories:
+                category_tree[api_cat["parent"]].append(api_cat)
+
+        root = category_tree[0]
+        return WoocommerceWordPress._category_traversal(category_tree, root, "")
+
+    def get_categories(self) -> Dict:
+        """
+        Get all categories in the shop
+        """
+        if not self._is_connection_established():
+            return dict()
+
+        return self._get_map_with_ids_and_category_hierarchy()
+
+    @staticmethod
+    def _category_traversal(category_tree: dict, api_categories: list, cat_hierarchy: str) -> Dict[int, str]:
+        categories = dict()
+        for api_category in api_categories:
+            current_cat_hierarchy = WoocommerceWordPress._concat_categories(cat_hierarchy, api_category["name"])
+            categories[api_category["id"]] = current_cat_hierarchy
+            categories.update(
+                WoocommerceWordPress._category_traversal(
+                    category_tree, category_tree[api_category["id"]], current_cat_hierarchy
+                )
+            )
+        return categories
+
+    @staticmethod
+    def _concat_categories(*cats: str) -> str:
+        if cats[0] == "":
+            return WoocommerceWordPress.CATEGORY_DELIMITER.join(cats[1:])
+
+        return WoocommerceWordPress.CATEGORY_DELIMITER.join(cats)
 
     def _setup_taxes(self):
         """
@@ -115,6 +172,7 @@ class WoocommerceWordPress:
             gw_product = Product("", 0, 0)
             gw_product.name = api_product["name"]
             gw_product.sku = api_product_variation["sku"]
+            gw_product.tag_guids = self._get_tag_guids(api_product)
 
             variant_description = api_product_variation["description"]
             if not variant_description:
@@ -170,8 +228,18 @@ class WoocommerceWordPress:
         return [image_record["src"] for image_record in api_product["images"]]
 
     # pylint: disable=R0201
-    def _get_categories(self, api_product: dict) -> List[str]:
-        return [cat_record["name"] for cat_record in api_product["categories"]]
+    def _get_tag_guids(self, api_product: dict) -> Set[str]:
+        """
+        Get categories of api product and convert them to gateway categories
+        """
+        mappings = self.exporter.get_category_mappings(self.category_mapping_filename)
+
+        tag_guids = set()
+        for integration_category in api_product["categories"]:
+            for mapped_name in mappings[str(integration_category['id'])]['categories']:
+                tag_guids.add(self.exporter.get_category_id_by_name(mapped_name, integration_category["id"]))
+
+        return tag_guids
 
     def _get_stock(self, api_product: dict) -> int:
         stock_status = api_product["stock_status"]
@@ -199,6 +267,7 @@ class WoocommerceWordPress:
         gw_product.images_urls = self._get_images_urls(api_product)
         gw_product.variant_data = self._get_variants(api_product)
         gw_product.stock = self._get_stock(api_product)
+        gw_product.tag_guids = self._get_tag_guids(api_product)
         self._set_price_and_vat(gw_product, api_product)
         return [gw_product]
 
@@ -243,17 +312,42 @@ class WoocommerceWordPress:
             ]
         )
 
+    def sync_categories(self, gw_product: Product) -> Product:
+        api_products = self.find_products_by_sku(gw_product.sku)
+        if not api_products:
+            logger.warning("Categories not found for product name=%s, sku=%s", gw_product.name, gw_product.sku)
+            return None
+
+        gw_product.tag_guids = self._get_tag_guids(api_products[0])
+        return gw_product
+
+    def find_products_by_sku(self, sku: str) -> List[dict]:
+        return self.wcapi.get("products", params={"sku": sku, "per_page": 100}).json()
+
     def get_products(self) -> Iterator[List[Product]]:
+        self.check_categories_are_mapped()
+        self.exporter.check_mapped_categories(self.category_mapping_filename)
+
         if not self._is_connection_established():
             return []
 
         self._setup_taxes()
         self._set_price_options()
+        self.api_category_map = self._get_map_with_ids_and_category_hierarchy()
 
-        for api_product in self._fetch_products_from_api():
+        for index, api_product in enumerate(self._fetch_products_from_api()):
+            print(f"\r{index}/???", end='')
+
             if not self._is_api_product_valid(api_product):
                 continue
 
             yield self._convert_api_product_to_gw_products(api_product)
 
         return []
+
+    def check_categories_are_mapped(self):
+        mappings = self.exporter.get_category_mappings(self.category_mapping_filename)
+        for category_id, category_name in self.get_categories().items():
+            if str(category_id) not in mappings.keys():
+                raise NotImplementedError(f'Missing mapping for category `{category_id}` ({category_name})')
+

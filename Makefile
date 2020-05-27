@@ -5,7 +5,7 @@ install-importers:
 
 develop-importers:
 	pip install -e ./gateway_pkg
-	pip install -e ./prestashop_pkg -e ./sellingo_pkg -e ./idosell_pkg -e ./magento_pkg -e ./shoper_pkg -e ./selly_pkg -e ./wordpress_pkg
+	pip install -e ./wordpress_pkg
 
 install-lint-dep:
 	pip install -e ./gateway_pkg
